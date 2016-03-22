@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface GestioneDB {
 
@@ -32,7 +33,7 @@ public interface GestioneDB {
 		Colonna prezzoAcquisto = new Colonna("PrezzoAcquisto", tipoColonna.decimal);
 		Colonna prezzoVendita = new Colonna("PrezzoVendita", tipoColonna.decimal);
 		
-		db.creaTabella(new Colonna[]{idProdottoPrimario, nome, cognome, prezzoAcquisto, prezzoVendita, IDUtente}, "Prodotti");
+		db.creaTabella(new Colonna[]{idProdottoPrimario, nome, prezzoAcquisto, prezzoVendita, IDUtente}, "Prodotti");
 		
 		Colonna idMovimentoPrimario = new Colonna("IDMovimento", tipoColonna.intero, new attributiColonna[]{attributiColonna.primaryKey, attributiColonna.autoincrement});
 		Colonna idProdotto = new Colonna("IDProdotto", tipoColonna.intero);
@@ -58,6 +59,8 @@ public interface GestioneDB {
 	void inserisciRecord(String nomeTabella, Map<String, Object> colonnaValore) throws SQLException;
 	
 	void aggiornaTabella(String nomeTabella, Map<String, Object> colonnaValore, String nomeChiave, Object[] valoriConfronto) throws SQLException;
+	
+	void eliminaRecord(String nomeTabella, Optional<String> nomeChiave, Optional<Object> valoreConfronto) throws SQLException;
 	
 	public enum tipoColonna{
 		testo("TEXT"),

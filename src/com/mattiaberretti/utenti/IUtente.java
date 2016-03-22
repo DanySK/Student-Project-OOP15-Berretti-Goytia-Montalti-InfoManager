@@ -1,6 +1,7 @@
 package com.mattiaberretti.utenti;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,6 +30,36 @@ public interface IUtente {
 				(String)dati.get().get("Password"));
 		utenteCorrente.setUtenteCorrente(ritorno);
 		return Optional.of(ritorno);
+	}
+	
+	public static Optional<IUtente> registrati(String nome, String cognome, String username, String password) throws ClassNotFoundException, SQLException{
+		IUtente ritorno = null;
+		GestioneDB db = GestioneDB.generaControllore();
+		db.connetti();
+		Boolean ok = db.eseguiLettura(new String[]{"Username"}, "Utenti").stream()
+				.filter(w -> w.get("Username").equals(username))
+				.count() == 0;
+		
+		if(ok){
+			Map<String, Object> valori = new HashMap<>();
+			valori.put("Nome", nome);
+			valori.put("Cognome", cognome);
+			valori.put("Username", username);
+			valori.put("Password", password);
+			db.inserisciRecord("Utenti", valori);
+			
+			Integer idUtente = db.eseguiLettura(new String[]{"IDUtente"}, "Utenti").stream()
+					.mapToInt(w -> (Integer)w.get("IDUtente"))
+					.max().getAsInt();
+			
+			ritorno = new Utente(idUtente, nome, cognome, username, password);
+			IUtente.utenteCorrente.setUtenteCorrente(ritorno);
+			
+		}
+		
+		db.disconnetti();
+		
+		return Optional.ofNullable(ritorno);
 	}
 	
 	

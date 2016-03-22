@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 class DataBase implements GestioneDB{
 	private static String cartellaBase = System.getProperty("user.home") + File.separator;
@@ -140,4 +141,16 @@ class DataBase implements GestioneDB{
 		stmt.executeUpdate(sql);
 		stmt.close();
 	}
+
+	@Override
+	public void eliminaRecord(String nomeTabella, Optional<String> nomeChiave, Optional<Object> valoreConfronto) throws SQLException {
+		String sql = "DELETE FROM " + nomeTabella;
+		if(nomeChiave.isPresent()){
+			sql = String.format("%s WHERE %s = '%s'", sql, nomeChiave.get(), valoreConfronto.get().toString());
+		}
+		
+		Statement stmt = c.createStatement();
+		stmt.executeUpdate(sql);
+	}
+	
 }
