@@ -21,13 +21,29 @@ public interface GestioneDB {
 		Colonna idUtentePrimaria = new Colonna("IDUtente", tipoColonna.intero, new attributiColonna[]{ attributiColonna.primaryKey, attributiColonna.autoincrement});
 		db.creaTabella(new Colonna[]{idUtentePrimaria, nome, cognome, usernameUtente, passwordUtente}, "Utenti");
 		
-		Colonna mail = new Colonna("EMail", tipoColonna.testo);
+		Colonna mail = new Colonna("Mail", tipoColonna.testo);
 		Colonna telefono = new Colonna("Telefono", tipoColonna.testo);
 		Colonna IDClientePrimaria = new Colonna("IDCliente", tipoColonna.intero, new attributiColonna[]{attributiColonna.primaryKey, attributiColonna.autoincrement});
 		Colonna IDUtente = new Colonna("IDUtente", tipoColonna.intero);
 		
 		db.creaTabella(new Colonna[]{IDClientePrimaria, nome, cognome, mail, telefono, IDUtente}, "Clienti");
 		
+		Colonna idProdottoPrimario = new Colonna("IDProdotto", tipoColonna.intero, new attributiColonna[]{attributiColonna.primaryKey, attributiColonna.autoincrement});
+		Colonna prezzoAcquisto = new Colonna("PrezzoAcquisto", tipoColonna.decimal);
+		Colonna prezzoVendita = new Colonna("PrezzoVendita", tipoColonna.decimal);
+		
+		db.creaTabella(new Colonna[]{idProdottoPrimario, nome, cognome, prezzoAcquisto, prezzoVendita, IDUtente}, "Prodotti");
+		
+		Colonna idMovimentoPrimario = new Colonna("IDMovimento", tipoColonna.intero, new attributiColonna[]{attributiColonna.primaryKey, attributiColonna.autoincrement});
+		Colonna idProdotto = new Colonna("IDProdotto", tipoColonna.intero);
+		Colonna data = new Colonna("Data", tipoColonna.data);
+		Colonna idVendita = new Colonna("IDVendita", tipoColonna.intero);
+		Colonna idAcquisto = new Colonna("IDAcquisto", tipoColonna.intero);
+		Colonna prezzo = new Colonna("Prezzo", tipoColonna.decimal);
+		Colonna iva = new Colonna("IVA", tipoColonna.intero);
+		Colonna descrizione = new Colonna("Descrizione", tipoColonna.testo);
+		
+		db.creaTabella(new Colonna[]{idMovimentoPrimario, idProdotto, data, idVendita, idAcquisto, prezzo, iva, descrizione}, "Movimenti");
 		db.disconnetti();
 	}
 	
