@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import com.mattiaberretti.clienti.ICliente;
 import com.mattiaberretti.database.GestioneDB;
+import com.mattiaberretti.prodotti.IProdotto;
 import com.mattiaberretti.utenti.IUtente;
 
 public class TestDati {
@@ -96,4 +97,35 @@ public class TestDati {
 		}
 	}
 
+	@Test
+	public void testProdotti(){
+		GestioneDB db = GestioneDB.generaControllore();
+		try {
+			db.connetti();
+			db.eliminaRecord("Prodotti", Optional.empty(), Optional.empty());
+			db.eliminaRecord("Utenti", Optional.empty(), Optional.empty());
+			db.disconnetti();
+			
+			IUtente.registrati("Nome", "Cognome", "Prova", "123");
+			
+			assertTrue("I prodotti non ci devono essere", IProdotto.elencoProdotti().size() == 0);
+			
+			IProdotto nuovo = new IProdotto.Builder("Nome")
+					.setPrezzoAcquisto(12.0)
+					.setPrezzoVendita(13.0)
+					.setQuantitaIniziale(100)
+					.build();
+			
+			assertTrue("Il prodotto non è stato creato", IProdotto.elencoProdotti().size() == 1);
+			
+			assertTrue("La quantita iniziale non è stata impostata", nuovo.quantita() > 0);
+			
+			IUtente.registrati("Secondo", "Prova", "necjn", "1213");
+			assertTrue("Non dovrei trovare prodotti", IProdotto.elencoProdotti().size() == 0);
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			fail("Accesso a db");
+		}
+	}
 }

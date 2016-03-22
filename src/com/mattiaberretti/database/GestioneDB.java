@@ -43,8 +43,9 @@ public interface GestioneDB {
 		Colonna prezzo = new Colonna("Prezzo", tipoColonna.decimal);
 		Colonna iva = new Colonna("IVA", tipoColonna.intero);
 		Colonna descrizione = new Colonna("Descrizione", tipoColonna.testo);
+		Colonna quantita = new Colonna("Quantita", tipoColonna.intero);
 		
-		db.creaTabella(new Colonna[]{idMovimentoPrimario, idProdotto, data, idVendita, idAcquisto, prezzo, iva, descrizione}, "Movimenti");
+		db.creaTabella(new Colonna[]{idMovimentoPrimario, idProdotto, data, idVendita, idAcquisto, prezzo, iva, descrizione, quantita}, "Movimenti");
 		db.disconnetti();
 	}
 	
