@@ -18,7 +18,7 @@ public interface ICliente {
 		GestioneDB db = GestioneDB.generaControllore();
 		db.connetti();
 		Integer idUtente = IUtente.utenteCorrente.getUtenteCorrente().get().getIDUtente();
-		List<Map<String, Object>> valori = db.eseguiLettura(new String[]{"IDCliente", "Nome", "Cognome", "Mail", "Password", "IDUtente"}, "Clienti").stream()
+		List<Map<String, Object>> valori = db.eseguiLettura(new String[]{"IDCliente", "Nome", "Cognome", "Mail", "IDUtente"}, "Clienti").stream()
 				.filter(w -> w.get("IDUtente").equals(idUtente))
 				.collect(Collectors.toList());
 		
