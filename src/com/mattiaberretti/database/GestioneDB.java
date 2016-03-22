@@ -16,20 +16,18 @@ public interface GestioneDB {
 		db.connetti();
 		Colonna nome = new Colonna("Nome", tipoColonna.testo);
 		Colonna cognome = new Colonna("Cognome", tipoColonna.testo);
-		//creo la tabellaUtenti
-		Colonna idUtente = new Colonna("IDUtente", tipoColonna.intero, new attributiColonna[]{attributiColonna.primaryKey, attributiColonna.autoincrement});
 		Colonna usernameUtente = new Colonna("Username", tipoColonna.testo);
 		Colonna passwordUtente = new Colonna("Password", tipoColonna.testo);
-		db.creaTabella(new Colonna[]{idUtente, nome, cognome, usernameUtente, passwordUtente}, "Utenti");
+		Colonna idUtentePrimaria = new Colonna("IDUtente", tipoColonna.intero, new attributiColonna[]{ attributiColonna.primaryKey, attributiColonna.autoincrement});
+		db.creaTabella(new Colonna[]{idUtentePrimaria, nome, cognome, usernameUtente, passwordUtente}, "Utenti");
 		
+		Colonna mail = new Colonna("EMail", tipoColonna.testo);
+		Colonna telefono = new Colonna("Telefono", tipoColonna.testo);
+		Colonna IDClientePrimaria = new Colonna("IDCliente", tipoColonna.intero, new attributiColonna[]{attributiColonna.primaryKey, attributiColonna.autoincrement});
+		Colonna IDUtente = new Colonna("IDUtente", tipoColonna.intero);
 		
-		//creo la tabella clienti
-		Colonna idCliente = new Colonna("IDCliente", tipoColonna.intero, new attributiColonna[]{attributiColonna.primaryKey, attributiColonna.autoincrement});
+		db.creaTabella(new Colonna[]{IDClientePrimaria, nome, cognome, mail, telefono, IDUtente}, "Clienti");
 		
-		Colonna telefonoCliente = new Colonna("Telefono", tipoColonna.testo);
-		Colonna mailCliente = new Colonna("Mail", tipoColonna.testo);
-		Colonna idUtenteCliente = new Colonna("IDUtente", tipoColonna.intero);
-		db.creaTabella(new Colonna[]{idCliente, nome, cognome, telefonoCliente, mailCliente, idUtenteCliente}, "Clienti");
 		db.disconnetti();
 	}
 	
