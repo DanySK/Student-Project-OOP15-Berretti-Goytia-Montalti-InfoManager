@@ -81,4 +81,9 @@ class Cliente implements ICliente {
 		
 		db.disconnetti();
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return obj != null && obj instanceof Cliente && ((Cliente)obj).getIDCliente().equals(this.getIDCliente());
+	}
 }

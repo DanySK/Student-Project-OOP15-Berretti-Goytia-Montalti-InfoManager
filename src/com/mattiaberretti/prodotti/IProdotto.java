@@ -12,6 +12,15 @@ import com.mattiaberretti.utenti.IUtente;
 
 public interface IProdotto {
 
+	/***
+	 * ricava l'elenco dei prodotti assegnati ad un determinato utente
+	 * @return
+	 * una lista di prodotti
+	 * @throws ClassNotFoundException
+	 * libreria di sqlite non trovata
+	 * @throws SQLException
+	 * errore durante l'interrogazione del database
+	 */
 	static List<IProdotto> elencoProdotti() throws ClassNotFoundException, SQLException{
 		GestioneDB db = GestioneDB.generaControllore();
 		db.connetti();
@@ -47,12 +56,42 @@ public interface IProdotto {
 
 	void setPrezzoVendita(Double prezzoVendita);
 
+	/**
+	 * ottiene la quantita di un prodotto mediante l'elaborazione dei movimenti
+	 * @return
+	 * la quantita attuale di un prodotto
+	 * @throws ClassNotFoundException
+	 * impossibile caricare la libreria di sqlite
+	 * @throws SQLException
+	 * errore durante l'interrogazione del database
+	 */
 	Integer quantita() throws ClassNotFoundException, SQLException;
 
+	/**
+	 * aggiorna il record di un prodotto
+	 * @throws ClassNotFoundException
+	 * impossibile caricare la libreria di sqlite
+	 * @throws SQLException
+	 * errore durante l'utilizzo del database
+	 */
 	void salva() throws ClassNotFoundException, SQLException;
 	
+	/***
+	 * ottiene l'elenco dei movimenti del prodotto
+	 * @return
+	 * un elenco di movimenti
+	 * @throws ClassNotFoundException
+	 * impossibile trovare la libreria di sqlite
+	 * @throws SQLException
+	 * errore durante l'interrogazione della tabella
+	 */
 	List<IMovimentoMagazzino> elencoMovimenti() throws ClassNotFoundException, SQLException;
 	
+	/**
+	 * Builder per un nuovo prodotto
+	 * @author mattiaberretti
+	 *
+	 */
 	public class Builder{
 		private String nome;
 		private Double prezzoAcquisto;
@@ -86,6 +125,16 @@ public interface IProdotto {
 			return this;
 		}
 		
+		/**
+		 * costruisce un nuovo prodotto e lo salva all'interno del database.
+		 * se impostata una quantita iniziale la salva come un nuovo movimento privo di riferimento ad acquisti o vendite
+		 * @return
+		 * il nuovo prodotto
+		 * @throws ClassNotFoundException
+		 * impossibile trovare la libreria di sqlite
+		 * @throws SQLException
+		 * impossibile collegarsi al database
+		 */
 		public IProdotto build() throws ClassNotFoundException, SQLException{
 			GestioneDB db = GestioneDB.generaControllore();
 			db.connetti();

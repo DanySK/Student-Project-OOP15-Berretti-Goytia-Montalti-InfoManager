@@ -8,10 +8,21 @@ import java.util.Optional;
 
 public interface GestioneDB {
 
+	/***
+	 * genera un'instanza del controllore del database
+	 * @return
+	 */
 	static GestioneDB generaControllore(){
 		return new DataBase();
 	}
 	
+	/***
+	 * genera il database sqlite per la conservazione dei dati
+	 * @throws ClassNotFoundException
+	 * impossibile trovare la libreria di sqlite
+	 * @throws SQLException
+	 * errore durante la creazione delle tabelle
+	 */
 	static void generaDB() throws ClassNotFoundException, SQLException{
 		DataBase db = new DataBase();
 		db.connetti();
@@ -49,20 +60,93 @@ public interface GestioneDB {
 		db.disconnetti();
 	}
 	
+	/***
+	 * connette il controllore al database
+	 * @throws SQLException
+	 * errore durante la connessione al database
+	 * @throws ClassNotFoundException
+	 * impossibile trovare la libreria di sqlite
+	 */
 	public void connetti() throws SQLException, ClassNotFoundException;
 
+	/***
+	 * disconnette il controllore dal database
+	 * @throws SQLException
+	 * errore durante la disconnessione
+	 */
 	public void disconnetti() throws SQLException;
 
+	/***
+	 * legge un'intera tabella di un database
+	 * @param campi
+	 * elenco dei campi da leggere
+	 * @param tabella
+	 * nome della tabella da interrogare
+	 * @return
+	 * una lista di mappe con chiave delle stringe e con valori degli Object
+	 * @throws SQLException
+	 * errore durante la lettura della tabella.
+	 * Controllare i nomi dei campi o il nome della tabella
+	 */
 	public List<Map<String, Object>> eseguiLettura(String[] campi, String tabella) throws SQLException;
 	
+	/***
+	 * crea una tabella all'interno del database
+	 * @param colonne
+	 * elenco delle colonne da creare
+	 * @param nomeTabella
+	 * nome della tabella
+	 * @throws SQLException
+	 * erorre durante la creazione della tabella
+	 */
 	public void creaTabella(GestioneDB.Colonna[] colonne, String nomeTabella) throws SQLException;
 	
+	/***
+	 * inserisce un nuovo record all'interno della tabella
+	 * @param nomeTabella
+	 * nome della tabella che conterrà il record
+	 * @param colonnaValore
+	 * una mappa di String e Object 
+	 * conterra come chiavi i nomi delle colonne e come valori il valore da inserire all'interno di tale colonna
+	 * @throws SQLException
+	 * errore durante l'aggiunta dei dati
+	 */
 	void inserisciRecord(String nomeTabella, Map<String, Object> colonnaValore) throws SQLException;
 	
+	/***
+	 * aggiorna un record di una tabella
+	 * @param nomeTabella
+	 * nome della tabella
+	 * @param colonnaValore
+	 * mappa contenente i nomi delle colonne come chiavi e come valori il nuovo contenuto di tali colonne
+	 * @param nomeChiave
+	 * nome della colonna che sarà usata per selezionare la colonna
+	 * @param valoriConfronto
+	 * i valori che può assumere la colonna chiave per essere selezionata (viene usata la logica OR)
+	 * @throws SQLException
+	 * errore durante l'aggiornamento
+	 */
 	void aggiornaTabella(String nomeTabella, Map<String, Object> colonnaValore, String nomeChiave, Object[] valoriConfronto) throws SQLException;
 	
+	/***
+	 * elimina un record dalla tabella
+	 * in caso di chiave e valore nulli la tabella viene svuotata
+	 * @param nomeTabella
+	 * nome della tabella
+	 * @param nomeChiave
+	 * chiave usata per l'eliminazione del record
+	 * @param valoreConfronto
+	 * valore per selezionare la chiave
+	 * @throws SQLException
+	 * errore durante l'eliminazione
+	 */
 	void eliminaRecord(String nomeTabella, Optional<String> nomeChiave, Optional<Object> valoreConfronto) throws SQLException;
 	
+	/***
+	 * tipi che una colonna può assumere
+	 * @author mattiaberretti
+	 *
+	 */
 	public enum tipoColonna{
 		testo("TEXT"),
 		decimal("DOUBLE"),
@@ -82,6 +166,11 @@ public interface GestioneDB {
 		}
 	}
 	
+	/***
+	 * attributi assegnabili ad una colonna
+	 * @author mattiaberretti
+	 *
+	 */
 	public enum attributiColonna{
 		primaryKey("PRIMARY KEY"),
 		autoincrement("AUTOINCREMENT");
@@ -98,6 +187,12 @@ public interface GestioneDB {
 		}
 	}
 	
+	/***
+	 * classe colonna,
+	 * essa contiene tutti i dati necessari per creare una colonna
+	 * @author mattiaberretti
+	 *
+	 */
 	public static class Colonna{
 		private String nome;
 		private tipoColonna tipo;

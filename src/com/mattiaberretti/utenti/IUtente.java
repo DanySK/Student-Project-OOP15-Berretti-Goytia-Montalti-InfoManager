@@ -9,8 +9,24 @@ import com.mattiaberretti.database.GestioneDB;
 
 public interface IUtente {
 
+	/**
+	 * utente corrente
+	 */
 	static CurrentUser utenteCorrente = new CurrentUser();
 	
+	/**
+	 * effettua il login di un utente
+	 * @param username
+	 * username dell'utente
+	 * @param password
+	 * password dell'utente
+	 * @return
+	 * il nuovo utente, ritorna vuoto se non è stato trovato nessun utente
+	 * @throws SQLException
+	 * impossibile collegarsi al databse
+	 * @throws ClassNotFoundException
+	 * impossibile caricare la libreria di sqlite
+	 */
 	static Optional<IUtente> accedi(String username, String password) throws SQLException, ClassNotFoundException{
 		GestioneDB db = GestioneDB.generaControllore();
 		db.connetti();
@@ -32,6 +48,20 @@ public interface IUtente {
 		return Optional.of(ritorno);
 	}
 	
+	/***
+	 * registra un nuovo utente
+	 * @param nome
+	 * @param cognome
+	 * @param username
+	 * username usato per l'acceso
+	 * @param password
+	 * @return
+	 * ritorna il nuovo utente se torna vuoto l'username è gia registrato
+	 * @throws ClassNotFoundException
+	 * errore durante il caricamento della libreria di sqlite
+	 * @throws SQLException
+	 * impossibile aggiungere il nuovo utente
+	 */
 	public static Optional<IUtente> registrati(String nome, String cognome, String username, String password) throws ClassNotFoundException, SQLException{
 		IUtente ritorno = null;
 		GestioneDB db = GestioneDB.generaControllore();
@@ -81,6 +111,11 @@ public interface IUtente {
 
 	void setPassword(String password);
 
+	/***
+	 * classe usata per la memorizzazione dell'utente corrente
+	 * @author mattiaberretti
+	 *
+	 */
 	public class CurrentUser{
 		private Optional<IUtente> utente;
 		

@@ -14,6 +14,15 @@ import com.mattiaberretti.utenti.IUtente;
 
 public interface ICliente {
 
+	/***
+	 * ottiene l'elenco dei clienti dal database appartenenti all'utente corrente
+	 * @return
+	 * una lista di clienti
+	 * @throws ClassNotFoundException
+	 * impossibile trovare la libreria di sqlite
+	 * @throws SQLException
+	 * errore durante l'interrogazione del database
+	 */
 	static List<ICliente> elencoClienti() throws ClassNotFoundException, SQLException{
 		GestioneDB db = GestioneDB.generaControllore();
 		db.connetti();
@@ -53,8 +62,20 @@ public interface ICliente {
 
 	void setTelefono(String telefono);
 
+	/***
+	 * aggiorna il record del cliente all'interno del db
+	 * @throws ClassNotFoundException
+	 * impossibile trovare la libreria di sqlite
+	 * @throws SQLException
+	 * errore durante l'esecuzione della query
+	 */
 	void salva() throws ClassNotFoundException, SQLException;
 
+	/***
+	 * costruttore per un nuovo cliente
+	 * @author mattiaberretti
+	 *
+	 */
 	public class Builder
 	{
 		private String nome;
@@ -106,6 +127,17 @@ public interface ICliente {
 			return ritorno;
 		}
 		
+		/***
+		 * crea il nuovo cliente 
+		 * @return
+		 * ritorna il nuovo cliente il valore è assente se il cliente esiste gia
+		 * @throws ClassNotFoundException
+		 * impossibile trovare la libreria di sqlite
+		 * @throws SQLException
+		 * errore durante l'esecuzione della query
+		 * @throws NoSuchElementException
+		 * 
+		 */
 		public Optional<ICliente> build() throws ClassNotFoundException, SQLException, NoSuchElementException{
 			if(!this.ok()){
 				return Optional.empty();
