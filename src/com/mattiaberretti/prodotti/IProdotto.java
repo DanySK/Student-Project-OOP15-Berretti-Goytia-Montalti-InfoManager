@@ -51,6 +51,8 @@ public interface IProdotto {
 
 	void salva() throws ClassNotFoundException, SQLException;
 	
+	List<IMovimentoMagazzino> elencoMovimenti() throws ClassNotFoundException, SQLException;
+	
 	public class Builder{
 		private String nome;
 		private Double prezzoAcquisto;

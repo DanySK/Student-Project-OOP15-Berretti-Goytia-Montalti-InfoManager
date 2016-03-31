@@ -1,8 +1,12 @@
 package com.mattiaberretti.prodotti;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.mattiaberretti.database.GestioneDB;
 
@@ -78,5 +82,31 @@ class Prodotto implements IProdotto {
 		db.aggiornaTabella("Prodotti", valori, "IDProdotto", new Object[]{this.idProdotto});
 		
 		db.disconnetti();
+	}
+
+	@Override
+	public List<IMovimentoMagazzino> elencoMovimenti() throws ClassNotFoundException, SQLException {
+		GestioneDB db = GestioneDB.generaControllore();
+		db.connetti();
+		List<Map<String, Object>> valori = db.eseguiLettura(new String[]{"IDMovimento", "IDProdotto", "IDVendita", "IDAcquisto", "Quantita", "Data", "Prezzo", "IVA", "Descrizione"}, "Movimenti").stream()
+				.filter(w -> w.get("IDProdotto").equals(this.idProdotto))
+				.collect(Collectors.toList());
+		db.disconnetti();
+		
+		List<IMovimentoMagazzino> ritorno = new ArrayList<>();
+		for (Map<String, Object> val : valori) {
+			ritorno.add(new MovimentoMagazzino((Integer)val.get("IDMovimento"),
+					(Integer)val.get("Quantita"),
+					(Integer)val.get("IDProdotto"),
+					(Date)val.get("Data"),
+					(Integer)val.get("IDVendita"),
+					(Integer)val.get("IDAcquisto"),
+					(String)val.get("Descrizione"),
+					(Double)val.get("Prezzo"),
+					(Integer)val.get("IVA")));
+		}
+		
+		return ritorno;
+		
 	}
 }
