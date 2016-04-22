@@ -13,9 +13,13 @@ import javax.swing.JTextField;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.JRadioButton;
 
-public class DialogNuovo extends JDialog {
+
+public class DialogNuovo extends JDialog implements DialogInterface {
 
 	/**
 	 * 
@@ -27,8 +31,8 @@ public class DialogNuovo extends JDialog {
 	private JTextField txtTelefono = new JTextField();
 	private JTextField txtIndirizzo = new JTextField();
 	private JLabel lblTelefono = new JLabel("Telefono");
-	private JLabel lblNome = new JLabel("Nome");
-	private JLabel lblCognome = new JLabel("Cognome");
+	private JLabel lblNome = new JLabel("Nome(*)");
+	private JLabel lblCognome = new JLabel("Cognome(*)");
 	private JLabel lblIndirizzo = new JLabel("Indirizzo");
 	private GridBagConstraints gbc_lblIndirizzo = new GridBagConstraints();
 	private GridBagConstraints gbc_lblTelefono = new GridBagConstraints();
@@ -46,9 +50,34 @@ public class DialogNuovo extends JDialog {
 	private JRadioButton rdbtnCliente = new JRadioButton("Cliente");
 	private JRadioButton rdbtnFornitore = new JRadioButton("Fornitore");
 	private JPanel buttonPane = new JPanel();
+	private Map<String,String> map = new HashMap<>();
 
 
-
+	public Map<String,String> getDataString(){
+		if(txtNome.getText().equals(null)){
+			if(txtCognome.getText().equals(null)){
+				map.put("Nome",txtNome.getText());
+				map.put("Cognome", txtCognome.getText());
+				map.put("Telefono", txtTelefono.getText());
+				map.put("Indirizzo", txtIndirizzo.getText());
+				if(rdbtnCliente.isSelected()){
+					map.put("TipoDiRapporto", rdbtnCliente.getText());
+				} else {
+					map.put("TipoDiRapporto", rdbtnFornitore.getText());
+				}
+				return map;
+			} else {
+				DialogCampoObbligatorio errore = new DialogCampoObbligatorio();
+				errore.setVisible(true);
+				return null;
+			}
+		} else {
+			DialogCampoObbligatorio errore = new DialogCampoObbligatorio();
+			errore.setVisible(true);
+			return null;
+		}
+	}
+	
 	/**
 	 * Create the dialog.
 	 */

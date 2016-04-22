@@ -2,13 +2,14 @@ package view.dialog;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class DialogCerca extends JDialog {
+public class DialogCerca extends JDialog implements DialogInterface{
 
 	/**
 	 * 
@@ -43,6 +44,13 @@ public class DialogCerca extends JDialog {
 				this.buttonPane.add(cancelButton);
 			}
 		}
+	}
+
+
+	@Override
+	public Map<String, String> getDataString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
