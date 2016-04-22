@@ -44,7 +44,6 @@ public class Menu extends JFrame {
 	private JButton bRiunioni = new JButton("");
 	private JButton bLogout = new JButton("Logout");
 	private JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-	private GroupLayout groupLayout = new GroupLayout(contentPane);
 	private JPanel pAcquVend = new JPanel();
 	private JPanel pAcqu = new JPanel();
 	private JPanel pVend = new JPanel();
@@ -173,9 +172,9 @@ public class Menu extends JFrame {
 		
 		this.lblMenu.setFont(new Font("Tahoma", Font.ITALIC, 48));
 		this.tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-
-		this.groupLayout.setHorizontalGroup(
-				this.groupLayout.createParallelGroup(Alignment.LEADING)
+		GroupLayout groupLayout = new GroupLayout(contentPane);
+		groupLayout.setHorizontalGroup(
+				groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(40)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
@@ -213,8 +212,8 @@ public class Menu extends JFrame {
 							.addGap(104)))
 					.addGap(33))
 		);
-		this.groupLayout.setVerticalGroup(
-				this.groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setVerticalGroup(
+				groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
