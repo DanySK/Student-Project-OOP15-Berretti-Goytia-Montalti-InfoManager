@@ -49,14 +49,13 @@ public interface GestioneDB {
 		Colonna idMovimentoPrimario = new Colonna("IDMovimento", tipoColonna.intero, new attributiColonna[]{attributiColonna.primaryKey, attributiColonna.autoincrement});
 		Colonna idProdotto = new Colonna("IDProdotto", tipoColonna.intero);
 		Colonna data = new Colonna("Data", tipoColonna.data);
-		Colonna idVendita = new Colonna("IDVendita", tipoColonna.intero);
-		Colonna idAcquisto = new Colonna("IDAcquisto", tipoColonna.intero);
+		Colonna idRicevuta = new Colonna("IDRicevuta", tipoColonna.intero);
 		Colonna prezzo = new Colonna("Prezzo", tipoColonna.decimal);
 		Colonna iva = new Colonna("IVA", tipoColonna.intero);
 		Colonna descrizione = new Colonna("Descrizione", tipoColonna.testo);
 		Colonna quantita = new Colonna("Quantita", tipoColonna.intero);
 		
-		db.creaTabella(new Colonna[]{idMovimentoPrimario, idProdotto, data, idVendita, idAcquisto, prezzo, iva, descrizione, quantita}, "Movimenti");
+		db.creaTabella(new Colonna[]{idMovimentoPrimario, idProdotto, data, idRicevuta, prezzo, iva, descrizione, quantita}, "Movimenti");
 		db.disconnetti();
 	}
 	
