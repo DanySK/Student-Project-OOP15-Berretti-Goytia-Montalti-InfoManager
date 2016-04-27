@@ -174,7 +174,7 @@ public interface IMovimento {
 			valori.put("Prezzo", this.prezzo);
 			valori.put("IVA", this.IVA);
 			valori.put("Descrizione", this.descrizione);
-			valori.put("Quantita", this.quantita);
+			valori.put("Quantita", this.isVendita ? -this.quantita : this.quantita);
 			GestioneDB db = GestioneDB.generaControllore();
 			db.connetti();
 			db.inserisciRecord("Movimenti", valori);

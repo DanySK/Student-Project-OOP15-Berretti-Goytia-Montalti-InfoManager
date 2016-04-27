@@ -2,6 +2,9 @@ package com.mattiaberretti.movimenti;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Optional;
+
+import com.mattiaberretti.database.GestioneDB;
 
 abstract class Movimento implements IMovimento {
 	private Integer idMovimento;
@@ -101,5 +104,10 @@ abstract class Movimento implements IMovimento {
 	public abstract void salva() throws SQLException, ClassNotFoundException;
 	
 	@Override
-	public abstract void elimina() throws SQLException, ClassNotFoundException;
+	public void elimina() throws SQLException, ClassNotFoundException{
+		GestioneDB db = GestioneDB.generaControllore();
+		db.connetti();
+		db.eliminaRecord("Movimenti", Optional.of("IDMovimento"), Optional.of(this.idMovimento));
+		db.disconnetti();
+	}
 }
