@@ -4,13 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.cert.PKIXRevocationChecker.Option;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.mattiaberretti.utenti.IUtente;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -43,16 +49,19 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 	private Map<String,String> map = new HashMap<>();
 	private JLabel lblConferma = new JLabel("Conferma Password(*)");
 
+	private registrazioneDelegate delegate;
+	
 	/**
 	 * Create the dialog.
 	 */
-	public DialogRegistrati() {
+	public DialogRegistrati(registrazioneDelegate delegate) {
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setBounds(100, 100, 310, 375);
 		this.setTitle("Registrazione");
 		this.getContentPane().setLayout(new BorderLayout());
 		this.contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
+		this.delegate = delegate;
 	
 		this.gl_contentPanel.setHorizontalGroup(
 				this.gl_contentPanel.createParallelGroup(Alignment.LEADING)
@@ -116,8 +125,21 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						getDataString();
+						Map<String, String> valori = getDataString();
+						if(valori != null){
+							try {
+								Optional<IUtente> nuovo = IUtente.registrati("utente", "utente", valori.get("Username"), valori.get("Password"), valori.get("Email"), valori.get("Negozio"));
+								if(nuovo.isPresent()){
+									DialogRegistrati.this.delegate.registrazioneCompletata(nuovo.get(), DialogRegistrati.this);
+								}
+								else{
+									//TODO: comunicare messaggio errore registrazine
+								}
+							} catch (ClassNotFoundException | SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
 					}
 				});
 				this.buttonPane.add(okButton);
@@ -168,6 +190,8 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 			this.map.put("Email", textFieldEmail.getText());
 			this.map.put("Indirizzo", textFieldIndirizzo.getText());
 			this.map.put("Negozio", textFieldNegozio.getText());
+			
+			this.map.put("Password", new String(passwordField.getPassword()));
 			return map;
 		} else {
 			this.creaDialogCampoObbligatorio();

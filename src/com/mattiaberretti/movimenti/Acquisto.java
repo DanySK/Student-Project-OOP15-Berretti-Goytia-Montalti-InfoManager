@@ -12,7 +12,6 @@ public class Acquisto extends Movimento {
 	protected Acquisto(Integer idMovimento, Integer quantita, String descrizione, Integer idProdotto, Date data,
 			Double prezzo, Integer iVA, Integer idRicevuta) {
 		super(idMovimento, quantita, descrizione, idProdotto, data, prezzo, iVA, idRicevuta);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

@@ -3,6 +3,8 @@ package view;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,6 +15,9 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLayeredPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import com.mattiaberretti.utenti.IUtente;
+
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -21,6 +26,7 @@ import java.awt.FlowLayout;
 import view.dialog.DialogRegistrati;
 import view.dialog.DialogWrongPass;
 import view.dialog.DialogWrongUser;
+import view.dialog.registrazioneDelegate;
 
 public class Login {
 
@@ -38,7 +44,15 @@ public class Login {
 	private JButton bRegistrati = new JButton("Registrati");
 	private DialogWrongPass dErrorPass = new DialogWrongPass();
 	private DialogWrongUser dErrorUser = new DialogWrongUser();
-	private DialogRegistrati dRegistrati = new DialogRegistrati();
+	private DialogRegistrati dRegistrati = new DialogRegistrati( new registrazioneDelegate() {
+		
+		@Override
+		public void registrazioneCompletata(IUtente utente, DialogRegistrati view) {
+			view.dispose();
+			new Menu().setVisible(true);
+			setStatus(false);
+		}
+	});
 
 	/**
 	 * Launch the application.
@@ -68,13 +82,17 @@ public class Login {
 	}
 	
 	public int checkLogin(){
-		if(tUser.getText().equals("admin")){
-			if(tPass.getText().equals("admin")){
+		try {
+			Optional<IUtente> utente = IUtente.accedi(tUser.getText(), tPass.getText());
+			if(utente.isPresent()){
 				return 1;
-			}else {
+			}
+			else{
 				return 0;
 			}
-		} else {
+		} catch (ClassNotFoundException | SQLException e) {
+			
+			e.printStackTrace();
 			return -1;
 		}
 	}

@@ -31,7 +31,9 @@ public interface GestioneDB {
 		Colonna usernameUtente = new Colonna("Username", tipoColonna.testo);
 		Colonna passwordUtente = new Colonna("Password", tipoColonna.testo);
 		Colonna idUtentePrimaria = new Colonna("IDUtente", tipoColonna.intero, new attributiColonna[]{ attributiColonna.primaryKey, attributiColonna.autoincrement});
-		db.creaTabella(new Colonna[]{idUtentePrimaria, nome, cognome, usernameUtente, passwordUtente}, "Utenti");
+		Colonna emailUtente = new Colonna("Mail", tipoColonna.testo);
+		Colonna nomeNegozio = new Colonna("NomeNegozio", tipoColonna.testo);
+		db.creaTabella(new Colonna[]{idUtentePrimaria, nomeNegozio, nome, cognome, usernameUtente, passwordUtente, emailUtente}, "Utenti");
 		
 		Colonna mail = new Colonna("Mail", tipoColonna.testo);
 		Colonna telefono = new Colonna("Telefono", tipoColonna.testo);

@@ -62,7 +62,7 @@ public interface IUtente {
 	 * @throws SQLException
 	 * impossibile aggiungere il nuovo utente
 	 */
-	public static Optional<IUtente> registrati(String nome, String cognome, String username, String password) throws ClassNotFoundException, SQLException{
+	public static Optional<IUtente> registrati(String nome, String cognome, String username, String password, String email, String nomeNegozio) throws ClassNotFoundException, SQLException{
 		IUtente ritorno = null;
 		GestioneDB db = GestioneDB.generaControllore();
 		db.connetti();
@@ -76,6 +76,8 @@ public interface IUtente {
 			valori.put("Cognome", cognome);
 			valori.put("Username", username);
 			valori.put("Password", password);
+			valori.put("Mail", email);
+			valori.put("NomeNegozio", nomeNegozio);
 			db.inserisciRecord("Utenti", valori);
 			
 			Integer idUtente = db.eseguiLettura(new String[]{"IDUtente"}, "Utenti").stream()
