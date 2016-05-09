@@ -30,7 +30,7 @@ public interface IUtente {
 	static Optional<IUtente> accedi(String username, String password) throws SQLException, ClassNotFoundException{
 		GestioneDB db = GestioneDB.generaControllore();
 		db.connetti();
-		Optional<Map<String, Object>> dati = db.eseguiLettura(new String[]{"IDUtente", "Nome", "Cognome", "Username", "Password"}, "Utenti").stream()
+		Optional<Map<String, Object>> dati = db.eseguiLettura(new String[]{"IDUtente", "Nome", "Cognome", "Username", "Password", "Mail", "nomeNegozio"}, "Utenti").stream()
 				.filter(e -> e.get("Username").equals(username))
 				.filter(e -> e.get("Password").equals(password))
 				.findFirst();
@@ -43,7 +43,9 @@ public interface IUtente {
 				(String)dati.get().get("Nome"), 
 				(String)dati.get().get("Cognome"),
 				(String)dati.get().get("Username"),
-				(String)dati.get().get("Password"));
+				(String)dati.get().get("Password"),
+				(String)dati.get().get("Mail"),
+				(String)dati.get().get("nomeNegozio"));
 		utenteCorrente.setUtenteCorrente(ritorno);
 		return Optional.of(ritorno);
 	}
@@ -84,7 +86,7 @@ public interface IUtente {
 					.mapToInt(w -> (Integer)w.get("IDUtente"))
 					.max().getAsInt();
 			
-			ritorno = new Utente(idUtente, nome, cognome, username, password);
+			ritorno = new Utente(idUtente, nome, cognome, username, password, email, nomeNegozio);
 			IUtente.utenteCorrente.setUtenteCorrente(ritorno);
 			
 		}
@@ -113,6 +115,17 @@ public interface IUtente {
 
 	void setPassword(String password);
 
+	public String getNomeNegozio();
+
+	public String getMail();
+
+	public void setNomeNegozio(String nomeNegozio);
+
+	public void setMail(String mail);
+	
+	
+	void salva() throws ClassNotFoundException, SQLException;
+	
 	/***
 	 * classe usata per la memorizzazione dell'utente corrente
 	 * @author mattiaberretti
