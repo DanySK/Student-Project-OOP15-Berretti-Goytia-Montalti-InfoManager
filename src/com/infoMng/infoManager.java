@@ -5,8 +5,6 @@ import java.sql.SQLException;
 
 import com.mattiaberretti.database.GestioneDB;
 
-import view.Login;
-
 public class infoManager {
 
 	public static void main(String[] args) {

@@ -1,35 +1,30 @@
 package view;
 
 
-import javax.swing.JFrame;
-
-import view.tabelle.PannelloTabelle;
-
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.LayoutManager;
 
-public class Fatture extends JFrame {
+public class Fatture extends InitializeFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3497349615019432641L;
-	private PannelloTabelle jPanel = new PannelloTabelle();
-
+	private static final String TITOLO = "Fatture";
+	private static final LayoutManager LAYOUT = new BorderLayout();
+	private static final Dimension DIMFRAME = new Dimension(830,568);
 	/**
 	 * Create the frame.
 	 */
 	public Fatture() {
+		super(TITOLO,LAYOUT,DIMFRAME);
 		
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Fatture.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
-		this.setTitle("Fatture");
-		this.setResizable(true);
-		this.setBounds(100, 100, 450, 300);
-		this.setLayout(new BorderLayout(0,0));
-		this.setContentPane(jPanel);
-		
+
 		
 		this.addWindowListener(new WindowListener() {
 

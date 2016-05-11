@@ -14,7 +14,6 @@ public class Fornitori extends InitializeFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -7744994891479399079L;
-	private BaseFatture jPanel = new BaseFatture();
 	private static final String TITOLO ="Fornitori";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(830,568);
@@ -25,7 +24,6 @@ public class Fornitori extends InitializeFrame {
 	public Fornitori() {
 		super(TITOLO,LAYOUT,DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Fornitori.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
-		this.setContentPane(jPanel);
 		
 		this.addWindowListener(new WindowListener() {
 

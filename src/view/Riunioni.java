@@ -1,6 +1,9 @@
 package view;
 
 import javax.swing.JPanel;
+
+import view.toolbar.MyToolbar;
+
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -19,6 +22,7 @@ public class Riunioni extends InitializeFrame{
 	private static final String TITOLO = "Riunioni";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(830,568);
+	private MyToolbar toolbar = new MyToolbar();
 
 
 	/**
@@ -28,6 +32,7 @@ public class Riunioni extends InitializeFrame{
 		super(TITOLO,LAYOUT,DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Riunioni.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.setContentPane(contentPane);
+		this.add(toolbar);
 		
 		this.addWindowListener(new WindowListener() {
 

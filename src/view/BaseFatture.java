@@ -1,15 +1,13 @@
 package view;
 
 import javax.swing.JPanel;
-import javax.swing.JToolBar;
-import javax.swing.JMenuItem;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.util.LinkedList;
-import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
-import view.dialog.DialogNuovo;
 import view.tabelle.PannelloTabelle;
+import view.toolbar.MyToolbar;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JTabbedPane;
@@ -48,12 +46,8 @@ public class BaseFatture extends JPanel {
 	private JButton btnPrecedente = new JButton("<Precedente");
 	private JButton btnAnnulla = new JButton("Annulla");
 	private JButton btnOk = new JButton("OK");
-	private JMenuItem mntmSalva = new JMenuItem("Salva");
-	private JMenuItem mntmCerca = new JMenuItem("Cerca");
-	private JMenuItem mntmAiuto = new JMenuItem("Aiuto");
 	private JLayeredPane layeredPane = new JLayeredPane();
-	private JMenuItem mntmNuovo = new JMenuItem("Nuovo");
-	private JToolBar toolBar = new JToolBar();
+	private MyToolbar toolBar = new MyToolbar();
 	private JComboBox<?> comboBoxFornitore = new JComboBox<>();
 	private JLabel lblConsegna = new JLabel("Consegna Dal");
 	private JLabel lblAl = new JLabel("Al");
@@ -108,29 +102,7 @@ public class BaseFatture extends JPanel {
 	 */
 	public BaseFatture() {
 		this.setEnabled(true);
-		this.mntmNuovo.setIcon(new ImageIcon(BaseFatture.class.getResource("/javax/swing/plaf/metal/icons/ocean/file.gif")));
-		this.mntmNuovo.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				DialogNuovo nuovoCli = new DialogNuovo();
-				nuovoCli.setTitle("Nuovo Cliente o Fornitore");
-				nuovoCli.setVisible(true);
-			}
-		});
-		this.toolBar.add(mntmNuovo);
-
-		this.mntmSalva.setIcon(new ImageIcon(BaseFatture.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
-		this.mntmSalva.setSelectedIcon(null);
-		this.toolBar.add(mntmSalva);
-		
-		
-		this.mntmCerca.setIcon(new ImageIcon(BaseFatture.class.getResource("/view/icon/lente-di-ingrandimento_318-1787.jpg")));
-		this.toolBar.add(mntmCerca);
-		
-		this.mntmAiuto.setIcon(new ImageIcon(BaseFatture.class.getResource("/view/icon/logotipo-informazioni-in-un-cerchio_318-9441.jpg")));
-		this.toolBar.add(mntmAiuto);
+		this.add(toolBar);
 
 		this.btnOk.setBounds(377, 464, 67, 23);
 		this.btnOk.addActionListener(new ActionListener() {
