@@ -76,16 +76,6 @@ public interface IProdotto {
 	 */
 	void salva() throws ClassNotFoundException, SQLException;
 	
-	/***
-	 * ottiene l'elenco dei movimenti del prodotto
-	 * @return
-	 * un elenco di movimenti
-	 * @throws ClassNotFoundException
-	 * impossibile trovare la libreria di sqlite
-	 * @throws SQLException
-	 * errore durante l'interrogazione della tabella
-	 */
-	List<IMovimentoMagazzino> elencoMovimenti() throws ClassNotFoundException, SQLException;
 	
 	/**
 	 * Builder per un nuovo prodotto
