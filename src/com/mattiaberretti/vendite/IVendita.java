@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.mattiaberretti.clienti.ICliente;
+import com.mattiaberretti.database.GestioneDB;
 import com.mattiaberretti.prodotti.IProdotto;
+import com.mattiaberretti.utenti.IUtente;
 
 public interface IVendita {
 
@@ -94,25 +96,53 @@ public interface IVendita {
 			return this;
 		}
 		
-		public IVendita build(){
+		public IVendita build() throws ClassNotFoundException, SQLException{
+			Integer idUtente = IUtente.utenteCorrente.getUtenteCorrente().get().getIDUtente();
 			Map<String, Object> valori = new HashMap<>();
 			valori.put("IDCliente", this.cliente.getIDCliente());
 			valori.put("IVA", this.IVA);
 			valori.put("Data", this.data.toString());
+			valori.put("IDUtente", idUtente);
 			
-			//TODO: salvataggio della nuova vendita
-			//TODO: lettura dell'id della vendita
-			Integer idVendita = -1;
+			GestioneDB db = GestioneDB.generaControllore();
+			db.connetti();
+			db.inserisciRecord("Vendite", valori);
 			
-			this.elementi.forEach((e,v) -> {
+			Integer idVendita = db.eseguiLettura(new String[]{"IDRicevuta", "IDUtente"}, "Vendite").stream()
+					.filter(e -> e.get("IDUtente").equals(idUtente))
+					.mapToInt(i -> (Integer)i.get("IDUtente"))
+					.max().getAsInt();
+			
+			for (java.util.Map.Entry<IProdotto, PairVendita> tmp: this.elementi.entrySet()){
+				IProdotto e = tmp.getKey();
+				PairVendita v = tmp.getValue();
 				Map<String, Object> valoriElemento = new HashMap<>();
-				valoriElemento.put("IProdotto", e.getIDProdotto());
+				valoriElemento.put("IDProdotto", e.getIDProdotto());
 				valoriElemento.put("Quantita", v.getQuantita());
 				valoriElemento.put("Prezzo", v.getPrezzo());
 				valoriElemento.put("IDVendita", idVendita);
 				
-				//TODO: salvataggio dell'elemento
-			});
+				db.inserisciRecord("DettagliVendita", valoriElemento);
+				
+				
+				Integer idDettagli = db.eseguiLettura(new String[]{"IDDettagliVendita"}, "DettagliVendita").stream()
+						.mapToInt(i -> (Integer)i.get("IDDettagliVendita"))
+						.max().getAsInt();
+				
+				//inserisco il movimento del prodotto
+				valoriElemento = new HashMap<>();
+				valoriElemento.put("IDProdotto", e.getIDProdotto());
+				valoriElemento.put("IDVendita", idDettagli);
+				valoriElemento.put("Descrizione", "Ricevuta di vendita");
+				valoriElemento.put("Quantita", v.getQuantita());
+				valoriElemento.put("Data", this.data);
+				
+				db.inserisciRecord("Movimento", valoriElemento);
+			
+				
+			}
+			
+			db.disconnetti();
 			
 			return new Vendita(idVendita, this.IVA, this.data, this.cliente, this.elementi);
 		}

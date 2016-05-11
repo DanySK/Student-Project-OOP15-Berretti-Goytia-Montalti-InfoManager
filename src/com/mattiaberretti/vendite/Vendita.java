@@ -124,11 +124,11 @@ class Vendita implements IVendita {
 
 	@Override
 	public void salva() throws SQLException, ClassNotFoundException{
-		
+		//TODO: modifica della ricevuta e di tutti i suoi elementi compresi i movimenti
 	}
 	
 	@Override
 	public void elimina() throws SQLException, ClassNotFoundException{
-		
+		//TODO: completare eliminazione della ricevuta e di tutti i suoi movimenti
 	}
 }

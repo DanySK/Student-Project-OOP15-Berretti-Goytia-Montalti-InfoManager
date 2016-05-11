@@ -26,6 +26,8 @@ public interface GestioneDB {
 	static void generaDB() throws ClassNotFoundException, SQLException{
 		DataBase db = new DataBase();
 		db.connetti();
+		
+		//creazione della tabella degli utenti
 		Colonna nome = new Colonna("Nome", tipoColonna.testo);
 		Colonna cognome = new Colonna("Cognome", tipoColonna.testo);
 		Colonna usernameUtente = new Colonna("Username", tipoColonna.testo);
@@ -35,6 +37,7 @@ public interface GestioneDB {
 		Colonna nomeNegozio = new Colonna("NomeNegozio", tipoColonna.testo);
 		db.creaTabella(new Colonna[]{idUtentePrimaria, nomeNegozio, nome, cognome, usernameUtente, passwordUtente, emailUtente}, "Utenti");
 		
+		//creazione della tabella dei clienti
 		Colonna mail = new Colonna("Mail", tipoColonna.testo);
 		Colonna telefono = new Colonna("Telefono", tipoColonna.testo);
 		Colonna IDClientePrimaria = new Colonna("IDCliente", tipoColonna.intero, new attributiColonna[]{attributiColonna.primaryKey, attributiColonna.autoincrement});
@@ -42,28 +45,39 @@ public interface GestioneDB {
 		
 		db.creaTabella(new Colonna[]{IDClientePrimaria, nome, cognome, mail, telefono, IDUtente}, "Clienti");
 		
+		//creazione della tabella dei prodotti
 		Colonna idProdottoPrimario = new Colonna("IDProdotto", tipoColonna.intero, new attributiColonna[]{attributiColonna.primaryKey, attributiColonna.autoincrement});
 		Colonna prezzoAcquisto = new Colonna("PrezzoAcquisto", tipoColonna.decimal);
 		Colonna prezzoVendita = new Colonna("PrezzoVendita", tipoColonna.decimal);
 		
 		db.creaTabella(new Colonna[]{idProdottoPrimario, nome, prezzoAcquisto, prezzoVendita, IDUtente}, "Prodotti");
 		
+		//creazione della tabella pre i movimenti del magazzino
 		Colonna idMovimentoPrimario = new Colonna("IDMovimento", tipoColonna.intero, new attributiColonna[]{attributiColonna.primaryKey, attributiColonna.autoincrement});
 		Colonna idProdotto = new Colonna("IDProdotto", tipoColonna.intero);
-		Colonna idRicevuta = new Colonna("IDRicevuta", tipoColonna.intero);
-		Colonna prezzo = new Colonna("Prezzo", tipoColonna.decimal);
-		Colonna iva = new Colonna("IVA", tipoColonna.intero);
+		Colonna idVendita = new Colonna("IDVendita", tipoColonna.intero);
+		Colonna idAcquisto = new Colonna("IDAcquisto", tipoColonna.intero);
 		Colonna descrizione = new Colonna("Descrizione", tipoColonna.testo);
 		Colonna quantita = new Colonna("Quantita", tipoColonna.intero);
+		Colonna data = new Colonna("Data", tipoColonna.data);
+		db.creaTabella(new Colonna[]{idMovimentoPrimario, idProdotto, idVendita, idAcquisto, descrizione, quantita, data}, "Movimenti");
 		
-		db.creaTabella(new Colonna[]{idMovimentoPrimario, idProdotto, idRicevuta, prezzo, iva, descrizione, quantita}, "Movimenti");
-		
+		//creazione della tabella per le ricevute di vendita
 		Colonna idRicevutaPrimaria = new Colonna("IDRicevuta", tipoColonna.intero, new attributiColonna[]{attributiColonna.primaryKey, attributiColonna.autoincrement});
 		Colonna dataRicevuta = new Colonna("Data", tipoColonna.datetime);
 		Colonna idCliente = new Colonna("IDCliente", tipoColonna.intero);
+		Colonna iva = new Colonna("IVA", tipoColonna.intero);
 		
-		db.creaTabella(new Colonna[]{idRicevutaPrimaria, dataRicevuta, idCliente, IDUtente}, "Vendite");
+		db.creaTabella(new Colonna[]{idRicevutaPrimaria, dataRicevuta, idCliente, IDUtente, iva}, "Vendite");
 	
+		//creazione della tabella per i dettagli delle vendite
+		Colonna idDettagliVendita = new Colonna("IDDettagliVendita", tipoColonna.intero, new attributiColonna[]{attributiColonna.primaryKey, attributiColonna.autoincrement});
+		Colonna quantitaVendita = new Colonna("Quantita", tipoColonna.intero);
+		Colonna prezzoSingolo = new Colonna("Prezzo", tipoColonna.decimal);
+		Colonna idRicevuta = new Colonna("IDVendita", tipoColonna.intero);
+		
+		db.creaTabella(new Colonna[]{idDettagliVendita, idProdotto, quantitaVendita, prezzoSingolo, idRicevuta}, "DettagliVendita");
+		
 		db.disconnetti();
 	}
 	
