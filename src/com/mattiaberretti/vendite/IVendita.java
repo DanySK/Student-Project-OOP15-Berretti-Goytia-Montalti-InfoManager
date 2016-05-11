@@ -3,8 +3,10 @@ package com.mattiaberretti.vendite;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.mattiaberretti.clienti.ICliente;
 import com.mattiaberretti.database.GestioneDB;
@@ -12,6 +14,64 @@ import com.mattiaberretti.prodotti.IProdotto;
 import com.mattiaberretti.utenti.IUtente;
 
 public interface IVendita {
+
+	static List<IVendita> elencoVendite() throws ClassNotFoundException, SQLException{
+		GestioneDB db = GestioneDB.generaControllore();
+		db.connetti();
+		Integer idUtente = IUtente.utenteCorrente.getUtenteCorrente().get().getIDUtente();
+		List<IVendita> ritorno = new LinkedList<>();
+		
+		List<Map<String, Object>> tabellaRicevute = db.eseguiLettura(new String[]{"IDRicevuta", "Data", "IDCliente", "IVA", "IDUtente"}, "Vendite").stream()
+		.filter(e -> e.get("IDUtente").equals(idUtente))
+		.map(e -> {
+			e.remove("IDUtente");
+			return e;
+		})
+		.collect(Collectors.toList());
+		
+		for(Map<String, Object> tmp : tabellaRicevute){
+			 ICliente cliente = ICliente.elencoClienti().stream()
+					 .filter(c -> c.getIDCliente().equals(tmp.get("IDCliente")))
+					 .findFirst().get();
+			 
+			 Date data = (Date)tmp.get("Data");
+			 Integer IDRicevuta = (Integer)tmp.get("IDRicevuta");
+			 Integer IVA = (Integer)tmp.get("IVA");
+			 
+			 
+			 //ottengo i dettagli
+			 
+			 List<Map<String, Object>> tabellaDettagli = db.eseguiLettura(new String[]{"Quantita", "Prezzo", "IDVendita", "IDProdotto"}, "DettagliVendita").stream()
+					 .filter(d -> d.get("IDVendita").equals(IDRicevuta))
+					 .map(r -> {
+						 r.remove("IDVendita");
+						 return r;
+					 })
+					 .collect(Collectors.toList());
+			 
+			 Map<IProdotto, PairVendita> dettagli = new HashMap<>();
+			 for(Map<String, Object> dettaglio : tabellaDettagli){
+				 Integer quantita = (Integer)dettaglio.get("Quantita");
+				 Double prezzo = (Double)dettaglio.get("Prezzo");
+				 
+				 IProdotto prodotto = IProdotto.elencoProdotti().stream()
+						 .filter(p -> p.getIDProdotto().equals(dettaglio.get("IDProdotto")))
+						 .findFirst().get();
+				 
+				 dettagli.put(prodotto, new PairVendita(quantita, prezzo));
+			 }
+			 
+			 IVendita nuovo = new Vendita(IDRicevuta, IVA, data, cliente, dettagli);
+			 ritorno.add(nuovo);
+		}
+		
+		
+		db.disconnetti();
+		return ritorno;
+	}
+	
+	
+
 
 	List<IProdotto> getProdotti();
 
