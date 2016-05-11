@@ -1,6 +1,5 @@
 package view;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
@@ -9,7 +8,11 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -18,7 +21,7 @@ import java.awt.event.WindowListener;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Toolkit;
 
-public class Menu extends JFrame {
+public class Menu extends InitializeFrame {
 
 	/**
 	 * 
@@ -47,6 +50,9 @@ public class Menu extends JFrame {
 	private JPanel pAcquVend = new JPanel();
 	private JPanel pAcqu = new JPanel();
 	private JPanel pVend = new JPanel();
+	private static final String TITOLO = "Menu";
+	private static final LayoutManager LAYOUT = new BorderLayout();
+	private static final Dimension DIMFRAME = new Dimension(938,476);
 	
 	public void changeStatus(){
 			dispose();
@@ -56,9 +62,8 @@ public class Menu extends JFrame {
 	 * Create the frame.
 	 */
 	public Menu() {
+		super(TITOLO,LAYOUT,DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
-		this.setTitle("Menu");
-		this.setBounds(100, 100, 938, 476);
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setContentPane(contentPane);

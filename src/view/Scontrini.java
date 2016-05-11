@@ -1,26 +1,31 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.LayoutManager;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-public class Scontrini extends JFrame {
+public class Scontrini extends InitializeFrame{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3626871331020606696L;
 	private JPanel contentPane;
+	private static final String TITOLO = "Menu";
+	private static final LayoutManager LAYOUT = new BorderLayout();
+	private static final Dimension DIMFRAME = new Dimension(938,476);
 
 	/**
 	 * Create the frame.
 	 */
 	public Scontrini() {
+		super(TITOLO,LAYOUT,DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Scontrini.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.setTitle("Scontrini");
 		this.setResizable(true);

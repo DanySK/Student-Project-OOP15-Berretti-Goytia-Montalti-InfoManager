@@ -14,10 +14,12 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLayeredPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.BorderLayout;
+
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
 import java.awt.FlowLayout;
+
 import view.dialog.DialogRegistrati;
 import view.dialog.DialogWrongPass;
 import view.dialog.DialogWrongUser;

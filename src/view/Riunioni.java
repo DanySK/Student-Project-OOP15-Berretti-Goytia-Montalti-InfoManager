@@ -1,34 +1,32 @@
 package view;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.LayoutManager;
 
-public class Riunioni extends JFrame {
+
+public class Riunioni extends InitializeFrame{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8816191580108552347L;
 	private JPanel contentPane;
+	private static final String TITOLO = "Riunioni";
+	private static final LayoutManager LAYOUT = new BorderLayout();
+	private static final Dimension DIMFRAME = new Dimension(830,568);
 
 
 	/**
 	 * Create the frame.
 	 */
 	public Riunioni() {
+		super(TITOLO,LAYOUT,DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Riunioni.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
-		this.setTitle("Riunioni");
-		this.setResizable(true);
-		this.setBounds(100, 100, 450, 300);
-		this.contentPane = new JPanel();
-		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		this.contentPane.setLayout(new BorderLayout(0, 0));
 		this.setContentPane(contentPane);
 		
 		this.addWindowListener(new WindowListener() {

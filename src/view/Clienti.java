@@ -1,34 +1,35 @@
 package view;
 
 
-import javax.swing.JFrame;
-
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 
 
-public class Clienti extends JFrame {
+public class Clienti extends InitializeFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7113641769924370743L;
-	private BaseForCli jPanel = new BaseForCli();
+	private BaseFatture jPanel = new BaseFatture();
+	private static final String TITOLO = "Clienti";
+	private static final LayoutManager LAYOUT = new BorderLayout();
+	private static final Dimension DIMFRAME = new Dimension(830,568);
+	
 	
 
 	/**
 	 * Create the frame.
 	 */
 	public Clienti() {
+		super(TITOLO, LAYOUT, DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Clienti.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
-		this.setTitle("Clienti");
-		this.setResizable(true);
-		this.setBounds(100, 100, 846, 577);
-		this.setContentPane(jPanel);
-		this.jPanel.setEnabled(true);
-		
+		this.getContentPane().add(jPanel);
 		
 		this.addWindowListener(new WindowListener() {
 

@@ -1,8 +1,9 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.LayoutManager;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -14,7 +15,7 @@ import java.awt.event.WindowListener;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
 
-public class Magazzino extends JFrame {
+public class Magazzino extends InitializeFrame {
 
 	/**
 	 * 
@@ -27,12 +28,16 @@ public class Magazzino extends JFrame {
 	private JButton btnAiuto = new JButton("Aiuto");
 	private PannelloTabelle jPanel = new PannelloTabelle();
 	private JToolBar toolBar = new JToolBar();
+	private static final String TITOLO = "Menu";
+	private static final LayoutManager LAYOUT = new BorderLayout();
+	private static final Dimension DIMFRAME = new Dimension(938,476);
 
 
 	/**
 	 * Create the frame.
 	 */
 	public Magazzino() {
+		super(TITOLO,LAYOUT,DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Magazzino.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.setTitle("Magazzino");
 		this.setResizable(true);

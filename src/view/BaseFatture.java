@@ -19,7 +19,7 @@ import javax.swing.JTextArea;
 import java.awt.BorderLayout;
 
 
-public class BaseForCli extends JPanel {
+public class BaseFatture extends JPanel {
 
 	/**
 	 * 
@@ -106,9 +106,9 @@ public class BaseForCli extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public BaseForCli() {
+	public BaseFatture() {
 		this.setEnabled(true);
-		this.mntmNuovo.setIcon(new ImageIcon(BaseForCli.class.getResource("/javax/swing/plaf/metal/icons/ocean/file.gif")));
+		this.mntmNuovo.setIcon(new ImageIcon(BaseFatture.class.getResource("/javax/swing/plaf/metal/icons/ocean/file.gif")));
 		this.mntmNuovo.addActionListener(new ActionListener() {
 			
 			@Override
@@ -121,15 +121,15 @@ public class BaseForCli extends JPanel {
 		});
 		this.toolBar.add(mntmNuovo);
 
-		this.mntmSalva.setIcon(new ImageIcon(BaseForCli.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
+		this.mntmSalva.setIcon(new ImageIcon(BaseFatture.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
 		this.mntmSalva.setSelectedIcon(null);
 		this.toolBar.add(mntmSalva);
 		
 		
-		this.mntmCerca.setIcon(new ImageIcon(BaseForCli.class.getResource("/view/icon/lente-di-ingrandimento_318-1787.jpg")));
+		this.mntmCerca.setIcon(new ImageIcon(BaseFatture.class.getResource("/view/icon/lente-di-ingrandimento_318-1787.jpg")));
 		this.toolBar.add(mntmCerca);
 		
-		this.mntmAiuto.setIcon(new ImageIcon(BaseForCli.class.getResource("/view/icon/logotipo-informazioni-in-un-cerchio_318-9441.jpg")));
+		this.mntmAiuto.setIcon(new ImageIcon(BaseFatture.class.getResource("/view/icon/logotipo-informazioni-in-un-cerchio_318-9441.jpg")));
 		this.toolBar.add(mntmAiuto);
 
 		this.btnOk.setBounds(377, 464, 67, 23);
