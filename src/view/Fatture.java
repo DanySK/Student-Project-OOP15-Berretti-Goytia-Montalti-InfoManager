@@ -14,6 +14,7 @@ public class Fatture extends InitializeFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -3497349615019432641L;
+	private BaseFatture panelFatture = new BaseFatture();
 	private static final String TITOLO = "Fatture";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(830,568);
@@ -22,7 +23,7 @@ public class Fatture extends InitializeFrame {
 	 */
 	public Fatture() {
 		super(TITOLO,LAYOUT,DIMFRAME);
-		
+		this.add(panelFatture);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Fatture.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 
 		
