@@ -13,7 +13,7 @@ public class infoManager {
 				@Override
 				public void run() {
 					try {
-						GestioneDB.generaDB();
+						GestioneDB.generaDB();//TODO: da rimuovere per le prossime versioni
 					} catch (ClassNotFoundException | SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

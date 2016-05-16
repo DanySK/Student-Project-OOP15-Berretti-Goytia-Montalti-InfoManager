@@ -1,6 +1,5 @@
 package com.infoMng.controller;
 
-import java.lang.instrument.IllegalClassFormatException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -82,7 +81,7 @@ class Oggetto implements MBOggetto{
 	}
 
 	@Override
-	public boolean salva() throws IllegalClassFormatException{
+	public boolean salva() throws IllegalArgumentException{
 		this.setModifica();
 		boolean ritorno;
 		DataBase db = new DataBase();

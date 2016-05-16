@@ -1,7 +1,6 @@
 package com.infoMng.controller;
 
 import java.io.File;
-import java.lang.instrument.IllegalClassFormatException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -119,7 +118,7 @@ class DataBase {
 		}
 	}
 
-	protected Integer inserisciOggetto(Oggetto oggetto) throws IllegalClassFormatException, SQLException{
+	protected Integer inserisciOggetto(Oggetto oggetto) throws IllegalArgumentException, SQLException{
 		this.aggiornaTabella(oggetto);
 		
 		String sql = String.format("INSERT INTO %s (", oggetto.nomeTabella);
@@ -151,7 +150,7 @@ class DataBase {
 		}
 	}
 	
-	protected void aggiornaRecord(Oggetto oggetto) throws IllegalClassFormatException, SQLException{
+	protected void aggiornaRecord(Oggetto oggetto) throws IllegalArgumentException, SQLException{
 		this.aggiornaTabella(oggetto);
 		
 		String sql = String.format("UPDATE %s SET ", oggetto.nomeTabella);
@@ -185,7 +184,7 @@ class DataBase {
 		this.eseguiAggiornamento(sql);
 	}
 	
-	private void aggiornaTabella(Oggetto oggetto) throws IllegalClassFormatException, SQLException{
+	private void aggiornaTabella(Oggetto oggetto) throws IllegalArgumentException, SQLException{
 		Set<String> campiEsistenti = this.colonneDaTabella(oggetto.nomeTabella).get();
 		Set<String> campiAggiungere = oggetto.dati.keySet().stream()
 				.filter(c -> {
@@ -206,7 +205,7 @@ class DataBase {
 		
 	}
 	
-	private void aggiungiColonna(String tabella, String colonna, Object class1) throws IllegalClassFormatException, SQLException{
+	private void aggiungiColonna(String tabella, String colonna, Object class1) throws IllegalArgumentException, SQLException{
 		String tipo;
 		if(class1 == null){
 			tipo = "";
@@ -228,7 +227,7 @@ class DataBase {
 		}
 		else{
 			tipo = "NULL";
-			throw new IllegalClassFormatException();
+			throw new IllegalArgumentException();
 		}
 		
 		String sql = String.format("ALTER TABLE %s ADD %s %s", tabella, colonna, tipo);

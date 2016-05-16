@@ -12,6 +12,28 @@ import java.util.List;
 public interface MBQuery {
 
 	/***
+	 * ritorna l'intero contenuto di una tabella
+	 * @param tabella
+	 * nome della tabella su cui eseguire la ricerca
+	 * @return
+	 * una lista di MBOggetto contenenti tutti i record
+	 * @throws SQLException
+	 * si è verificato un errore all'interno del database
+	 * N.B.
+	 * 	La stampa della traccia di errore avviene comunque
+	 */
+	public static List<MBOggetto> contenutoTabella(String tabella) throws SQLException{
+		MBQuery query = new Query(tabella);
+		try{
+			return query.find();
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	/***
 	 * crea una query di ricerca sulla base di una tabella
 	 * @param nomeTabella
 	 * nome della tabella da cui eseguire le ricerche
@@ -79,7 +101,7 @@ public interface MBQuery {
 	 * N.B.
 	 * 	Può derivare da condizioni errate
 	 */
-	List<Oggetto> find() throws SQLException;
+	List<MBOggetto> find() throws SQLException;
 
 	/**
 	 * ottiene il primo elemento della tabella corrispondente all'elenco

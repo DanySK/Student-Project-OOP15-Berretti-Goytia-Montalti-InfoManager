@@ -1,6 +1,5 @@
 package com.infoMng.controller;
 
-import java.lang.instrument.IllegalClassFormatException;
 import java.sql.Date;
 import java.util.Optional;
 
@@ -55,7 +54,7 @@ public interface MBOggetto {
 	 * salva il record
 	 * @return
 	 * il risultato del salvataggio
-	 * @throws IllegalClassFormatException
+	 * @throws IllegalArgumentException
 	 * si verifica nel caso che il tipo di dato di una colonna non sia riconoscuto
 	 * 
 	 * Tipi conoscuti
@@ -65,7 +64,7 @@ public interface MBOggetto {
 	 *  •)Float
 	 *  •)Date (il formato di sql)
 	 */
-	boolean salva() throws IllegalClassFormatException;
+	boolean salva() throws IllegalArgumentException;
 
 	/**
 	 * elimina il record dalla tabella

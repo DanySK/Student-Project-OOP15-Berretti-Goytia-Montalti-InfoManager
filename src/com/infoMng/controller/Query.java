@@ -54,10 +54,10 @@ class Query implements MBQuery {
 	}
 	
 	@Override
-	public List<Oggetto> find() throws SQLException{
+	public List<MBOggetto> find() throws SQLException{
 		DataBase db = new DataBase();
 		db.connetti();
-		List<Oggetto> ritorno = db.eseguiLettura(this.generateSQL()).stream()
+		List<MBOggetto> ritorno = db.eseguiLettura(this.generateSQL()).stream()
 				.map(d -> {
 					return new Oggetto(this.nomeTabella, d);
 				}).collect(Collectors.toList());
@@ -67,7 +67,7 @@ class Query implements MBQuery {
 	
 	@Override
 	public MBOggetto getFirst() throws SQLException{
-		List<Oggetto> elenco = this.find();
+		List<MBOggetto> elenco = this.find();
 		if(elenco.isEmpty()){
 			return null;
 		}
