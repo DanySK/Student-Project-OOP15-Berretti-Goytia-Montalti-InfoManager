@@ -194,7 +194,7 @@ public interface IVendita {
 				valoriElemento.put("IDProdotto", e.getIDProdotto());
 				valoriElemento.put("IDVendita", idDettagli);
 				valoriElemento.put("Descrizione", "Ricevuta di vendita");
-				valoriElemento.put("Quantita", v.getQuantita());
+				valoriElemento.put("Quantita", -v.getQuantita());
 				valoriElemento.put("Data", this.data);
 				
 				db.inserisciRecord("Movimento", valoriElemento);

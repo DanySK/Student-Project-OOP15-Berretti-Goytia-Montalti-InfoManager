@@ -78,6 +78,11 @@ public interface GestioneDB {
 		
 		db.creaTabella(new Colonna[]{idDettagliVendita, idProdotto, quantitaVendita, prezzoSingolo, idRicevuta}, "DettagliVendita");
 		
+		//Creazione della tabella dei fornitori
+		Colonna idFornitore = new Colonna("IDFornitore", tipoColonna.intero, new attributiColonna[] {attributiColonna.primaryKey, attributiColonna.autoincrement});
+		db.creaTabella(new Colonna[]{idFornitore, nome, telefono, mail, IDUtente}, "Fornitori");
+		
+		
 		db.disconnetti();
 	}
 	
