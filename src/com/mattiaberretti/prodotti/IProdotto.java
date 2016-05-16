@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import com.mattiaberretti.database.GestioneDB;
 import com.mattiaberretti.utenti.IUtente;
 
+@Deprecated
 public interface IProdotto {
 
 	/***

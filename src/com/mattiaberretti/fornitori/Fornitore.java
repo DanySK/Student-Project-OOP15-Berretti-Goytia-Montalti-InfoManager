@@ -1,7 +1,7 @@
 package com.mattiaberretti.fornitori;
 
 import java.sql.SQLException;
-
+@Deprecated
 class Fornitore implements IFornitore {
 	private Integer idFornitore;
 	private String nome;

@@ -12,7 +12,7 @@ import com.mattiaberretti.clienti.ICliente;
 import com.mattiaberretti.database.GestioneDB;
 import com.mattiaberretti.prodotti.IProdotto;
 import com.mattiaberretti.utenti.IUtente;
-
+@Deprecated
 public interface IVendita {
 
 	static List<IVendita> elencoVendite() throws ClassNotFoundException, SQLException{

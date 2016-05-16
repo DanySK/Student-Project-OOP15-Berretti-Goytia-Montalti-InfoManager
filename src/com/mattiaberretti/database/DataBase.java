@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
+@Deprecated
 class DataBase implements GestioneDB{
 	private static String cartellaBase = System.getProperty("user.home") + File.separator;
 	private Connection c;

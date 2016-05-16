@@ -1,5 +1,5 @@
 package com.mattiaberretti.vendite;
-
+@Deprecated
 class PairVendita {
 	private Integer quantita;
 	private Double prezzo;

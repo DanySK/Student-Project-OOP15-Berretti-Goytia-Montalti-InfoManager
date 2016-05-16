@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import com.mattiaberretti.database.GestioneDB;
 import com.mattiaberretti.utenti.IUtente;
-
+@Deprecated
 interface IFornitore {
 
 	static List<IFornitore> elenco() throws ClassNotFoundException, SQLException{

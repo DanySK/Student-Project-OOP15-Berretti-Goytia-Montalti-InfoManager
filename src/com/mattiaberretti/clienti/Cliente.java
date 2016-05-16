@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.mattiaberretti.database.GestioneDB;
-
+@Deprecated
 class Cliente implements ICliente {
 	private Integer idCliente;
 	private String nome;

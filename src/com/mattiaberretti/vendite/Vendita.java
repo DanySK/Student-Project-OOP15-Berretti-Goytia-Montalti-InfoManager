@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import com.mattiaberretti.clienti.ICliente;
 import com.mattiaberretti.prodotti.IProdotto;
-
+@Deprecated
 class Vendita implements IVendita {
 	private Integer IDVendita;
 	private Integer IVA;
