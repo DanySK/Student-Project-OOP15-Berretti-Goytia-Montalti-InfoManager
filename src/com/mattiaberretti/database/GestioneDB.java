@@ -67,8 +67,9 @@ public interface GestioneDB {
 		Colonna dataRicevuta = new Colonna("Data", tipoColonna.datetime);
 		Colonna idCliente = new Colonna("IDCliente", tipoColonna.intero);
 		Colonna iva = new Colonna("IVA", tipoColonna.intero);
+		Colonna tipoVendita = new Colonna("TipoFattura", tipoColonna.testo);
 		
-		db.creaTabella(new Colonna[]{idRicevutaPrimaria, dataRicevuta, idCliente, IDUtente, iva}, "Vendite");
+		db.creaTabella(new Colonna[]{idRicevutaPrimaria, dataRicevuta, idCliente, IDUtente, iva, tipoVendita}, "Vendite");
 	
 		//creazione della tabella per i dettagli delle vendite
 		Colonna idDettagliVendita = new Colonna("IDDettagliVendita", tipoColonna.intero, new attributiColonna[]{attributiColonna.primaryKey, attributiColonna.autoincrement});
