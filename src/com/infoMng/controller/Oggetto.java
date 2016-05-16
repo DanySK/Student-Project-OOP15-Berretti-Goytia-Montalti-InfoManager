@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.Map;
 import java.util.Optional;
 
-public class Oggetto{
+class Oggetto implements MBOggetto{
 	protected Map<String, Object> dati;
 	protected String nomeTabella;
 	protected Set<String> campi;
@@ -38,6 +38,7 @@ public class Oggetto{
 		this.campi = valori.keySet();
 	}
 
+	@Override
 	public Integer objectId(){
 		return (Integer)this.dati.get("objectId");
 	}
@@ -51,22 +52,26 @@ public class Oggetto{
 	private void setObjectId(Integer value){
 		this.dati.put("objectId", value);
 	}
+	@Override
 	public Optional<Date> creazione(){
 		return Optional.ofNullable((Date)this.dati.get("Creazione"));
 	}
 	private void setCreazione(){
 		this.dati.put("Creazione", this.ora());
 	}
+	@Override
 	public Optional<Date> modifica(){
 		return Optional.ofNullable((Date)this.dati.get("Modifica"));
 	}
 	private void setModifica(){
 		this.dati.put("Modifica", this.ora());
 	}
+	@Override
 	public Object getObject(String key){
 		return this.dati.get(key);
 	}
 	
+	@Override
 	public void setObjectValue(String key, Object value){
 		if(value != null){
 			this.dati.put(key, value);
@@ -76,6 +81,7 @@ public class Oggetto{
 		}
 	}
 
+	@Override
 	public boolean salva() throws IllegalClassFormatException{
 		this.setModifica();
 		boolean ritorno;
@@ -113,6 +119,7 @@ public class Oggetto{
 		}
 	}
 	
+	@Override
 	public boolean elimina(){
 		if(this.objectId() == null){
 			return false;
@@ -121,6 +128,7 @@ public class Oggetto{
 		try {
 			db.connetti();
 			db.eliminaRecord(this);
+			this.dati.remove("objectId");
 			db.disconnetti();
 			return true;
 		} catch (SQLException e) {

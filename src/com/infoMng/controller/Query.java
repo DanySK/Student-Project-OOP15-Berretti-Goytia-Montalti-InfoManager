@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 
-public class Query {
+class Query implements MBQuery {
 	private String nomeTabella;
 	private Set<String> condizioni;
 	
@@ -20,18 +20,22 @@ public class Query {
 		this.condizioni.add(predicate);
 	}
 	
+	@Override
 	public void whereEqualTo(String key, Object value){
 		this.condizioni.add(String.format("%s = '%s'", key, value.toString()));
 	}
 	
+	@Override
 	public void whereNotEqualTo(String key, Object value){
 		this.condizioni.add(String.format("%s <> '%s'", key, value.toString()));
 	}
 	
+	@Override
 	public void whereKeyExists(String key){
 		this.condizioni.add(String.format("%s is not null", key));
 	}
 	
+	@Override
 	public void whereKeyNotExists(String key){
 		this.condizioni.add(String.format("%s is null", key));
 	}
@@ -49,6 +53,7 @@ public class Query {
 		return sql;
 	}
 	
+	@Override
 	public List<Oggetto> find() throws SQLException{
 		DataBase db = new DataBase();
 		db.connetti();
@@ -60,7 +65,8 @@ public class Query {
 		return ritorno;
 	}
 	
-	public Oggetto getFirst() throws SQLException{
+	@Override
+	public MBOggetto getFirst() throws SQLException{
 		List<Oggetto> elenco = this.find();
 		if(elenco.isEmpty()){
 			return null;
