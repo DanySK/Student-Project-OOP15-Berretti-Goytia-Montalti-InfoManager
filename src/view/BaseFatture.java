@@ -5,7 +5,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.util.LinkedList;
 import javax.swing.JLayeredPane;
-import view.tabelle.PannelloTabelle;
 import view.toolbar.MyToolbar;
 
 import javax.swing.JTextField;
@@ -15,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import java.awt.BorderLayout;
+import javax.swing.JScrollPane;
 
 
 public class BaseFatture extends JPanel {
@@ -60,17 +60,18 @@ public class BaseFatture extends JPanel {
 	private JLabel lblBanca = new JLabel("Banca");
 	private JLabel lblNote = new JLabel("Note");
 	private JLabel lblSconto = new JLabel("Sconto");
-	private JLabel label = new JLabel("%");
+	private JLabel lblPercento2 = new JLabel("%");
 	private JLabel lblProdotto = new JLabel("Prodotto");
-	private JLabel lblNewLabel = new JLabel("P.U.");
-	private JLabel label_1 = new JLabel("\u20AC");
+	private JLabel lblPrezzoUnitario = new JLabel("P.U.");
+	private JLabel lblEuro = new JLabel("\u20AC");
 	private JButton bAggiungi = new JButton("Aggiungi");
 	private JLabel lblIva = new JLabel("IVA");
-	private JLabel label_2 = new JLabel("%");
+	private JLabel lblPercento1 = new JLabel("%");
 	private JLabel lblQuantita = new JLabel("Quantit\u00E0");
-	private PannelloTabelle textArea = new PannelloTabelle();
 	private JPanel panelFattura = new JPanel();
 	private JLabel lblCodFornitore = new JLabel("Cod. Fornitore");
+	private JScrollPane scrollPaneFattura = new JScrollPane();
+	private JTextArea textAreaFattura = new JTextArea("");
 	
 	public String getTextfield(){
 		return "Numero Ordine: " + textNumeroOrdine.getText() + "\n" +
@@ -248,8 +249,8 @@ public class BaseFatture extends JPanel {
 		this.panelTestata.add(textFieldSconto);
 		this.textFieldSconto.setColumns(10);
 		
-		this.label.setBounds(483, 11, 21, 14);
-		this.panelTestata.add(label);
+		this.lblPercento2.setBounds(483, 11, 21, 14);
+		this.panelTestata.add(lblPercento2);
 		
 		this.lblProdotto.setBounds(315, 62, 72, 14);
 		this.panelTestata.add(lblProdotto);
@@ -259,25 +260,26 @@ public class BaseFatture extends JPanel {
 		this.panelTestata.add(textFieldProdotto);
 		this.textFieldProdotto.setColumns(10);
 		
-		this.lblNewLabel.setBounds(538, 62, 26, 14);
-		this.panelTestata.add(lblNewLabel);
+		this.lblPrezzoUnitario.setBounds(538, 62, 26, 14);
+		this.panelTestata.add(lblPrezzoUnitario);
 		
 		this.textFieldPrezzo = new JTextField();
 		this.textFieldPrezzo.setBounds(574, 59, 86, 20);
 		this.panelTestata.add(textFieldPrezzo);
 		this.textFieldPrezzo.setColumns(10);
 		
-		this.label_1.setBounds(662, 62, 21, 14);
-		this.panelTestata.add(label_1);
+		this.lblEuro.setBounds(662, 62, 21, 14);
+		this.panelTestata.add(lblEuro);
 		
 
 		this.bAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				list.add("Prodotto: "+textFieldProdotto.getText()+" Quantita': "+ textFieldQuantita.getText()+" Prezzo: "+textFieldPrezzo.getText());
-				JTextArea textArea = new JTextArea();
-				textArea.setBounds(383, 153, 399, 185);
-				panelTestata.add(textArea);
-				textArea.setText(list.toString());
+				list.add("Prodotto:"+textFieldProdotto.getText()+"\tQuantita':"+ textFieldQuantita.getText()+"\tPrezzo:"+textFieldPrezzo.getText()+ "\tSconto:" + textFieldSconto.getText() + "\tIVA:" + textFieldIVA.getText());
+				textAreaFattura.setText("");
+				for(String elem : list){
+						textAreaFattura.append(elem);
+						textAreaFattura.append("\n"+ "=============================================" + "\n");
+					}
 				}
 		});
 		this.bAggiungi.setBounds(538, 104, 97, 23);
@@ -293,8 +295,8 @@ public class BaseFatture extends JPanel {
 		this.textFieldIVA.setColumns(10);
 		
 
-		this.label_2.setBounds(670, 11, 46, 14);
-		this.panelTestata.add(label_2);
+		this.lblPercento1.setBounds(670, 11, 46, 14);
+		this.panelTestata.add(lblPercento1);
 		
 		this.lblQuantita.setBounds(315, 108, 46, 14);
 		this.panelTestata.add(lblQuantita);
@@ -303,9 +305,11 @@ public class BaseFatture extends JPanel {
 		this.textFieldQuantita.setBounds(387, 105, 86, 20);
 		this.panelTestata.add(textFieldQuantita);
 		this.textFieldQuantita.setColumns(10);
+		this.textAreaFattura.setEditable(true);
 		
-		this.textArea.setBounds(315, 153, 467, 193);
-		this.panelTestata.add(textArea);
+		this.scrollPaneFattura.setBounds(315, 153, 467, 193);
+		this.scrollPaneFattura.setViewportView(textAreaFattura);//= new JScrollPane(textAreaFattura,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		this.panelTestata.add(scrollPaneFattura);
 		
 
 		this.tabbedPane.addTab("Fattura", null, panelFattura, null);

@@ -18,13 +18,13 @@ public class BaseTabelle extends AbstractTableModel {
 	@Override
 	public int getColumnCount() {
 		// TODO Auto-generated method stub
-		return 10;
+		return 3;
 	}
 
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return 10;
+		return 1;
 	}
 
 	@Override
