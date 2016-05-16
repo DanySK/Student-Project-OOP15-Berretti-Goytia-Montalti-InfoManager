@@ -21,7 +21,7 @@ import java.awt.event.WindowListener;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Toolkit;
 
-public class Menu extends InitializeFrame {
+public class MenuGUI extends InitializeFrame {
 
 	/**
 	 * 
@@ -61,103 +61,103 @@ public class Menu extends InitializeFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Menu() {
+	public MenuGUI() {
 		super(TITOLO,LAYOUT,DIMFRAME);
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(MenuGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setContentPane(contentPane);
-		this.bClienti.setIcon(new ImageIcon(Login.class.getResource("/view/icon/Cliente.png")));
+		this.bClienti.setIcon(new ImageIcon(LoginGUI.class.getResource("/view/icon/Cliente.png")));
 		this.bClienti.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				Clienti jFClienti = new Clienti();
+				ClientiGUI jFClienti = new ClientiGUI();
 				jFClienti.setVisible(true);
 				dispose();
 			}
 		});
 
-		this.bScontrini.setIcon(new ImageIcon(Login.class.getResource("/view/icon/Scontrino.jpg")));
+		this.bScontrini.setIcon(new ImageIcon(LoginGUI.class.getResource("/view/icon/Scontrino.jpg")));
 		this.bScontrini.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				Scontrini frame = new Scontrini();
+				ScontriniGUI frame = new ScontriniGUI();
 				frame.setVisible(true);
 				dispose();
 			}
 		});
 		
-		this.bFornitori.setIcon(new ImageIcon(Login.class.getResource("/view/icon/Fornitore.jpg")));
+		this.bFornitori.setIcon(new ImageIcon(LoginGUI.class.getResource("/view/icon/Fornitore.jpg")));
 		this.bFornitori.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				Fornitori jFFornitori = new Fornitori();
+				FornitoriGUI jFFornitori = new FornitoriGUI();
 				jFFornitori.setVisible(true);
 				dispose();
 			}
 		});
 		
-		this.bMagazzino.setIcon(new ImageIcon(Login.class.getResource("/view/icon/Magazzino.jpg")));
+		this.bMagazzino.setIcon(new ImageIcon(LoginGUI.class.getResource("/view/icon/Magazzino.jpg")));
 		this.bMagazzino.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				Magazzino jFMagazzino = new Magazzino();
+				MagazzinoGUI jFMagazzino = new MagazzinoGUI();
 				jFMagazzino.setVisible(true);
 				dispose();
 			}
 		});
 		
-		this.bFattAcqu.setIcon(new ImageIcon(Login.class.getResource("/view/icon/Fattura.png")));
+		this.bFattAcqu.setIcon(new ImageIcon(LoginGUI.class.getResource("/view/icon/Fattura.png")));
 		this.bFattAcqu.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				Fatture jFFatture = new Fatture();
+				FattureGUI jFFatture = new FattureGUI();
 				jFFatture.setVisible(true);
 				dispose();
 			}
 		});
 		
-		this.bIvaAcqu.setIcon(new ImageIcon(Login.class.getResource("/view/icon/IVA.jpg")));
+		this.bIvaAcqu.setIcon(new ImageIcon(LoginGUI.class.getResource("/view/icon/IVA.jpg")));
 		this.bIvaAcqu.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				RegistriIVA jFRegistri = new RegistriIVA();
+				RegistriIvaGUI jFRegistri = new RegistriIvaGUI();
 				jFRegistri.setVisible(true);
 				dispose();
 			}
 		});
 		
-		this.bReport.setIcon(new ImageIcon(Login.class.getResource("/view/icon/vendite-salgono-1024x1024.png")));
+		this.bReport.setIcon(new ImageIcon(LoginGUI.class.getResource("/view/icon/vendite-salgono-1024x1024.png")));
 		this.bReport.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				ReportVendite jFReport = new ReportVendite();
+				ReportVenditeGUI jFReport = new ReportVenditeGUI();
 				jFReport.setVisible(true);
 				dispose();
 			}
 		});
 		
-		this.bRiunioni.setIcon(new ImageIcon(Login.class.getResource("/view/icon/Riunione.jpg")));
+		this.bRiunioni.setIcon(new ImageIcon(LoginGUI.class.getResource("/view/icon/Riunione.jpg")));
 		this.bRiunioni.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				Riunioni jFRiunioni = new Riunioni();
+				RiunioniGUI jFRiunioni = new RiunioniGUI();
 				jFRiunioni.setVisible(true);
 				dispose();
 			}
@@ -168,7 +168,7 @@ public class Menu extends InitializeFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Login windows = new Login();
+				LoginGUI windows = new LoginGUI();
 				windows.setStatus(true);
 				dispose();
 				
@@ -277,7 +277,7 @@ public class Menu extends InitializeFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				// TODO Auto-generated method stub
-				Login windows = new Login();
+				LoginGUI windows = new LoginGUI();
 				windows.setStatus(true);
 				dispose();
 			}

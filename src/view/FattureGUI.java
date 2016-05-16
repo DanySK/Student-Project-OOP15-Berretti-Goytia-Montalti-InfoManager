@@ -1,8 +1,5 @@
 package view;
 
-import javax.swing.JPanel;
-
-import view.toolbar.MyToolbar;
 
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -11,28 +8,24 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
 
-
-public class Riunioni extends InitializeFrame{
+public class FattureGUI extends InitializeFrame {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8816191580108552347L;
-	private JPanel contentPane;
-	private static final String TITOLO = "Riunioni";
+	private static final long serialVersionUID = -3497349615019432641L;
+	private BaseFatture panelFatture = new BaseFatture();
+	private static final String TITOLO = "Fatture";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(830,568);
-	private MyToolbar toolbar = new MyToolbar();
-
-
 	/**
 	 * Create the frame.
 	 */
-	public Riunioni() {
+	public FattureGUI() {
 		super(TITOLO,LAYOUT,DIMFRAME);
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Riunioni.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
-		this.setContentPane(contentPane);
-		this.add(toolbar);
+		this.add(panelFatture);
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(FattureGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
+
 		
 		this.addWindowListener(new WindowListener() {
 
@@ -46,7 +39,7 @@ public class Riunioni extends InitializeFrame{
 			@Override
 			public void windowClosing(WindowEvent e) {
 				// TODO Auto-generated method stub
-				Menu jFMenu = new Menu();
+				MenuGUI jFMenu = new MenuGUI();
 				jFMenu.setVisible(true);
 				dispose();
 			}

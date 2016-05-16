@@ -1,31 +1,38 @@
 package view;
 
-
-import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
-public class Fatture extends InitializeFrame {
+public class ReportVenditeGUI extends InitializeFrame {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3497349615019432641L;
-	private BaseFatture panelFatture = new BaseFatture();
-	private static final String TITOLO = "Fatture";
+	private static final long serialVersionUID = 5756256366498583375L;
+	private JPanel contentPane;
+	private static final String TITOLO = "Report Vendite";
 	private static final LayoutManager LAYOUT = new BorderLayout();
-	private static final Dimension DIMFRAME = new Dimension(830,568);
+	private static final Dimension DIMFRAME = new Dimension(938,476);
+
 	/**
 	 * Create the frame.
 	 */
-	public Fatture() {
+	public ReportVenditeGUI() {
 		super(TITOLO,LAYOUT,DIMFRAME);
-		this.add(panelFatture);
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Fatture.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
-
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(ReportVenditeGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
+		this.setTitle("Report Vendite");
+		this.setResizable(true);
+		this.setBounds(100, 100, 450, 300);
+		this.contentPane = new JPanel();
+		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		this.contentPane.setLayout(new BorderLayout(0, 0));
+		this.setContentPane(contentPane);
 		
 		this.addWindowListener(new WindowListener() {
 
@@ -39,7 +46,7 @@ public class Fatture extends InitializeFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				// TODO Auto-generated method stub
-				Menu jFMenu = new Menu();
+				MenuGUI jFMenu = new MenuGUI();
 				jFMenu.setVisible(true);
 				dispose();
 			}

@@ -8,26 +8,22 @@ import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-
-
-public class Clienti extends InitializeFrame {
+public class FornitoriGUI extends InitializeFrame {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7113641769924370743L;
-	private static final String TITOLO = "Clienti";
+	private static final long serialVersionUID = -7744994891479399079L;
+	private static final String TITOLO ="Fornitori";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(830,568);
-	
-	
 
 	/**
 	 * Create the frame.
 	 */
-	public Clienti() {
-		super(TITOLO, LAYOUT, DIMFRAME);
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Clienti.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
+	public FornitoriGUI() {
+		super(TITOLO,LAYOUT,DIMFRAME);
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(FornitoriGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		
 		this.addWindowListener(new WindowListener() {
 
@@ -41,7 +37,7 @@ public class Clienti extends InitializeFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				// TODO Auto-generated method stub
-				Menu jFMenu = new Menu();
+				MenuGUI jFMenu = new MenuGUI();
 				jFMenu.setVisible(true);
 				dispose();
 			}
@@ -76,8 +72,6 @@ public class Clienti extends InitializeFrame {
 				
 			}
 		});
-		
-		
 	}
 
 }

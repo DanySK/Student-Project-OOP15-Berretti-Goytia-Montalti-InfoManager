@@ -30,7 +30,7 @@ import view.dialog.DialogWrongPass;
 import view.dialog.DialogWrongUser;
 import view.dialog.registrazioneDelegate;
 
-public class Login {
+public class LoginGUI {
 
 	private JFrame frmInfoManager;
 	private JTextField tUser = new JTextField(10);
@@ -51,7 +51,7 @@ public class Login {
 		@Override
 		public void registrazioneCompletata(IUtente utente, DialogRegistrati view) {
 			view.dispose();
-			new Menu().setVisible(true);
+			new MenuGUI().setVisible(true);
 			setStatus(false);
 		}
 	});
@@ -63,7 +63,7 @@ public class Login {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login window = new Login();
+					LoginGUI window = new LoginGUI();
 					window.frmInfoManager.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -79,7 +79,7 @@ public class Login {
 	/**
 	 * Create the application.
 	 */
-	public Login() {
+	public LoginGUI() {
 		initialize();
 	}
 	
@@ -104,7 +104,7 @@ public class Login {
 	 */
 	private void initialize() {
 		this.frmInfoManager = new JFrame();	
-		this.frmInfoManager.setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
+		this.frmInfoManager.setIconImage(Toolkit.getDefaultToolkit().getImage(LoginGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.frmInfoManager.setTitle("Login");
 		this.frmInfoManager.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frmInfoManager.setBounds(100, 100, 462, 315);
@@ -171,7 +171,7 @@ public class Login {
 				// TODO Auto-generated method stub
 				final int a = checkLogin();
 				if(a == 1){
-					Menu jFMenu = new Menu();
+					MenuGUI jFMenu = new MenuGUI();
 					jFMenu.setVisible(true);
 					setStatus(false);
 				} else {

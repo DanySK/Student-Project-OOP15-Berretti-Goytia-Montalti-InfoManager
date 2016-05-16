@@ -10,7 +10,7 @@ import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-public class Scontrini extends InitializeFrame{
+public class ScontriniGUI extends InitializeFrame{
 
 	/**
 	 * 
@@ -24,9 +24,9 @@ public class Scontrini extends InitializeFrame{
 	/**
 	 * Create the frame.
 	 */
-	public Scontrini() {
+	public ScontriniGUI() {
 		super(TITOLO,LAYOUT,DIMFRAME);
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage(Scontrini.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(ScontriniGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.setTitle("Scontrini");
 		this.setResizable(true);
 		this.setBounds(100, 100, 664, 413);
@@ -47,7 +47,7 @@ public class Scontrini extends InitializeFrame{
 			@Override
 			public void windowClosing(WindowEvent e) {
 				// TODO Auto-generated method stub
-				Menu jFMenu = new Menu();
+				MenuGUI jFMenu = new MenuGUI();
 				jFMenu.setVisible(true);
 				dispose();
 			}
