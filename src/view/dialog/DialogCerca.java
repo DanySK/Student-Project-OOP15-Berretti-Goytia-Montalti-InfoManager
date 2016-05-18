@@ -9,6 +9,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import view.interfaces.ObserverInterface;
+
 public class DialogCerca extends JDialog implements DialogInterface{
 
 	/**
@@ -24,7 +26,7 @@ public class DialogCerca extends JDialog implements DialogInterface{
 	/**
 	 * Create the dialog.
 	 */
-	public DialogCerca() {
+	public DialogCerca(final ObserverInterface o) {
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setBounds(100, 100, 450, 300);
 		this.getContentPane().setLayout(new BorderLayout());
@@ -48,7 +50,7 @@ public class DialogCerca extends JDialog implements DialogInterface{
 
 
 	@Override
-	public Map<String, String> getDataString() {
+	public Map<String, String> getDataString(final ObserverInterface o) {
 		// TODO Auto-generated method stub
 		return null;
 	}

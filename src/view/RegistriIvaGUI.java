@@ -6,11 +6,10 @@ import java.awt.LayoutManager;
 
 import javax.swing.JPanel;
 
+import view.interfaces.ObserverInterface;
 import view.tabelle.PannelloTabelle;
 
 import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 public class RegistriIvaGUI extends InitializeFrame {
 
@@ -28,61 +27,13 @@ public class RegistriIvaGUI extends InitializeFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegistriIvaGUI() {
+	public RegistriIvaGUI(final ObserverInterface o) {
 		super(TITOLO,LAYOUT,DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(RegistriIvaGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.contentPane = new JPanel();
 		this.contentPane.add(jPanel);
 		this.setContentPane(contentPane);
 		
-		
-		this.addWindowListener(new WindowListener() {
-
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-			
-				
-			}
-			
-			@Override
-			public void windowClosing(WindowEvent e) {
-				// TODO Auto-generated method stub
-				MenuGUI jFMenu = new MenuGUI();
-				jFMenu.setVisible(true);
-				dispose();
-			}
-			
-			@Override
-			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 	}
 
 }

@@ -1,103 +1,143 @@
 package view;
 
+import view.interfaces.ObserverInterface;
 import view.interfaces.ViewInterface;
 
+import view.dialog.*;
+
 public class ViewInterfaceImpl implements ViewInterface{
+	
+	private MenuGUI jFMenu;
+	private FattureGUI jFFatture;
+	private ClientiGUI jFClienti;
+	private FornitoriGUI jFFornitori;
+	private MagazzinoGUI jFMagazzino;
+	private RegistriIvaGUI jFRegistiIva;
+	private RiunioniGUI jFRiunioni;
+	private ScontriniGUI jFScontrini;
+	private LoginGUI jFLogin;
+	private ReportVenditeGUI jFReportVendite;
+	private ObserverInterface o;
+	private DialogCampoObbligatorio jDCampoObb;
+	private DialogCerca jDCerca;
+	private DialogNuovo jDNuovo;
+	private DialogRegistrati jDRegistrati;
+	private DialogWrongPass jDWrongPass;
+	private DialogWrongUser jDWrongUser;
+	
+	
+	/**
+	 * Costruttore vuoto
+	 */
+    public ViewInterfaceImpl() {
+	}
 
 	@Override
 	public void viewClienti() {
-		// TODO Auto-generated method stub
+		this.jFClienti = new ClientiGUI(o);
+		this.jFClienti.display(true);
 		
 	}
 
 	@Override
 	public void viewFornitori() {
-		// TODO Auto-generated method stub
-		
+		this.jFFornitori = new FornitoriGUI(o);
+		this.jFFornitori.display(true);
 	}
 
 	@Override
 	public void viewFatture() {
-		// TODO Auto-generated method stub
-		
+		this.jFFatture = new FattureGUI(o);
+		this.jFFatture.display(true);
 	}
 
 	@Override
 	public void viewStart() {
-		// TODO Auto-generated method stub
+		this.jFLogin = new LoginGUI(o);
+		this.jFLogin.setStatus(true);
 		
 	}
 
 	@Override
 	public void viewMenu() {
-		// TODO Auto-generated method stub
-		
+		this.jFMenu = new MenuGUI(o);
+		this.jFMenu.display(true);
 	}
 
 	@Override
 	public void viewMagazzino() {
-		// TODO Auto-generated method stub
-		
+		this.jFMagazzino = new MagazzinoGUI(o);
+		this.jFMagazzino.display(true);
 	}
 
 	@Override
 	public void viewRegistiIva() {
-		// TODO Auto-generated method stub
-		
+		this.jFRegistiIva = new RegistriIvaGUI(o);
+		this.jFRegistiIva.display(true);
 	}
 
 	@Override
 	public void viewReportVendite() {
-		// TODO Auto-generated method stub
-		
+		this.jFReportVendite = new ReportVenditeGUI(o);
+		this.jFReportVendite.display(true);
 	}
 
 	@Override
 	public void viewRiunioni() {
-		// TODO Auto-generated method stub
-		
+		this.jFRiunioni = new RiunioniGUI(o);
+		this.jFRiunioni.display(true);
 	}
 
 	@Override
 	public void viewScontrini() {
-		// TODO Auto-generated method stub
-		
+		this.jFScontrini = new ScontriniGUI(o);
+		this.jFScontrini.display(true);
 	}
 
 	@Override
 	public void viewDialogCampoObbligatorio() {
-		// TODO Auto-generated method stub
-		
+		this.jDCampoObb = new DialogCampoObbligatorio(o);
+		this.jDCampoObb.setVisible(true);
 	}
 
 	@Override
 	public void viewDialogCerca() {
-		// TODO Auto-generated method stub
+		this.jDCerca = new DialogCerca(o);
+		this.jDCerca.setVisible(true);
 		
 	}
 
 	@Override
 	public void viewDialogNuovo() {
-		// TODO Auto-generated method stub
+		this.jDNuovo = new DialogNuovo(o);
+		this.jDNuovo.setVisible(true);
 		
 	}
 
 	@Override
 	public void viewDialogRegistrati() {
-		// TODO Auto-generated method stub
+		this.jDRegistrati = new DialogRegistrati(o);
+		this.jDRegistrati.setVisible(true);
 		
 	}
 
 	@Override
 	public void viewDialogWrongPass() {
-		// TODO Auto-generated method stub
+		this.jDWrongPass = new DialogWrongPass(o);
+		this.jDWrongPass.setVisible(true);
 		
 	}
 
 	@Override
 	public void viewDialogWrongUser() {
-		// TODO Auto-generated method stub
+		this.jDWrongUser = new DialogWrongUser(o);
+		this.jDWrongUser.setVisible(true);
 		
+	}
+
+	@Override
+	public void setOggettoController(ObserverInterface o) {
+		this.o = o;	
 	}
 
 }

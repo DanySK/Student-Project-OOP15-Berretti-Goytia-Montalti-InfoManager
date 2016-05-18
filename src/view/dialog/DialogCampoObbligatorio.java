@@ -10,6 +10,9 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import view.interfaces.ObserverInterface;
+
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 
@@ -28,7 +31,7 @@ public class DialogCampoObbligatorio extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public DialogCampoObbligatorio() {
+	public DialogCampoObbligatorio(final ObserverInterface o) {
 		setTitle("Inserisci i campi obbligatori");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(DialogCampoObbligatorio.class.getResource("/javax/swing/plaf/metal/icons/Error.gif")));
 		this.setBounds(100, 100, 674, 169);

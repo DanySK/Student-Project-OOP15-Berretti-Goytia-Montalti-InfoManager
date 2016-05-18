@@ -2,6 +2,9 @@ package view;
 
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import view.interfaces.ObserverInterface;
+
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
@@ -15,8 +18,6 @@ import java.awt.Font;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Toolkit;
@@ -61,7 +62,7 @@ public class MenuGUI extends InitializeFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MenuGUI() {
+	public MenuGUI(final ObserverInterface o) {
 		super(TITOLO,LAYOUT,DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(MenuGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.contentPane = new JPanel();
@@ -73,7 +74,7 @@ public class MenuGUI extends InitializeFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				ClientiGUI jFClienti = new ClientiGUI();
+				ClientiGUI jFClienti = new ClientiGUI(o);
 				jFClienti.setVisible(true);
 				dispose();
 			}
@@ -85,7 +86,7 @@ public class MenuGUI extends InitializeFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				ScontriniGUI frame = new ScontriniGUI();
+				ScontriniGUI frame = new ScontriniGUI(o);
 				frame.setVisible(true);
 				dispose();
 			}
@@ -97,7 +98,7 @@ public class MenuGUI extends InitializeFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				FornitoriGUI jFFornitori = new FornitoriGUI();
+				FornitoriGUI jFFornitori = new FornitoriGUI(o);
 				jFFornitori.setVisible(true);
 				dispose();
 			}
@@ -109,7 +110,7 @@ public class MenuGUI extends InitializeFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				MagazzinoGUI jFMagazzino = new MagazzinoGUI();
+				MagazzinoGUI jFMagazzino = new MagazzinoGUI(o);
 				jFMagazzino.setVisible(true);
 				dispose();
 			}
@@ -121,7 +122,7 @@ public class MenuGUI extends InitializeFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				FattureGUI jFFatture = new FattureGUI();
+				FattureGUI jFFatture = new FattureGUI(o);
 				jFFatture.setVisible(true);
 				dispose();
 			}
@@ -133,7 +134,7 @@ public class MenuGUI extends InitializeFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				RegistriIvaGUI jFRegistri = new RegistriIvaGUI();
+				RegistriIvaGUI jFRegistri = new RegistriIvaGUI(o);
 				jFRegistri.setVisible(true);
 				dispose();
 			}
@@ -145,7 +146,7 @@ public class MenuGUI extends InitializeFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				ReportVenditeGUI jFReport = new ReportVenditeGUI();
+				ReportVenditeGUI jFReport = new ReportVenditeGUI(o);
 				jFReport.setVisible(true);
 				dispose();
 			}
@@ -157,7 +158,7 @@ public class MenuGUI extends InitializeFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				RiunioniGUI jFRiunioni = new RiunioniGUI();
+				RiunioniGUI jFRiunioni = new RiunioniGUI(o);
 				jFRiunioni.setVisible(true);
 				dispose();
 			}
@@ -168,7 +169,7 @@ public class MenuGUI extends InitializeFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				LoginGUI windows = new LoginGUI();
+				LoginGUI windows = new LoginGUI(o);
 				windows.setStatus(true);
 				dispose();
 				
@@ -265,51 +266,6 @@ public class MenuGUI extends InitializeFrame {
 		this.tabbedPane.addTab("Vendite", null, pVend, null);
 		this.contentPane.setLayout(groupLayout);
 		
-		this.addWindowListener(new WindowListener() {
 
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-			
-				
-			}
-			
-			@Override
-			public void windowClosing(WindowEvent e) {
-				// TODO Auto-generated method stub
-				LoginGUI windows = new LoginGUI();
-				windows.setStatus(true);
-				dispose();
-			}
-			
-			@Override
-			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-			}
-			
-			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 	}
 }

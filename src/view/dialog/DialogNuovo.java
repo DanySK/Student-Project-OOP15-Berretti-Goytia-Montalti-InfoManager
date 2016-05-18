@@ -6,6 +6,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import view.interfaces.ObserverInterface;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -53,7 +56,7 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 	private Map<String,String> map = new HashMap<>();
 
 
-	public Map<String,String> getDataString(){
+	public Map<String,String> getDataString(final ObserverInterface o){
 		if(txtNome.getText().equals(null)){
 			if(txtCognome.getText().equals(null)){
 				map.put("Nome",txtNome.getText());
@@ -67,12 +70,12 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 				}
 				return map;
 			} else {
-				DialogCampoObbligatorio errore = new DialogCampoObbligatorio();
+				DialogCampoObbligatorio errore = new DialogCampoObbligatorio(o);
 				errore.setVisible(true);
 				return null;
 			}
 		} else {
-			DialogCampoObbligatorio errore = new DialogCampoObbligatorio();
+			DialogCampoObbligatorio errore = new DialogCampoObbligatorio(o);
 			errore.setVisible(true);
 			return null;
 		}
@@ -81,7 +84,8 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 	/**
 	 * Create the dialog.
 	 */
-	public DialogNuovo() {
+	public DialogNuovo(final ObserverInterface o) {
+		this.setTitle("Nuovo Fornitore o Cliente");
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setBounds(100, 100, 450, 300);
 		this.getContentPane().setLayout(new BorderLayout());

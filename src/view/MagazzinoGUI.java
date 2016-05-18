@@ -3,16 +3,12 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
-
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
+import view.interfaces.ObserverInterface;
 import view.tabelle.PannelloTabelle;
 import view.toolbar.MyToolbar;
-
 import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 public class MagazzinoGUI extends InitializeFrame {
 
@@ -22,7 +18,7 @@ public class MagazzinoGUI extends InitializeFrame {
 	private static final long serialVersionUID = -9052481395137391704L;
 	private JPanel contentPane;
 	private PannelloTabelle jPanel = new PannelloTabelle();
-	private MyToolbar toolBar = new MyToolbar();
+	private MyToolbar toolBar;
 	private static final String TITOLO = "Menu";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(938,476);
@@ -31,10 +27,11 @@ public class MagazzinoGUI extends InitializeFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MagazzinoGUI() {
+	public MagazzinoGUI(final ObserverInterface o) {
 		super(TITOLO,LAYOUT,DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(MagazzinoGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.setTitle("Magazzino");
+		this.toolBar =  new MyToolbar(o);
 		this.setBounds(100, 100, 781, 486);
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -42,53 +39,6 @@ public class MagazzinoGUI extends InitializeFrame {
 		this.contentPane.add(toolBar, BorderLayout.NORTH);
 		this.contentPane.add(jPanel);
 		this.setContentPane(contentPane);
-		this.addWindowListener(new WindowListener() {
-
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-			
-				
-			}
-			
-			@Override
-			public void windowClosing(WindowEvent e) {
-				// TODO Auto-generated method stub
-				MenuGUI jFMenu = new MenuGUI();
-				jFMenu.setVisible(true);
-				dispose();
-			}
-			
-			@Override
-			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 	}
 
 }

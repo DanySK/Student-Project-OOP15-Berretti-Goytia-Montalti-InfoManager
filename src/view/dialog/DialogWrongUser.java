@@ -7,6 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import view.interfaces.ObserverInterface;
+
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,7 +31,7 @@ public class DialogWrongUser extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public DialogWrongUser() {
+	public DialogWrongUser(final ObserverInterface o) {
 		this.setTitle("Errore");
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(DialogWrongUser.class.getResource("/javax/swing/plaf/metal/icons/Error.gif")));
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

@@ -4,18 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import com.mattiaberretti.utenti.IUtente;
-
+import view.interfaces.ObserverInterface;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -48,19 +43,18 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 	private Map<String,String> map = new HashMap<>();
 	private JLabel lblConferma = new JLabel("Conferma Password(*)");
 
-	private registrazioneDelegate delegate;
 	
 	/**
 	 * Create the dialog.
 	 */
-	public DialogRegistrati(registrazioneDelegate delegate) {
+	public DialogRegistrati(final ObserverInterface o) {
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setBounds(100, 100, 310, 375);
 		this.setTitle("Registrazione");
 		this.getContentPane().setLayout(new BorderLayout());
 		this.contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
-		this.delegate = delegate;
+
 	
 		this.gl_contentPanel.setHorizontalGroup(
 				this.gl_contentPanel.createParallelGroup(Alignment.LEADING)
@@ -124,21 +118,8 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						Map<String, String> valori = getDataString();
-						if(valori != null){
-							try {
-								Optional<IUtente> nuovo = IUtente.registrati("utente", "utente", valori.get("Username"), valori.get("Password"), valori.get("Email"), valori.get("Negozio"));
-								if(nuovo.isPresent()){
-									DialogRegistrati.this.delegate.registrazioneCompletata(nuovo.get(), DialogRegistrati.this);
-								}
-								else{
-									//TODO: comunicare messaggio errore registrazine
-								}
-							} catch (ClassNotFoundException | SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
+						//Map<String, String> valori = getDataString(o);
+						o.salvaCliente();
 					}
 				});
 				this.buttonPane.add(okButton);
@@ -158,8 +139,8 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 		}
 	}
 	
-	private void creaDialogCampoObbligatorio(){
-		DialogCampoObbligatorio errore = new DialogCampoObbligatorio();
+	private void creaDialogCampoObbligatorio(final ObserverInterface o){
+		DialogCampoObbligatorio errore = new DialogCampoObbligatorio(o);
 		errore.setVisible(true);
 	}
 	private boolean verificaCampiObbligatori(){
@@ -183,7 +164,7 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 	}
 
 	@Override
-	public Map<String, String> getDataString() {
+	public Map<String, String> getDataString(final ObserverInterface o) {
 		if (this.verificaCampiObbligatori() == true){
 			this.map.put("Username",textFieldUsername.getText());
 			this.map.put("Email", textFieldEmail.getText());
@@ -193,7 +174,7 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 			this.map.put("Password", new String(passwordField.getPassword()));
 			return map;
 		} else {
-			this.creaDialogCampoObbligatorio();
+			this.creaDialogCampoObbligatorio(o);
 			return null;
 		}
 	}

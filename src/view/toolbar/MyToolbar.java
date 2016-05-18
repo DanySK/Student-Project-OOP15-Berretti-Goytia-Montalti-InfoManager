@@ -9,6 +9,7 @@ import javax.swing.JToolBar;
 
 import view.BaseFatture;
 import view.dialog.DialogNuovo;
+import view.interfaces.ObserverInterface;
 
 public class MyToolbar extends JToolBar {
 
@@ -21,7 +22,7 @@ public class MyToolbar extends JToolBar {
 	private JMenuItem mntmAiuto = new JMenuItem("Aiuto");
 	private JMenuItem mntmNuovo = new JMenuItem("Nuovo");
 	
-	public MyToolbar(){
+	public MyToolbar(final ObserverInterface o){
 		this.add(mntmNuovo);
 		this.add(mntmSalva);
 		this.add(mntmCerca);
@@ -31,13 +32,19 @@ public class MyToolbar extends JToolBar {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				DialogNuovo nuovoCli = new DialogNuovo();
+				DialogNuovo nuovoCli = new DialogNuovo(o);
 				nuovoCli.setTitle("Nuovo Cliente o Fornitore");
 				nuovoCli.setVisible(true);
 			}
 		});
 		this.mntmSalva.setIcon(new ImageIcon(BaseFatture.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
+		this.mntmSalva.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		this.mntmCerca.setIcon(new ImageIcon(BaseFatture.class.getResource("/view/icon/lente-di-ingrandimento_318-1787.jpg")));
 		this.mntmAiuto.setIcon(new ImageIcon(BaseFatture.class.getResource("/view/icon/logotipo-informazioni-in-un-cerchio_318-9441.jpg")));
 	}

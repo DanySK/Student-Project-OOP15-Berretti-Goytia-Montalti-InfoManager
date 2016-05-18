@@ -2,11 +2,11 @@ package view;
 
 import javax.swing.JPanel;
 
+import view.interfaces.ObserverInterface;
 import view.toolbar.MyToolbar;
 
 import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
@@ -22,65 +22,20 @@ public class RiunioniGUI extends InitializeFrame{
 	private static final String TITOLO = "Riunioni";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(830,568);
-	private MyToolbar toolbar = new MyToolbar();
+	private MyToolbar toolbar;
 
 
 	/**
 	 * Create the frame.
 	 */
-	public RiunioniGUI() {
+	public RiunioniGUI(final ObserverInterface o) {
 		super(TITOLO,LAYOUT,DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(RiunioniGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.setContentPane(contentPane);
+		this.toolbar = new MyToolbar(o);
 		this.add(toolbar);
 		
-		this.addWindowListener(new WindowListener() {
 
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-			
-				
-			}
-			
-			@Override
-			public void windowClosing(WindowEvent e) {
-				// TODO Auto-generated method stub
-				MenuGUI jFMenu = new MenuGUI();
-				jFMenu.setVisible(true);
-				dispose();
-			}
-			
-			@Override
-			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 	}
 
 }

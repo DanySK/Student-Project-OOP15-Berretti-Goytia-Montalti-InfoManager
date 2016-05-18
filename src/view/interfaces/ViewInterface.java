@@ -17,4 +17,5 @@ public interface ViewInterface {
 	void viewDialogRegistrati();
 	void viewDialogWrongPass();
 	void viewDialogWrongUser();
+	void setOggettoController(ObserverInterface o);
 }

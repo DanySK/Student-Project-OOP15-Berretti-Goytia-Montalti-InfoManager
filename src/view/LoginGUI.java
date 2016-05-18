@@ -3,9 +3,6 @@ package view;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.Optional;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,20 +12,11 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLayeredPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
-
-import com.mattiaberretti.utenti.IUtente;
-
 import java.awt.BorderLayout;
-
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-
 import java.awt.FlowLayout;
-
-import view.dialog.DialogRegistrati;
-import view.dialog.DialogWrongPass;
-import view.dialog.DialogWrongUser;
-import view.dialog.registrazioneDelegate;
+import view.interfaces.ObserverInterface;
 
 public class LoginGUI {
 
@@ -44,18 +32,6 @@ public class LoginGUI {
 	private JPanel buttonPane = new JPanel();
 	private JButton bAccendi = new JButton("Accedi");
 	private JButton bRegistrati = new JButton("Registrati");
-	private DialogWrongPass dErrorPass = new DialogWrongPass();
-	private DialogWrongUser dErrorUser = new DialogWrongUser();
-	private DialogRegistrati dRegistrati = new DialogRegistrati( new registrazioneDelegate() {
-		
-		@Override
-		public void registrazioneCompletata(IUtente utente, DialogRegistrati view) {
-			view.dispose();
-			new MenuGUI().setVisible(true);
-			setStatus(false);
-		}
-	});
-
 	/**
 	 * Launch the application.
 	 */
@@ -63,7 +39,7 @@ public class LoginGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginGUI window = new LoginGUI();
+					LoginGUI window = new LoginGUI(null);
 					window.frmInfoManager.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -75,16 +51,20 @@ public class LoginGUI {
 	public void setStatus(boolean a){
 		frmInfoManager.setVisible(a);
 	}
+	
+	public void setUsable(boolean a){
+		frmInfoManager.setEnabled(a);
+	}
 
 	/**
 	 * Create the application.
 	 */
-	public LoginGUI() {
-		initialize();
+	public LoginGUI(final ObserverInterface o) {
+		initialize(o);
 	}
 	
 	public int checkLogin(){
-		try {
+		/*try {
 			Optional<IUtente> utente = IUtente.accedi(tUser.getText(), tPass.getText());
 			if(utente.isPresent()){
 				return 1;
@@ -96,13 +76,14 @@ public class LoginGUI {
 			
 			e.printStackTrace();
 			return -1;
-		}
+		}*/
+		return 1;
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(final ObserverInterface o) {
 		this.frmInfoManager = new JFrame();	
 		this.frmInfoManager.setIconImage(Toolkit.getDefaultToolkit().getImage(LoginGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.frmInfoManager.setTitle("Login");
@@ -171,14 +152,13 @@ public class LoginGUI {
 				// TODO Auto-generated method stub
 				final int a = checkLogin();
 				if(a == 1){
-					MenuGUI jFMenu = new MenuGUI();
-					jFMenu.setVisible(true);
-					setStatus(false);
+					o.mostraMenu();
+					frmInfoManager.dispose();
 				} else {
 					if(a == 0){
-						dErrorPass.setVisible(true);
+					o.mostraDialogWrongPass();
 					} else {
-						dErrorUser.setVisible(true);
+						o.mostraDialogWrongUser();;
 					}
 				}
 			}
@@ -189,8 +169,8 @@ public class LoginGUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				dRegistrati.setVisible(true);
+				frmInfoManager.setEnabled(false);
+				o.mostraDialogRegistrati();
 			}
 		});
 		this.buttonPane.add(bRegistrati);

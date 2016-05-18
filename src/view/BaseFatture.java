@@ -5,6 +5,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.util.LinkedList;
 import javax.swing.JLayeredPane;
+
+import view.interfaces.ObserverInterface;
 import view.toolbar.MyToolbar;
 
 import javax.swing.JTextField;
@@ -23,6 +25,7 @@ public class BaseFatture extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 7696186269898876284L;
+	private ObserverInterface o;
 	private JTextField textNumeroOrdine;
 	private JTextField textDataOrdine;
 	private JTextField textFornitore;
@@ -47,7 +50,7 @@ public class BaseFatture extends JPanel {
 	private JButton btnAnnulla = new JButton("Annulla");
 	private JButton btnOk = new JButton("OK");
 	private JLayeredPane layeredPane = new JLayeredPane();
-	private MyToolbar toolBar = new MyToolbar();
+	private MyToolbar toolBar = new MyToolbar(o);
 	private JComboBox<?> comboBoxFornitore = new JComboBox<>();
 	private JLabel lblConsegna = new JLabel("Consegna Dal");
 	private JLabel lblAl = new JLabel("Al");

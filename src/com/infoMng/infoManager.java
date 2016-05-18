@@ -25,7 +25,7 @@ public class infoManager {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						new view.LoginGUI().setStatus(true);
+						new view.LoginGUI(null).setStatus(true);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

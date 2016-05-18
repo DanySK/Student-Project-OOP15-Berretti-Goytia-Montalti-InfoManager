@@ -2,8 +2,7 @@ package view;
 
 
 import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import view.interfaces.ObserverInterface;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
@@ -21,59 +20,11 @@ public class FattureGUI extends InitializeFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FattureGUI() {
+	public FattureGUI(final ObserverInterface o) {
 		super(TITOLO,LAYOUT,DIMFRAME);
 		this.add(panelFatture);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(FattureGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 
-		
-		this.addWindowListener(new WindowListener() {
-
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-			
-				
-			}
-			
-			@Override
-			public void windowClosing(WindowEvent e) {
-				// TODO Auto-generated method stub
-				MenuGUI jFMenu = new MenuGUI();
-				jFMenu.setVisible(true);
-				dispose();
-			}
-			
-			@Override
-			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 	}
 
 }
