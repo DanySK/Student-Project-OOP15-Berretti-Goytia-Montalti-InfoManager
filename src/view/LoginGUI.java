@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -32,21 +31,7 @@ public class LoginGUI {
 	private JPanel buttonPane = new JPanel();
 	private JButton bAccendi = new JButton("Accedi");
 	private JButton bRegistrati = new JButton("Registrati");
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginGUI window = new LoginGUI(null);
-					window.frmInfoManager.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 	
 	public void setStatus(boolean a){
 		frmInfoManager.setVisible(a);

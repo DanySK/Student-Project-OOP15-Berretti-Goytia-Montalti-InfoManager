@@ -8,7 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class DialogAiuto extends JDialog {
+public class DialogIndietro extends JDialog {
 
 	/**
 	 * 
@@ -22,7 +22,7 @@ public class DialogAiuto extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public DialogAiuto() {
+	public DialogIndietro() {
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setBounds(100, 100, 450, 300);
 		this.getContentPane().setLayout(new BorderLayout());
