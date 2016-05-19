@@ -18,7 +18,6 @@ public class FornitoriGUI extends ClientiGUI {
 		super(o);
 		this.setTitle(TITOLO);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(FornitoriGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
-		
 	}
 
 }

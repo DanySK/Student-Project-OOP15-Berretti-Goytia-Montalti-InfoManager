@@ -70,13 +70,11 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 				}
 				return map;
 			} else {
-				DialogCampoObbligatorio errore = new DialogCampoObbligatorio(o);
-				errore.setVisible(true);
+				o.mostraDialogCampoObbligatorio();
 				return null;
 			}
 		} else {
-			DialogCampoObbligatorio errore = new DialogCampoObbligatorio(o);
-			errore.setVisible(true);
+			o.mostraDialogCampoObbligatorio();
 			return null;
 		}
 	}

@@ -2,6 +2,9 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -46,6 +49,13 @@ public class LoginGUI {
 	 */
 	public LoginGUI(final ObserverInterface o) {
 		initialize(o);
+	}
+	
+	public Map<String,String> getTextfield(){
+		Map<String, String> mappa = new HashMap<>();
+		mappa.put("Username",tUser.getText());
+		mappa.put("Password",tPass.getText());
+		return mappa;
 	}
 	
 	public int checkLogin(){
