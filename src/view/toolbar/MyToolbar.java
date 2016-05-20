@@ -31,7 +31,7 @@ public class MyToolbar extends JToolBar {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				o.mostraDialogNuovo();
+				o.mostraDialogNuovo();//aggiungi booleano per controllare quale tipo di azione fare
 				//Gli passo un intero e a seconda del numero passato al costruttore di mytoolbar creo una specifica toolbar
 				//Chiedere a viroli come fare per gestire lo switch tra i dialog, nel senso che essendo la toolbar in più frame come fare a capire quale dialog attivare
 			}
@@ -46,6 +46,14 @@ public class MyToolbar extends JToolBar {
 		});
 		this.mntmCerca.setIcon(new ImageIcon(BaseFatture.class.getResource("/view/icon/lente-di-ingrandimento_318-1787.jpg")));
 		this.mntmIndietro.setIcon(new ImageIcon(MyToolbar.class.getResource("/com/sun/javafx/scene/web/skin/Undo_16x16_JFX.png")));
+		this.mntmIndietro.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				o.mostraMenu();
+				
+			}
+		});
 	}
 
 }

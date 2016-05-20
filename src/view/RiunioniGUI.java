@@ -1,12 +1,12 @@
 package view;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import view.interfaces.ObserverInterface;
 import view.toolbar.MyToolbar;
 
 import java.awt.Toolkit;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
@@ -23,6 +23,8 @@ public class RiunioniGUI extends InitializeFrame{
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(830,568);
 	private MyToolbar toolbar;
+	private JPanel panel = new JPanel();
+	private JButton btnOk = new JButton("OK");
 
 
 	/**
@@ -33,7 +35,9 @@ public class RiunioniGUI extends InitializeFrame{
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(RiunioniGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.setContentPane(contentPane);
 		this.toolbar = new MyToolbar(o);
-		this.add(toolbar);
+		getContentPane().add(toolbar, BorderLayout.NORTH);
+		panel.add(btnOk);
+		getContentPane().add(panel, BorderLayout.SOUTH);
 		
 
 	}

@@ -5,6 +5,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
+import java.util.HashMap;
+import java.util.Map;
+
 import view.interfaces.ObserverInterface;
 import view.toolbar.MyToolbar;
 
@@ -113,5 +116,14 @@ public class ClientiGUI extends InitializeFrame {
 		
 		
 		
+	}
+	
+	public Map<String,String> getTextfield(){
+		Map<String,String> mappa = new HashMap<>();
+		mappa.put("Nome", txtNome.getText());
+		mappa.put("Cognome", txtCognome.getText());
+		mappa.put("Email", txtEmail.getText());
+		mappa.put("Telefono", txtTelefono.getText());
+		return mappa;
 	}
 }

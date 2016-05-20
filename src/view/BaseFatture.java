@@ -3,7 +3,11 @@ package view;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
+
 import javax.swing.JLayeredPane;
 
 import view.interfaces.ObserverInterface;
@@ -76,29 +80,24 @@ public class BaseFatture extends JPanel {
 	private JScrollPane scrollPaneFattura = new JScrollPane();
 	private JTextArea textAreaFattura = new JTextArea("");
 	
-	public String getTextfield(){
-		return "Numero Ordine: " + textNumeroOrdine.getText() + "\n" +
-				"Data Ordine: " + textDataOrdine.getText() + "\n" +
-				"Fornitore/Cliente: " + textFornitore.getText() + "\n" +
-				"Dal: " + textDal.getText() + "\n" +
-				"Al: " + textAl.getText() + "\n" +
-				"Tipo Ordine: " + textTipoOrdine.getText() + "\n" +
-				"Negozio: " + textNegozio.getText() + "\n" +
-				"Pagamento: " + textFieldPagamento.getText() + "\n" +
-				"Banca: " + textFieldBanca.getText() + "\n" +
-				"Note: " + textFieldNote.getText() + "\n" +
-				"Sconto: " + textFieldSconto.getText()+ "\n" +
-				"Prodotto: " + textFieldProdotto.getText() + "\n" +
-				"Prezzo: " + textFieldPrezzo.getText() + "\n" +
-				"IVA: " + textFieldIVA.getText() + "\n" +
-				"Quantita: " + textFieldQuantita.getText();
-	}
-	
-	public void setForCli(){
-		this.textFornitore.setText("q");
-	}
-	public void setTipoOrd(){
-		this.textTipoOrdine.setText("c");
+	public Map<String,String> getTextfield(){
+		Map<String,String> mappa = new HashMap<>();
+		mappa.put("NumeroOrdine", textNumeroOrdine.getText());
+		mappa.put("DataOrdine", textDataOrdine.getText());
+		mappa.put("Fornitore/Cliente", textFornitore.getText());
+		mappa.put("Dal", textDal.getText());
+		mappa.put("Al", textAl.getText());
+		mappa.put("Tipo Ordine", textTipoOrdine.getText());
+		mappa.put("Negozio", textNegozio.getText());
+		mappa.put("Pagamento", textFieldPagamento.getText());
+		mappa.put("Banca", textFieldBanca.getText());
+		mappa.put("Note", textFieldNote.getText());
+		mappa.put("Sconto" , textFieldSconto.getText());
+		mappa.put("Prodotto", textFieldProdotto.getText());
+		mappa.put("Prezzo", textFieldPrezzo.getText());
+		mappa.put("IVA", textFieldIVA.getText());
+		mappa.put("Quantita", textFieldQuantita.getText());
+		return mappa;
 	}
 	
 	/**
@@ -114,8 +113,6 @@ public class BaseFatture extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				String a = new String(getTextfield());
-				System.out.println(a);
 			}
 		});
 		this.layeredPane.add(btnOk);
@@ -160,7 +157,6 @@ public class BaseFatture extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				setForCli();
 			}
 		});
 		this.layeredPane.add(comboBoxFornitore);
@@ -207,7 +203,6 @@ public class BaseFatture extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				setTipoOrd();
 			}
 		});
 		this.panelTestata.add(comboBoxTipoOrdine);
