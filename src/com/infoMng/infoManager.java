@@ -19,18 +19,6 @@ public class infoManager {
 			try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			} catch (Exception e){}
-			EventQueue.invokeLater(new Runnable() {
-				
-				@Override
-				public void run() {
-					try {
-						GestioneDB.generaDB();//TODO: da rimuovere per le prossime versioni
-					} catch (ClassNotFoundException | SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			});
 			
 		    ViewInterface view = new ViewInterfaceImpl();
 			ObserverInterface controller = new ObserverInterfaceImpl(view);

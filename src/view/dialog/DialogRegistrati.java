@@ -119,7 +119,8 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						//Map<String, String> valori = getDataString(o);
-						o.salvaCliente();
+						//TODO: correggere richiamo al metodo di salvataggio
+						//o.salvaCliente();
 					}
 				});
 				this.buttonPane.add(okButton);

@@ -1,14 +1,37 @@
 package com.infoMng.controller;
 
+import java.awt.TextField;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.swing.JFrame;
+
 import view.interfaces.ObserverInterface;
 import view.interfaces.ViewInterface;
 
 public class ObserverInterfaceImpl implements ObserverInterface {
 
 	private ViewInterface view;
+	private JFrame attuale;
+	
+	@Override
+	public Optional<JFrame> getAttuale(){
+		return Optional.ofNullable(this.attuale);
+	}
+	
+	@Override
+	public void setAttuale(JFrame attuale){
+		this.attuale = attuale;
+	}
 	
 	public ObserverInterfaceImpl(ViewInterface view) {
+		this(view, null);
+	}
+	
+	public ObserverInterfaceImpl(ViewInterface view, JFrame attuale) {
 		this.view = view;
+		this.view.setOggettoController(this);
+		this.attuale = attuale;
 	}
 	
 	@Override
@@ -31,108 +54,100 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public void Start() {
-		// TODO Auto-generated method stub
-
+		//TODO: controllare se c'è l'utente loggato se no eseguo l'accesso
+		this.view.viewStart();
 	}
 
 	@Override
 	public void mostraMenu() {
-		// TODO Auto-generated method stub
-
+		this.view.viewMenu();
+		if(this.attuale != null){
+			this.attuale.dispose();
+		}
 	}
 
 	@Override
 	public void mostraMagazzino() {
-		// TODO Auto-generated method stub
-
+		this.view.viewMagazzino();
 	}
 
 	@Override
 	public void mostraRegistiIva() {
-		// TODO Auto-generated method stub
-
+		this.view.viewRegistiIva();
 	}
 
 	@Override
 	public void mostraReportVendite() {
-		// TODO Auto-generated method stub
+		this.view.viewReportVendite();
 
 	}
 
 	@Override
 	public void mostraRiunioni() {
-		// TODO Auto-generated method stub
+		this.view.viewRiunioni();
 
 	}
 
 	@Override
 	public void mostraScontrini() {
-		// TODO Auto-generated method stub
+		this.view.viewScontrini();
 
 	}
 
 	@Override
 	public void mostraDialogCampoObbligatorio() {
-		// TODO Auto-generated method stub
-
+		this.view.viewDialogCampoObbligatorio();
 	}
 
 	@Override
 	public void mostraDialogCerca() {
-		// TODO Auto-generated method stub
-
+		this.view.viewDialogCerca();
 	}
 
 	@Override
 	public void mostraDialogNuovo() {
-		// TODO Auto-generated method stub
-
+		this.view.viewDialogNuovo();
 	}
 
 	@Override
 	public void mostraDialogRegistrati() {
-		// TODO Auto-generated method stub
-
+		this.view.viewDialogRegistrati();
 	}
 
 	@Override
 	public void mostraDialogWrongPass() {
-		// TODO Auto-generated method stub
-
+		this.view.viewDialogWrongPass();
 	}
 
 	@Override
 	public void mostraDialogWrongUser() {
+		this.view.viewDialogWrongUser();
+	}
+
+	@Override
+	public void salvaUtente(Map<String, TextField> dati) {
+		
+	}
+
+	@Override
+	public void salvaCliente(Map<String, TextField> dati) {
+		
+	}
+
+	@Override
+	public void salvaFornitore(Map<String, TextField> dati) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void salvaUtente() {
+	public void salvaFattura(Map<String, Object> dati) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void salvaCliente() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void salvaFornitore() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void salvaFattura() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void salvaRiunione() {
+	public void salvaRiunione(Map<String, Object> dati) {
 		// TODO Auto-generated method stub
 
 	}
