@@ -87,7 +87,7 @@ public class modelFornitori{
 	}
 	
 	public boolean eleminaFornitore(String nome, String cognome, String mail, String telefono){
-		MBQuery query = MBQuery.queryDaTabella("Clienti");
+		MBQuery query = MBQuery.queryDaTabella("Fornitori");
 		query.whereEqualTo("Nome", ctrlStringa(nome));
 		query.whereEqualTo("Cognome", ctrlStringa(cognome));
 		query.whereEqualTo("Mail", ctrlStringa(mail));

@@ -2,7 +2,6 @@ package com.goytia.models.DB;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.infoMng.controller.MBOggetto;
@@ -29,6 +28,10 @@ public class modelClienti {
 	}
 
 	MBOggetto oggetto;
+	
+	public modelClienti(){
+		this.oggetto= MBOggetto.oggettoDaTabella("Clienti");
+	}
 	
 	/***
 	 * crea un nuovo oggetto tipo modelCliente
