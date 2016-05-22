@@ -2,6 +2,7 @@ package com.goytia.models.DB;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.infoMng.controller.MBOggetto;
@@ -49,23 +50,29 @@ public class modelClienti {
 	public String getNomeNegozio(){
 		return (String)this.oggetto.getObject("Negozio");
 	}
-	public void setNome(String nome){
+	
+	private void setNome(String nome){
+		if(nome!= "")
 		this.oggetto.setObjectValue("Nome", nome);
 	}
 	
-	public void setCognome(String cognome){
+	private void setCognome(String cognome){
+		if(cognome!="")
 		this.oggetto.setObjectValue("Cognome", cognome);
 	}
 	
-	public void setMail(String mail){
+	private void setMail(String mail){
+		if(mail != "")
 		this.oggetto.setObjectValue("Mail", mail);
 	}
 	
-	public void setTelefono(String telf){
+	private void setTelefono(String telf){
+		if(telf != "")
 		this.oggetto.setObjectValue("Telefono", telf);
 	}
 	
-	public void setNegozio(String negoz){
+	private void setNegozio(String negoz){
+		if(negoz != "")
 		this.oggetto.setObjectValue("Negozio", negoz);
 	}
 	
@@ -79,11 +86,11 @@ public class modelClienti {
 	
 	public static boolean nuovoCliente(String nome, String cognome, String mail, String telefono, String negozio){
 		modelClienti nuovo = new modelClienti(MBOggetto.oggettoDaTabella("Clienti"));
-		nuovo.setNome(nome);
-		nuovo.setCognome(cognome);
-		nuovo.setMail(mail);
-		nuovo.setTelefono(telefono);
-		nuovo.setNegozio(negozio);
+		nuovo.setNome(nome = nome!="" ? nome : null);
+		nuovo.setCognome(cognome = cognome!="" ? cognome : null);
+		nuovo.setMail(mail = mail!="" ? mail : null);
+		nuovo.setTelefono(telefono = telefono!="" ? telefono : null);
+		nuovo.setNegozio(negozio = negozio!="" ? negozio : null);
 		return nuovo.oggetto.salva();
 	}
 	
@@ -101,5 +108,27 @@ public class modelClienti {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public boolean modificaCliente(String nome, String cognome, String mail, String telefono, String negozio,
+									String newNome, String newCognome, String newMail, String newTelefono, String newNegozio){
+	    @SuppressWarnings("static-access")
+		List<modelClienti> _temp= this.elenco().stream()
+						.filter(cliente -> cliente.getNome() == nome && cliente.getCognome() == cognome
+											    && cliente.getMail() == mail && cliente.getNomeNegozio() == negozio
+											    && cliente.getTelefono() == telefono)
+						.collect(Collectors.toList());
+		
+	    if(_temp.size() == 1){
+	    	_temp.get(0).setNome(newNome);
+	    	_temp.get(0).setCognome(newCognome);
+	    	_temp.get(0).setNegozio(newNegozio);
+	    	_temp.get(0).setMail(newMail);
+	    	_temp.get(0).setTelefono(newTelefono);
+	    	return _temp.get(0).oggetto.salva();
+	    }
+	    else
+	    	return false;
+		
 	}
 }
