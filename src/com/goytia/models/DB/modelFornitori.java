@@ -77,6 +77,21 @@ public class modelFornitori{
 							.collect(Collectors.toList());
 	}
 	
+	public static List<modelFornitori> cercaFornitori(String nomeProdotto){
+		
+		List<String> listTemp = modelMagazzino.elenco().stream()
+				.filter(e-> e.getNome() == nomeProdotto)
+				.map(e -> e.getFornitore())
+				.collect(Collectors.toList());
+		
+		return modelFornitori.elenco().stream()
+				.filter(e ->{
+					for(String a : listTemp){
+						if(e.getNome() == a)
+							return true;
+					}return false;	
+				}).collect(Collectors.toList());
+	}
 	public static boolean nuovoFornitore(String nome, String cognome, String mail, String telefono){
 		modelFornitori nuovo = new modelFornitori(MBOggetto.oggettoDaTabella("Fornitori"));
 		nuovo.setNome(nome);
