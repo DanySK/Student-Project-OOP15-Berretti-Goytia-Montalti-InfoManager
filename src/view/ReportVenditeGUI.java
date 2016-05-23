@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import view.interfaces.ObserverInterface;
@@ -21,7 +20,7 @@ public class ReportVenditeGUI extends InitializeFrame {
 	private static final String TITOLO = "Report Vendite";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(938,476);
-	private JFrame frame = this;
+	private ReportVenditeGUI frame = this;
 	private JPanel panelTool = new JPanel();
 	private JPanel panelText = new JPanel();
 	private MyToolbar toolbar;

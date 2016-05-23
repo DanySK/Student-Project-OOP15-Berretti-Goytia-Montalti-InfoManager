@@ -4,14 +4,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
 
+import view.ClientiGUI;
 import view.FattureGUI;
+import view.FornitoriGUI;
+import view.InitializeFrame;
+import view.MagazzinoGUI;
+import view.RegistriIvaGUI;
+import view.ReportVenditeGUI;
+import view.RiunioniGUI;
+import view.ScontriniGUI;
 import view.interfaces.ObserverInterface;
 
 public class MyToolbar extends JToolBar {
+
 
 	/**
 	 * 
@@ -22,7 +30,7 @@ public class MyToolbar extends JToolBar {
 	private JMenuItem mntmIndietro = new JMenuItem("Indietro");
 	private JMenuItem mntmNuovo = new JMenuItem("Nuovo");
 	
-	public MyToolbar(final ObserverInterface o, final JFrame frame){
+	public MyToolbar(final ObserverInterface o, final InitializeFrame frame){
 		this.add(mntmNuovo);
 		this.add(mntmSalva);
 		this.add(mntmCerca);
@@ -32,12 +40,35 @@ public class MyToolbar extends JToolBar {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				o.setAttuale(frame);
-				o.abilitaFrame(false);
-				o.mostraDialogNuovo();
-				//aggiungi booleano per controllare quale tipo di azione fare
-				//Gli passo un intero e a seconda del numero passato al costruttore di mytoolbar creo una specifica toolbar
-				//Chiedere a viroli come fare per gestire lo switch tra i dialog, nel senso che essendo la toolbar in più frame come fare a capire quale dialog attivare
+				if(frame.getClass().equals(FattureGUI.class)){
+					((FattureGUI) frame).resetCampi();
+				}
+				if(frame.getClass().equals(ClientiGUI.class)){
+					o.setAttuale(frame);
+					o.abilitaFrame(false);
+					o.mostraDialogNuovo();
+				}
+				if(frame.getClass().equals(FornitoriGUI.class)){
+					o.setAttuale(frame);
+					o.abilitaFrame(false);
+					o.mostraDialogNuovo();
+				}
+				if(frame.getClass().equals(MagazzinoGUI.class)){
+					
+				}
+				if(frame.getClass().equals(ReportVenditeGUI.class)){
+					
+				}
+				if(frame.getClass().equals(RegistriIvaGUI.class)){
+					
+				}
+				if(frame.getClass().equals(ScontriniGUI.class)){
+					((ScontriniGUI) frame).resetCampi();
+				}
+				if(frame.getClass().equals(RiunioniGUI.class)){
+					
+				}
+				
 			}
 		});
 		this.mntmSalva.setIcon(new ImageIcon(FattureGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
@@ -45,7 +76,30 @@ public class MyToolbar extends JToolBar {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				o.salvaCliente();
+				if(frame.getClass().equals(FattureGUI.class)){
+					o.salvaFattura(((FattureGUI) frame).getTextfield());
+				}
+				if(frame.getClass().equals(ClientiGUI.class)){
+					o.salvaCliente(((ClientiGUI)frame).getTextfield());
+				}
+				if(frame.getClass().equals(FornitoriGUI.class)){
+					o.salvaFornitore(((FornitoriGUI)frame).getTextfield());
+				}
+				if(frame.getClass().equals(MagazzinoGUI.class)){
+					
+				}
+				if(frame.getClass().equals(ReportVenditeGUI.class)){
+					
+				}
+				if(frame.getClass().equals(RegistriIvaGUI.class)){
+					
+				}
+				if(frame.getClass().equals(ScontriniGUI.class)){
+					((ScontriniGUI) frame).resetCampi();
+				}
+				if(frame.getClass().equals(RiunioniGUI.class)){
+					
+				}
 				
 			}
 		});
@@ -70,5 +124,5 @@ public class MyToolbar extends JToolBar {
 			}
 		});
 	}
-
+	
 }

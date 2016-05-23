@@ -10,7 +10,6 @@ import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -35,7 +34,7 @@ public class FattureGUI extends InitializeFrame {
 	private static final String TITOLO = "Fatture";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(830,568);
-	private JFrame frame = this;
+	private FattureGUI frame = this;
 	private JTextField textNumeroOrdine;
 	private JTextField textDataOrdine;
 	private JTextField textFornitore;
@@ -81,6 +80,25 @@ public class FattureGUI extends InitializeFrame {
 	private JScrollPane scrollPaneFattura = new JScrollPane();
 	private JTextArea textAreaFattura = new JTextArea("");
 	
+	public void resetCampi(){
+		//PULISCI Campi
+		this.textNumeroOrdine.setText("");
+		this.textDataOrdine.setText("");
+		this.textFornitore.setText("");
+		this.textDal.setText("");
+		this.textAl.setText("");
+		this.textTipoOrdine.setText("");
+		this.textNegozio.setText("");
+		this.textFieldPagamento.setText("");
+		this.textFieldBanca.setText("");
+		this.textFieldNote.setText("");
+		this.textFieldSconto.setText("");
+		this.textFieldProdotto.setText("");
+		this.textFieldPrezzo.setText("");
+		this.textFieldIVA.setText("");
+		this.textFieldQuantita.setText("");
+		
+	}
 	public Map<String,String> getTextfield(){
 		Map<String,String> mappa = new HashMap<>();
 		mappa.put("NumeroOrdine", textNumeroOrdine.getText());

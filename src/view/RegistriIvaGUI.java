@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import view.interfaces.ObserverInterface;
@@ -23,7 +22,7 @@ public class RegistriIvaGUI extends InitializeFrame {
 	private static final String TITOLO = "Registri IVA";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(830,568);
-	private JFrame frame = this;
+	private RegistriIvaGUI frame = this;
 	private JPanel panelTool = new JPanel();
 	private JPanel panelText = new JPanel();
 	private MyToolbar toolbar;

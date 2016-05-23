@@ -1,13 +1,10 @@
 package com.infoMng.controller;
 
-import java.awt.TextField;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.swing.JFrame;
 
-import view.ClientiGUI;
 import view.interfaces.ObserverInterface;
 import view.interfaces.ViewInterface;
 
@@ -108,7 +105,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public void mostraDialogNuovo() {
-				this.view.viewDialogNuovo();
+		this.view.viewDialogNuovo();
 
 	}
 
@@ -133,26 +130,24 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public void salvaCliente() {
-		Map<String,String> mappa = new HashMap<>();
-		mappa = new ClientiGUI(view.getObserverInterface()).getTextfield();
-		//usa la mappa per dare i dati al model
+	public void salvaCliente(Map<String,String> dati) {
+		System.out.println(dati);
 	}
 
 	@Override
-	public void salvaFornitore(Map<String, TextField> dati) {
+	public void salvaFornitore(Map<String, String> dati) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void salvaFattura(Map<String, Object> dati) {
+	public void salvaFattura(Map<String, String> dati) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void salvaRiunione(Map<String, Object> dati) {
+	public void salvaRiunione(Map<String, String> dati) {
 		// TODO Auto-generated method stub
 
 	}

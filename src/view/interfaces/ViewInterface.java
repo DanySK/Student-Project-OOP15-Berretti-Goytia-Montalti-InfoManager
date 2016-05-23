@@ -14,7 +14,6 @@ public interface ViewInterface {
 	void viewDialogCampoObbligatorio();
 	void viewDialogCerca();
 	void viewDialogNuovo();
-	ObserverInterface getObserverInterface();
 	void viewDialogRegistrati();
 	void viewDialogWrongPass();
 	void viewDialogWrongUser();

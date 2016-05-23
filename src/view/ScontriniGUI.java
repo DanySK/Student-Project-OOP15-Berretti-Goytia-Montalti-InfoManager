@@ -24,7 +24,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 public class ScontriniGUI extends InitializeFrame{
@@ -36,7 +35,7 @@ public class ScontriniGUI extends InitializeFrame{
 	private static final String TITOLO = "Scontrini";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(664,413);
-	private JFrame frame = this;
+	private ScontriniGUI frame = this;
 	private JTextField txtProdotto;
 	private JTextField txtPrezzoUnitario;
 	private JTextField txtQuantita;

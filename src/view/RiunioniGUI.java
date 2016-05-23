@@ -1,6 +1,5 @@
 package view;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import view.interfaces.ObserverInterface;
@@ -21,7 +20,7 @@ public class RiunioniGUI extends InitializeFrame{
 	private static final String TITOLO = "Riunioni";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(830,568);
-	private JFrame frame = this;
+	private RiunioniGUI frame = this;
 	private JPanel panelTool = new JPanel();
 	private JPanel panelText = new JPanel();
 	private MyToolbar toolbar;

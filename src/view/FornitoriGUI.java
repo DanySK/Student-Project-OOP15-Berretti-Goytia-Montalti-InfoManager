@@ -12,6 +12,7 @@ public class FornitoriGUI extends ClientiGUI {
 	 */
 	private static final long serialVersionUID = -7744994891479399079L;
 	private static final String TITOLO ="Fornitori";
+	
 
 	/**
 	 * Create the frame.

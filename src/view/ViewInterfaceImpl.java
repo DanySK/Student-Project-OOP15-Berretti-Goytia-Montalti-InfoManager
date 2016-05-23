@@ -8,7 +8,6 @@ import view.dialog.*;
 public class ViewInterfaceImpl implements ViewInterface{
 	
 	private ObserverInterface o;
-	private ClientiGUI JClienti;
 	
 	
 	/**
@@ -17,14 +16,10 @@ public class ViewInterfaceImpl implements ViewInterface{
     public ViewInterfaceImpl() {
 	}
     
-    public ObserverInterface getObserverInterface(){
-    	return this.o;
-    }
-
 	@Override
 	public void viewClienti() {
-		this.JClienti = new ClientiGUI(o);
-		this.JClienti.display(true);
+		new ClientiGUI(o).display(true);;
+
 		
 	}
 

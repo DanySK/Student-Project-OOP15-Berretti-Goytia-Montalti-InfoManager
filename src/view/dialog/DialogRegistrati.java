@@ -120,7 +120,6 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 					public void actionPerformed(ActionEvent e) {
 						//Map<String, String> valori = getDataString(o);
 						//TODO: correggere richiamo al metodo di salvataggio
-						o.salvaCliente();
 						dispose();
 					}
 				});
