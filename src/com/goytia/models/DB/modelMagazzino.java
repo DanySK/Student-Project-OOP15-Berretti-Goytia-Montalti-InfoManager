@@ -87,10 +87,26 @@ public class modelMagazzino {
 		temp.setFornitore(fornitore);
 		temp.setPrezzoAcquisto(prezzoAcquisto);
 		temp.setPrezzoVendita(prezzoVendita);
+		temp.setDescrizione(descrizione);
 		return temp.oggetto.salva();
 	}
-	/*
-	public static List<modelMagazzino> cercaProdotto(String nome){
-		
-	}*/
+	
+	public static List<modelMagazzino> cercaProdotti(String nome){
+		return modelMagazzino.elenco().stream()
+				.filter(e-> e.getNome() == nome)
+				.collect(Collectors.toList());
+	}
+	
+	public static List<modelMagazzino> cercaProdotti(int quantitaMinima){
+		return modelMagazzino.elenco().stream()
+				.filter(e-> e.getQuantita() >= quantitaMinima)
+				.collect(Collectors.toList());
+	}
+	
+	public static List<modelMagazzino> cercaProdotti(modelFornitori fornitore){
+		return modelMagazzino.elenco().stream()
+				.filter(e-> e.getFornitore() == fornitore.getNome())
+				.collect(Collectors.toList());
+	}
+	
 }
