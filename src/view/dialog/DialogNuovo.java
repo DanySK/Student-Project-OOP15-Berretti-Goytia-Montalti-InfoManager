@@ -7,6 +7,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.goytia.models.DB.modelClienti;
+
 import view.interfaces.ObserverInterface;
 
 import java.awt.GridBagLayout;
@@ -54,6 +56,10 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 	private JRadioButton rdbtnFornitore = new JRadioButton("Fornitore");
 	private JPanel buttonPane = new JPanel();
 	private Map<String,String> map = new HashMap<>();
+	private final JTextField txtMail = new JTextField();
+	private final JLabel lblEmail = new JLabel("E-Mail");
+	private final JTextField txtNegozio = new JTextField();
+	private final JLabel lblNegozio = new JLabel("Negozio");
 
 
 	public Map<String,String> getDataString(final ObserverInterface o){
@@ -83,42 +89,18 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 	 * Create the dialog.
 	 */
 	public DialogNuovo(final ObserverInterface o) {
+		txtNegozio.setColumns(10);
+		txtMail.setColumns(10);
 		this.setTitle("Nuovo Fornitore o Cliente");
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		this.setBounds(100, 100, 450, 300);
+		this.setBounds(100, 100, 603, 265);
 		this.getContentPane().setLayout(new BorderLayout());
 		this.contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
 		this.gbl_contentPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0};
-		this.gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+		this.gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		this.gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
-		this.gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		
-		this.rdbtnCliente.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				if(rdbtnCliente.isSelected()){
-					rdbtnFornitore.setEnabled(false);
-				} else {
-					rdbtnFornitore.setEnabled(true);
-				}
-			}
-		});
-		
-		this.rdbtnFornitore.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				if (rdbtnFornitore.isSelected()){
-					rdbtnCliente.setEnabled(false);
-				} else {
-					rdbtnCliente.setEnabled(true);
-				}
-			}
-		});
+		this.gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		this.contentPanel.setLayout(gbl_contentPanel);
 		{
 			this.gbc_lblNome.gridwidth = 4;
@@ -185,14 +167,74 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 			this.txtIndirizzo.setColumns(10);
 		}
 		{
-			this.gbc_rdbtnFornitore.insets = new Insets(0, 0, 0, 5);
-			this.gbc_rdbtnFornitore.gridx = 4;
-			this.gbc_rdbtnFornitore.gridy = 7;
-			this.contentPanel.add(rdbtnFornitore, gbc_rdbtnFornitore);
+			GridBagConstraints gbc_lblEmail = new GridBagConstraints();
+			gbc_lblEmail.gridwidth = 3;
+			gbc_lblEmail.insets = new Insets(0, 0, 5, 5);
+			gbc_lblEmail.gridx = 0;
+			gbc_lblEmail.gridy = 8;
+			contentPanel.add(lblEmail, gbc_lblEmail);
 		}
 		{
+			GridBagConstraints gbc_txtMail = new GridBagConstraints();
+			gbc_txtMail.gridwidth = 2;
+			gbc_txtMail.insets = new Insets(0, 0, 5, 0);
+			gbc_txtMail.fill = GridBagConstraints.HORIZONTAL;
+			gbc_txtMail.gridx = 4;
+			gbc_txtMail.gridy = 8;
+			contentPanel.add(txtMail, gbc_txtMail);
+		}
+		
+		this.rdbtnFornitore.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (rdbtnFornitore.isSelected()){
+					rdbtnCliente.setEnabled(false);
+				} else {
+					rdbtnCliente.setEnabled(true);
+				}
+			}
+		});
+		{
+			GridBagConstraints gbc_lblNegozio = new GridBagConstraints();
+			gbc_lblNegozio.gridwidth = 4;
+			gbc_lblNegozio.insets = new Insets(0, 0, 5, 5);
+			gbc_lblNegozio.gridx = 0;
+			gbc_lblNegozio.gridy = 10;
+			contentPanel.add(lblNegozio, gbc_lblNegozio);
+		}
+		{
+			GridBagConstraints gbc_txtNegozio = new GridBagConstraints();
+			gbc_txtNegozio.gridwidth = 2;
+			gbc_txtNegozio.insets = new Insets(0, 0, 5, 5);
+			gbc_txtNegozio.fill = GridBagConstraints.HORIZONTAL;
+			gbc_txtNegozio.gridx = 4;
+			gbc_txtNegozio.gridy = 10;
+			contentPanel.add(txtNegozio, gbc_txtNegozio);
+		}
+		{
+			this.gbc_rdbtnFornitore.insets = new Insets(0, 0, 0, 5);
+			this.gbc_rdbtnFornitore.gridx = 4;
+			this.gbc_rdbtnFornitore.gridy = 11;
+			this.contentPanel.add(rdbtnFornitore, gbc_rdbtnFornitore);
+		}
+		
+		this.rdbtnCliente.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if(rdbtnCliente.isSelected()){
+					rdbtnFornitore.setEnabled(false);
+				} else {
+					rdbtnFornitore.setEnabled(true);
+				}
+			}
+		});
+		{
 			this.gbc_rdbtnCliente.gridx = 5;
-			this.gbc_rdbtnCliente.gridy = 7;
+			this.gbc_rdbtnCliente.gridy = 11;
 			this.contentPanel.add(rdbtnCliente, gbc_rdbtnCliente);
 		}
 		{
@@ -203,7 +245,7 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
+						//TODO: aggiungere chiamata al controller per salvare dati
 						dispose();
 					}
 				});

@@ -3,10 +3,12 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
+
+import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import view.interfaces.ObserverInterface;
+import view.toolbar.MyToolbar;
 
 import java.awt.Toolkit;
 
@@ -16,10 +18,13 @@ public class ReportVenditeGUI extends InitializeFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 5756256366498583375L;
-	private JPanel contentPane;
 	private static final String TITOLO = "Report Vendite";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(938,476);
+	private JFrame frame = this;
+	private JPanel panelTool = new JPanel();
+	private JPanel panelText = new JPanel();
+	private MyToolbar toolbar;
 
 	/**
 	 * Create the frame.
@@ -30,10 +35,12 @@ public class ReportVenditeGUI extends InitializeFrame {
 		this.setTitle("Report Vendite");
 		this.setResizable(true);
 		this.setBounds(100, 100, 450, 300);
-		this.contentPane = new JPanel();
-		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		this.contentPane.setLayout(new BorderLayout(0, 0));
-		this.setContentPane(contentPane);
+		this.getMainPanel().setLayout(new BorderLayout(0, 0));
+		this.getMainPanel().add(panelTool, BorderLayout.CENTER);
+		this.toolbar = new MyToolbar(o, frame);
+		this.panelTool.setLayout(new BorderLayout(0,0));
+		this.panelTool.add(toolbar, BorderLayout.NORTH);
+		this.panelTool.add(panelText, BorderLayout.CENTER);
 		
 	}
 

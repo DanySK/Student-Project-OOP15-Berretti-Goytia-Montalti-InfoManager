@@ -71,7 +71,7 @@ public class ScontriniGUI extends InitializeFrame{
 		this.getMainPanel().setLayout(new BorderLayout(0, 0));
 		this.getMainPanel().add(panelTool, BorderLayout.CENTER);
 		panelTool.setLayout(new BorderLayout(0, 0));
-		this.toolbar = new MyToolbar(o);
+		this.toolbar = new MyToolbar(o,frame);
 		this.panelTool.add(toolbar, BorderLayout.NORTH);
 		this.panelTool.add(panelText);
 		this.txtProdotto = new JTextField();

@@ -3,6 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
+
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import view.interfaces.ObserverInterface;
@@ -19,6 +21,7 @@ public class MagazzinoGUI extends InitializeFrame {
 	private JPanel contentPane;
 	private PannelloTabelle jPanel = new PannelloTabelle();
 	private MyToolbar toolBar;
+	private JFrame frame = this;
 	private static final String TITOLO = "Menu";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(938,476);
@@ -31,7 +34,7 @@ public class MagazzinoGUI extends InitializeFrame {
 		super(TITOLO,LAYOUT,DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(MagazzinoGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.setTitle("Magazzino");
-		this.toolBar =  new MyToolbar(o);
+		this.toolBar =  new MyToolbar(o,frame);
 		this.setBounds(100, 100, 781, 486);
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

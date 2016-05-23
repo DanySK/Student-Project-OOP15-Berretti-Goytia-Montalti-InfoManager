@@ -14,6 +14,7 @@ import view.toolbar.MyToolbar;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -29,6 +30,7 @@ public class ClientiGUI extends InitializeFrame {
 	private static final String TITOLO = "Clienti";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(480,290);
+	private JFrame frame = this;
 	private MyToolbar toolbar;
 	private JPanel panelTool = new JPanel();
 	private JPanel panelText = new JPanel();
@@ -53,7 +55,7 @@ public class ClientiGUI extends InitializeFrame {
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(ClientiGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.getMainPanel().setLayout(new BorderLayout(0, 0));
 		this.getMainPanel().add(panelTool, BorderLayout.CENTER);
-		this.toolbar = new MyToolbar(o);
+		this.toolbar = new MyToolbar(o, frame);
 		this.panelTool.setLayout(new BorderLayout(0,0));
 		this.panelTool.add(toolbar, BorderLayout.NORTH);
 		this.panelTool.add(panelText, BorderLayout.CENTER);

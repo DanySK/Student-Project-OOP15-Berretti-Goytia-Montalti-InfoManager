@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.Toolkit;
+
+
 import view.interfaces.ObserverInterface;
 
 public class FornitoriGUI extends ClientiGUI {
