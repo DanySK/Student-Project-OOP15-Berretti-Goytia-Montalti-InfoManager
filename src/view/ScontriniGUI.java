@@ -21,6 +21,8 @@ import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -59,8 +61,19 @@ public class ScontriniGUI extends InitializeFrame{
 	private double imponibile;
 	private double totale;
 	private double totiva;
+	private double totsconto;
 	private final JButton btnAggiungi = new JButton("Aggiungi");
 	private final JLabel lblAnteprimaDiStampa = new JLabel("Anteprima di Stampa");
+	
+	public void resetCampi(){
+		txtIva.setText("");
+		txtPrezzoUnitario.setText("");
+		txtProdotto.setText("");
+		txtQuantita.setText("");
+		txtSconto.setText("");
+		txtScontrino.setText("");
+	}
+
 
 	/**
 	 * Create the frame.
@@ -88,6 +101,9 @@ public class ScontriniGUI extends InitializeFrame{
 		
 		this.txtSconto = new JTextField();
 		this.txtSconto.setColumns(10);
+		
+		this.textArea.setEditable(false);
+		
 
 		this.txtScontrino = new JTextField();
 		this.txtScontrino.setColumns(10);
@@ -187,13 +203,15 @@ public class ScontriniGUI extends InitializeFrame{
 				Calcola(Integer.parseInt(txtPrezzoUnitario.getText()), Integer.parseInt(txtQuantita.getText())
 						, Integer.parseInt(txtIva.getText()));
 				textArea.setText("");
-				textArea.setText("\tNome\n" + "\tIndirizzo\n" + "\tTelefono\n" + "\tN.Scontrino"+ "\n\n\n" + 
-						"Quantità: " + txtQuantita.getText() +" "+ txtProdotto.getText() +"     Prezzo: " + txtPrezzoUnitario.getText() + "€ "
-						+ "\n\tSconto:\t"
+				textArea.setText("Quantità: " + txtQuantita.getText() +" "+ txtProdotto.getText() 
+						+ "     Prezzo: " 
+						+ txtPrezzoUnitario.getText() + "\u20AC "
+						+ "\nSconto:\t"
 						+ txtSconto.getText() + "\n\n =====================================\n\n" +
-						"Imponibile:\t\t" + String.valueOf(imponibile) + "€\nIva: " + txtIva.getText() + "%"  + "\t\t" + totiva + "€" +
-						"\n\n =====================================\n\n" + "Totale:\t\t" + 
-				String.valueOf(totale)+"€");
+						"Sconto:\t\t\t" + String.valueOf(totsconto) +
+						"\nImponibile:\t\t" + String.valueOf(imponibile) + "\u20AC\nIva: " + txtIva.getText() + "%"  + "\t\t" + String.valueOf(totiva) + "\u20AC" +
+						"\n\n =====================================\n\n" + "Totale:\t\t\t" + 
+				String.valueOf(totale)+"\u20AC");		 
 				}
 				catch (NumberFormatException e1){
 					JOptionPane.showMessageDialog(frame,"Inserisci i campi correttamente","Campi scorretti",JOptionPane.ERROR_MESSAGE);
@@ -204,7 +222,14 @@ public class ScontriniGUI extends InitializeFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//metodo con lista per permettere la vendita di più prodotti in uno scontrino
+				
+				//modelScontrini.nuovoScontrino(txtScontrino.getText(), txtPrezzoUnitario.getText(), 
+						//txtProdotto.getText(), txtIva.getText(), txtQuantita.getText(), txtSconto.getText());
+				txtIva.setText("");
+				txtSconto.setText("");
+				txtQuantita.setText("");
+				txtPrezzoUnitario.setText("");
+				txtProdotto.setText("");
 			}
 		});
 		
@@ -223,12 +248,14 @@ public class ScontriniGUI extends InitializeFrame{
 	private double Calcola (Integer prezzo, Integer quantita, Integer iva){
 		this.imponibile=0;
 		this.totale=0;
+		this.totiva=0;
+		this.totsconto=0;
 		if(txtSconto.getText().equals("")){
 			this.imponibile = prezzo*quantita;
 			this.totiva = (this.imponibile * iva)/100;
 			this.totale = this.totiva + this.imponibile;
 		} else {
-			this.imponibile = ((prezzo*quantita)*Integer.parseInt(txtSconto.getText())/100);
+			this.totsconto = ((prezzo*quantita)*Integer.parseInt(txtSconto.getText())/100);
 			this.imponibile = (prezzo*quantita)-this.imponibile;
 			this.totiva = (this.imponibile * iva)/100;
 			this.totale = this.totiva + this.imponibile;

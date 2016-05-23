@@ -48,9 +48,9 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 	 * Create the dialog.
 	 */
 	public DialogRegistrati(final ObserverInterface o) {
-		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setBounds(100, 100, 310, 375);
 		this.setTitle("Registrazione");
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.getContentPane().setLayout(new BorderLayout());
 		this.contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -120,7 +120,8 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 					public void actionPerformed(ActionEvent e) {
 						//Map<String, String> valori = getDataString(o);
 						//TODO: correggere richiamo al metodo di salvataggio
-						//o.salvaCliente();
+						o.salvaCliente();
+						dispose();
 					}
 				});
 				this.buttonPane.add(okButton);
@@ -131,7 +132,6 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
 						dispose();
 					}
 				});

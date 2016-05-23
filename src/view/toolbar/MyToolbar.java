@@ -32,6 +32,8 @@ public class MyToolbar extends JToolBar {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				o.setAttuale(frame);
+				o.abilitaFrame(false);
 				o.mostraDialogNuovo();
 				//aggiungi booleano per controllare quale tipo di azione fare
 				//Gli passo un intero e a seconda del numero passato al costruttore di mytoolbar creo una specifica toolbar
@@ -43,10 +45,21 @@ public class MyToolbar extends JToolBar {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				o.salvaCliente();
 				
 			}
 		});
 		this.mntmCerca.setIcon(new ImageIcon(FattureGUI.class.getResource("/view/icon/lente-di-ingrandimento_318-1787.jpg")));
+		this.mntmCerca.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				o.setAttuale(frame);
+				o.abilitaFrame(false);
+				o.mostraDialogCerca();
+				
+			}
+		});
 		this.mntmIndietro.setIcon(new ImageIcon(MyToolbar.class.getResource("/com/sun/javafx/scene/web/skin/Undo_16x16_JFX.png")));
 		this.mntmIndietro.addActionListener(new ActionListener() {
 			

@@ -2,6 +2,8 @@ package view.dialog;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -27,8 +29,8 @@ public class DialogCerca extends JDialog implements DialogInterface{
 	 * Create the dialog.
 	 */
 	public DialogCerca(final ObserverInterface o) {
-		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setBounds(100, 100, 450, 300);
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.getContentPane().setLayout(new BorderLayout());
 		this.contentPanel.setLayout(new FlowLayout());
 		this.contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -39,11 +41,27 @@ public class DialogCerca extends JDialog implements DialogInterface{
 			{
 				this.okButton.setActionCommand("OK");
 				this.buttonPane.add(okButton);
-				this.getRootPane().setDefaultButton(okButton);
+				this.okButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						o.abilitaFrame(true);
+						dispose();
+					}
+				});
 			}
 			{
 				this.cancelButton.setActionCommand("Cancel");
 				this.buttonPane.add(cancelButton);
+				cancelButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						o.abilitaFrame(true);
+						dispose();
+						
+					}
+				});
 			}
 		}
 	}

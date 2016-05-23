@@ -34,7 +34,7 @@ public class DialogWrongUser extends JDialog {
 	public DialogWrongUser(final ObserverInterface o) {
 		this.setTitle("Errore");
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(DialogWrongUser.class.getResource("/javax/swing/plaf/metal/icons/Error.gif")));
-		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		this.setBounds(100, 100, 672, 195);
 		this.getContentPane().setLayout(new BorderLayout());
 		this.contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -52,7 +52,7 @@ public class DialogWrongUser extends JDialog {
 					
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						// TODO Auto-generated method stub
+						o.abilitaFrame(true);
 						dispose();
 					}
 				});
@@ -64,7 +64,7 @@ public class DialogWrongUser extends JDialog {
 					
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						// TODO Auto-generated method stub
+						o.abilitaFrame(true);
 						dispose();
 					}
 				});

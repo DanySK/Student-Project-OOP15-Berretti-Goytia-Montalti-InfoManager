@@ -32,10 +32,10 @@ public class FattureGUI extends InitializeFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -3497349615019432641L;
-	private JFrame frame = this;
 	private static final String TITOLO = "Fatture";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(830,568);
+	private JFrame frame = this;
 	private JTextField textNumeroOrdine;
 	private JTextField textDataOrdine;
 	private JTextField textFornitore;
@@ -55,10 +55,6 @@ public class FattureGUI extends InitializeFrame {
 	private JLabel lblDataOrdine = new JLabel("Data Ordine");
 	private LinkedList<String> list = new LinkedList<>();
 	private JLabel lblNumeroOrdine = new JLabel("Numero Ordine");
-	private JButton btnProssimo = new JButton("Prossimo>");
-	private JButton btnPrecedente = new JButton("<Precedente");
-	private JButton btnAnnulla = new JButton("Annulla");
-	private JButton btnOk = new JButton("OK");
 	private JLayeredPane layeredPane = new JLayeredPane();
 	private MyToolbar toolBar;
 	private JComboBox<?> comboBoxFornitore = new JComboBox<>();
@@ -81,7 +77,6 @@ public class FattureGUI extends InitializeFrame {
 	private JLabel lblIva = new JLabel("IVA");
 	private JLabel lblPercento1 = new JLabel("%");
 	private JLabel lblQuantita = new JLabel("Quantit\u00E0");
-	private JPanel panelFattura = new JPanel();
 	private JLabel lblCodFornitore = new JLabel("Cod. Fornitore");
 	private JScrollPane scrollPaneFattura = new JScrollPane();
 	private JTextArea textAreaFattura = new JTextArea("");
@@ -114,28 +109,6 @@ public class FattureGUI extends InitializeFrame {
 		this.setEnabled(true);
 		toolBar = new MyToolbar(o,frame);
 		getContentPane().add(toolBar);
-		
-
-		this.btnOk.setBounds(377, 464, 67, 23);
-		this.btnOk.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-			}
-		});
-		this.layeredPane.add(btnOk);
-		
-		this.btnAnnulla.setBounds(454, 464, 85, 23);
-		this.layeredPane.add(btnAnnulla);
-		
-		this.btnPrecedente.setBounds(549, 464, 117, 23);
-		this.layeredPane.add(btnPrecedente);
-		
-		this.btnProssimo.setBounds(676, 464, 117, 23);
-		this.layeredPane.add(btnProssimo);
-		
-
 		this.lblNumeroOrdine.setBounds(10, 11, 97, 14);
 		this.layeredPane.add(lblNumeroOrdine);
 		
@@ -321,10 +294,6 @@ public class FattureGUI extends InitializeFrame {
 		this.scrollPaneFattura.setBounds(315, 153, 467, 193);
 		this.scrollPaneFattura.setViewportView(textAreaFattura);//= new JScrollPane(textAreaFattura,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.panelTestata.add(scrollPaneFattura);
-		
-
-		this.tabbedPane.addTab("Fattura", null, panelFattura, null);
-		this.panelFattura.setLayout(null);
 		
 		this.lblCodFornitore.setBounds(226, 57, 100, 14);
 		this.layeredPane.add(lblCodFornitore);

@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.goytia.models.DB.modelClienti;
+import com.goytia.models.DB.modelFornitori;
 
 import view.interfaces.ObserverInterface;
 
@@ -31,10 +32,10 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 	 */
 	private static final long serialVersionUID = -5569305998629847130L;
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtNome = new JTextField();
-	private JTextField txtCognome = new JTextField();
-	private JTextField txtTelefono = new JTextField();
-	private JTextField txtIndirizzo = new JTextField();
+	private JTextField txtNome = new JTextField(10);
+	private JTextField txtCognome = new JTextField(20);
+	private JTextField txtTelefono = new JTextField(10);
+	private JTextField txtIndirizzo = new JTextField(30);
 	private JLabel lblTelefono = new JLabel("Telefono");
 	private JLabel lblNome = new JLabel("Nome(*)");
 	private JLabel lblCognome = new JLabel("Cognome(*)");
@@ -49,6 +50,10 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 	private GridBagConstraints gbc_txtTelefono = new GridBagConstraints();
 	private GridBagConstraints gbc_rdbtnFornitore = new GridBagConstraints();
 	private GridBagConstraints gbc_rdbtnCliente = new GridBagConstraints();
+	private GridBagConstraints gbc_lblNegozio = new GridBagConstraints();
+	private GridBagConstraints gbc_txtNegozio = new GridBagConstraints();
+	private GridBagConstraints gbc_lblEmail = new GridBagConstraints();
+	private GridBagConstraints gbc_txtMail = new GridBagConstraints();
 	private JButton okButton = new JButton("OK");
 	private JButton cancelButton = new JButton("Cancel");
 	private GridBagLayout gbl_contentPanel = new GridBagLayout();
@@ -56,33 +61,25 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 	private JRadioButton rdbtnFornitore = new JRadioButton("Fornitore");
 	private JPanel buttonPane = new JPanel();
 	private Map<String,String> map = new HashMap<>();
-	private final JTextField txtMail = new JTextField();
+	private final JTextField txtMail = new JTextField(30);
 	private final JLabel lblEmail = new JLabel("E-Mail");
-	private final JTextField txtNegozio = new JTextField();
+	private final JTextField txtNegozio = new JTextField(30);
 	private final JLabel lblNegozio = new JLabel("Negozio");
 
 
 	public Map<String,String> getDataString(final ObserverInterface o){
-		if(txtNome.getText().equals(null)){
-			if(txtCognome.getText().equals(null)){
-				map.put("Nome",txtNome.getText());
-				map.put("Cognome", txtCognome.getText());
-				map.put("Telefono", txtTelefono.getText());
-				map.put("Indirizzo", txtIndirizzo.getText());
-				if(rdbtnCliente.isSelected()){
-					map.put("TipoDiRapporto", rdbtnCliente.getText());
-				} else {
-					map.put("TipoDiRapporto", rdbtnFornitore.getText());
-				}
-				return map;
-			} else {
-				o.mostraDialogCampoObbligatorio();
-				return null;
-			}
+		this.map.put("Nome",txtNome.getText());
+		this.map.put("Cognome", txtCognome.getText());
+		this.map.put("Telefono", txtTelefono.getText());
+		this.map.put("Indirizzo", txtIndirizzo.getText());
+		this.map.put("Email", txtMail.getText());
+		this.map.put("Negozio", txtNegozio.getText());
+		if(rdbtnCliente.isSelected()){
+			this.map.put("TipoDiRapporto", rdbtnCliente.getText());
 		} else {
-			o.mostraDialogCampoObbligatorio();
-			return null;
+			this.map.put("TipoDiRapporto", rdbtnFornitore.getText());
 		}
+		return this.map;
 	}
 	
 	/**
@@ -91,6 +88,7 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 	public DialogNuovo(final ObserverInterface o) {
 		txtNegozio.setColumns(10);
 		txtMail.setColumns(10);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setTitle("Nuovo Fornitore o Cliente");
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setBounds(100, 100, 603, 265);
@@ -115,6 +113,7 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 			this.gbc_txtNome.fill = GridBagConstraints.HORIZONTAL;
 			this.gbc_txtNome.gridx = 4;
 			this.gbc_txtNome.gridy = 0;
+			this.txtNome.setEditable(true);
 			this.contentPanel.add(txtNome, gbc_txtNome);
 			this.txtNome.setColumns(10);
 		}
@@ -131,6 +130,7 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 			this.gbc_txtCognome.fill = GridBagConstraints.HORIZONTAL;
 			this.gbc_txtCognome.gridx = 4;
 			this.gbc_txtCognome.gridy = 2;
+			this.txtCognome.setEditable(true);
 			this.contentPanel.add(txtCognome, gbc_txtCognome);
 			this.txtCognome.setColumns(10);
 		}
@@ -147,6 +147,7 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 			this.gbc_txtTelefono.fill = GridBagConstraints.HORIZONTAL;
 			this.gbc_txtTelefono.gridx = 4;
 			this.gbc_txtTelefono.gridy = 4;
+			this.txtTelefono.setEditable(true);
 			this.contentPanel.add(txtTelefono, gbc_txtTelefono);
 			this.txtTelefono.setColumns(10);
 		}
@@ -163,25 +164,26 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 			this.gbc_txtIndirizzo.fill = GridBagConstraints.HORIZONTAL;
 			this.gbc_txtIndirizzo.gridx = 4;
 			this.gbc_txtIndirizzo.gridy = 6;
+			this.txtIndirizzo.setEditable(true);
 			this.contentPanel.add(txtIndirizzo, gbc_txtIndirizzo);
 			this.txtIndirizzo.setColumns(10);
 		}
 		{
-			GridBagConstraints gbc_lblEmail = new GridBagConstraints();
-			gbc_lblEmail.gridwidth = 3;
-			gbc_lblEmail.insets = new Insets(0, 0, 5, 5);
-			gbc_lblEmail.gridx = 0;
-			gbc_lblEmail.gridy = 8;
-			contentPanel.add(lblEmail, gbc_lblEmail);
+
+			this.gbc_lblEmail.gridwidth = 3;
+			this.gbc_lblEmail.insets = new Insets(0, 0, 5, 5);
+			this.gbc_lblEmail.gridx = 0;
+			this.gbc_lblEmail.gridy = 8;
+			this.contentPanel.add(lblEmail, gbc_lblEmail);
 		}
 		{
-			GridBagConstraints gbc_txtMail = new GridBagConstraints();
-			gbc_txtMail.gridwidth = 2;
-			gbc_txtMail.insets = new Insets(0, 0, 5, 0);
-			gbc_txtMail.fill = GridBagConstraints.HORIZONTAL;
-			gbc_txtMail.gridx = 4;
-			gbc_txtMail.gridy = 8;
-			contentPanel.add(txtMail, gbc_txtMail);
+			this.gbc_txtMail.gridwidth = 2;
+			this.gbc_txtMail.insets = new Insets(0, 0, 5, 0);
+			this.gbc_txtMail.fill = GridBagConstraints.HORIZONTAL;
+			this.gbc_txtMail.gridx = 4;
+			this.gbc_txtMail.gridy = 8;
+			this.txtMail.setEditable(true);
+			this.contentPanel.add(txtMail, gbc_txtMail);
 		}
 		
 		this.rdbtnFornitore.addActionListener(new ActionListener() {
@@ -197,21 +199,20 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 			}
 		});
 		{
-			GridBagConstraints gbc_lblNegozio = new GridBagConstraints();
-			gbc_lblNegozio.gridwidth = 4;
-			gbc_lblNegozio.insets = new Insets(0, 0, 5, 5);
-			gbc_lblNegozio.gridx = 0;
-			gbc_lblNegozio.gridy = 10;
-			contentPanel.add(lblNegozio, gbc_lblNegozio);
+			this.gbc_lblNegozio.gridwidth = 4;
+			this.gbc_lblNegozio.insets = new Insets(0, 0, 5, 5);
+			this.gbc_lblNegozio.gridx = 0;
+			this.gbc_lblNegozio.gridy = 10;
+			this.contentPanel.add(lblNegozio, gbc_lblNegozio);
 		}
 		{
-			GridBagConstraints gbc_txtNegozio = new GridBagConstraints();
-			gbc_txtNegozio.gridwidth = 2;
-			gbc_txtNegozio.insets = new Insets(0, 0, 5, 5);
-			gbc_txtNegozio.fill = GridBagConstraints.HORIZONTAL;
-			gbc_txtNegozio.gridx = 4;
-			gbc_txtNegozio.gridy = 10;
-			contentPanel.add(txtNegozio, gbc_txtNegozio);
+
+			this.gbc_txtNegozio.gridwidth = 2;
+			this.gbc_txtNegozio.insets = new Insets(0, 0, 5, 5);
+			this.gbc_txtNegozio.fill = GridBagConstraints.HORIZONTAL;
+			this.gbc_txtNegozio.gridx = 4;
+			this.gbc_txtNegozio.gridy = 10;
+			this.contentPanel.add(txtNegozio, gbc_txtNegozio);
 		}
 		{
 			this.gbc_rdbtnFornitore.insets = new Insets(0, 0, 0, 5);
@@ -224,7 +225,6 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				if(rdbtnCliente.isSelected()){
 					rdbtnFornitore.setEnabled(false);
 				} else {
@@ -245,7 +245,24 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						//TODO: aggiungere chiamata al controller per salvare dati
+						if(rdbtnCliente.isSelected()){
+							try{
+								Map<String,String> mappa = getDataString(o);
+								modelClienti.nuovoCliente(mappa.get("Nome"), mappa.get("Cognome"),
+									mappa.get("Email"), mappa.get("Telefono"), mappa.get("Negozio"));
+							} catch (NullPointerException e1){
+								o.mostraDialogCampoObbligatorio();
+							}
+						} else {
+							try{
+								Map<String,String> mappa = getDataString(o);
+								modelFornitori.nuovoFornitore(mappa.get("Nome"), mappa.get("Cognome"),
+									mappa.get("Email"), mappa.get("Telefono"));
+							} catch (NullPointerException e2){
+								o.mostraDialogCampoObbligatorio();
+							}
+						}
+						o.abilitaFrame(true);
 						dispose();
 					}
 				});
@@ -257,7 +274,7 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
+						o.abilitaFrame(false);
 						dispose();
 					}
 				});
