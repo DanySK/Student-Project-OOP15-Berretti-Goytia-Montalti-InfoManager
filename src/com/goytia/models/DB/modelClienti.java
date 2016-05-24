@@ -67,7 +67,7 @@ public class modelClienti {
 		return str != "" ? str : null;
 	}
 	
-	private static MBOggetto getSpecificObject(String nome, String cognome, String mail, String telefono, String negozio){
+	private static modelClienti getSpecificObject(String nome, String cognome, String mail, String telefono, String negozio){
 		MBQuery query = MBQuery.queryDaTabella("Clienti");
 		query.whereEqualTo("Nome", ctrlStringa(nome));
 		query.whereEqualTo("Cognome", ctrlStringa(cognome));
@@ -76,7 +76,7 @@ public class modelClienti {
 		query.whereEqualTo("Negozio", ctrlStringa(negozio));
 		
 		try {
-			return query.find().get(0);
+			return new modelClienti(query.find().get(0));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,21 +117,19 @@ public class modelClienti {
 
 	public boolean eliminaCliente(String nome, String cognome, String mail, String telefono, String negozio){
 		//controllo dati in input
-		MBOggetto temp = modelClienti.getSpecificObject(nome, cognome, mail, telefono, negozio);
+		modelClienti temp = modelClienti.getSpecificObject(nome, cognome, mail, telefono, negozio);
 		if(temp != null)
-			return temp.elimina();
+			return temp.oggetto.elimina();
 		else
 			return false;
 	}
 	
 	public boolean modificaCliente(String nome, String cognome, String mail, String telefono, String negozio,
 									String newNome, String newCognome, String newMail, String newTelefono, String newNegozio){
-		modelClienti _temp;
 		//controllo dell'esistenza del Cliente a modificare
-		MBOggetto temp = modelClienti.getSpecificObject(nome, cognome, mail, telefono, negozio);
+		modelClienti _temp = modelClienti.getSpecificObject(nome, cognome, mail, telefono, negozio);
 
-		if(temp != null){
-			_temp= new modelClienti(temp);
+		if(_temp != null){
 			_temp.setCognome(newCognome);
 			_temp.setNome(newCognome);
 			_temp.setMail(newMail);

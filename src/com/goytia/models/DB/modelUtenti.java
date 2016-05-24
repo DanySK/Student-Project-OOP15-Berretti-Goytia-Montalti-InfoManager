@@ -61,7 +61,7 @@ public class modelUtenti {
 		this.oggetto.setObjectValue("Password", ctrlStringa(password));
 	}
 	
-	private String ctrlStringa(String str){
+	private static String ctrlStringa(String str){
 		return str != "" ? str : null;
 	}
 	
@@ -71,6 +71,23 @@ public class modelUtenti {
 			return query.find().stream()
 					.map(e -> new modelUtenti(e))
 					.collect(Collectors.toList());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	private static modelUtenti getSpecificObject(String nome, String cognome, String mail, String telefono, String negozio){
+		MBQuery query = MBQuery.queryDaTabella("Clienti");
+		query.whereEqualTo("Nome", ctrlStringa(nome));
+		query.whereEqualTo("Cognome", ctrlStringa(cognome));
+		query.whereEqualTo("Mail", ctrlStringa(mail));
+		query.whereEqualTo("Telefono", ctrlStringa(telefono));
+		query.whereEqualTo("Negozio", ctrlStringa(negozio));
+		
+		try {
+			return new modelUtenti(query.find().get(0));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,38 +111,23 @@ public class modelUtenti {
 	}
 	
 	public boolean cambiaPassword(String nome, String cognome, String mail, String username, String password, String newPassword){
-		MBQuery query = MBQuery.queryDaTabella("Clienti");
-		query.whereEqualTo("Nome", ctrlStringa(nome));
-		query.whereEqualTo("Cognome", ctrlStringa(cognome));
-		query.whereEqualTo("Mail", ctrlStringa(mail));
-		query.whereEqualTo("Username", ctrlStringa(username));
-		query.whereEqualTo("Password", ctrlStringa(password));
-		try {
-			MBOggetto temp = query.find().get(0);
-			temp.setObjectValue("Password", newPassword);
-			return temp.salva();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
+		//controllo esistenza dell'utente a cambiare la passoword
+		modelUtenti temp = modelUtenti.getSpecificObject(nome, cognome, mail, username, password);
+		if(temp != null){
+			temp.setPassword(newPassword);
+			return temp.oggetto.salva();
 		}
+		else 
+			return false;
 	}
 	
 	public boolean eliminaUtente(String nome, String cognome, String mail, String username, String password){
-		MBQuery query = MBQuery.queryDaTabella("Clienti");
-		query.whereEqualTo("Nome", ctrlStringa(nome));
-		query.whereEqualTo("Cognome", ctrlStringa(cognome));
-		query.whereEqualTo("Mail", ctrlStringa(mail));
-		query.whereEqualTo("Username", ctrlStringa(username));
-		query.whereEqualTo("Password", ctrlStringa(password));
-		try {
-			MBOggetto temp = query.find().get(0);
-			return temp.elimina();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		//controllo esistenza dell'utente a eliminare
+		modelUtenti temp = modelUtenti.getSpecificObject(nome, cognome, mail, username, password);
+		if(temp != null)
+			return temp.oggetto.elimina();
+		else 
 			return false;
-		}
 	}
 	
 }
