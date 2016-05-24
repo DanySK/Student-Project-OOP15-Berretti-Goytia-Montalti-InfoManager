@@ -27,7 +27,7 @@ public interface ObserverInterface {
 	void abilitaFrame(boolean abilita);
 	void salvaUtente(Map<String,String> dati);
 	boolean salvaCliente(Map<String,String> dati);
-	void salvaFornitore(Map<String, String> dati);
+	boolean salvaFornitore(Map<String, String> dati);
 	void salvaFattura(Map<String, String> dati);
 	void salvaRiunione(Map<String, String> dati);
 	void salvaScontrini(Map<String, String> dati);

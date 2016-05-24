@@ -19,6 +19,10 @@ public class modelFornitori{
 		this.oggetto = MBOggetto.oggettoDaTabella("Fornitori");
 	}
 	
+	public String getIDFornitore(){
+		return String.format("%i", this.oggetto.objectId());
+	}
+	
 	public String getNome(){
 		return (String)this.oggetto.getObject("Nome");
 	}
@@ -102,6 +106,10 @@ public class modelFornitori{
 	}
 	
 	public boolean eleminaFornitore(String nome, String cognome, String mail, String telefono){
+		/*
+		 * è cosi che si fa l'eliminazione
+		return this.oggetto.elimina();
+		*/
 		MBQuery query = MBQuery.queryDaTabella("Fornitori");
 		query.whereEqualTo("Nome", ctrlStringa(nome));
 		query.whereEqualTo("Cognome", ctrlStringa(cognome));
@@ -116,8 +124,11 @@ public class modelFornitori{
 		}
 	}
 	
-	public boolean modificaFornitore(String nome, String cognome, String mail, String telefono,
-									String newNome, String newCognome, String newMail, String newTelefono){
+	public boolean modificaFornitore(String nome , String cognome, String mail, String telefono, String newNome , String newCognome, String newMail, String newTelefono){
+		/*
+		 * è cosi che si fa l'aggiornamento di un record
+		return this.oggetto.salva();
+		*/
 		@SuppressWarnings("static-access")
 		List<modelFornitori> _temp= this.elenco().stream()
 								.filter(cliente -> cliente.getNome() == ctrlStringa(nome) && cliente.getCognome() == ctrlStringa(cognome)
