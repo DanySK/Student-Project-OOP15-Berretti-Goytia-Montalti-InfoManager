@@ -25,7 +25,7 @@ public interface ObserverInterface {
 	void mostraDialogWrongPass();
 	void mostraDialogWrongUser();
 	void abilitaFrame(boolean abilita);
-	void salvaUtente();
+	void salvaUtente(Map<String,String> dati);
 	void salvaCliente(Map<String,String> dati);
 	void salvaFornitore(Map<String, String> dati);
 	void salvaFattura(Map<String, String> dati);

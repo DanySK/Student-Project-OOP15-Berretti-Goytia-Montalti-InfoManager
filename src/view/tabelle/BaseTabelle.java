@@ -1,7 +1,10 @@
 package view.tabelle;
 
 
+
 import javax.swing.table.AbstractTableModel;
+
+import com.goytia.models.DB.modelMagazzino;
 
 
 
@@ -17,20 +20,33 @@ public class BaseTabelle extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
+		
 		return 3;
 	}
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
-		return 1;
+		int i = 0;
+		for (i=0;i<modelMagazzino.elenco().size();i++){
+		}
+		return i;
 	}
 
 	@Override
 	public Object getValueAt(int row, int col) {
 		// TODO Auto-generated method stub
-		return new Integer ((row+1)*(col+1));
+		if(row == 0){
+			if(col == 0){
+				return new String("Prodotto");
+			}
+			if(col==1){
+				return new String("Quantita'");
+			}
+			if (col == 2){
+				return new String("Prezzo");
+			}
+		}
+		return new String("");
 	}
 	
 	 // ritorna il nome della colonna

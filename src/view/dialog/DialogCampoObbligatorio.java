@@ -50,8 +50,6 @@ public class DialogCampoObbligatorio extends JDialog {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						o.abilitaFrame(true);
 						dispose();
 						
 					}
@@ -64,8 +62,6 @@ public class DialogCampoObbligatorio extends JDialog {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						o.abilitaFrame(true);
 						dispose();
 						
 					}

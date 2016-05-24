@@ -74,8 +74,7 @@ public class MenuGUI extends InitializeFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				ClientiGUI jFClienti = new ClientiGUI(o);
-				jFClienti.setVisible(true);
+				o.mostraClienti();
 				dispose();
 			}
 		});
@@ -85,9 +84,7 @@ public class MenuGUI extends InitializeFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				ScontriniGUI frame = new ScontriniGUI(o);
-				frame.setVisible(true);
+				o.mostraScontrini();
 				dispose();
 			}
 		});
@@ -97,9 +94,7 @@ public class MenuGUI extends InitializeFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				FornitoriGUI jFFornitori = new FornitoriGUI(o);
-				jFFornitori.setVisible(true);
+				o.mostraFornitori();
 				dispose();
 			}
 		});
@@ -109,9 +104,7 @@ public class MenuGUI extends InitializeFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				MagazzinoGUI jFMagazzino = new MagazzinoGUI(o);
-				jFMagazzino.setVisible(true);
+				o.mostraMagazzino();
 				dispose();
 			}
 		});
@@ -122,8 +115,7 @@ public class MenuGUI extends InitializeFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				FattureGUI jFFatture = new FattureGUI(o);
-				jFFatture.setVisible(true);
+				o.mostraFatture();
 				dispose();
 			}
 		});
@@ -134,8 +126,7 @@ public class MenuGUI extends InitializeFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				RegistriIvaGUI jFRegistri = new RegistriIvaGUI(o);
-				jFRegistri.setVisible(true);
+				o.mostraRegistiIva();
 				dispose();
 			}
 		});
@@ -146,8 +137,7 @@ public class MenuGUI extends InitializeFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				ReportVenditeGUI jFReport = new ReportVenditeGUI(o);
-				jFReport.setVisible(true);
+				o.mostraReportVendite();
 				dispose();
 			}
 		});
@@ -158,8 +148,7 @@ public class MenuGUI extends InitializeFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				RiunioniGUI jFRiunioni = new RiunioniGUI(o);
-				jFRiunioni.setVisible(true);
+				o.mostraRiunioni();
 				dispose();
 			}
 		});
@@ -169,8 +158,7 @@ public class MenuGUI extends InitializeFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				LoginGUI windows = new LoginGUI(o);
-				windows.setStatus(true);
+				o.Start();
 				dispose();
 				
 			}

@@ -144,7 +144,6 @@ public class LoginGUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				final int a = checkLogin();
 				if(a == 1){
 					o.mostraMenu();
@@ -164,7 +163,7 @@ public class LoginGUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frmInfoManager.setEnabled(false);
+				frmInfoManager.dispose();
 				o.mostraDialogRegistrati();
 			}
 		});

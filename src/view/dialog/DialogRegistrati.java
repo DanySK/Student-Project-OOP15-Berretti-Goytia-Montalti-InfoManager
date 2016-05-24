@@ -19,7 +19,6 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
 public class DialogRegistrati extends JDialog implements DialogInterface{
-	//DA MODIFICARE IN JFRAME FORSE aggiungere metodo per confrontare la password
 	/**
 	 * 
 	 */
@@ -118,9 +117,12 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						//Map<String, String> valori = getDataString(o);
-						//TODO: correggere richiamo al metodo di salvataggio
-						dispose();
+						Map<String, String> valori = getDataString(o);
+						if (valori != null){
+							o.salvaUtente(valori);
+							o.mostraMenu();
+							dispose();
+						}
 					}
 				});
 				this.buttonPane.add(okButton);
@@ -131,6 +133,7 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
+						o.Start();
 						dispose();
 					}
 				});
@@ -144,16 +147,16 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 		errore.setVisible(true);
 	}
 	private boolean verificaCampiObbligatori(){
-		if(textFieldUsername.getText().equals(null)){
+		if(textFieldUsername.getText().equals("")){
 			return false;
 		} else { 
-			if(textFieldEmail.getText().equals(null)){
+			if(textFieldEmail.getText().equals("")){
 				return false;
 			} else {
-				if(passwordField.equals(null)){
+				if(passwordField.equals("")){
 					return false;
 				} else {
-					if(passwordFieldConfirm.equals(null)){
+					if(passwordFieldConfirm.equals("")){
 						return false;
 					} else {
 						return true;						

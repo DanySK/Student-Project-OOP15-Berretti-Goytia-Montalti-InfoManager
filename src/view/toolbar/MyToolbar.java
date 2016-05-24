@@ -35,6 +35,9 @@ public class MyToolbar extends JToolBar {
 		this.add(mntmSalva);
 		this.add(mntmCerca);
 		this.add(mntmIndietro);
+		if(frame.getClass().equals(ReportVenditeGUI.class)){
+			mntmNuovo.setEnabled(false);
+		}
 		this.mntmNuovo.setIcon(new ImageIcon(FattureGUI.class.getResource("/javax/swing/plaf/metal/icons/ocean/file.gif")));
 		this.mntmNuovo.addActionListener(new ActionListener() {
 			
@@ -56,9 +59,6 @@ public class MyToolbar extends JToolBar {
 				if(frame.getClass().equals(MagazzinoGUI.class)){
 					
 				}
-				if(frame.getClass().equals(ReportVenditeGUI.class)){
-					
-				}
 				if(frame.getClass().equals(RegistriIvaGUI.class)){
 					
 				}
@@ -72,6 +72,15 @@ public class MyToolbar extends JToolBar {
 			}
 		});
 		this.mntmSalva.setIcon(new ImageIcon(FattureGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
+		if(frame.getClass().equals(MagazzinoGUI.class)){
+			mntmSalva.setEnabled(false);
+		}
+		if(frame.getClass().equals(ReportVenditeGUI.class)){
+			mntmSalva.setEnabled(false);
+		}
+		if(frame.getClass().equals(RegistriIvaGUI.class)){
+			mntmSalva.setEnabled(false);
+		}
 		this.mntmSalva.addActionListener(new ActionListener() {
 			
 			@Override
@@ -85,22 +94,13 @@ public class MyToolbar extends JToolBar {
 				if(frame.getClass().equals(FornitoriGUI.class)){
 					o.salvaFornitore(((FornitoriGUI)frame).getTextfield());
 				}
-				if(frame.getClass().equals(MagazzinoGUI.class)){
-					
-				}
-				if(frame.getClass().equals(ReportVenditeGUI.class)){
-					
-				}
-				if(frame.getClass().equals(RegistriIvaGUI.class)){
-					
-				}
+
 				if(frame.getClass().equals(ScontriniGUI.class)){
 					((ScontriniGUI) frame).resetCampi();
 				}
 				if(frame.getClass().equals(RiunioniGUI.class)){
-					
+					o.salvaRiunione(((RiunioniGUI)frame).getTextField());
 				}
-				
 			}
 		});
 		this.mntmCerca.setIcon(new ImageIcon(FattureGUI.class.getResource("/view/icon/lente-di-ingrandimento_318-1787.jpg")));

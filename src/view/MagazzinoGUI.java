@@ -40,7 +40,7 @@ public class MagazzinoGUI extends InitializeFrame {
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.contentPane.setLayout(new BorderLayout(0, 0));
 		this.contentPane.add(toolBar, BorderLayout.NORTH);
-		this.contentPane.add(jPanel);
+		this.contentPane.add(jPanel, BorderLayout.WEST);
 		this.setContentPane(contentPane);
 	}
 

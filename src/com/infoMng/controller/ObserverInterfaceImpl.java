@@ -35,19 +35,19 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	
 	@Override
 	public void mostraClienti() {
-		// TODO Auto-generated method stub
+		this.view.viewClienti();
 
 	}
 
 	@Override
 	public void mostraFornitori() {
-		// TODO Auto-generated method stub
+		this.view.viewFornitori();
 
 	}
 
 	@Override
 	public void mostraFatture() {
-		// TODO Auto-generated method stub
+		this.view.viewFatture();
 
 	}
 
@@ -125,30 +125,30 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public void salvaUtente() {
+	public void salvaUtente(Map<String,String> dati) {
 		 
 	}
 
 	@Override
 	public void salvaCliente(Map<String,String> dati) {
-		System.out.println(dati);
+	    //TODO chiamata model per salvare cliente
 	}
 
 	@Override
 	public void salvaFornitore(Map<String, String> dati) {
-		// TODO Auto-generated method stub
+		// TODO chiamata model per salvare fornitore
 
 	}
 
 	@Override
 	public void salvaFattura(Map<String, String> dati) {
-		// TODO Auto-generated method stub
+		// TODO chiamata model per salvare fattura
 
 	}
 
 	@Override
 	public void salvaRiunione(Map<String, String> dati) {
-		// TODO Auto-generated method stub
+		// TODO chiamata model per salvare riunione
 
 	}
 
