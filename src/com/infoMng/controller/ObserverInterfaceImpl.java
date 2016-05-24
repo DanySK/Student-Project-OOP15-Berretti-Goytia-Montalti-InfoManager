@@ -1,10 +1,11 @@
 package com.infoMng.controller;
 
-import java.awt.TextField;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.swing.JFrame;
+
+import com.goytia.models.DB.modelClienti;
 
 import view.interfaces.ObserverInterface;
 import view.interfaces.ViewInterface;
@@ -36,19 +37,19 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	
 	@Override
 	public void mostraClienti() {
-		// TODO Auto-generated method stub
+		this.view.viewClienti();
 
 	}
 
 	@Override
 	public void mostraFornitori() {
-		// TODO Auto-generated method stub
+		this.view.viewFornitori();
 
 	}
 
 	@Override
 	public void mostraFatture() {
-		// TODO Auto-generated method stub
+		this.view.viewFatture();
 
 	}
 
@@ -107,6 +108,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	@Override
 	public void mostraDialogNuovo() {
 		this.view.viewDialogNuovo();
+
 	}
 
 	@Override
@@ -125,31 +127,46 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public void salvaUtente(Map<String, TextField> dati) {
-		
+	public void salvaUtente(Map<String,String> dati) {
+		 
 	}
 
 	@Override
-	public void salvaCliente(Map<String, TextField> dati) {
-		
+	public boolean salvaCliente(Map<String,String> dati) {
+	    String nome = dati.get("Nome");
+	    String cognome = dati.get("Cognome");
+	    String mail = dati.get("Email");
+	    String telefono = dati.get("Telefono");
+	    String nomeNegozio = ""; //in attesa del metodoto per il nome negozio
+	    return modelClienti.nuovoCliente(nome, cognome, mail, telefono, nomeNegozio);
 	}
 
 	@Override
-	public void salvaFornitore(Map<String, TextField> dati) {
-		// TODO Auto-generated method stub
+	public void salvaFornitore(Map<String, String> dati) {
+		// TODO chiamata model per salvare fornitore
 
 	}
 
 	@Override
-	public void salvaFattura(Map<String, Object> dati) {
-		// TODO Auto-generated method stub
+	public void salvaFattura(Map<String, String> dati) {
+		// TODO chiamata model per salvare fattura
 
 	}
 
 	@Override
-	public void salvaRiunione(Map<String, Object> dati) {
-		// TODO Auto-generated method stub
+	public void salvaRiunione(Map<String, String> dati) {
+		// TODO chiamata model per salvare riunione
 
 	}
+
+	@Override
+	public void abilitaFrame(boolean attiva) {
+		if (attiva){
+			this.attuale.setEnabled(attiva);
+		} else {
+			this.attuale.setEnabled(attiva);
+		}
+	}
+
 
 }

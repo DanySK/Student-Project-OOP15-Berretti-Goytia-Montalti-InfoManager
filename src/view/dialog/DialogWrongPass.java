@@ -34,7 +34,7 @@ public class DialogWrongPass extends JDialog {
 	public DialogWrongPass(final ObserverInterface o) {
 		this.setTitle("Errore");
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(DialogWrongPass.class.getResource("/javax/swing/plaf/metal/icons/Error.gif")));
-		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.setBounds(100, 100, 625, 174);
 		this.getContentPane().setLayout(new BorderLayout());
 		this.contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -54,7 +54,7 @@ public class DialogWrongPass extends JDialog {
 					
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						// TODO Auto-generated method stub
+						o.abilitaFrame(true);
 						dispose();
 					}
 				});
@@ -67,7 +67,7 @@ public class DialogWrongPass extends JDialog {
 					
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						// TODO Auto-generated method stub
+						o.abilitaFrame(true);
 						dispose();
 					}
 				});

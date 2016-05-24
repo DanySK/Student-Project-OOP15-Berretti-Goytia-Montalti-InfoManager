@@ -1,6 +1,5 @@
 package view.interfaces;
 
-import java.awt.TextField;
 import java.util.Map;
 import java.util.Optional;
 
@@ -25,11 +24,12 @@ public interface ObserverInterface {
 	void mostraDialogRegistrati();
 	void mostraDialogWrongPass();
 	void mostraDialogWrongUser();
-	void salvaUtente(Map<String, TextField> dati);
-	void salvaCliente(Map<String, TextField> dati);
-	void salvaFornitore(Map<String, TextField> dati);
-	void salvaFattura(Map<String, Object> dati);
-	void salvaRiunione(Map<String, Object> dati);
+	void abilitaFrame(boolean abilita);
+	void salvaUtente(Map<String,String> dati);
+	boolean salvaCliente(Map<String,String> dati);
+	void salvaFornitore(Map<String, String> dati);
+	void salvaFattura(Map<String, String> dati);
+	void salvaRiunione(Map<String, String> dati);
 	
 	//Domandina veloce... Dobbiamo anche mettere un database esempio con gi� tutta la roba dentro per fare vedere che funziona,
 	//quindi bisonga implementare la funzione carica? tipo void caricaDataBase?

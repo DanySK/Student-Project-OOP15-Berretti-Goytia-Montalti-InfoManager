@@ -33,6 +33,7 @@ public class DialogCampoObbligatorio extends JDialog {
 	 */
 	public DialogCampoObbligatorio(final ObserverInterface o) {
 		setTitle("Inserisci i campi obbligatori");
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(DialogCampoObbligatorio.class.getResource("/javax/swing/plaf/metal/icons/Error.gif")));
 		this.setBounds(100, 100, 674, 169);
 		this.getContentPane().setLayout(new BorderLayout());
@@ -49,7 +50,6 @@ public class DialogCampoObbligatorio extends JDialog {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
 						dispose();
 						
 					}
@@ -62,7 +62,6 @@ public class DialogCampoObbligatorio extends JDialog {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
 						dispose();
 						
 					}

@@ -28,9 +28,9 @@ public class modelScontrini {
 		this.oggetto.setObjectValue("IVA", iva);
 	}
 
-	private void setQuantità(int quantità) {
+	private void setQuantita(int quantita) {
 		// TODO Auto-generated method stub
-		this.oggetto.setObjectValue("Quantità", quantità);
+		this.oggetto.setObjectValue("Quantita", quantita);
 	}
 
 	private void setPrezzoUnitario(double prezzoUnitario) {
@@ -56,8 +56,8 @@ public class modelScontrini {
 		return (String)this.oggetto.getObject("Prodotto");
 	}
 	
-	public int getQuantità(){
-		return (int)this.oggetto.getObject("Quantità");
+	public int getQuantita(){
+		return (int)this.oggetto.getObject("Quantita");
 	}
 	
 	public float getIva(){
@@ -85,11 +85,11 @@ public class modelScontrini {
 		}
 	}
 	
-	public boolean nuovoScontrino(int nScontrino, String prodotto, int quantità, double prezzoUnitario, float iva, float sconto){
+	public boolean nuovoScontrino(int nScontrino, String prodotto, int quantita, double prezzoUnitario, float iva, float sconto){
 		modelScontrini _temp = new modelScontrini(MBOggetto.oggettoDaTabella("Scontrini"));
 		_temp.setNumScontrino(nScontrino);
 		_temp.setProdotto(prodotto);
-		_temp.setQuantità(quantità);
+		_temp.setQuantita(quantita);
 		_temp.setPrezzoUnitario(prezzoUnitario);
 		_temp.setIva(iva);
 		_temp.setSconto(sconto);

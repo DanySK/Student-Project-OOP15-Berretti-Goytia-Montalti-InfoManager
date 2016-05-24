@@ -55,4 +55,5 @@ package view;
 	    public void display(final Boolean switchOn) {
 	        this.setVisible(switchOn);
 	    }
+	    
 	}

@@ -15,10 +15,11 @@ public class ViewInterfaceImpl implements ViewInterface{
 	 */
     public ViewInterfaceImpl() {
 	}
-
+    
 	@Override
 	public void viewClienti() {
 		new ClientiGUI(o).display(true);;
+
 		
 	}
 
@@ -88,8 +89,7 @@ public class ViewInterfaceImpl implements ViewInterface{
 
 	@Override
 	public void viewDialogNuovo() {
-		new DialogNuovo(o).setVisible(true);
-
+			new DialogNuovo(o).setVisible(true);
 		
 	}
 

@@ -19,7 +19,6 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
 public class DialogRegistrati extends JDialog implements DialogInterface{
-	//DA MODIFICARE IN JFRAME FORSE aggiungere metodo per confrontare la password
 	/**
 	 * 
 	 */
@@ -48,9 +47,9 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 	 * Create the dialog.
 	 */
 	public DialogRegistrati(final ObserverInterface o) {
-		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setBounds(100, 100, 310, 375);
 		this.setTitle("Registrazione");
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.getContentPane().setLayout(new BorderLayout());
 		this.contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -118,9 +117,12 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						//Map<String, String> valori = getDataString(o);
-						//TODO: correggere richiamo al metodo di salvataggio
-						//o.salvaCliente();
+						Map<String, String> valori = getDataString(o);
+						if (valori != null){
+							o.salvaUtente(valori);
+							o.mostraMenu();
+							dispose();
+						}
 					}
 				});
 				this.buttonPane.add(okButton);
@@ -131,7 +133,7 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
+						o.Start();
 						dispose();
 					}
 				});
@@ -145,16 +147,16 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 		errore.setVisible(true);
 	}
 	private boolean verificaCampiObbligatori(){
-		if(textFieldUsername.getText().equals(null)){
+		if(textFieldUsername.getText().equals("")){
 			return false;
 		} else { 
-			if(textFieldEmail.getText().equals(null)){
+			if(textFieldEmail.getText().equals("")){
 				return false;
 			} else {
-				if(passwordField.equals(null)){
+				if(passwordField.equals("")){
 					return false;
 				} else {
-					if(passwordFieldConfirm.equals(null)){
+					if(passwordFieldConfirm.equals("")){
 						return false;
 					} else {
 						return true;						
