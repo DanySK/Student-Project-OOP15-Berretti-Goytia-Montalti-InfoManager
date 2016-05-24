@@ -9,24 +9,6 @@ import com.infoMng.controller.MBQuery;
 
 public class modelClienti {
 	
-	/***
-	 * metodo che ottine un elenco con tutti i clienti
-	 * @return
-	 * un lista di tipo modelClienti contenente tutti i clienti
-	 */
-	public static List<modelClienti> elenco(){
-		MBQuery query = MBQuery.queryDaTabella("Clienti");
-		try {
-			return query.find().stream()
-					.map(e -> new modelClienti(e))
-					.collect(Collectors.toList());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
-
 	MBOggetto oggetto;
 	
 	public modelClienti(){
@@ -77,22 +59,44 @@ public class modelClienti {
 		this.oggetto.setObjectValue("Telefono", ctrlStringa(telf));
 	}
 	
-	private void setNegozio(String negoz){
-		this.oggetto.setObjectValue("Negozio", ctrlStringa(negoz));
+	private void setNegozio(String negozio){
+		this.oggetto.setObjectValue("Negozio", ctrlStringa(negozio));
 	}
 	
-	private String ctrlStringa(String str){
+	private static String ctrlStringa(String str){
 		return str != "" ? str : null;
 	}
 	
-	/***
-	 * ricera di clienti in base ai parametri, se non si ha conoscenza di tutti i parametri, si passi
-	 * i parametri non conosciuti come stringa vuota ""
-	 * @param nome cognome mail telefono nomeNegozio
-	 * Stringhe che servono a filtare l'elenco e trovare il/i clienti
-	 * @return
-	 * un lista di contente il/i clienti trovati
-	 */
+	private static MBOggetto getSpecificObject(String nome, String cognome, String mail, String telefono, String negozio){
+		MBQuery query = MBQuery.queryDaTabella("Clienti");
+		query.whereEqualTo("Nome", ctrlStringa(nome));
+		query.whereEqualTo("Cognome", ctrlStringa(cognome));
+		query.whereEqualTo("Mail", ctrlStringa(mail));
+		query.whereEqualTo("Telefono", ctrlStringa(telefono));
+		query.whereEqualTo("Negozio", ctrlStringa(negozio));
+		
+		try {
+			return query.find().get(0);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	public static List<modelClienti> elenco(){
+		MBQuery query = MBQuery.queryDaTabella("Clienti");
+		try {
+			return query.find().stream()
+					.map(e -> new modelClienti(e))
+					.collect(Collectors.toList());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public static List<modelClienti> cercaClienti(String nome, String cognome, String mail, String telefono, String nomeNegozio){
 		return modelClienti.elenco().stream()
 							.filter(cliente -> cliente.getNome() == nome || cliente.getCognome() == cognome
@@ -101,13 +105,6 @@ public class modelClienti {
 							.collect(Collectors.toList());
 	}
 	
-	/***
-	 * crea un nuovo cliente
-	 * @param nome cognome mail telefono negozio
-	 * stringhe contenente i dati del clienti inclui il negozio(ovvero negozio a cui appartiene quest'ultimo)
-	 * @return
-	 * true se si e creato il nuovo cliente altriemente false
-	 */
 	public static boolean nuovoCliente(String nome, String cognome, String mail, String telefono, String negozio){
 		modelClienti nuovo = new modelClienti(MBOggetto.oggettoDaTabella("Clienti"));
 		nuovo.setNome(nome);
@@ -117,55 +114,32 @@ public class modelClienti {
 		nuovo.setNegozio(negozio);
 		return nuovo.oggetto.salva();
 	}
-	/***
-	 * eliminazione di un determinato cliente
-	 * @param nome cognome mail telefono negozio
-	 * tutti parametri sono indispensabile per poter eliminare un cliente, quindi si accerti prima
-	 * di tutti i parametri neccessari
-	 * @return
-	 * true se è stato eliminato, altrimenti false
-	 */
-	public boolean eleminaCliente(String nome, String cognome, String mail, String telefono, String negozio){
-		MBQuery query = MBQuery.queryDaTabella("Clienti");
-		query.whereEqualTo("Nome", ctrlStringa(nome));
-		query.whereEqualTo("Cognome", ctrlStringa(cognome));
-		query.whereEqualTo("Mail", ctrlStringa(mail));
-		query.whereEqualTo("Telefono", ctrlStringa(telefono));
-		query.whereEqualTo("Negozio", ctrlStringa(negozio));
-		try {
-			return query.getFirst().elimina();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+	public boolean eliminaCliente(String nome, String cognome, String mail, String telefono, String negozio){
+		//controllo dati in input
+		MBOggetto temp = modelClienti.getSpecificObject(nome, cognome, mail, telefono, negozio);
+		if(temp != null)
+			return temp.elimina();
+		else
 			return false;
-		}
 	}
-	/***
-	 * eliminazione di un determinato cliente
-	 * @param nome cognome mail telefono negozio
-	 * dati correntei del cliente che si intende modificare i dati
-	 * @param newNome newCognome newMail newTelefono newNegozio
-	 * nuovi dati da modificare nel cliente. i dati a non modificare devono essere passati come stringa vuota ""
-	 * @return
-	 * true se è stato modificato, altrimenti false
-	 */
+	
 	public boolean modificaCliente(String nome, String cognome, String mail, String telefono, String negozio,
 									String newNome, String newCognome, String newMail, String newTelefono, String newNegozio){
-	    @SuppressWarnings("static-access")
-		List<modelClienti> _temp= this.elenco().stream()
-						.filter(cliente -> cliente.getNome() == ctrlStringa(nome) && cliente.getCognome() == ctrlStringa(cognome)
-											    && cliente.getMail() == ctrlStringa(mail) && cliente.getNomeNegozio() == ctrlStringa(negozio)
-											    && cliente.getTelefono() == ctrlStringa(telefono))
-						.collect(Collectors.toList());
-	    if(_temp.size() == 1){
-	    	_temp.get(0).setNome(newNome);
-	    	_temp.get(0).setCognome(newCognome);
-	    	_temp.get(0).setNegozio(newNegozio);
-	    	_temp.get(0).setMail(newMail);
-	    	_temp.get(0).setTelefono(newTelefono);
-	    	return _temp.get(0).oggetto.salva();
-	    }
-	    else
-	    	return false;
+		modelClienti _temp;
+		//controllo dell'esistenza del Cliente a modificare
+		MBOggetto temp = modelClienti.getSpecificObject(nome, cognome, mail, telefono, negozio);
+
+		if(temp != null){
+			_temp= new modelClienti(temp);
+			_temp.setCognome(newCognome);
+			_temp.setNome(newCognome);
+			_temp.setMail(newMail);
+			_temp.setNegozio(newNegozio);
+			_temp.setTelefono(newTelefono);
+			return _temp.oggetto.salva();
+		}
+		else
+			return false;
 	}
 }
