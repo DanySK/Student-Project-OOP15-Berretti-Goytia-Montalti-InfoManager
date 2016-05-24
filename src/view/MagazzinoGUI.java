@@ -11,7 +11,12 @@ import view.interfaces.ObserverInterface;
 import view.tabelle.PannelloTabelle;
 import view.toolbar.MyToolbar;
 import java.awt.Toolkit;
-
+/**
+ * Class that define viewMagazzino
+ * 
+ * @author Alessandro
+ *
+ */
 public class MagazzinoGUI extends InitializeFrame {
 
 	/**
@@ -27,9 +32,11 @@ public class MagazzinoGUI extends InitializeFrame {
 	private static final Dimension DIMFRAME = new Dimension(938,476);
 
 
-	/**
-	 * Create the frame.
-	 */
+/**
+ * 	Constructor for MagazzinGUI frame
+ * @param o
+ * 			Object ObserverInterface
+ */
 	public MagazzinoGUI(final ObserverInterface o) {
 		super(TITOLO,LAYOUT,DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(MagazzinoGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));

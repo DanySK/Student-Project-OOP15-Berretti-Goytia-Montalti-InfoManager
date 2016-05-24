@@ -18,7 +18,11 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-
+/**
+ * Class that define viewClient
+ * @author Alessandro
+ *
+ */
 
 public class ClientiGUI extends InitializeFrame {
 
@@ -46,9 +50,11 @@ public class ClientiGUI extends InitializeFrame {
 	
 	
 
-	/**
-	 * Create the frame.
-	 */
+/**
+ * 	Constructor for ClientiGUI frame
+ * @param o
+ * 			object ObserverInterface
+ */
 	public ClientiGUI(final ObserverInterface o) {
 		super(TITOLO, LAYOUT, DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(ClientiGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
@@ -118,7 +124,11 @@ public class ClientiGUI extends InitializeFrame {
 		
 		
 	}
-	
+	/**
+	 * 	Method for get data from TextField
+	 * @return
+	 * 			Map (String,String)
+	 */			
 	public Map<String,String> getTextfield(){
 		Map<String,String> mappa = new HashMap<>();
 		mappa.put("Nome", txtNome.getText());

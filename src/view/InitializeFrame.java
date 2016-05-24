@@ -6,8 +6,9 @@ package view;
 	import javax.swing.JFrame;
 	import javax.swing.JPanel;
 	/**
-	 * classe de definisce gli aspetti comuni dei jframe per questo programma.
-	 *
+	 * 
+	 * Class that define the common aspect of JFrame for this program
+	 *@author Alessandro
 	 */
 	public class InitializeFrame extends JFrame {
 	    /**
@@ -18,14 +19,14 @@ package view;
 	    private final Integer close = JFrame.EXIT_ON_CLOSE;
 
 	    /**
-	     * costruttore
+	     * Constructor
 	     * 
 	     * @param title
-	     *            titolo frame
+	     *            Frame's title
 	     * @param layout
-	     *            layout main panel
+	     *            Layout main panel
 	     * @param dimension
-	     *            dimensioni frame
+	     *            Dimension of the frame
 	     */
 	    protected InitializeFrame(final String title, final LayoutManager layout, final Dimension dimension) {
 	        this.setTitle(title);
@@ -38,19 +39,20 @@ package view;
 	    }
 
 	    /**
-	     * ritorna il mainpanel
+	     * Method for return MainPanel
 	     * 
-	     * @return il main panel
+	     * @return 
+	     * 			MainPanel
 	     */
 	    protected JPanel getMainPanel() {
 	        return (JPanel) this.getContentPane().getComponent(0);
 	    }
 
 	    /**
-	     * rende visibile il frame
+	     * Set the frame visible
 	     * 
 	     * @param switchOn
-	     *            true = visibile
+	     *            true = visible
 	     */
 	    public void display(final Boolean switchOn) {
 	        this.setVisible(switchOn);

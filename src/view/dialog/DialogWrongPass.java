@@ -15,7 +15,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-
+/**
+ * Class that define DialogWrongPass
+ * @author Alessandro
+ *
+ */
 public class DialogWrongPass extends JDialog {
 
 	/**
@@ -29,7 +33,9 @@ public class DialogWrongPass extends JDialog {
 	private JButton cancelButton = new JButton("Cancel");
 
 	/**
-	 * Create the dialog.
+	 * Create the DialogWrongPass.
+	 * @param o
+	 * 			Object ObserverInterface
 	 */
 	public DialogWrongPass(final ObserverInterface o) {
 		this.setTitle("Errore");

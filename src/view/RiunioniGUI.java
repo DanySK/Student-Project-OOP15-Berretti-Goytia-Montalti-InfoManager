@@ -17,7 +17,11 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 
-
+/**
+ * Class that define viewRiunioni
+ * @author Alessandro
+ *
+ */
 public class RiunioniGUI extends InitializeFrame{
 
 	/**
@@ -43,7 +47,12 @@ public class RiunioniGUI extends InitializeFrame{
 	private final JLabel lblAnno = new JLabel("Anno");
 	private final JTextField txtAnno = new JTextField();
 	private JTextArea textArea = new JTextArea();
-
+	private GroupLayout gl_panelText = new GroupLayout(panelText);
+	/**
+	 * Method that get data from TextField's frame
+	 * @return
+	 * 			Map (String,String)
+	 */		
 	public Map<String,String> getTextField(){
 		Map<String,String> mappa = new HashMap<>();
 		mappa.put("Evento", txtEvento.getText());
@@ -54,15 +63,17 @@ public class RiunioniGUI extends InitializeFrame{
 		return mappa;
 	}
 	/**
-	 * Create the frame.
+	 * Create the RiunioniGUI frame.
+	 * @param o
+	 * 		Object ObserverInterface
 	 */
 	public RiunioniGUI(final ObserverInterface o) {
 		super(TITOLO,LAYOUT,DIMFRAME);
-		txtAnno.setColumns(10);
-		txtMese.setColumns(10);
-		txtOra.setColumns(10);
-		txtGiorno.setColumns(10);
-		txtEvento.setColumns(10);
+		this.txtAnno.setColumns(10);
+		this.txtMese.setColumns(10);
+		this.txtOra.setColumns(10);
+		this.txtGiorno.setColumns(10);
+		this.txtEvento.setColumns(10);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(RiunioniGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.getMainPanel().setLayout(new BorderLayout(0, 0));
 		this.getMainPanel().add(panelTool, BorderLayout.CENTER);
@@ -72,9 +83,9 @@ public class RiunioniGUI extends InitializeFrame{
 		this.panelTool.add(panelText, BorderLayout.CENTER);
 		
 
-		GroupLayout gl_panelText = new GroupLayout(panelText);
-		gl_panelText.setHorizontalGroup(
-			gl_panelText.createParallelGroup(Alignment.LEADING)
+
+		this.gl_panelText.setHorizontalGroup(
+				this.gl_panelText.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelText.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panelText.createParallelGroup(Alignment.LEADING)
@@ -99,8 +110,8 @@ public class RiunioniGUI extends InitializeFrame{
 							.addComponent(txtAnno, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
-		gl_panelText.setVerticalGroup(
-			gl_panelText.createParallelGroup(Alignment.LEADING)
+		this.gl_panelText.setVerticalGroup(
+				this.gl_panelText.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelText.createSequentialGroup()
 					.addGap(32)
 					.addGroup(gl_panelText.createParallelGroup(Alignment.BASELINE)
@@ -124,7 +135,7 @@ public class RiunioniGUI extends InitializeFrame{
 						.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(24, Short.MAX_VALUE))
 		);
-		panelText.setLayout(gl_panelText);
+		this.panelText.setLayout(gl_panelText);
 		
 
 	}

@@ -15,13 +15,28 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLayeredPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import java.awt.FlowLayout;
+import java.awt.LayoutManager;
+
 import view.interfaces.ObserverInterface;
+/**
+ * Class that define viewLogin, which is the start view
+ * @author Alessandro
+ *
+ */
+public class LoginGUI extends InitializeFrame{
 
-public class LoginGUI {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2973091805746960466L;
+	private static final String TITOLO = "Login";
+	private static final LayoutManager LAYOUT = new BorderLayout();
+	private static final Dimension DIMFRAME = new Dimension(462,315);
 	private JFrame frmInfoManager;
 	private JTextField tUser = new JTextField(10);
 	private JTextField tPass = new JPasswordField(10);
@@ -34,23 +49,30 @@ public class LoginGUI {
 	private JPanel buttonPane = new JPanel();
 	private JButton bAccendi = new JButton("Accedi");
 	private JButton bRegistrati = new JButton("Registrati");
-
 	
-	public void setStatus(boolean a){
-		frmInfoManager.setVisible(a);
-	}
-	
+	/**
+	 * Method for set the frame enabled 
+	 * @param a
+	 * 			Variable Boolean
+	 */			
 	public void setUsable(boolean a){
 		frmInfoManager.setEnabled(a);
 	}
 
 	/**
-	 * Create the application.
+	 * Create the frame LoginGUI
+	 * @param o
+	 * 			Object ObserverInterface
 	 */
 	public LoginGUI(final ObserverInterface o) {
+		super(TITOLO,LAYOUT,DIMFRAME);
 		initialize(o);
 	}
-	
+	/**
+	 * 	Method for get data from TextField
+	 * @return
+	 * 			Map (String,String) 
+	 */			
 	public Map<String,String> getTextfield(){
 		Map<String, String> mappa = new HashMap<>();
 		mappa.put("Username",tUser.getText());
@@ -77,13 +99,13 @@ public class LoginGUI {
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @param o
+	 * 			Object ObserverInterface
 	 */
 	private void initialize(final ObserverInterface o) {
 		this.frmInfoManager = new JFrame();	
 		this.frmInfoManager.setIconImage(Toolkit.getDefaultToolkit().getImage(LoginGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
-		this.frmInfoManager.setTitle("Login");
 		this.frmInfoManager.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.frmInfoManager.setBounds(100, 100, 462, 315);
 		
 		this.tUser.setEditable(true);
 		this.tPass.setEditable(true);

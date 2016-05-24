@@ -24,7 +24,11 @@ import java.util.Map;
 
 import javax.swing.JRadioButton;
 
-
+/**
+ * Class that define DialogNuovo
+ * @author Alessandro
+ *
+ */
 public class DialogNuovo extends JDialog implements DialogInterface {
 
 	/**
@@ -66,7 +70,7 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 	private final JTextField txtNegozio = new JTextField(30);
 	private final JLabel lblNegozio = new JLabel("Negozio");
 
-
+	@Override
 	public Map<String,String> getDataString(final ObserverInterface o){
 		this.map.put("Nome",txtNome.getText());
 		this.map.put("Cognome", txtCognome.getText());
@@ -83,7 +87,9 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 	}
 	
 	/**
-	 * Create the dialog.
+	 * Create the DialogNuovo.
+	 * @param o
+	 * 			Object ObserverInterface
 	 */
 	public DialogNuovo(final ObserverInterface o) {
 		txtNegozio.setColumns(10);

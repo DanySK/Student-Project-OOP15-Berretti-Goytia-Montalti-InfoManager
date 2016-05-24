@@ -4,7 +4,11 @@ import java.awt.Toolkit;
 
 
 import view.interfaces.ObserverInterface;
-
+/**
+ * Class that define  viewFornitori
+ * @author Alessandro
+ *
+ */
 public class FornitoriGUI extends ClientiGUI {
 
 	/**
@@ -14,9 +18,11 @@ public class FornitoriGUI extends ClientiGUI {
 	private static final String TITOLO ="Fornitori";
 	
 
-	/**
-	 * Create the frame.
-	 */
+/**
+ * Constructor for FornitoriGUI frame
+ * @param o
+ * 			Object ObserverInterface
+ */
 	public FornitoriGUI(final ObserverInterface o) {
 		super(o);
 		this.setTitle(TITOLO);

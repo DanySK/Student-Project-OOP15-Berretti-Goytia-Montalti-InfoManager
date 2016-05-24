@@ -15,7 +15,11 @@ import view.interfaces.ObserverInterface;
 
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
-
+/**
+ * Class that define DialogCampoObbligatorio
+ * @author Alessandro
+ *
+ */
 public class DialogCampoObbligatorio extends JDialog {
 
 	/**
@@ -29,7 +33,9 @@ public class DialogCampoObbligatorio extends JDialog {
 	private JLabel lblCampoObb = new JLabel("Non hai inserito i campi Obbligatori, i campi obbligatori sono quelli contrassegnati con il simbolo *");
 	
 	/**
-	 * Create the dialog.
+	 * Create the DialogCampoObbligatorio
+	 * @param o
+	 * 			Object ObserverInterface
 	 */
 	public DialogCampoObbligatorio(final ObserverInterface o) {
 		setTitle("Inserisci i campi obbligatori");

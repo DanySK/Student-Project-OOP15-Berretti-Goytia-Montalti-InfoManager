@@ -11,7 +11,7 @@ public class ViewInterfaceImpl implements ViewInterface{
 	
 	
 	/**
-	 * Costruttore vuoto
+	 * Constructor empty
 	 */
     public ViewInterfaceImpl() {
 	}
@@ -36,7 +36,7 @@ public class ViewInterfaceImpl implements ViewInterface{
 
 	@Override
 	public void viewStart() {
-		new LoginGUI(o).setStatus(true);
+		new LoginGUI(o).display(true);
 	}
 
 	@Override

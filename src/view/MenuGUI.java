@@ -21,7 +21,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Toolkit;
-
+/**
+ * Class that define viewMenu
+ * @author Alessandro
+ *
+ */
 public class MenuGUI extends InitializeFrame {
 
 	/**
@@ -55,12 +59,11 @@ public class MenuGUI extends InitializeFrame {
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(938,476);
 	
-	public void changeStatus(){
-			dispose();
-	}
 
 	/**
-	 * Create the frame.
+	 * Create the MenuGUI frame
+	 * @param o
+	 * 			Object ObserverInterface
 	 */
 	public MenuGUI(final ObserverInterface o) {
 		super(TITOLO,LAYOUT,DIMFRAME);

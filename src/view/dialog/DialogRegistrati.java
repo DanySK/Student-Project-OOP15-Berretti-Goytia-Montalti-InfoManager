@@ -17,7 +17,11 @@ import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
-
+/**
+ * Class that define DialogRegistrati
+ * @author Alessandro
+ *
+ */
 public class DialogRegistrati extends JDialog implements DialogInterface{
 	/**
 	 * 
@@ -44,7 +48,9 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 
 	
 	/**
-	 * Create the dialog.
+	 * Create the DialogRegistrati.
+	 * @param o
+	 * 		  Object ObserverInterface
 	 */
 	public DialogRegistrati(final ObserverInterface o) {
 		this.setBounds(100, 100, 310, 375);
@@ -141,11 +147,21 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 			}
 		}
 	}
-	
+	/**
+	 * Method that show DialogCampoObbligatorio as error
+	 * @param o
+	 * 			Object ObserverInterface
+	 */
 	private void creaDialogCampoObbligatorio(final ObserverInterface o){
 		DialogCampoObbligatorio errore = new DialogCampoObbligatorio(o);
 		errore.setVisible(true);
 	}
+	/**
+	 * Method that verify the right insertion of the required field
+	 * @return
+	 * 			Variable Boolean false if the field are not insert,
+	 * 				true instead
+	 */
 	private boolean verificaCampiObbligatori(){
 		if(textFieldUsername.getText().equals("")){
 			return false;

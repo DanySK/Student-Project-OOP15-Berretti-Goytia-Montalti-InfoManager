@@ -12,7 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import view.interfaces.ObserverInterface;
-
+/**
+ * Class that define DialogCerca
+ * @author Alessandro
+ *
+ */
 public class DialogCerca extends JDialog implements DialogInterface{
 
 	/**
@@ -26,7 +30,9 @@ public class DialogCerca extends JDialog implements DialogInterface{
 
 
 	/**
-	 * Create the dialog.
+	 * Create the DialogCerca.
+	 * @param o
+	 * 			Object ObserverInterface
 	 */
 	public DialogCerca(final ObserverInterface o) {
 		this.setBounds(100, 100, 450, 300);
@@ -66,7 +72,7 @@ public class DialogCerca extends JDialog implements DialogInterface{
 		}
 	}
 
-
+	
 	@Override
 	public Map<String, String> getDataString(final ObserverInterface o) {
 		// TODO Auto-generated method stub

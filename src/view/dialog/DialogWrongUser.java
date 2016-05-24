@@ -15,7 +15,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-
+/**
+ * Class that define DIalogWrongUser
+ * @author Alessandro
+ *
+ */
 public class DialogWrongUser extends JDialog {
 
 	/**
@@ -29,7 +33,9 @@ public class DialogWrongUser extends JDialog {
 	private JButton okButton = new JButton("OK");
 	
 	/**
-	 * Create the dialog.
+	 * Create the DialogWrongUser.
+	 * @param o
+	 * 			Object ObserverInterface
 	 */
 	public DialogWrongUser(final ObserverInterface o) {
 		this.setTitle("Errore");

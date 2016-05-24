@@ -24,7 +24,11 @@ import view.toolbar.MyToolbar;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
-
+/**
+ * Class that define viewFatture
+ * @author Alessandro
+ *
+ */
 public class FattureGUI extends InitializeFrame {
 
 	/**
@@ -80,8 +84,10 @@ public class FattureGUI extends InitializeFrame {
 	private JScrollPane scrollPaneFattura = new JScrollPane();
 	private JTextArea textAreaFattura = new JTextArea("");
 	
+	/**
+	 * Method for clean textfield of that frame
+	 */
 	public void resetCampi(){
-		//PULISCI Campi
 		this.textNumeroOrdine.setText("");
 		this.textDataOrdine.setText("");
 		this.textFornitore.setText("");
@@ -99,6 +105,11 @@ public class FattureGUI extends InitializeFrame {
 		this.textFieldQuantita.setText("");
 		
 	}
+	/**
+	 * Method for get data from TextField
+	 * @return
+	 * 			Map(String,String)
+	 */			
 	public Map<String,String> getTextfield(){
 		Map<String,String> mappa = new HashMap<>();
 		mappa.put("NumeroOrdine", textNumeroOrdine.getText());
@@ -118,9 +129,11 @@ public class FattureGUI extends InitializeFrame {
 		mappa.put("Quantita", textFieldQuantita.getText());
 		return mappa;
 	}
-	/**
-	 * Create the frame.
-	 */
+/**
+ * Constructor for FattureGUI frame
+ * @param o
+ * 			Object ObserverInterface
+ */			
 	public FattureGUI(final ObserverInterface o) {
 		super(TITOLO,LAYOUT,DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(FattureGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));

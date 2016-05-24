@@ -7,7 +7,11 @@ import javax.swing.table.AbstractTableModel;
 import com.goytia.models.DB.modelMagazzino;
 
 
-
+/**
+ * Class that define Model of JTable
+ * @author Alessandro
+ *
+ */
 public class BaseTabelle extends AbstractTableModel {
 	/**
 	 * 

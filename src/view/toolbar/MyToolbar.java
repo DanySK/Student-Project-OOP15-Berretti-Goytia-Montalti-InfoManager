@@ -18,7 +18,11 @@ import view.ReportVenditeGUI;
 import view.RiunioniGUI;
 import view.ScontriniGUI;
 import view.interfaces.ObserverInterface;
-
+/**
+ * Class that define Mytoolbar
+ * @author Alessandro
+ *
+ */
 public class MyToolbar extends JToolBar {
 
 
@@ -30,7 +34,13 @@ public class MyToolbar extends JToolBar {
 	private JMenuItem mntmCerca = new JMenuItem("Cerca");
 	private JMenuItem mntmIndietro = new JMenuItem("Indietro");
 	private JMenuItem mntmNuovo = new JMenuItem("Nuovo");
-	
+	/**
+	 * Create the ToolBar
+	 * @param o
+	 * 			Object ObserverInterface
+	 * @param frame
+	 * 			Object InitializeFrame
+	 */
 	public MyToolbar(final ObserverInterface o, final InitializeFrame frame){
 		this.add(mntmNuovo);
 		this.add(mntmSalva);

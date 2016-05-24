@@ -25,7 +25,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
-
+/**
+ * Class that define viewScontrini
+ * @author Alessandro
+ *
+ */
 public class ScontriniGUI extends InitializeFrame{
 
 	/**
@@ -63,7 +67,9 @@ public class ScontriniGUI extends InitializeFrame{
 	private double totsconto;
 	private final JButton btnAggiungi = new JButton("Aggiungi");
 	private final JLabel lblAnteprimaDiStampa = new JLabel("Anteprima di Stampa");
-	
+	/**
+	 * Method that clean the TextField's frame
+	 */
 	public void resetCampi(){
 		txtIva.setText("");
 		txtPrezzoUnitario.setText("");
@@ -75,7 +81,9 @@ public class ScontriniGUI extends InitializeFrame{
 
 
 	/**
-	 * Create the frame.
+	 * Create the ScontriniGUI frame.
+	 * @param o
+	 * 			Object ObserverInterface
 	 */
 	public ScontriniGUI(final ObserverInterface o) {
 		super(TITOLO,LAYOUT,DIMFRAME);
@@ -107,8 +115,8 @@ public class ScontriniGUI extends InitializeFrame{
 		this.txtScontrino = new JTextField();
 		this.txtScontrino.setColumns(10);
 		
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+		this.gl_contentPane.setHorizontalGroup(
+			this.gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
@@ -148,8 +156,8 @@ public class ScontriniGUI extends InitializeFrame{
 							.addComponent(lblAnteprimaDiStampa, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap(104, Short.MAX_VALUE))))
 		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+		this.gl_contentPane.setVerticalGroup(
+			this.gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
@@ -233,6 +241,11 @@ public class ScontriniGUI extends InitializeFrame{
 		});
 		
 	}
+	/**
+	 * Method for get data from TextField
+	 * @return
+	 * 			Map (String,String)
+	 */
 	public Map<String,String> getTextField(){
 		Map<String,String> mappa = new HashMap<>();
 		mappa.put("Prodotto", txtProdotto.getText());
@@ -243,7 +256,17 @@ public class ScontriniGUI extends InitializeFrame{
 		mappa.put("Scontrino", txtScontrino.getText());
 		return mappa;
 	}
-	
+	/**
+	 * Method that calculate price in real time
+	 * @param prezzo
+	 * 			Object Integer
+	 * @param quantita
+	 * 			Object Integer
+	 * @param iva
+	 * 			Object Integer
+	 * @return
+	 * 		  Total
+	 */
 	private double Calcola (Integer prezzo, Integer quantita, Integer iva){
 		this.imponibile=0;
 		this.totale=0;
