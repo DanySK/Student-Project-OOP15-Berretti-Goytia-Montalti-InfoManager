@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import javax.swing.JFrame;
 
+import com.goytia.models.DB.modelClienti;
+
 import view.interfaces.ObserverInterface;
 import view.interfaces.ViewInterface;
 
@@ -130,8 +132,13 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public void salvaCliente(Map<String,String> dati) {
-	    //TODO chiamata model per salvare cliente
+	public boolean salvaCliente(Map<String,String> dati) {
+	    String nome = dati.get("Nome");
+	    String cognome = dati.get("Cognome");
+	    String mail = dati.get("Email");
+	    String telefono = dati.get("Telefono");
+	    String nomeNegozio = ""; //in attesa del metodoto per il nome negozio
+	    return modelClienti.nuovoCliente(nome, cognome, mail, telefono, nomeNegozio);
 	}
 
 	@Override
