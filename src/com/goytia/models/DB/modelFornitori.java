@@ -56,11 +56,25 @@ public class modelFornitori{
 		this.oggetto.setObjectValue("Telefono", ctrlStringa(telf));
 	}
 	
-	private String ctrlStringa(String str){
+	private static String ctrlStringa(String str){
 		return str != "" ? str : null;
 	}
 	
-
+	private static modelFornitori getSpecificObject(String nome, String cognome, String mail, String telefono){
+		MBQuery query = MBQuery.queryDaTabella("Clienti");
+		query.whereEqualTo("Nome", ctrlStringa(nome));
+		query.whereEqualTo("Cognome", ctrlStringa(cognome));
+		query.whereEqualTo("Mail", ctrlStringa(mail));
+		query.whereEqualTo("Telefono", ctrlStringa(telefono));	
+		try {
+			return new modelFornitori(query.find().get(0));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public static List<modelFornitori> elenco(){
 		MBQuery query = MBQuery.queryDaTabella("Fornitori");
 		try {
@@ -76,15 +90,15 @@ public class modelFornitori{
 	
 	public static List<modelFornitori> cercaFornitori(String nome, String cognome, String mail, String telefono){
 		return modelFornitori.elenco().stream()
-							.filter(f -> f.getNome() == nome || f.getCognome() == cognome
-											    || f.getMail() == mail || f.getTelefono() == telefono)
+							.filter(f -> f.getNome() == ctrlStringa(nome) || f.getCognome() == ctrlStringa(cognome)
+											    || f.getMail() == ctrlStringa(mail) || f.getTelefono() == ctrlStringa(telefono))
 							.collect(Collectors.toList());
 	}
 	
 	public static List<modelFornitori> cercaFornitori(String nomeProdotto){
 		
 		List<String> listTemp = modelMagazzino.elenco().stream()
-				.filter(e-> e.getNome() == nomeProdotto)
+				.filter(e-> e.getNome() == ctrlStringa(nomeProdotto))
 				.map(e -> e.getFornitore())
 				.collect(Collectors.toList());
 		
@@ -105,41 +119,25 @@ public class modelFornitori{
 		return nuovo.oggetto.salva();
 	}
 	
-	public boolean eleminaFornitore(String nome, String cognome, String mail, String telefono){
-		/*
-		 * è cosi che si fa l'eliminazione
-		return this.oggetto.elimina();
-		*/
-		MBQuery query = MBQuery.queryDaTabella("Fornitori");
-		query.whereEqualTo("Nome", ctrlStringa(nome));
-		query.whereEqualTo("Cognome", ctrlStringa(cognome));
-		query.whereEqualTo("Mail", ctrlStringa(mail));
-		query.whereEqualTo("Telefono", ctrlStringa(telefono));
-		try {
-			return query.getFirst().elimina();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
+	public boolean eliminaFornitore(String nome, String cognome, String mail, String telefono){
+		//controllo l'esistenza del fornitore a eliminare
+		modelFornitori temp = modelFornitori.getSpecificObject(nome, cognome, mail, telefono);
+		if(temp != null){
+			return temp.oggetto.elimina();
 		}
+		else 
+			return false;
 	}
 	
 	public boolean modificaFornitore(String nome , String cognome, String mail, String telefono, String newNome , String newCognome, String newMail, String newTelefono){
-		/*
-		 * è cosi che si fa l'aggiornamento di un record
-		return this.oggetto.salva();
-		*/
-		@SuppressWarnings("static-access")
-		List<modelFornitori> _temp= this.elenco().stream()
-								.filter(cliente -> cliente.getNome() == ctrlStringa(nome) && cliente.getCognome() == ctrlStringa(cognome)
-													    && cliente.getMail() == ctrlStringa(mail) && cliente.getTelefono() == ctrlStringa(telefono))
-								.collect(Collectors.toList());
-			if(_temp.size() == 1){
-			_temp.get(0).setNome(newNome);
-			_temp.get(0).setCognome(newCognome);
-			_temp.get(0).setMail(newMail);
-			_temp.get(0).setTelefono(newTelefono);
-			return _temp.get(0).oggetto.salva();
+		//Conttrollo l'esistenza del fornitore a modificare
+		modelFornitori temp = modelFornitori.getSpecificObject(nome, cognome, mail, telefono);
+		if(temp != null){
+			temp.setNome(newNome);
+			temp.setCognome(newCognome);
+			temp.setMail(newMail);
+			temp.setTelefono(newTelefono);
+			return temp.oggetto.salva();
 		}
 		else
 			return false;

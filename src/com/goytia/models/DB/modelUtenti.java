@@ -85,7 +85,6 @@ public class modelUtenti {
 		query.whereEqualTo("Mail", ctrlStringa(mail));
 		query.whereEqualTo("Telefono", ctrlStringa(telefono));
 		query.whereEqualTo("Negozio", ctrlStringa(negozio));
-		
 		try {
 			return new modelUtenti(query.find().get(0));
 		} catch (SQLException e) {
@@ -94,6 +93,7 @@ public class modelUtenti {
 			return null;
 		}
 	}
+	
 	public boolean nuovoUtente(String nome, String cognome, String mail, String username, String password){
 		modelUtenti nuovo = new modelUtenti(MBOggetto.oggettoDaTabella("Utenti"));
 		nuovo.setNome(nome);
