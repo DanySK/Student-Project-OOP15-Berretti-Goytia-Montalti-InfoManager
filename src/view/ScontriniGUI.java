@@ -202,12 +202,12 @@ public class ScontriniGUI extends InitializeFrame{
 				Calcola(Integer.parseInt(txtPrezzoUnitario.getText()), Integer.parseInt(txtQuantita.getText())
 						, Integer.parseInt(txtIva.getText()));
 				textArea.setText("");
-				textArea.setText("Quantità: " + txtQuantita.getText() +" "+ txtProdotto.getText() 
+				textArea.setText("Quantita': " + txtQuantita.getText() +" "+ txtProdotto.getText() 
 						+ "     Prezzo: " 
 						+ txtPrezzoUnitario.getText() + "\u20AC "
-						+ "\nSconto:\t"
+						+ "\nSconto: "
 						+ txtSconto.getText() + "\n\n =====================================\n\n" +
-						"Sconto:\t\t\t" + String.valueOf(totsconto) +
+						"Sconto: "  + txtSconto.getText() +"%" +"\t\t" + String.valueOf(totsconto) +
 						"\nImponibile:\t\t" + String.valueOf(imponibile) + "\u20AC\nIva: " + txtIva.getText() + "%"  + "\t\t" + String.valueOf(totiva) + "\u20AC" +
 						"\n\n =====================================\n\n" + "Totale:\t\t\t" + 
 				String.valueOf(totale)+"\u20AC");		 

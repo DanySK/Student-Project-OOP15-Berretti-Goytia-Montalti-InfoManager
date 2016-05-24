@@ -30,6 +30,7 @@ public interface ObserverInterface {
 	void salvaFornitore(Map<String, String> dati);
 	void salvaFattura(Map<String, String> dati);
 	void salvaRiunione(Map<String, String> dati);
+	void salvaScontrini(Map<String, String> dati);
 	
 	//Domandina veloce... Dobbiamo anche mettere un database esempio con gi� tutta la roba dentro per fare vedere che funziona,
 	//quindi bisonga implementare la funzione carica? tipo void caricaDataBase?

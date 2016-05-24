@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 
 import view.ClientiGUI;
@@ -35,7 +36,10 @@ public class MyToolbar extends JToolBar {
 		this.add(mntmSalva);
 		this.add(mntmCerca);
 		this.add(mntmIndietro);
-		if(frame.getClass().equals(ReportVenditeGUI.class)){
+		if(frame instanceof RegistriIvaGUI){
+			mntmNuovo.setEnabled(false);
+		}
+		if(frame instanceof MagazzinoGUI){
 			mntmNuovo.setEnabled(false);
 		}
 		this.mntmNuovo.setIcon(new ImageIcon(FattureGUI.class.getResource("/javax/swing/plaf/metal/icons/ocean/file.gif")));
@@ -43,30 +47,24 @@ public class MyToolbar extends JToolBar {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(frame.getClass().equals(FattureGUI.class)){
+				if(frame instanceof FattureGUI){
 					((FattureGUI) frame).resetCampi();
 				}
-				if(frame.getClass().equals(ClientiGUI.class)){
+				if(frame instanceof ClientiGUI){
 					o.setAttuale(frame);
 					o.abilitaFrame(false);
 					o.mostraDialogNuovo();
 				}
-				if(frame.getClass().equals(FornitoriGUI.class)){
+				if(frame instanceof FornitoriGUI){
 					o.setAttuale(frame);
 					o.abilitaFrame(false);
 					o.mostraDialogNuovo();
 				}
-				if(frame.getClass().equals(MagazzinoGUI.class)){
-					
-				}
-				if(frame.getClass().equals(RegistriIvaGUI.class)){
-					
-				}
-				if(frame.getClass().equals(ScontriniGUI.class)){
+				if(frame instanceof ScontriniGUI){
 					((ScontriniGUI) frame).resetCampi();
 				}
-				if(frame.getClass().equals(RiunioniGUI.class)){
-					
+				if(frame instanceof RiunioniGUI){
+					//((RiunioniGUI) frame).resetCampi();
 				}
 				
 			}
@@ -87,19 +85,24 @@ public class MyToolbar extends JToolBar {
 			public void actionPerformed(ActionEvent e) {
 				if(frame.getClass().equals(FattureGUI.class)){
 					o.salvaFattura(((FattureGUI) frame).getTextfield());
+					JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
 				}
 				if(frame.getClass().equals(ClientiGUI.class)){
 					o.salvaCliente(((ClientiGUI)frame).getTextfield());
+					JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
 				}
 				if(frame.getClass().equals(FornitoriGUI.class)){
 					o.salvaFornitore(((FornitoriGUI)frame).getTextfield());
+					JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
 				}
 
 				if(frame.getClass().equals(ScontriniGUI.class)){
-					((ScontriniGUI) frame).resetCampi();
+					//o.salvaScontriniGUI(((ScontriniGUI) frame).getTextfield());
+					//JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
 				}
 				if(frame.getClass().equals(RiunioniGUI.class)){
 					o.salvaRiunione(((RiunioniGUI)frame).getTextField());
+					JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
 				}
 			}
 		});

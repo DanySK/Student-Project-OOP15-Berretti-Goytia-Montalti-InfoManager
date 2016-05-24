@@ -168,5 +168,11 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		}
 	}
 
+	@Override
+	public void salvaScontrini(Map<String, String> dati) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }
