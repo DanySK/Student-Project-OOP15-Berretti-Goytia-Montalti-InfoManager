@@ -1,5 +1,6 @@
 package com.infoMng.controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import javax.swing.JFrame;
 
 import com.goytia.models.DB.modelClienti;
 import com.goytia.models.DB.modelFornitori;
+import com.goytia.models.DB.modelMagazzino;
 
 import view.interfaces.ObserverInterface;
 import view.interfaces.ViewInterface;
@@ -176,6 +178,12 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	public void salvaScontrini(Map<String, String> dati) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<modelMagazzino> ricercaProdotti(String nome) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

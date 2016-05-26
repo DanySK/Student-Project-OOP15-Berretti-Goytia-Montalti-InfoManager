@@ -1,9 +1,12 @@
 package view.interfaces;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.swing.JFrame;
+
+import com.goytia.models.DB.modelMagazzino;
 
 public interface ObserverInterface {
 	/**
@@ -129,5 +132,5 @@ public interface ObserverInterface {
 	 */
 	void salvaScontrini(Map<String, String> dati);
 	
-
+	List<modelMagazzino> ricercaProdotti(String nome);
 }
