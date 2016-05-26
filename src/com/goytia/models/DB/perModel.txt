@@ -1,0 +1,16 @@
+I metodi per la creazione di nuovi elementi come per esempio "nuovo prodotto" devono essere statici e sarebbe meglio che ritornino l'elemento creato
+
+Nei metodi per il salvataggio è inutile fare tutto quela lavoro basta che chiami il salva del mio oggetto pensa a tutto lui
+
+Per quanto riguarda l'eliminazione vale la stessa storia dei metodi di salvataggio
+
+nel tuo model magazzino la quantita dei prodotti non viene salvata da nessuna parte ma siene calcolata attraverso i movimenti (vendite e acquisti) 
+
+quanto all'interno di una classe vuoi salvare un oggetto salva l'id dell'oggetto (ES fornitore all'interno del prodotto ci dovresti salvare l'id dell'oggetto) in quanto tutto è basato su un database SQLlite e ti ricordi come si fanno le associazioni 1 a n?
+
+devi trovare un modo per salvare l'utente corrente durante l'uso dell'applicazione
+
+quando crei una nuova cosa (ES un nuovo cliente) devi associarlo ad un utente, in modo che quando vai a ottenere l'elenco dei clienti prendi solo quelli dell'utente corrente
+ 
+RICORDA!
+tutte quante le associazioni tra oggetti le devi pensare come associazioni in sql
