@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JRadioButton;
+import java.awt.Toolkit;
 
 /**
  * Class that define DialogNuovo
@@ -92,6 +93,7 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 	 * 			Object ObserverInterface
 	 */
 	public DialogNuovo(final ObserverInterface o) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(DialogNuovo.class.getResource("/javax/swing/plaf/metal/icons/ocean/computer.gif")));
 		txtNegozio.setColumns(10);
 		txtMail.setColumns(10);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);

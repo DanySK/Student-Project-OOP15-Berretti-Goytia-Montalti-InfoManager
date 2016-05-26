@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import java.awt.Toolkit;
 /**
  * Class that define DialogRegistrati
  * @author Alessandro
@@ -53,6 +54,7 @@ public class DialogRegistrati extends JDialog implements DialogInterface{
 	 * 		  Object ObserverInterface
 	 */
 	public DialogRegistrati(final ObserverInterface o) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(DialogRegistrati.class.getResource("/javax/swing/plaf/metal/icons/ocean/computer.gif")));
 		this.setBounds(100, 100, 310, 375);
 		this.setTitle("Registrazione");
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
