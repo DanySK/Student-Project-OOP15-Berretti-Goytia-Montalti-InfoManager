@@ -37,7 +37,6 @@ public class LoginGUI extends InitializeFrame{
 	private static final String TITOLO = "Login";
 	private static final LayoutManager LAYOUT = new BorderLayout();
 	private static final Dimension DIMFRAME = new Dimension(462,315);
-	private JFrame frmInfoManager;
 	private JTextField tUser = new JTextField(10);
 	private JTextField tPass = new JPasswordField(10);
 	private JLayeredPane layeredPane = new JLayeredPane();
@@ -56,7 +55,7 @@ public class LoginGUI extends InitializeFrame{
 	 * 			Variable Boolean
 	 */			
 	public void setUsable(boolean a){
-		frmInfoManager.setEnabled(a);
+		this.setEnabled(a);
 	}
 
 	/**
@@ -66,46 +65,8 @@ public class LoginGUI extends InitializeFrame{
 	 */
 	public LoginGUI(final ObserverInterface o) {
 		super(TITOLO,LAYOUT,DIMFRAME);
-		initialize(o);
-	}
-	/**
-	 * 	Method for get data from TextField
-	 * @return
-	 * 			Map (String,String) 
-	 */			
-	public Map<String,String> getTextfield(){
-		Map<String, String> mappa = new HashMap<>();
-		mappa.put("Username",tUser.getText());
-		mappa.put("Password",tPass.getText());
-		return mappa;
-	}
-	
-	public int checkLogin(){
-		/*try {
-			Optional<IUtente> utente = IUtente.accedi(tUser.getText(), tPass.getText());
-			if(utente.isPresent()){
-				return 1;
-			}
-			else{
-				return 0;
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-			
-			e.printStackTrace();
-			return -1;
-		}*/
-		return 1;
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 * @param o
-	 * 			Object ObserverInterface
-	 */
-	private void initialize(final ObserverInterface o) {
-		this.frmInfoManager = new JFrame();	
-		this.frmInfoManager.setIconImage(Toolkit.getDefaultToolkit().getImage(LoginGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
-		this.frmInfoManager.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(LoginGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		this.tUser.setEditable(true);
 		this.tPass.setEditable(true);
@@ -155,11 +116,11 @@ public class LoginGUI extends InitializeFrame{
 		);
 		this.layeredPane_1.setLayout(gl_layeredPane_1);
 		this.layeredPane.setLayout(gl_layeredPane);
-		this.frmInfoManager.getContentPane().setLayout(new BorderLayout(0, 0));
-		this.frmInfoManager.getContentPane().add(layeredPane, BorderLayout.NORTH);
+		this.getContentPane().setLayout(new BorderLayout(0, 0));
+		this.getContentPane().add(layeredPane, BorderLayout.NORTH);
 		
 
-		this.frmInfoManager.getContentPane().add(buttonPane, BorderLayout.SOUTH);
+		this.getContentPane().add(buttonPane, BorderLayout.SOUTH);
 		this.buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		this.bAccendi.addActionListener(new ActionListener() {
@@ -169,7 +130,7 @@ public class LoginGUI extends InitializeFrame{
 				final int a = checkLogin();
 				if(a == 1){
 					o.mostraMenu();
-					frmInfoManager.dispose();
+					dispose();
 				} else {
 					if(a == 0){
 					o.mostraDialogWrongPass();
@@ -185,10 +146,39 @@ public class LoginGUI extends InitializeFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frmInfoManager.dispose();
+				dispose();
 				o.mostraDialogRegistrati();
 			}
 		});
 		this.buttonPane.add(bRegistrati);
 	}
+	/**
+	 * 	Method for get data from TextField
+	 * @return
+	 * 			Map (String,String) 
+	 */			
+	public Map<String,String> getTextfield(){
+		Map<String, String> mappa = new HashMap<>();
+		mappa.put("Username",tUser.getText());
+		mappa.put("Password",tPass.getText());
+		return mappa;
+	}
+	
+	public int checkLogin(){
+		/*try {
+			Optional<IUtente> utente = IUtente.accedi(tUser.getText(), tPass.getText());
+			if(utente.isPresent()){
+				return 1;
+			}
+			else{
+				return 0;
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			
+			e.printStackTrace();
+			return -1;
+		}*/
+		return 1;
+	}
+		
 }
