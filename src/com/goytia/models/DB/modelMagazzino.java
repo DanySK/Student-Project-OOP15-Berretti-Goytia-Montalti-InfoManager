@@ -43,6 +43,10 @@ public class modelMagazzino {
 		this.oggetto.setObjectValue("Descrizione", descrizione);
 	}
 	
+	public Integer getID(){
+		return this.oggetto.objectId();
+	}
+	
 	public String getNome(){
 		return (String) this.oggetto.getObject("Nome");
 	}

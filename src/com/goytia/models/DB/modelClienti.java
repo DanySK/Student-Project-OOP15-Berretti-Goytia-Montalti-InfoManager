@@ -22,6 +22,10 @@ public class modelClienti {
 		this.oggetto=temp;
 	}
 	
+	public Integer getID(){
+		return this.oggetto.objectId();
+	}
+	
 	public String getNome(){
 		return (String)this.oggetto.getObject("Nome");
 	}

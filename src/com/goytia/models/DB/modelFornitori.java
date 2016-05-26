@@ -19,6 +19,10 @@ public class modelFornitori{
 		this.oggetto = MBOggetto.oggettoDaTabella("Fornitori");
 	}
 	
+	public Integer getID(){
+		return this.oggetto.objectId();
+	}
+	
 	public String getIDFornitore(){
 		return String.format("%i", this.oggetto.objectId());
 	}

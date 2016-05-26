@@ -47,6 +47,9 @@ public class modelRiunioni {
 		return str != "" ? str : null;
 	}
 
+	public Integer getID(){
+		return this.oggetto.objectId();
+	}
 	
 	public String getNomeRiunione(){
 		return (String)this.oggetto.getObject("Riunione");

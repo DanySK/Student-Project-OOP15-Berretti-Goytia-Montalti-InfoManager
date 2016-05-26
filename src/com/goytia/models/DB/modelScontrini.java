@@ -17,7 +17,7 @@ public class modelScontrini {
 	public modelScontrini(){
 		this.oggetto = MBOggetto.oggettoDaTabella("Scontrini");
 	}
-
+	
 	private void setSconto(float sconto) {
 		// TODO Auto-generated method stub
 		this.oggetto.setObjectValue("Sconti", sconto);
@@ -46,6 +46,10 @@ public class modelScontrini {
 	private void setNumScontrino(int nScontrino) {
 		// TODO Auto-generated method stub
 		this.oggetto.setObjectValue("NumScontrino", nScontrino);
+	}
+	
+	public Integer getID(){
+		return this.oggetto.objectId();
 	}
 	
 	public int getNumScontrino(){
