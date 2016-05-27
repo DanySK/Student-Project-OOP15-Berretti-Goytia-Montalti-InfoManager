@@ -108,12 +108,15 @@ public class modelFornitori{
 		return nuovo.oggetto.salva();
 	}
 	
-	public boolean eliminaFornitore(Integer idFornitore){
-		return false;
+	public boolean eliminaFornitore(){
+		return this.oggetto.elimina();
 	}
 	
-	public boolean modificaFornitore(String nome , String cognome, String mail, String telefono, String newNome , String newCognome, String newMail, String newTelefono){
-		//Conttrollo l'esistenza del fornitore a modificare
-		return false;
+	public boolean modificaFornitore(String newNome , String newCognome, String newMail, String newTelefono){
+		if(newNome != "")this.setNome(newNome);
+		if(newCognome != "")this.setCognome(newCognome);
+		if(newMail != "")this.setMail(newMail);
+		if(newTelefono != "")this.setTelefono(newTelefono);
+		return this.oggetto.salva();
 	}
 }
