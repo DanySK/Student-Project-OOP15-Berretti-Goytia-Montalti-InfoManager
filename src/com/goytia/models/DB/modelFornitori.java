@@ -124,26 +124,11 @@ public class modelFornitori{
 	}
 	
 	public boolean eliminaFornitore(String nome, String cognome, String mail, String telefono){
-		//controllo l'esistenza del fornitore a eliminare
-		modelFornitori temp = modelFornitori.getSpecificObject(nome, cognome, mail, telefono);
-		if(temp != null){
-			return temp.oggetto.elimina();
-		}
-		else 
-			return false;
+		return false;
 	}
 	
 	public boolean modificaFornitore(String nome , String cognome, String mail, String telefono, String newNome , String newCognome, String newMail, String newTelefono){
 		//Conttrollo l'esistenza del fornitore a modificare
-		modelFornitori temp = modelFornitori.getSpecificObject(nome, cognome, mail, telefono);
-		if(temp != null){
-			temp.setNome(newNome);
-			temp.setCognome(newCognome);
-			temp.setMail(newMail);
-			temp.setTelefono(newTelefono);
-			return temp.oggetto.salva();
-		}
-		else
-			return false;
+		return false;
 	}
 }

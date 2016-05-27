@@ -120,28 +120,11 @@ public class modelClienti {
 	}
 
 	public boolean eliminaCliente(String nome, String cognome, String mail, String telefono, String negozio){
-		//controllo dati in input
-		modelClienti temp = modelClienti.getSpecificObject(nome, cognome, mail, telefono, negozio);
-		if(temp != null)
-			return temp.oggetto.elimina();
-		else
-			return false;
+		return false;
 	}
 	
 	public boolean modificaCliente(String nome, String cognome, String mail, String telefono, String negozio,
 									String newNome, String newCognome, String newMail, String newTelefono, String newNegozio){
-		//controllo dell'esistenza del Cliente a modificare
-		modelClienti _temp = modelClienti.getSpecificObject(nome, cognome, mail, telefono, negozio);
-
-		if(_temp != null){
-			_temp.setCognome(newCognome);
-			_temp.setNome(newCognome);
-			_temp.setMail(newMail);
-			_temp.setNegozio(newNegozio);
-			_temp.setTelefono(newTelefono);
-			return _temp.oggetto.salva();
-		}
-		else
 			return false;
 	}
 }
