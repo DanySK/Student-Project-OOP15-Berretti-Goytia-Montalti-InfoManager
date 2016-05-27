@@ -5,8 +5,6 @@ public class prodottoVenduto {
 	private Integer idProdotto;
 	private int quantita;
 	double prezzoUnitario;
-	float IVA;
-	float Sconto;
 	
 	public prodottoVenduto(Integer idProdotto, int quantita, double prezzoUnitario, float IVA, float Sconto){
 		this.idProdotto = idProdotto;
@@ -25,11 +23,4 @@ public class prodottoVenduto {
 		return this.prezzoUnitario;
 	}
 	
-	public float getIVA(){
-		return this.IVA;
-	}
-	//
-	public float getSconto(){
-		return this.Sconto;
-	}
 }	

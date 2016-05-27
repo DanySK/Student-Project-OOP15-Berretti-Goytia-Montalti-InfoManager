@@ -44,7 +44,6 @@ public class modelFornitori{
 	}
 	
 	private void setNome(String nome){
-		if(nome!= "")
 		this.oggetto.setObjectValue("Nome", ctrlStringa(nome));
 	}
 	
@@ -64,20 +63,6 @@ public class modelFornitori{
 		return str != "" ? str : null;
 	}
 	
-	private static modelFornitori getSpecificObject(String nome, String cognome, String mail, String telefono){
-		MBQuery query = MBQuery.queryDaTabella("Clienti");
-		query.whereEqualTo("Nome", ctrlStringa(nome));
-		query.whereEqualTo("Cognome", ctrlStringa(cognome));
-		query.whereEqualTo("Mail", ctrlStringa(mail));
-		query.whereEqualTo("Telefono", ctrlStringa(telefono));	
-		try {
-			return new modelFornitori(query.find().get(0));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
 	
 	public static List<modelFornitori> elenco(){
 		MBQuery query = MBQuery.queryDaTabella("Fornitori");
@@ -94,15 +79,15 @@ public class modelFornitori{
 	
 	public static List<modelFornitori> cercaFornitori(String nome, String cognome, String mail, String telefono){
 		return modelFornitori.elenco().stream()
-							.filter(f -> f.getNome() == ctrlStringa(nome) || f.getCognome() == ctrlStringa(cognome)
-											    || f.getMail() == ctrlStringa(mail) || f.getTelefono() == ctrlStringa(telefono))
+							.filter(f -> f.getNome().equalsIgnoreCase(nome) || f.getCognome().equalsIgnoreCase(cognome)
+											    || f.getMail().equalsIgnoreCase(mail) || f.getTelefono().equalsIgnoreCase(mail))
 							.collect(Collectors.toList());
 	}
 	
 	public static List<modelFornitori> cercaFornitori(String nomeProdotto){
 		
 		List<String> listTemp = modelMagazzino.elenco().stream()
-				.filter(e-> e.getNome().equalsIgnoreCase(ctrlStringa(nomeProdotto)))
+				.filter(e-> e.getNome().equalsIgnoreCase(nomeProdotto))
 				.map(e -> e.getNome())
 				.collect(Collectors.toList());
 		
@@ -123,7 +108,7 @@ public class modelFornitori{
 		return nuovo.oggetto.salva();
 	}
 	
-	public boolean eliminaFornitore(String nome, String cognome, String mail, String telefono){
+	public boolean eliminaFornitore(Integer idFornitore){
 		return false;
 	}
 	

@@ -47,7 +47,6 @@ public class modelClienti {
 	}
 	
 	private void setNome(String nome){
-		if(nome!= "")
 		this.oggetto.setObjectValue("Nome", ctrlStringa(nome));
 	}
 	
@@ -71,23 +70,6 @@ public class modelClienti {
 		return str != "" ? str : null;
 	}
 	
-	private static modelClienti getSpecificObject(String nome, String cognome, String mail, String telefono, String negozio){
-		MBQuery query = MBQuery.queryDaTabella("Clienti");
-		query.whereEqualTo("Nome", ctrlStringa(nome));
-		query.whereEqualTo("Cognome", ctrlStringa(cognome));
-		query.whereEqualTo("Mail", ctrlStringa(mail));
-		query.whereEqualTo("Telefono", ctrlStringa(telefono));
-		query.whereEqualTo("Negozio", ctrlStringa(negozio));
-		
-		try {
-			return new modelClienti(query.find().get(0));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-		
-	}
 	public static List<modelClienti> elenco(){
 		MBQuery query = MBQuery.queryDaTabella("Clienti");
 		try {
@@ -103,9 +85,9 @@ public class modelClienti {
 	
 	public static List<modelClienti> cercaClienti(String nome, String cognome, String mail, String telefono, String nomeNegozio){
 		return modelClienti.elenco().stream()
-							.filter(cliente -> cliente.getNome() == nome || cliente.getCognome() == cognome
-											    || cliente.getMail() == mail || cliente.getNomeNegozio() == nomeNegozio
-											    || cliente.getTelefono() == telefono)
+							.filter(cliente -> cliente.getNome().equalsIgnoreCase(nome) || cliente.getCognome().equalsIgnoreCase(cognome)
+											    || cliente.getMail().equalsIgnoreCase(mail) || cliente.getNomeNegozio().equalsIgnoreCase(nomeNegozio)
+											    || cliente.getTelefono().equalsIgnoreCase(telefono))
 							.collect(Collectors.toList());
 	}
 	
@@ -119,12 +101,17 @@ public class modelClienti {
 		return nuovo.oggetto.salva();
 	}
 
-	public boolean eliminaCliente(String nome, String cognome, String mail, String telefono, String negozio){
-		return false;
+	public boolean eliminaCliente(Integer idCliente){
+		this.oggetto.setObjectValue("objectId", idCliente);
+		return this.oggetto.elimina();
 	}
 	
-	public boolean modificaCliente(String nome, String cognome, String mail, String telefono, String negozio,
-									String newNome, String newCognome, String newMail, String newTelefono, String newNegozio){
-			return false;
+	public boolean modificaCliente(Integer idCliente, String newNome, String newCognome, String newMail, String newTelefono, String newNegozio){
+			this.oggetto.setObjectValue("objectId", idCliente );
+			if(newNome != "")this.setNome(newNome);
+			if(newCognome != "")this.setCognome(newCognome);
+			if(newMail != "")this.setMail(newMail);
+			if(newTelefono != "")this.setTelefono(newTelefono);
+			return this.oggetto.salva();
 	}
 }

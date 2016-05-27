@@ -39,8 +39,15 @@ public class modelMagazzino {
 		return (String) this.oggetto.getObject("Nome");
 	}
 	
-	public int getQuantita(){
-		return 0;
+	public int getQuantita(Integer IDProdotto){
+		int quantitaAcquistata = modelProdottiAcquistati.elenco().stream()
+								.filter(pA -> pA.getIDProdotto().equals(IDProdotto))
+								.mapToInt( m -> m.getQuantita())
+								.sum();
+		return quantitaAcquistata - (modelProdottiVenduti.elenco().stream()
+				.filter(pA -> pA.getIDProdotto().equals(IDProdotto))
+				.mapToInt( m -> m.getQuantita())
+				.sum());
 	}
 	
 	public Integer getFornitore(){
@@ -72,22 +79,22 @@ public class modelMagazzino {
 		return temp.oggetto.salva();
 	}
 	
-	public static List<modelMagazzino> cercaProdotti(String nome){
+	public static List<modelMagazzino> cercaProdottiDalNome(String nome){
 		return modelMagazzino.elenco().stream()
 				.filter(e-> e.getNome() == nome)
 				.collect(Collectors.toList());
 	}
 	
-	public static List<modelMagazzino> cercaProdotti(int quantitaMinima){
+	public static List<modelMagazzino> cercaProdottiDisponibili(int quantitaMinima){
 		return modelMagazzino.elenco().stream()
-				.filter(e-> e.getQuantita() >= quantitaMinima)
+				.filter(e-> e.getQuantita(e.getID()) >= quantitaMinima)
 				.collect(Collectors.toList());
 	}
 	
-	/*public static List<modelMagazzino> cercaProdotti(String nomeFornitore){
+	public static List<modelMagazzino> cercaProdottiDalFornitore(Integer IDFornitore){
 		return modelMagazzino.elenco().stream()
-				.filter(e-> e.getFornitore() == fornitore.getNome())
+				.filter(e-> e.getFornitore().equals(IDFornitore))
 				.collect(Collectors.toList());
-	}*/
+	}
 	
 }

@@ -68,7 +68,7 @@ public class modelRiunioni {
 	}
 	
 	public static List<modelRiunioni> elenco(){
-		MBQuery query = MBQuery.queryDaTabella("Clienti");
+		MBQuery query = MBQuery.queryDaTabella("Riunioni");
 		try {
 			return query.find().stream()
 					.map(e -> new modelRiunioni(e))
