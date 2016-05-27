@@ -1,7 +1,11 @@
 package com.goytia.models.DB;
 
 import com.infoMng.controller.MBOggetto;
-import com.goytia.models.DB.*;
+
+import java.sql.Date;
+import java.util.List;
+
+import com.goytia.classiAusiliari.prodottoVenduto;
 public class modelAcquisti {
 	
 	MBOggetto oggetto;
@@ -14,86 +18,63 @@ public class modelAcquisti {
 		this.oggetto = MBOggetto.oggettoDaTabella("Acquisti");
 	}
 	
-	private void setPrezzoAcquisto(double prezzoAcquisto){
-		this.oggetto.setObjectValue("PrezzoAcquisto", prezzoAcquisto);
+	private void setRicevuta(int nRicevuta){
+		this.oggetto.setObjectValue("nRicevuta", nRicevuta);
 	}
 	
-	private void setIdPodotto(Integer id){
-		this.oggetto.setObjectValue("IDProdotto", id);
+	private void setIVA(float iva){
+		this.oggetto.setObjectValue("IVA", iva);
 	}
 	
-	private void setQuantita(int quantita){
-		this.oggetto.setObjectValue("Quantita", quantita);
+	private void setFornitore(Integer IDFornitore){
+		this.oggetto.setObjectValue("IDFornitore", IDFornitore);
 	}
 	
-	private static boolean newProdotto(String nome, Integer IDFornitore, String descrizione){
-		return modelMagazzino.nuovoProdotto(nome, IDFornitore, descrizione);
+	private void setData(Date data){
+		this.oggetto.setObjectValue("Data", data);
 	}
 	
-	private static boolean newFornitore(String nome, String cognome, String mail, String telefono){
-		return modelFornitori.nuovoFornitore(nome, cognome, mail, telefono);
-	}
-	public Integer getID(){
-		return this.oggetto.objectId();
+	private void setSconto(float sconto){
+		this.oggetto.setObjectValue("Sconto", sconto);
 	}
 	
-	public int getQuantita(){
-		return (int)this.oggetto.getObject("Quantita");
+	public int getRicevuta(){
+		return (int)this.oggetto.getObject("nRicevuta");
 	}
 	
-	public double getPrezzoAcquisto(){
-		return (double)this.oggetto.getObject("PrezzoAcquisto");
+	public Integer getCliente(){
+		return (Integer)this.oggetto.getObject("IDFornitore");
 	}
 	
-	public Integer getIdProdotto(){
-		return (Integer)this.oggetto.getObject("IDProdotto");
+	public float getIva(){
+		return (float)this.oggetto.getObject("IVA");
 	}
 	
-	public String getNomeProdotto(){
-		return modelMagazzino.elenco().stream()
-				.filter(p -> p.getID() == this.getIdProdotto())
-				.map(a -> a.getNome())
-				.findFirst()
-				.toString();
+	public Date getData(){
+		return (Date)this.oggetto.getObject("Data");
 	}
 	
-	public static boolean nuovoAcquistoProdttoEsistente(String nomeProdotto, int quantita, double prezzoAcquisto){
+	public float getSconto(){
+		return (float)this.oggetto.getObject("Sconto");
+	}
+	
+	public static boolean nuovoAcquisto(Integer IDFornitore, int nRicevuta, float iva, float sconto, Date data, List<prodottoVenduto> prodotti){
 		
 		modelAcquisti temp = new modelAcquisti(MBOggetto.oggettoDaTabella("Acquisti"));
-		Integer idProd = modelMagazzino.elenco().stream()
-				.filter(a -> a.getNome().equalsIgnoreCase(nomeProdotto))
-				.map( i -> i.getID())
-				.findFirst()
-				.get();
-		temp.setIdPodotto(idProd);
-		temp.setPrezzoAcquisto(prezzoAcquisto);
-		temp.setQuantita(quantita);
-		return temp.oggetto.salva();
-	}
-	
-	public static boolean newAcquistoProdottoNuovoFornitoreEsistente(String nomeProdotto, int quantita, double prezzoAcquisto, String descrizione, Integer IDFornitore){
-		
-		if(modelAcquisti.newProdotto(nomeProdotto, IDFornitore, descrizione))
-		    return modelAcquisti.nuovoAcquistoProdttoEsistente(nomeProdotto, quantita, prezzoAcquisto);
-		else
+		temp.setFornitore(IDFornitore);
+		temp.setSconto(sconto);
+		temp.setData(data);
+		temp.setIVA(iva);
+		temp.setRicevuta(nRicevuta);
+		if(modelAcquisti.builderElementiAcquisiti(nRicevuta, prodotti))
+			return temp.oggetto.salva();
+		else 
 			return false;
 	}
 	
-	public static boolean newAcquistoProdottoNuovoFornitoreNuovo(String nomeProdotto, int quantita, double prezzoAcquisto, String descrizione, String nomeFornitore, String cognomeFornitore, String mailFornitore, String telfFornitore ){
+	private static boolean builderElementiAcquisiti(int nRicevuta, List<prodottoVenduto> lista){
 		
-		if(modelAcquisti.newFornitore(nomeFornitore, cognomeFornitore, mailFornitore, telfFornitore)){
-			Integer IDFornitore = modelFornitori.elenco().stream()
-									.filter( f -> f.getNome().equalsIgnoreCase(nomeFornitore))
-									.map(i -> i.getID())
-									.findFirst()
-									.get();
-			if(modelAcquisti.newProdotto(nomeProdotto, IDFornitore, descrizione))
-				return modelAcquisti.nuovoAcquistoProdttoEsistente(nomeProdotto, quantita, prezzoAcquisto);
-			else
-				return false;
-		}
-		else
-			return false;
+		return modelProdottiAcquistati.prodottiAcquistati(nRicevuta, lista);
 	}
 	
 }
