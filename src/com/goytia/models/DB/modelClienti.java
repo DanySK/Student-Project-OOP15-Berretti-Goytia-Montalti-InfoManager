@@ -102,12 +102,10 @@ public class modelClienti {
 	}
 
 	public boolean eliminaCliente(Integer idCliente){
-		this.oggetto.setObjectValue("objectId", idCliente);
 		return this.oggetto.elimina();
 	}
 	
-	public boolean modificaCliente(Integer idCliente, String newNome, String newCognome, String newMail, String newTelefono, String newNegozio){
-			this.oggetto.setObjectValue("objectId", idCliente );
+	public boolean modificaCliente(String newNome, String newCognome, String newMail, String newTelefono, String newNegozio){
 			if(newNome != "")this.setNome(newNome);
 			if(newCognome != "")this.setCognome(newCognome);
 			if(newMail != "")this.setMail(newMail);
