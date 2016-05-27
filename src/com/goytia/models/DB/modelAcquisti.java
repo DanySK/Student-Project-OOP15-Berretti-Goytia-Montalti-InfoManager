@@ -71,9 +71,8 @@ public class modelAcquisti {
 		else 
 			return false;
 	}
-	
+	//salvataggio degli elementi acquistati
 	private static boolean builderElementiAcquisiti(int nRicevuta, List<prodottoVenduto> lista){
-		
 		return modelProdottiAcquistati.prodottiAcquistati(nRicevuta, lista);
 	}
 	
