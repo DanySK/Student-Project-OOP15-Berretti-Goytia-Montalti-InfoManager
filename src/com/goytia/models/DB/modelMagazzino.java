@@ -23,20 +23,8 @@ public class modelMagazzino {
 		this.oggetto.setObjectValue("Nome", nome);
 	}
 	
-	private void setQuantita(int quantita){
-		this.oggetto.setObjectValue("Quantita", quantita);
-	}
-	
-	private void setFornitore(modelFornitori fornitore){
-		this.oggetto.setObjectValue("Fornitore", fornitore.oggetto.getObject("nome"));
-	}
-	
-	private void setPrezzoAcquisto(double prezzo){
-		this.oggetto.setObjectValue("PrezzoAcquisto", prezzo);
-	}
-	
-	private void setPrezzoVendita(double prezzo){
-		this.oggetto.setObjectValue("PrezzoVendita", prezzo);
+	private void setFornitore(Integer IDFornitore){
+		this.oggetto.setObjectValue("IDFornitore", IDFornitore);
 	}
 	
 	private void setDescrizione(String descrizione){
@@ -52,19 +40,11 @@ public class modelMagazzino {
 	}
 	
 	public int getQuantita(){
-		return (int)this.oggetto.getObject("Quantita");
+		return 0;
 	}
 	
-	public String getFornitore(){
-		return (String)this.oggetto.getObject("Fornitore");
-	}
-	
-	public Double getPrezzoAcquisto(){
-		return (Double)this.oggetto.getObject("PrezzoAcquisto");
-	}
-	
-	public Double getPrezzoVendita(){
-		return (Double)this.oggetto.getObject("PrezzoVendita");
+	public Integer getFornitore(){
+		return (Integer)this.oggetto.getObject("IDFornitore");
 	}
 	
 	public String getDescrizione(){
@@ -72,7 +52,7 @@ public class modelMagazzino {
 	}
 	
 	public static List<modelMagazzino> elenco(){
-		MBQuery query = MBQuery.queryDaTabella("Clienti");
+		MBQuery query = MBQuery.queryDaTabella("Magazzino");
 		try {
 			return query.find().stream()
 					.map(e -> new modelMagazzino(e))
@@ -84,13 +64,10 @@ public class modelMagazzino {
 		}
 	}
 	
-	public boolean nuovoProdotto(String nome, int quantita, modelFornitori fornitore, double prezzoAcquisto, double prezzoVendita, String descrizione) {
+	public static boolean nuovoProdotto(String nome, Integer IDFornitore, String descrizione) {
 		modelMagazzino temp = new modelMagazzino(MBOggetto.oggettoDaTabella("Magazzino"));
 		temp.setNome(nome);
-		temp.setQuantita(quantita);
-		temp.setFornitore(fornitore);
-		temp.setPrezzoAcquisto(prezzoAcquisto);
-		temp.setPrezzoVendita(prezzoVendita);
+		temp.setFornitore(IDFornitore);
 		temp.setDescrizione(descrizione);
 		return temp.oggetto.salva();
 	}
@@ -107,10 +84,10 @@ public class modelMagazzino {
 				.collect(Collectors.toList());
 	}
 	
-	public static List<modelMagazzino> cercaProdotti(modelFornitori fornitore){
+	/*public static List<modelMagazzino> cercaProdotti(String nomeFornitore){
 		return modelMagazzino.elenco().stream()
 				.filter(e-> e.getFornitore() == fornitore.getNome())
 				.collect(Collectors.toList());
-	}
+	}*/
 	
 }

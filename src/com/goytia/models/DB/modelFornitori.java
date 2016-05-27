@@ -102,8 +102,8 @@ public class modelFornitori{
 	public static List<modelFornitori> cercaFornitori(String nomeProdotto){
 		
 		List<String> listTemp = modelMagazzino.elenco().stream()
-				.filter(e-> e.getNome() == ctrlStringa(nomeProdotto))
-				.map(e -> e.getFornitore())
+				.filter(e-> e.getNome().equalsIgnoreCase(ctrlStringa(nomeProdotto)))
+				.map(e -> e.getNome())
 				.collect(Collectors.toList());
 		
 		return modelFornitori.elenco().stream()
