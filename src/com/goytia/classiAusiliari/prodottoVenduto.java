@@ -28,7 +28,7 @@ public class prodottoVenduto {
 	public float getIVA(){
 		return this.IVA;
 	}
-	
+	//
 	public float getSconto(){
 		return this.Sconto;
 	}
