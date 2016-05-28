@@ -10,7 +10,9 @@ import com.infoMng.controller.MBQuery;
 public class modelUtenti {
 
 	MBOggetto oggetto;
-	
+	/***
+	 * Ottengo un record nuovo dalla tabella Scontrini
+	 */
 	public modelUtenti(){
 		this.oggetto= MBOggetto.oggettoDaTabella("Utenti");
 	}
@@ -68,7 +70,11 @@ public class modelUtenti {
 	private static String ctrlStringa(String str){
 		return str != "" ? str : null;
 	}
-	
+	/***
+	 * metodo che ritorna un elenco di tutti gli utento
+	 * @return
+	 * una lista contenenti tutti gli utenti esistenti
+	 */
 	private static List<modelUtenti> elenco(){
 		MBQuery query = MBQuery.queryDaTabella("Utenti");
 		try {
@@ -81,23 +87,16 @@ public class modelUtenti {
 			return null;
 		}
 	}
-	
-	private static modelUtenti getSpecificObject(String nome, String cognome, String mail, String telefono, String negozio){
-		MBQuery query = MBQuery.queryDaTabella("Clienti");
-		query.whereEqualTo("Nome", ctrlStringa(nome));
-		query.whereEqualTo("Cognome", ctrlStringa(cognome));
-		query.whereEqualTo("Mail", ctrlStringa(mail));
-		query.whereEqualTo("Telefono", ctrlStringa(telefono));
-		query.whereEqualTo("Negozio", ctrlStringa(negozio));
-		try {
-			return new modelUtenti(query.find().get(0));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
+	/***
+	 * creazione di un nuovo utente
+	 * @param nome
+	 * @param cognome
+	 * @param mail
+	 * @param username
+	 * @param password
+	 * @return
+	 * true se è stato creato l'utente altrimenti false
+	 */
 	public boolean nuovoUtente(String nome, String cognome, String mail, String username, String password){
 		modelUtenti nuovo = new modelUtenti(MBOggetto.oggettoDaTabella("Utenti"));
 		nuovo.setNome(nome);
@@ -107,31 +106,55 @@ public class modelUtenti {
 		nuovo.setPassword(password);
 		return nuovo.oggetto.salva();
 	}
-	
+	/***
+	 * controllo dell'accesso dell'utente
+	 * @param username
+	 * @param password
+	 * @return
+	 * true se l'untente esiste, altrimenti False
+	 */
 	public boolean loginUtenti(String username, String password){
 		return modelUtenti.elenco().stream()
 				.filter(e -> e.getUsername() == username &&  e.getPassword() == password)
 				.count() == 1;
 	}
-	
+	/***
+	 * metodo per cambiare la prpria pasword
+	 * @param nome
+	 * @param cognome
+	 * @param mail
+	 * @param username
+	 * @param password
+	 * @param newPassword
+	 * @return
+	 * true se la password e stata cambiata, altrimenti false.
+	 */
 	public boolean cambiaPassword(String nome, String cognome, String mail, String username, String password, String newPassword){
-		//controllo esistenza dell'utente a cambiare la passoword
-		modelUtenti temp = modelUtenti.getSpecificObject(nome, cognome, mail, username, password);
-		if(temp != null){
-			temp.setPassword(newPassword);
-			return temp.oggetto.salva();
+		//mi accerto che si tratti dello stesso cliente richiedendo i dati
+		if(this.getNome()== nome && this.getCognome()==cognome && this.getUsername()==username && this.getMail()==mail && this.getPassword()== password){
+			this.setPassword(newPassword);
+			return this.oggetto.salva();
 		}
 		else 
 			return false;
 	}
-	
+	/***
+	 * metodo per eliminare il propri account utente
+	 * @param nome
+	 * @param cognome
+	 * @param mail
+	 * @param username
+	 * @param password
+	 * @return
+	 * true se è stata cancellata l'account altrimenti false
+	 */
 	public boolean eliminaUtente(String nome, String cognome, String mail, String username, String password){
-		//controllo esistenza dell'utente a eliminare
-		modelUtenti temp = modelUtenti.getSpecificObject(nome, cognome, mail, username, password);
-		if(temp != null)
-			return temp.oggetto.elimina();
+		//mi accerto che si tratti dello stesso cliente richiedendo i dati
+		if(this.getNome()== nome && this.getCognome()==cognome && this.getUsername()==username && this.getMail()==mail && this.getPassword()== password)
+			return this.oggetto.elimina();
 		else 
 			return false;
 	}
+	
 	
 }
