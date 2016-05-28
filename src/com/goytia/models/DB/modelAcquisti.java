@@ -1,9 +1,12 @@
 package com.goytia.models.DB;
 
 import com.infoMng.controller.MBOggetto;
+import com.infoMng.controller.MBQuery;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.goytia.classiAusiliari.prodottoVenduto;
 public class modelAcquisti {
@@ -57,7 +60,34 @@ public class modelAcquisti {
 	public float getSconto(){
 		return (float)this.oggetto.getObject("Sconto");
 	}
-	
+	/***
+	 * elenco di tutti gli acquisti realizzati
+	 * @return
+	 * una lista contenente tutti gli acquisti fatti
+	 */
+	public static List<modelAcquisti> elenco(){
+		MBQuery query = MBQuery.queryDaTabella("Acquisti");
+		try {
+			return query.find().stream()
+					.map(e -> new modelAcquisti(e))
+					.collect(Collectors.toList());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	/***
+	 * Aggiunta di un nuovo acquisto
+	 * @param IDFornitore
+	 * @param nRicevuta
+	 * @param iva
+	 * @param sconto
+	 * @param data
+	 * @param prodotti
+	 * @return
+	 * true se è stato aggiunt nel db altrimenti false
+	 */
 	public static boolean nuovoAcquisto(Integer IDFornitore, int nRicevuta, float iva, float sconto, Date data, List<prodottoVenduto> prodotti){
 		
 		modelAcquisti temp = new modelAcquisti(MBOggetto.oggettoDaTabella("Acquisti"));
@@ -75,5 +105,12 @@ public class modelAcquisti {
 	private static boolean builderElementiAcquisiti(int nRicevuta, List<prodottoVenduto> lista){
 		return modelMovimenti.prodottiNelMovimento(nRicevuta, lista, false);
 	}
-	
+	/***
+	 * eliminazione dell'accquisto corrente
+	 * @return
+	 * true o false a seconda del esito
+	 */
+	public boolean eliminaAquisto(){
+		return this.oggetto.elimina();
+	}
 }

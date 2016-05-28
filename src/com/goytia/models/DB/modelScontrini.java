@@ -80,7 +80,7 @@ public class modelScontrini {
 		return modelMovimenti.elenco().stream()
 				.filter( m -> m.getNricevuta() == this.getRicevuta())
 				.map( p -> {
-					prodottoVenduto prod = new prodottoVenduto(p.getIDProdotto(), p.getQuantita(), p.getPrezzo());
+					prodottoVenduto prod = new prodottoVenduto(p.getIDProdotto(), Math.abs(p.getQuantita()), p.getPrezzo());
 					return prod;
 				})
 				.collect(Collectors.toList());

@@ -101,7 +101,7 @@ public class modelClienti {
 		return nuovo.oggetto.salva();
 	}
 
-	public boolean eliminaCliente(Integer idCliente){
+	public boolean eliminaCliente(){
 		return this.oggetto.elimina();
 	}
 	
