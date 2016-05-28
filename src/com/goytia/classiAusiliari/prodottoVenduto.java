@@ -6,9 +6,10 @@ public class prodottoVenduto {
 	private int quantita;
 	double prezzoUnitario;
 	
-	public prodottoVenduto(Integer idProdotto, int quantita, double prezzoUnitario, float IVA, float Sconto){
+	public prodottoVenduto(Integer idProdotto, int quantita, double prezzoUnitario){
 		this.idProdotto = idProdotto;
 		this.quantita = quantita;
+		this.prezzoUnitario = prezzoUnitario;
 	}
 	
 	public Integer getIDProdottoV(){
