@@ -137,12 +137,20 @@ public class modelScontrini {
 	 * @return
 	 * lo scontrino 
 	 */
-	public modelScontrini cercaScontrinoPerNumero(int nScontrino){
+	public static modelScontrini cercaScontrinoPerNumero(int nScontrino){
 		
 		return modelScontrini.elenco().stream()
 				.filter(s -> s.getNscontrino() == nScontrino)
 				.findFirst()
 				.get();
+	}
+	/***
+	 * elimnazione dello scontrino corrente
+	 * @return
+	 * true o false a seconda del esito
+	 */
+	public boolean eliminaScontrino(){
+		return this.oggetto.elimina();
 	}
 }
 
