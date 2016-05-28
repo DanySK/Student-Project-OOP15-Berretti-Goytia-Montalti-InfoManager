@@ -40,14 +40,11 @@ public class modelMagazzino {
 	}
 	
 	public int getQuantita(Integer IDProdotto){
-		int quantitaAcquistata = modelProdottiAcquistati.elenco().stream()
-								.filter(pA -> pA.getIDProdotto().equals(IDProdotto))
-								.mapToInt( m -> m.getQuantita())
-								.sum();
-		return quantitaAcquistata - (modelProdottiVenduti.elenco().stream()
-				.filter(pA -> pA.getIDProdotto().equals(IDProdotto))
+		
+		return 	modelMovimenti.elenco().stream()
+				.filter(p -> p.getIDProdotto().equals(IDProdotto))
 				.mapToInt( m -> m.getQuantita())
-				.sum());
+				.sum();
 	}
 	
 	public Integer getFornitore(){

@@ -74,6 +74,6 @@ public class modelVendite{
 	
 	private static boolean builderElementiVenduti(int nRicevuta, List<prodottoVenduto> lista){
 		
-		return modelProdottiVenduti.prodottiVenduti(nRicevuta, lista);
+		return modelMovimenti.prodottiNelMovimento(nRicevuta, lista, true);
 	}
 }
