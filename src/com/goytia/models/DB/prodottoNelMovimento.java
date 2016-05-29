@@ -1,12 +1,12 @@
-package com.goytia.classiAusiliari;
+package com.goytia.models.DB;
 
-public class prodottoVenduto {
+public class prodottoNelMovimento {
 	
 	private Integer idProdotto;
 	private int quantita;
 	double prezzoUnitario;
 	
-	public prodottoVenduto(Integer idProdotto, int quantita, double prezzoUnitario){
+	public prodottoNelMovimento(Integer idProdotto, int quantita, double prezzoUnitario){
 		this.idProdotto = idProdotto;
 		this.quantita = quantita;
 		this.prezzoUnitario = prezzoUnitario;

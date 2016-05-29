@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.sql.Date;
-import com.goytia.classiAusiliari.*;
 import com.infoMng.controller.MBOggetto;
 import com.infoMng.controller.MBQuery;
 
@@ -76,11 +75,11 @@ public class modelScontrini {
 	 * @return
 	 * una lista ocn tutti i prodotti sottoforma di prodottoVenduto
 	 */
-	public List<prodottoVenduto> prodottiVenduti(){
+	public List<prodottoNelMovimento> prodottiVenduti(){
 		return modelMovimenti.elenco().stream()
 				.filter( m -> m.getNricevuta() == this.getRicevuta())
 				.map( p -> {
-					prodottoVenduto prod = new prodottoVenduto(p.getIDProdotto(), Math.abs(p.getQuantita()), p.getPrezzo());
+					prodottoNelMovimento prod = new prodottoNelMovimento(p.getIDProdotto(), Math.abs(p.getQuantita()), p.getPrezzo());
 					return prod;
 				})
 				.collect(Collectors.toList());

@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.goytia.classiAusiliari.prodottoVenduto;
 import com.infoMng.controller.MBOggetto;
 import com.infoMng.controller.MBQuery;
 
@@ -60,14 +59,14 @@ public class modelMovimenti {
 	 * @param lista
 	 * lista tipo prodottoVenduto contenente tutti i prodotti coinvolti nel movimento
 	 * @param ctrlVendita
-	 * bollean che controlla se si tratta di una vendita o acquisto
+	 * boolean che controlla se si tratta di una vendita(true) o acquisto(false)
 	 * @return
 	 * true o false a seconda dell'esito
 	 */
-	public static boolean prodottiNelMovimento(int nRicevuta, List<prodottoVenduto> lista, boolean ctrlVendita){
+	public static boolean prodottiNelMovimento(int nRicevuta, List<prodottoNelMovimento> lista, boolean ctrlVendita){
 		
 		boolean ctrl= true;
-		for(prodottoVenduto p : lista){
+		for(prodottoNelMovimento p : lista){
 			modelMovimenti temp = new modelMovimenti(MBOggetto.oggettoDaTabella("Movimenti"));
 			temp.oggetto.setObjectValue("nRicevuta", nRicevuta );
 			temp.oggetto.setObjectValue("IDProdotto", p.getIDProdottoV());
@@ -80,7 +79,15 @@ public class modelMovimenti {
 		}
 		return ctrl;
 	}
-	
+	/***
+	 * metodo per eliminaare tutti i prodotti di una vendita o aquisto sbagliti
+	 * @param nRicevuta
+	 * nRicevuta, neceessario per cancellare la vendita
+	 * @param ctrlVendita
+	 * ture se si tratta di una vendita, false se si tratta di un acquisto
+	 * @return
+	 * true o false a secoda del esito
+	 */
 	public static boolean elimnaProdottiDellMovimento(int nRicevuta, boolean ctrlVendita){
 		List<modelMovimenti> temp;
 		boolean ctrl = true;

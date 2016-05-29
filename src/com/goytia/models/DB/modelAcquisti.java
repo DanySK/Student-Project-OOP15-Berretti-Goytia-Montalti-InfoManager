@@ -7,8 +7,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.goytia.classiAusiliari.prodottoVenduto;
 public class modelAcquisti {
 	
 	MBOggetto oggetto;
@@ -88,7 +86,7 @@ public class modelAcquisti {
 	 * @return
 	 * true se è stato aggiunt nel db altrimenti false
 	 */
-	public static boolean nuovoAcquisto(Integer IDFornitore, int nRicevuta, float iva, float sconto, Date data, List<prodottoVenduto> prodotti){
+	public static boolean nuovoAcquisto(Integer IDFornitore, int nRicevuta, float iva, float sconto, Date data, List<prodottoNelMovimento> prodotti){
 		
 		modelAcquisti temp = new modelAcquisti(MBOggetto.oggettoDaTabella("Acquisti"));
 		temp.setFornitore(IDFornitore);
@@ -102,7 +100,7 @@ public class modelAcquisti {
 			return false;
 	}
 	//salvataggio degli elementi acquistati
-	private static boolean builderElementiAcquisiti(int nRicevuta, List<prodottoVenduto> lista){
+	private static boolean builderElementiAcquisiti(int nRicevuta, List<prodottoNelMovimento> lista){
 		return modelMovimenti.prodottiNelMovimento(nRicevuta, lista, false);
 	}
 	/***

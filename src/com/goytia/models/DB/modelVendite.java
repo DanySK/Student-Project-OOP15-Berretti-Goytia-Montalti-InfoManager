@@ -2,7 +2,7 @@ package com.goytia.models.DB;
 
 import com.infoMng.controller.MBOggetto;
 import com.infoMng.controller.MBQuery;
-import com.goytia.classiAusiliari.prodottoVenduto;
+
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class modelVendite{
 	
 	MBOggetto oggetto;
-	List<prodottoVenduto> prodottiVenduti;
+	List<prodottoNelMovimento> prodottiVenduti;
 	
 	private modelVendite(MBOggetto temp){
 		this.oggetto = temp;
@@ -91,7 +91,7 @@ public class modelVendite{
 	 * @return
 	 * true o false a seconda dell'esito
 	 */
-	public static boolean nuovaVendita(Integer IDCliente, int nRicevuta, float iva, float sconto, Date data, List<prodottoVenduto> prodotti){
+	public static boolean nuovaVendita(Integer IDCliente, int nRicevuta, float iva, float sconto, Date data, List<prodottoNelMovimento> prodotti){
 		
 		modelVendite temp = new modelVendite(MBOggetto.oggettoDaTabella("Vendite"));
 		temp.setCliente(IDCliente);
@@ -111,7 +111,7 @@ public class modelVendite{
 	 * @return
 	 * true o false a seconda dell'esito
 	 */
-	private static boolean builderElementiVenduti(int nRicevuta, List<prodottoVenduto> lista){
+	private static boolean builderElementiVenduti(int nRicevuta, List<prodottoNelMovimento> lista){
 		
 		return modelMovimenti.prodottiNelMovimento(nRicevuta, lista, true);
 	}
