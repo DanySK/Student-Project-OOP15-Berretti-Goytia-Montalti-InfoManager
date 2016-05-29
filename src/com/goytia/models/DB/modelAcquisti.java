@@ -111,6 +111,10 @@ public class modelAcquisti {
 	 * true o false a seconda del esito
 	 */
 	public boolean eliminaAquisto(){
-		return this.oggetto.elimina();
+		
+		if(modelMovimenti.elimnaProdottiDellMovimento(this.getRicevuta(), false))
+			return this.oggetto.elimina();
+		else 
+			return false;
 	}
 }

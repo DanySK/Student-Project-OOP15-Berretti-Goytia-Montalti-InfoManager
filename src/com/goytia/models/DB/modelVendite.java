@@ -1,9 +1,12 @@
 package com.goytia.models.DB;
 
 import com.infoMng.controller.MBOggetto;
+import com.infoMng.controller.MBQuery;
 import com.goytia.classiAusiliari.prodottoVenduto;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class modelVendite{
 	
@@ -58,6 +61,36 @@ public class modelVendite{
 		return (float)this.oggetto.getObject("Sconto");
 	}
 	
+	/***
+	 * elenco di tutte le vendite realizzate anche quelle che non possiedono uno scrontrino
+	 * @return
+	 * una lista contenente tutte le vendite
+	 */
+	public static List<modelVendite> elenco(){
+		MBQuery query = MBQuery.queryDaTabella("Acquisti");
+		try {
+			return query.find().stream()
+					.map(e -> new modelVendite(e))
+					.collect(Collectors.toList());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	/***
+	 * nuova vendita
+	 * @param IDCliente
+	 * id del cliente a chi è stato effettuata la vendita
+	 * @param nRicevuta
+	 * @param iva
+	 * @param sconto
+	 * @param data
+	 * @param prodotti
+	 * una lista dipo prodottoVenduto che contiene tutti i prodotti venduti
+	 * @return
+	 * true o false a seconda dell'esito
+	 */
 	public static boolean nuovaVendita(Integer IDCliente, int nRicevuta, float iva, float sconto, Date data, List<prodottoVenduto> prodotti){
 		
 		modelVendite temp = new modelVendite(MBOggetto.oggettoDaTabella("Vendite"));
@@ -71,9 +104,27 @@ public class modelVendite{
 		else 
 			return false;
 	}
-	
+	/***
+	 * metodo per il slvataggio dei produtti venduti
+	 * @param nRicevuta
+	 * @param lista
+	 * @return
+	 * true o false a seconda dell'esito
+	 */
 	private static boolean builderElementiVenduti(int nRicevuta, List<prodottoVenduto> lista){
 		
 		return modelMovimenti.prodottiNelMovimento(nRicevuta, lista, true);
+	}
+	/***
+	 * metodo che elimina la vednita corrente e i suoi relativi prodotti
+	 * @return
+	 * true o false a seconda del esito
+	 */
+	public boolean eliminaVendita(){
+
+		if(modelMovimenti.elimnaProdottiDellMovimento(this.getRicevuta(), true))
+			return this.oggetto.elimina();
+		else 
+			return false;
 	}
 }

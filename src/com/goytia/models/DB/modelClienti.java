@@ -144,7 +144,7 @@ public class modelClienti {
 	 * @param newTelefono
 	 * @param newNegozio
 	 * @return
-	 * true o false a seconda del esisto
+	 * true o false a seconda del esisto\
 	 */
 	public boolean modificaCliente(String newNome, String newCognome, String newMail, String newTelefono, String newNegozio){
 			if(newNome != "")this.setNome(newNome);
