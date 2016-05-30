@@ -4,12 +4,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
+
 /**
- * Class that define PannelloTabelle JPanel
+ * Classe che definisce PannelloTabelle JPanel.
+ * 
  * @author Alessandro
  *
  */
-public class PannelloTabelle extends JPanel{
+public class PannelloTabelle extends JPanel {
 
 	/**
 	 * 
@@ -18,10 +20,11 @@ public class PannelloTabelle extends JPanel{
 	private TableModel dataModel = new BaseTabelle();
 	private JTable table = new JTable(dataModel);;
 	private JScrollPane scrollTabella = new JScrollPane(table);
+
 	/**
-	 * Create the PannelloTabelle panel
+	 * Costruttore PannelloTabelle panel.
 	 */
-	public PannelloTabelle(){
+	public PannelloTabelle() {
 		this.add(scrollTabella);
 	}
 }

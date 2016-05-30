@@ -8,139 +8,230 @@ import java.util.Optional;
 import javax.swing.JFrame;
 import com.goytia.models.DB.modelStore;
 
+/**
+ * Interfaccia che definisce ObserverInterface.
+ * @author Alessandro
+ *
+ */
 public interface ObserverInterface {
 	/**
-	 * Method that get current JFrame
-	 * @return
-	 * 		   Object Optional(JFrame)
+	 * Metodo per ottenere il JFrame attuale.
+	 * 
+	 * @return oggetto Optional(JFrame)
 	 */
 	Optional<JFrame> getAttuale();
+
 	/**
-	 * Method that set current JFrame
+	 * Metodo per settare il JFrame attuale.
+	 * 
 	 * @param attuale
-	 * 			Object JFrame
+	 *            Oggetto JFrame
 	 */
 	void setAttuale(JFrame attuale);
+
 	/**
-	 * Method that show ClientiGUI
+	 * metodo che mostra ClientiGUI.
 	 */
 	void mostraClienti();
+
 	/**
-	 * Method that show FornitoriGUI
+	 * Metodo che mostra FornitoriGUI.
 	 */
 	void mostraFornitori();
+
 	/**
-	 * Method that show FattureGUI
+	 * Metodo che mostra FattureGUI.
 	 */
 	void mostraFatture();
+
 	/**
-	 * Method that launch the application
+	 * Metodo che lancia l'applicazione.
 	 */
-	public void Start();
+	void start();
+
 	/**
-	 * Method that show MenuGUI
+	 * Metodo che mostra MenuGUI.
 	 */
 	void mostraMenu();
+
 	/**
-	 * Method that show MagazzinoGUI
+	 * Metodo che mostra MagazzinoGUI.
 	 */
 	void mostraMagazzino();
+
 	/**
-	 * Method that show RegistriIvaGUI
+	 * Metodo che mostra RegistriIvaGUI.
 	 */
 	void mostraRegistiIva();
+
 	/**
-	 * Method that show ReportVenditeGUI
+	 * Metodo che mostra ReportVenditeGUI.
 	 */
 	void mostraReportVendite();
+
 	/**
-	 * Method that show RiunioniGUI
+	 * Metodo che mostra RiunioniGUI.
 	 */
 	void mostraRiunioni();
+
 	/**
-	 * Method that show ScontriniGUI
+	 * Metodo che mostra ScontriniGUI.
 	 */
 	void mostraScontrini();
+
 	/**
-	 * Method that show DialogCampoObbligatorio
+	 * Metodo che mostra DialogCampoObbligatorio.
 	 */
 	void mostraDialogCampoObbligatorio();
+
 	/**
-	 * Method that show DiaslogCerca
+	 * Metodo che mostra DiaslogCerca.
 	 */
 	void mostraDialogCerca();
+
 	/**
-	 * Method that show DialogNuovo
+	 * Metodo che mostra DialogNuovo.
 	 */
 	void mostraDialogNuovo();
+
 	/**
-	 * Method that show DialogRegistrati
+	 * Metodo che mostra DialogRegistrati.
 	 */
 	void mostraDialogRegistrati();
+
 	/**
-	 * Method that show DialogWrongPass
+	 * Metodo che mostra DialogWrongPass.
 	 */
 	void mostraDialogWrongPass();
+
 	/**
-	 * Method that show DialogWrongUser
+	 * Metodo che mostra DialogWrongUser.
 	 */
 	void mostraDialogWrongUser();
+
 	/**
-	 * Method that set JFrame Visible
+	 * Metodo che setta l' attuale JFrame Visibile.
+	 * 
 	 * @param abilita
-	 * 			Variable boolean, true if you want to show current JFrame, false instead
+	 *            Variabile boolean, true se vuoi abilitare il JFrame attuale,
+	 *            false se non vuoi abilitare il JFrame
 	 */
 	void abilitaFrame(boolean abilita);
+
 	/**
-	 * Method that save User
+	 * Metodo che salva l' User.
+	 * 
 	 * @param dati
-	 * 			Map (String,String)
+	 *            Map (String,String)
 	 */
-	void salvaUtente(Map<String,String> dati);
+	void salvaUtente(Map<String, String> dati);
+
 	/**
-	 * Method that save Client
+	 * Metodo che salva il Cliente.
+	 * 
 	 * @param dati
-	 * 			Map (String,String)
-	 * @return
-	 * 			Variable boolean, true if the operation goes well, false Instead
+	 *            Map (String,String)
+	 * @return Variabile boolean, true se l'operazione va a buon fine, false se non va buon fine
 	 */
-	boolean salvaCliente(Map<String,String> dati);
+	boolean salvaCliente(Map<String, String> dati);
+
 	/**
-	 * Method that save supplier
+	 * Metodo che salva i fornitori.
+	 * 
 	 * @param dati
-	 * 			Map (String,String)
-	 * @return
-	 * 			Variable boolean, true if the operation goes well, false Instead
+	 *            Map (String,String)
+	 * @return Variabile boolean, true se l'operazione va a buon fine, false se non va buon fine
 	 */
 	boolean salvaFornitore(Map<String, String> dati);
+
 	/**
-	 * Method that save invoice
+	 * Metodo che salva la fattura.
+	 * 
 	 * @param map
-	 * 			Map (String,String)
-	 * @return 
-	 * @throws ParseException 
+	 *            Map (String,String)
+	 * @return Variabile boolean, true se l'operazione va a buon fine, false se non va buon fine
+	 * @throws ParseException
+	 * 			da circondare con try catch
 	 */
 	int salvaFattura(Map<String, Object> map) throws ParseException;
+
 	/**
-	 * Method that save reunion
+	 * Metodo che salva le riunioni.
+	 * 
 	 * @param dati
-	 * 			Map (String,String)
+	 *            Map (String,String)
+	 * 
 	 */
 	void salvaRiunione(Map<String, String> dati);
+
 	/**
-	 * Method that save receipt
+	 * Metodo che salva gli scontrini.
+	 * 
 	 * @param dati
-	 * 			Map (String,String)
+	 *            Map (String,String)
 	 */
 	void salvaScontrini(Map<String, Object> dati);
-	
+/**
+ * Metodo per ricercare i prodotti da nome.
+ * @param nome
+ * 			nome prodotto da ricercare
+ * @return
+ * 			List< modelStore > :lista di prodotti 
+ */	
 	List<modelStore> ricercaProdotti(String nome);
-	
-	List<modelStore> elencoProdotti();
-	
+/**Metodo per ottenere lunghezza lista prodotti.
+ * @param lista
+ * 		lista dei prodotti
+ * @return
+ * 		intero con lunghezza lista
+ */
+	 int elencoProdotti(List<modelStore> lista);
+/**
+ * Metodo per cercare un fornitore.
+ * @param nome
+ * 			nome del fornitore
+ */
 	void cercaFornitori(String nome);
+/**
+ * Metodo per cercare un cliente.
+ * @param nome
+ * 			nome del cliente
+ * 
+ */
 	void cercaClienti(String nome);
+/**
+ * Metodo per cercare una riunione.
+ * @param data
+ * 			data della riunione
+ * @param nome
+ * 			nome dell evento
+ */
 	void cercaRiunioni(String data, String nome);
+/**
+ * Metodo per cercare uno scontrino.
+ * @param numero
+ * 			numero dello scontrino
+ * @param nome
+ * 			nome dell prodotto
+ */
 	void cercaScontrini(String numero, String nome);
+/**
+ * Metodo di verifica di username e password.
+ * @param user
+ * 			username da verificare
+ * @param pass
+ * 			password da verificare
+ * @return
+ * 		Variabile boolean, true se l'operazione è eseguita con successo, falsa se non eseguita
+ */
+	boolean userLogin(String user, String pass);
+	/**
+	 * Metodo per cercare una fattura.
+	 * @param numero
+	 * 			numero della fattura
+	 * @param nome
+	 * 			nome del Cliente o Fornitore
+	 */
+	void cercaFatture(String numero, String nome);
 
 }

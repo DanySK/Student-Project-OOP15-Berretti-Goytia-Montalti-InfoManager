@@ -12,7 +12,7 @@ import view.toolbar.MyToolbar;
 import java.awt.Toolkit;
 import javax.swing.JTextArea;
 /**
- * Class that define viewReportVendite
+ * Classe che definisce viewReportVendite.
  * @author Alessandro
  *
  */
@@ -24,33 +24,33 @@ public class ReportVenditeGUI extends InitializeFrame {
 	private static final long serialVersionUID = 5756256366498583375L;
 	private static final String TITOLO = "Report Vendite";
 	private static final LayoutManager LAYOUT = new BorderLayout();
-	private static final Dimension DIMFRAME = new Dimension(938,476);
+	private static final Dimension DIMFRAME = new Dimension(938, 476);
 	private ReportVenditeGUI frame = this;
 	private JPanel panelTool = new JPanel();
 	private JPanel panelText = new JPanel();
 	private MyToolbar toolbar;
 	private final JTextArea textArea = new JTextArea();
 	/**
-	 * Method that set text into the textArea of the frame
+	 * Metodo che setta il testo nella textArea del frame.
 	 * @param testoVendite
-	 * 				Object String
+	 * 				Oggetto String
 	 */
-	public void setTextVendite(String testoVendite){
+	public void setTextVendite(final String testoVendite) {
 		this.textArea.setText(testoVendite);
 	}
 	/**
-	 * Create the ReportVenditeGUI frame.
+	 * Costruttore del ReportVenditeGUI frame.
 	 * @param o
-	 * 			Object ObserverInterface
+	 * 			Oggetto ObserverInterface
 	 */
 	public ReportVenditeGUI(final ObserverInterface o) {
-		super(TITOLO,LAYOUT,DIMFRAME);
+		super(TITOLO, LAYOUT, DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(ReportVenditeGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.setTitle("Report Vendite");
 		this.getMainPanel().setLayout(new BorderLayout(0, 0));
 		this.getMainPanel().add(panelTool, BorderLayout.CENTER);
 		this.toolbar = new MyToolbar(o, frame);
-		this.panelTool.setLayout(new BorderLayout(0,0));
+		this.panelTool.setLayout(new BorderLayout(0, 0));
 		this.panelTool.add(toolbar, BorderLayout.NORTH);
 		this.panelTool.add(panelText, BorderLayout.CENTER);
 		panelText.setLayout(new BorderLayout(0, 0));

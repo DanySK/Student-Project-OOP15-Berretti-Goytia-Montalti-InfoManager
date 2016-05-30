@@ -18,13 +18,14 @@ import view.ReportVenditeGUI;
 import view.RiunioniGUI;
 import view.ScontriniGUI;
 import view.interfaces.ObserverInterface;
+
 /**
- * Class that define Mytoolbar
+ * Classe che definisce Mytoolbar.
+ * 
  * @author Alessandro
  *
  */
 public class MyToolbar extends JToolBar {
-
 
 	/**
 	 * 
@@ -34,123 +35,126 @@ public class MyToolbar extends JToolBar {
 	private JMenuItem mntmCerca = new JMenuItem("Cerca");
 	private JMenuItem mntmIndietro = new JMenuItem("Indietro");
 	private JMenuItem mntmNuovo = new JMenuItem("Nuovo");
+
 	/**
-	 * Create the ToolBar
+	 * Costruttore della ToolBar.
+	 * 
 	 * @param o
-	 * 			Object ObserverInterface
+	 *            Oggetto ObserverInterface
 	 * @param frame
-	 * 			Object InitializeFrame
+	 *            Oggetto InitializeFrame
 	 */
-	public MyToolbar(final ObserverInterface o, final InitializeFrame frame){
+	public MyToolbar(final ObserverInterface o, final InitializeFrame frame) {
 		this.add(mntmNuovo);
 		this.add(mntmSalva);
 		this.add(mntmCerca);
 		this.add(mntmIndietro);
-		if(frame instanceof RegistriIvaGUI){
+		if (frame instanceof RegistriIvaGUI) {
 			mntmNuovo.setEnabled(false);
 		}
-		if(frame instanceof MagazzinoGUI){
+		if (frame instanceof MagazzinoGUI) {
 			mntmNuovo.setEnabled(false);
 		}
-		this.mntmNuovo.setIcon(new ImageIcon(FattureGUI.class.getResource("/javax/swing/plaf/metal/icons/ocean/file.gif")));
+		this.mntmNuovo
+				.setIcon(new ImageIcon(FattureGUI.class.getResource("/javax/swing/plaf/metal/icons/ocean/file.gif")));
 		this.mntmNuovo.addActionListener(new ActionListener() {
-			
+
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(frame instanceof FattureGUI){
+			public void actionPerformed(final ActionEvent e) {
+				if (frame instanceof FattureGUI) {
 					((FattureGUI) frame).resetCampi();
 				}
-				if(frame instanceof ClientiGUI){
+				if (frame instanceof ClientiGUI) {
 					o.setAttuale(frame);
 					o.abilitaFrame(false);
 					o.mostraDialogNuovo();
 				}
-				if(frame instanceof FornitoriGUI){
+				if (frame instanceof FornitoriGUI) {
 					o.setAttuale(frame);
 					o.abilitaFrame(false);
 					o.mostraDialogNuovo();
 				}
-				if(frame instanceof ScontriniGUI){
+				if (frame instanceof ScontriniGUI) {
 					((ScontriniGUI) frame).resetCampi();
 				}
-				if(frame instanceof RiunioniGUI){
-					//((RiunioniGUI) frame).resetCampi();
+				if (frame instanceof RiunioniGUI) {
+					((RiunioniGUI) frame).resetCampi();
 				}
-				
 			}
 		});
-		this.mntmSalva.setIcon(new ImageIcon(FattureGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
-		if(frame.getClass().equals(MagazzinoGUI.class)){
+		this.mntmSalva.setIcon(
+				new ImageIcon(FattureGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
+		if (frame.getClass().equals(MagazzinoGUI.class)) {
 			mntmSalva.setEnabled(false);
 		}
-		if(frame.getClass().equals(ReportVenditeGUI.class)){
+		if (frame.getClass().equals(ReportVenditeGUI.class)) {
 			mntmSalva.setEnabled(false);
 		}
-		if(frame.getClass().equals(RegistriIvaGUI.class)){
+		if (frame.getClass().equals(RegistriIvaGUI.class)) {
 			mntmSalva.setEnabled(false);
 		}
 		this.mntmSalva.addActionListener(new ActionListener() {
-			
+
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(frame.getClass().equals(FattureGUI.class)){
-					/*switch (o.salvaFattura(((FattureGUI) frame).getTextfield())){
-					case SALVATAGGIO:
-						JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
-						break;
-					case ERROREDATA:
-						JOptionPane.showMessageDialog(frame, "Inserimento errato data");
-						break;
-					case ERRORESALVATAGGIO:
-						JOptionPane.showMessageDialog(frame, "Errore nel salvataggio dei dati");
-						break;
-					default:
-						throw new IllegalStateException();
-					}*/	
+			public void actionPerformed(final ActionEvent e) {
+				if (frame.getClass().equals(FattureGUI.class)) {
+					/*
+					 * switch (o.salvaFattura(((FattureGUI)
+					 * frame).getTextfield())){ case SALVATAGGIO:
+					 * JOptionPane.showMessageDialog(frame,
+					 * "Salvataggio eseguito con successo"); break; case
+					 * ERROREDATA: JOptionPane.showMessageDialog(frame,
+					 * "Inserimento errato data"); break; case
+					 * ERRORESALVATAGGIO: JOptionPane.showMessageDialog(frame,
+					 * "Errore nel salvataggio dei dati"); break; default: throw
+					 * new IllegalStateException(); }
+					 */
 				}
-				if(frame.getClass().equals(ClientiGUI.class)){
-					if(o.salvaCliente(((ClientiGUI)frame).getTextfield())){
-						JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");	
+				if (frame.getClass().equals(ClientiGUI.class)) {
+					if (o.salvaCliente(((ClientiGUI) frame).getTextfield())) {
+						JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
 					} else {
 						JOptionPane.showMessageDialog(frame, "Errore nel salvataggio dei dati");
 					}
-					
+
 				}
-				if(frame.getClass().equals(FornitoriGUI.class)){
-					o.salvaFornitore(((FornitoriGUI)frame).getTextfield());
+				if (frame.getClass().equals(FornitoriGUI.class)) {
+					o.salvaFornitore(((FornitoriGUI) frame).getTextfield());
 					JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
 				}
 
-				if(frame.getClass().equals(ScontriniGUI.class)){
-					//o.salvaScontriniGUI(((ScontriniGUI) frame).getTextField());
+				if (frame.getClass().equals(ScontriniGUI.class)) {
+					 o.salvaScontrini(((ScontriniGUI) frame).getTextField());
 					JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
 				}
-				if(frame.getClass().equals(RiunioniGUI.class)){
-					o.salvaRiunione(((RiunioniGUI)frame).getTextField());
+				if (frame.getClass().equals(RiunioniGUI.class)) {
+					o.salvaRiunione(((RiunioniGUI) frame).getTextField());
 					JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
 				}
 			}
 		});
-		this.mntmCerca.setIcon(new ImageIcon(FattureGUI.class.getResource("/view/icon/lente-di-ingrandimento_318-1787.jpg")));
+		this.mntmCerca
+				.setIcon(new ImageIcon(FattureGUI.class.getResource("/view/icon/lente-di-ingrandimento_318-1787.jpg")));
 		this.mntmCerca.addActionListener(new ActionListener() {
-			
+
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				o.setAttuale(frame);
 				o.abilitaFrame(false);
 				o.mostraDialogCerca();
-				
+
 			}
 		});
-		this.mntmIndietro.setIcon(new ImageIcon(MyToolbar.class.getResource("/com/sun/javafx/scene/web/skin/Undo_16x16_JFX.png")));
+		this.mntmIndietro.setIcon(
+				new ImageIcon(MyToolbar.class.getResource("/com/sun/javafx/scene/web/skin/Undo_16x16_JFX.png")));
 		this.mntmIndietro.addActionListener(new ActionListener() {
-			
+
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(final ActionEvent arg0) {
 				o.setAttuale(frame);
 				o.mostraMenu();
 			}
 		});
 	}
-	
+
 }

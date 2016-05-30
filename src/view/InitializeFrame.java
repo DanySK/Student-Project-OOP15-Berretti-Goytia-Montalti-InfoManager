@@ -7,7 +7,7 @@ package view;
 	import javax.swing.JPanel;
 	/**
 	 * 
-	 * Class that define the common aspect of JFrame for this program
+	 * Classe che definisce gli aspetti comuni del JFrame per questo programma.
 	 *@author Alessandro
 	 */
 	public class InitializeFrame extends JFrame {
@@ -19,14 +19,14 @@ package view;
 	    private final Integer close = JFrame.EXIT_ON_CLOSE;
 
 	    /**
-	     * Constructor
+	     * Costruttore.
 	     * 
 	     * @param title
-	     *            Frame's title
+	     *            Titolo del frame
 	     * @param layout
 	     *            Layout main panel
 	     * @param dimension
-	     *            Dimension of the frame
+	     *            Dimensione del frame
 	     */
 	    protected InitializeFrame(final String title, final LayoutManager layout, final Dimension dimension) {
 	        this.setTitle(title);
@@ -39,7 +39,7 @@ package view;
 	    }
 
 	    /**
-	     * Method for return MainPanel
+	     * Metodo che ritorna MainPanel.
 	     * 
 	     * @return 
 	     * 			MainPanel
@@ -49,7 +49,7 @@ package view;
 	    }
 
 	    /**
-	     * Set the frame visible
+	     * Metodo che setta visible il frame.
 	     * 
 	     * @param switchOn
 	     *            true = visible

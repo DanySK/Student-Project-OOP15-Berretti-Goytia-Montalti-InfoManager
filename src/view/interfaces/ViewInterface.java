@@ -1,74 +1,95 @@
 package view.interfaces;
-
+/**
+ * Interfaccia per le classi view.
+ * @author Alessandro
+ *
+ */
 public interface ViewInterface {
 	/**
-	 * Method that create viewClient
+	 * Metodo che crea viewClient.
 	 */
 	void viewClienti();
+
 	/**
-	 * Method that create viewFornitori
+	 * Metodo che crea viewFornitori.
 	 */
 	void viewFornitori();
+
 	/**
-	 * Method that create viewFatture
+	 * Metodo che crea viewFatture.
 	 */
 	void viewFatture();
+
 	/**
-	 * Method that create the Start view
+	 * Metodo che crea la view Start .
 	 */
 	void viewStart();
+
 	/**
-	 * Method that create viewMenu
+	 * Metodo che crea viewMenu.
 	 */
 	void viewMenu();
+
 	/**
-	 * Method that create viewMagazzino
+	 * Metodo che crea viewMagazzino.
 	 */
 	void viewMagazzino();
+
 	/**
-	 * Method that create viewRegistiIva
+	 * Metodo che crea viewRegistiIva.
 	 */
 	void viewRegistiIva();
+
 	/**
-	 * Method that create viewReportVendite
+	 * Metodo che crea viewReportVendite.
 	 */
 	void viewReportVendite();
+
 	/**
-	 * Method that create viewRiunioni
+	 * Metodo che crea viewRiunioni.
 	 */
 	void viewRiunioni();
+
 	/**
-	 * Method that create viewScontrini
+	 * Metodo che crea viewScontrini.
 	 */
 	void viewScontrini();
+
 	/**
-	 * Method that create viewDialogCampoObbligatorio
+	 * Metodo che crea viewDialogCampoObbligatorio.
 	 */
 	void viewDialogCampoObbligatorio();
+
 	/**
-	 * Method that create viewDialogCerca
+	 * Metodo che crea viewDialogCerca.
 	 */
 	void viewDialogCerca();
+
 	/**
-	 * Method that create viewDialogNuovo
+	 * Metodo che crea viewDialogNuovo.
 	 */
 	void viewDialogNuovo();
+
 	/**
-	 * Method that create viewDialogRegistrati
+	 * Metodo che crea viewDialogRegistrati.
 	 */
 	void viewDialogRegistrati();
+
 	/**
-	 * Method that create viewDialogWrongPass
+	 * Metodo che crea viewDialogWrongPass.
 	 */
 	void viewDialogWrongPass();
+
 	/**
-	 * Method that create viewDialogWrongUser
+	 * Metodo che crea viewDialogWrongUser.
 	 */
 	void viewDialogWrongUser();
+
 	/**
-	 * Method that set the Object ObserverInterface
+	 * Metodo che setta l' Oggetto ObserverInterface.
+	 * 
 	 * @param o
-	 * 			Object ObserverInterface
+	 *            OggettoObserverInterface
 	 */
 	void setOggettoController(ObserverInterface o);
 }

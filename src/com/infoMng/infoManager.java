@@ -8,16 +8,16 @@ import view.interfaces.ViewInterface;
 
 public class infoManager {
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 
-	    	
-	    	try {
+		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			} catch (Exception e){}
-			
-		    ViewInterface view = new ViewInterfaceImpl();
-			ObserverInterface controller = new ObserverInterfaceImpl(view);
-			controller.Start();
+		} catch (Exception e) {
+		}
+
+		ViewInterface view = new ViewInterfaceImpl();
+		ObserverInterface controller = new ObserverInterfaceImpl(view);
+		controller.start();
 	}
 
 }

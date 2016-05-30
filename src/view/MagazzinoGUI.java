@@ -12,7 +12,7 @@ import view.tabelle.PannelloTabelle;
 import view.toolbar.MyToolbar;
 import java.awt.Toolkit;
 /**
- * Class that define viewMagazzino
+ * Classe che definisce viewMagazzino.
  * 
  * @author Alessandro
  *
@@ -29,19 +29,20 @@ public class MagazzinoGUI extends InitializeFrame {
 	private MagazzinoGUI frame = this;
 	private static final String TITOLO = "Menu";
 	private static final LayoutManager LAYOUT = new BorderLayout();
-	private static final Dimension DIMFRAME = new Dimension(938,476);
+	private static final Dimension DIMFRAME = new Dimension(938, 476);
 
 
 /**
- * 	Constructor for MagazzinGUI frame
+ * 	Costruttore del MagazzinGUI frame.
  * @param o
- * 			Object ObserverInterface
+ * 			Oggetto ObserverInterface
  */
+	//CHECKSTYLE:OFF: checkstyle:magicnumber    
 	public MagazzinoGUI(final ObserverInterface o) {
-		super(TITOLO,LAYOUT,DIMFRAME);
+		super(TITOLO, LAYOUT, DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(MagazzinoGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.setTitle("Magazzino");
-		this.toolBar =  new MyToolbar(o,frame);
+		this.toolBar =  new MyToolbar(o, frame);
 		this.setBounds(100, 100, 781, 486);
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

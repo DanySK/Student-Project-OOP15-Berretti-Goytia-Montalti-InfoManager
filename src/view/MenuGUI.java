@@ -22,7 +22,7 @@ import java.awt.event.ActionListener;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Toolkit;
 /**
- * Class that define viewMenu
+ * Classe che definisce viewMenu.
  * @author Alessandro
  *
  */
@@ -55,28 +55,30 @@ public class MenuGUI extends InitializeFrame {
 	private JPanel pAcquVend = new JPanel();
 	private JPanel pAcqu = new JPanel();
 	private JPanel pVend = new JPanel();
+	private GroupLayout groupLayout;
 	private static final String TITOLO = "Menu";
 	private static final LayoutManager LAYOUT = new BorderLayout();
-	private static final Dimension DIMFRAME = new Dimension(938,476);
+	private static final Dimension DIMFRAME = new Dimension(938, 476);
 	
 
 	/**
-	 * Create the MenuGUI frame
+	 * Costruttore del MenuGUI frame.
 	 * @param o
-	 * 			Object ObserverInterface
+	 * 			Oggetto ObserverInterface
 	 */
+	//CHECKSTYLE:OFF: checkstyle:magicnumber    
 	public MenuGUI(final ObserverInterface o) {
-		super(TITOLO,LAYOUT,DIMFRAME);
+		super(TITOLO, LAYOUT, DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(MenuGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setContentPane(contentPane);
+		this.groupLayout = new GroupLayout(contentPane);
 		this.bClienti.setIcon(new ImageIcon(LoginGUI.class.getResource("/view/icon/Cliente.png")));
 		this.bClienti.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+			public void actionPerformed(final ActionEvent arg0) {
 				o.mostraClienti();
 				dispose();
 			}
@@ -86,7 +88,7 @@ public class MenuGUI extends InitializeFrame {
 		this.bScontrini.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(final ActionEvent arg0) {
 				o.mostraScontrini();
 				dispose();
 			}
@@ -96,7 +98,7 @@ public class MenuGUI extends InitializeFrame {
 		this.bFornitori.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(final ActionEvent arg0) {
 				o.mostraFornitori();
 				dispose();
 			}
@@ -106,7 +108,7 @@ public class MenuGUI extends InitializeFrame {
 		this.bMagazzino.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(final ActionEvent arg0) {
 				o.mostraMagazzino();
 				dispose();
 			}
@@ -116,8 +118,7 @@ public class MenuGUI extends InitializeFrame {
 		this.bFattAcqu.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+			public void actionPerformed(final ActionEvent arg0) {
 				o.mostraFatture();
 				dispose();
 			}
@@ -127,8 +128,7 @@ public class MenuGUI extends InitializeFrame {
 		this.bIvaAcqu.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+			public void actionPerformed(final ActionEvent arg0) {
 				o.mostraRegistiIva();
 				dispose();
 			}
@@ -138,8 +138,7 @@ public class MenuGUI extends InitializeFrame {
 		this.bReport.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+			public void actionPerformed(final ActionEvent arg0) {
 				o.mostraReportVendite();
 				dispose();
 			}
@@ -149,8 +148,7 @@ public class MenuGUI extends InitializeFrame {
 		this.bRiunioni.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+			public void actionPerformed(final ActionEvent arg0) {
 				o.mostraRiunioni();
 				dispose();
 			}
@@ -159,9 +157,8 @@ public class MenuGUI extends InitializeFrame {
 		this.bLogout.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				o.Start();
+			public void actionPerformed(final ActionEvent e) {
+				o.start();
 				dispose();
 				
 			}
@@ -169,9 +166,9 @@ public class MenuGUI extends InitializeFrame {
 		
 		this.lblMenu.setFont(new Font("Tahoma", Font.ITALIC, 48));
 		this.tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		GroupLayout groupLayout = new GroupLayout(contentPane);
-		groupLayout.setHorizontalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING)
+		
+		this.groupLayout.setHorizontalGroup(
+				this.groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(40)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
@@ -209,8 +206,8 @@ public class MenuGUI extends InitializeFrame {
 							.addGap(104)))
 					.addGap(33))
 		);
-		groupLayout.setVerticalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING)
+		this.groupLayout.setVerticalGroup(
+				this.groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)

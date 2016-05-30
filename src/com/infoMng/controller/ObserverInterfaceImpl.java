@@ -20,27 +20,27 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	private ViewInterface view;
 	private JFrame attuale;
-	
+
 	@Override
-	public Optional<JFrame> getAttuale(){
+	public Optional<JFrame> getAttuale() {
 		return Optional.ofNullable(this.attuale);
 	}
-	
+
 	@Override
-	public void setAttuale(JFrame attuale){
+	public void setAttuale(JFrame attuale) {
 		this.attuale = attuale;
 	}
-	
+
 	public ObserverInterfaceImpl(ViewInterface view) {
 		this(view, null);
 	}
-	
+
 	public ObserverInterfaceImpl(ViewInterface view, JFrame attuale) {
 		this.view = view;
 		this.view.setOggettoController(this);
 		this.attuale = attuale;
 	}
-	
+
 	@Override
 	public void mostraClienti() {
 		this.view.viewClienti();
@@ -60,14 +60,14 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public void Start() {
+	public void start() {
 		this.view.viewStart();
 	}
 
 	@Override
 	public void mostraMenu() {
 		this.view.viewMenu();
-		if(this.attuale != null){
+		if (this.attuale != null) {
 			this.attuale.dispose();
 		}
 	}
@@ -132,18 +132,18 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public void salvaUtente(Map<String,String> dati) {
-		 //TODO: Da fare
+	public void salvaUtente(Map<String, String> dati) {
+		// TODO: Da fare
 	}
 
 	@Override
-	public boolean salvaCliente(Map<String,String> dati) {
-	    String nome = dati.get("Nome");
-	    String cognome = dati.get("Cognome");
-	    String mail = dati.get("Email");
-	    String telefono = dati.get("Telefono");
-	    String nomeNegozio = ""; //in attesa del metodoto per il nome negozio
-	    return modelClients.newClient(nome, cognome, mail, telefono, nomeNegozio);
+	public boolean salvaCliente(Map<String, String> dati) {
+		String nome = dati.get("Nome");
+		String cognome = dati.get("Cognome");
+		String mail = dati.get("Email");
+		String telefono = dati.get("Telefono");
+		String nomeNegozio = ""; // in attesa del metodoto per il nome negozio
+		return modelClients.newClient(nome, cognome, mail, telefono, nomeNegozio);
 	}
 
 	@Override
@@ -156,27 +156,26 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public int salvaFattura(Map<String, Object> dati) throws ParseException, NumberFormatException  {
-		//TODO: fai enumerazione con i casi SUCCESSO o ERROREDATA o ERRORESALVATAGGIO al posto del ritorno int perchè fa più figo
+	public int salvaFattura(Map<String, Object> dati) throws ParseException, NumberFormatException {
+		// TODO: fai enumerazione con i casi SUCCESSO o ERROREDATA o
+		// ERRORESALVATAGGIO al posto del ritorno int perchè fa più figo
 		Integer numeroFattura = Integer.parseInt((String) dati.get("NumeroOrdine"));
 		String cliente = (String) dati.get("Fornitore/Cliente");
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
-		Date data = new Date(dateFormatter.parse((String)dati.get("DataOrdine")).getTime());
-		
-		
-		Date inizio = new Date(dateFormatter.parse((String)dati.get("Dal")).getTime());
-		Date fine = new Date(dateFormatter.parse((String)dati.get("Al")).getTime());
+		Date data = new Date(dateFormatter.parse((String) dati.get("DataOrdine")).getTime());
+
+		Date inizio = new Date(dateFormatter.parse((String) dati.get("Dal")).getTime());
+		Date fine = new Date(dateFormatter.parse((String) dati.get("Al")).getTime());
 		String banca = (String) dati.get("Banca");
-		
-		Double sconto = Double.parseDouble((String)dati.get("Sconto"));
-		Integer iva = Integer.parseInt((String)dati.get("IVA"));
-		
-		String descrizione = String.format("Tipo ordine : %s, Banca %s, note %s", banca, (String)dati.get("Tipo ordine"), (String)dati.get("Note"));
+
+		Double sconto = Double.parseDouble((String) dati.get("Sconto"));
+		Integer iva = Integer.parseInt((String) dati.get("IVA"));
+
+		String descrizione = String.format("Tipo ordine : %s, Banca %s, note %s", banca,
+				(String) dati.get("Tipo ordine"), (String) dati.get("Note"));
 		String nomeNegozio = (String) dati.get("Negozio");
 		return 1;
-		
-		
-		
+
 	}
 
 	@Override
@@ -187,7 +186,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public void abilitaFrame(boolean attiva) {
-		if (attiva){
+		if (attiva) {
 			this.attuale.setEnabled(attiva);
 		} else {
 			this.attuale.setEnabled(attiva);
@@ -197,7 +196,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	@Override
 	public void salvaScontrini(Map<String, Object> dati) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -206,33 +205,46 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public List<modelStore> elencoProdotti() {
-		return modelStore.elenco();
+	public int elencoProdotti(List<modelStore> lista) {
+		return lista.size();
 	}
 
 	@Override
 	public void cercaFornitori(String nome) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void cercaClienti(String nome) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void cercaRiunioni(String data, String nome) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void cercaScontrini(String numero, String nome) {
 		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean userLogin(String user, String pass) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void cercaFatture(String numero, String nome) {
+		// TODO Auto-generated method stub
 		
 	}
+
 
 
 }

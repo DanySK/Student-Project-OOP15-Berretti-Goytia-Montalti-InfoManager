@@ -15,8 +15,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+
 /**
- * Class that define DIalogWrongUser
+ * Classe che definisce DIalogWrongUser.
+ * 
  * @author Alessandro
  *
  */
@@ -28,18 +30,22 @@ public class DialogWrongUser extends JDialog {
 	private static final long serialVersionUID = -5939201597436719902L;
 	private final JPanel contentPanel = new JPanel();
 	private JButton cancelButton = new JButton("Cancel");
-	private JLabel lblLusernameInseritoNon = new JLabel("l'username inserito non risulta essere registrato, riprovare con un altro username o provare a registrarsi");
+	private JLabel lblLusernameInseritoNon = new JLabel(
+			"l'username inserito non risulta essere registrato, riprovare con un altro username o provare a registrarsi");
 	private JPanel buttonPane = new JPanel();
 	private JButton okButton = new JButton("OK");
-	
+
 	/**
-	 * Create the DialogWrongUser.
+	 * Costruttore del DialogWrongUser.
+	 * 
 	 * @param o
-	 * 			Object ObserverInterface
+	 *            Oggetto ObserverInterface
 	 */
+	// CHECKSTYLE:OFF: checkstyle:magicnumber
 	public DialogWrongUser(final ObserverInterface o) {
 		this.setTitle("Errore");
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage(DialogWrongUser.class.getResource("/javax/swing/plaf/metal/icons/Error.gif")));
+		this.setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(DialogWrongUser.class.getResource("/javax/swing/plaf/metal/icons/Error.gif")));
 		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		this.setBounds(100, 100, 672, 195);
 		this.getContentPane().setLayout(new BorderLayout());
@@ -47,7 +53,8 @@ public class DialogWrongUser extends JDialog {
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
 		this.contentPanel.setLayout(new BorderLayout(0, 0));
 		{
-			this.lblLusernameInseritoNon.setIcon(new ImageIcon(DialogWrongUser.class.getResource("/javax/swing/plaf/metal/icons/Warn.gif")));
+			this.lblLusernameInseritoNon.setIcon(
+					new ImageIcon(DialogWrongUser.class.getResource("/javax/swing/plaf/metal/icons/Warn.gif")));
 			this.contentPanel.add(lblLusernameInseritoNon, BorderLayout.CENTER);
 		}
 		{
@@ -55,7 +62,7 @@ public class DialogWrongUser extends JDialog {
 			this.getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				this.okButton.addActionListener(new ActionListener() {
-					
+
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						o.abilitaFrame(true);
@@ -67,7 +74,7 @@ public class DialogWrongUser extends JDialog {
 			}
 			{
 				this.cancelButton.addActionListener(new ActionListener() {
-					
+
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						o.abilitaFrame(true);

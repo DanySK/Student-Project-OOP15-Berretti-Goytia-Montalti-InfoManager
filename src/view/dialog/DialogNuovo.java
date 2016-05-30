@@ -23,10 +23,12 @@ import javax.swing.JRadioButton;
 import java.awt.Toolkit;
 
 /**
- * Class that define DialogNuovo
+ * Classe che definisce DialogNuovo.
+ * 
  * @author Alessandro
  *
  */
+//CHECKSTYLE:OFF: checkstyle:magicnumber    
 public class DialogNuovo extends JDialog implements DialogInterface {
 
 	/**
@@ -42,66 +44,68 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 	private JLabel lblNome = new JLabel("Nome(*)");
 	private JLabel lblCognome = new JLabel("Cognome(*)");
 	private JLabel lblIndirizzo = new JLabel("Indirizzo");
-	private GridBagConstraints gbc_lblIndirizzo = new GridBagConstraints();
-	private GridBagConstraints gbc_lblTelefono = new GridBagConstraints();
-	private GridBagConstraints gbc_lblCognome = new GridBagConstraints();
-	private GridBagConstraints gbc_txtNome = new GridBagConstraints();
-	private GridBagConstraints gbc_lblNome = new GridBagConstraints();
-	private GridBagConstraints gbc_txtIndirizzo = new GridBagConstraints();
-	private GridBagConstraints gbc_txtCognome = new GridBagConstraints();
-	private GridBagConstraints gbc_txtTelefono = new GridBagConstraints();
-	private GridBagConstraints gbc_rdbtnFornitore = new GridBagConstraints();
-	private GridBagConstraints gbc_rdbtnCliente = new GridBagConstraints();
-	private GridBagConstraints gbc_lblNegozio = new GridBagConstraints();
-	private GridBagConstraints gbc_txtNegozio = new GridBagConstraints();
-	private GridBagConstraints gbc_lblEmail = new GridBagConstraints();
-	private GridBagConstraints gbc_txtMail = new GridBagConstraints();
+	private GridBagConstraints glblIndirizzo = new GridBagConstraints();
+	private GridBagConstraints glblTelefono = new GridBagConstraints();
+	private GridBagConstraints glblCognome = new GridBagConstraints();
+	private GridBagConstraints gtxtNome = new GridBagConstraints();
+	private GridBagConstraints glblNome = new GridBagConstraints();
+	private GridBagConstraints gtxtIndirizzo = new GridBagConstraints();
+	private GridBagConstraints gtxtCognome = new GridBagConstraints();
+	private GridBagConstraints gtxtTelefono = new GridBagConstraints();
+	private GridBagConstraints grdbtnFornitore = new GridBagConstraints();
+	private GridBagConstraints grdbtnCliente = new GridBagConstraints();
+	private GridBagConstraints glblNegozio = new GridBagConstraints();
+	private GridBagConstraints gtxtNegozio = new GridBagConstraints();
+	private GridBagConstraints glblEmail = new GridBagConstraints();
+	private GridBagConstraints gtxtMail = new GridBagConstraints();
 	private JButton okButton = new JButton("OK");
 	private JButton cancelButton = new JButton("Cancel");
-	private GridBagLayout gbl_contentPanel = new GridBagLayout();
+	private GridBagLayout gcontentPanel = new GridBagLayout();
 	private JRadioButton rdbtnCliente = new JRadioButton("Cliente");
 	private JRadioButton rdbtnFornitore = new JRadioButton("Fornitore");
 	private JPanel buttonPane = new JPanel();
-	private Map<String,String> map = new HashMap<>();
+	private Map<String, String> map = new HashMap<>();
 	private final JTextField txtMail = new JTextField(30);
 	private final JLabel lblEmail = new JLabel("E-Mail");
 	private final JTextField txtNegozio = new JTextField(30);
 	private final JLabel lblNegozio = new JLabel("Negozio");
 
 	@Override
-	public Map<String,String> getDataString(final ObserverInterface o){
-		this.map.put("Nome",txtNome.getText());
+	public Map<String, String> getDataString(final ObserverInterface o) {
+		this.map.put("Nome", txtNome.getText());
 		this.map.put("Cognome", txtCognome.getText());
 		this.map.put("Telefono", txtTelefono.getText());
 		this.map.put("Indirizzo", txtIndirizzo.getText());
 		this.map.put("Email", txtMail.getText());
 		this.map.put("Negozio", txtNegozio.getText());
-		if(rdbtnCliente.isSelected()){
+		if (rdbtnCliente.isSelected()) {
 			this.map.put("TipoDiRapporto", rdbtnCliente.getText());
 		} else {
 			this.map.put("TipoDiRapporto", rdbtnFornitore.getText());
 		}
 		return this.map;
 	}
-	
-	private boolean checkText () {
-		if (txtNome.getText().equals("")){
+
+	private boolean checkText() {
+		if (txtNome.getText().equals("")) {
 			return false;
 		} else {
-			if(txtCognome.getText().equals("")){
+			if (txtCognome.getText().equals("")) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	/**
-	 * Create the DialogNuovo.
+	 * Costruttore DialogNuovo.
+	 * 
 	 * @param o
-	 * 			Object ObserverInterface
+	 *            Oggetto ObserverInterface
 	 */
 	public DialogNuovo(final ObserverInterface o) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(DialogNuovo.class.getResource("/javax/swing/plaf/metal/icons/ocean/computer.gif")));
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(DialogNuovo.class.getResource("/javax/swing/plaf/metal/icons/ocean/computer.gif")));
 		txtNegozio.setColumns(10);
 		txtMail.setColumns(10);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -111,103 +115,104 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 		this.getContentPane().setLayout(new BorderLayout());
 		this.contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
-		this.gbl_contentPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0};
-		this.gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		this.gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
-		this.gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		this.contentPanel.setLayout(gbl_contentPanel);
+		this.gcontentPanel.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+		this.gcontentPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		this.gcontentPanel.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE };
+		this.gcontentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+				Double.MIN_VALUE };
+		this.contentPanel.setLayout(gcontentPanel);
 		{
-			this.gbc_lblNome.gridwidth = 4;
-			this.gbc_lblNome.insets = new Insets(0, 0, 5, 5);
-			this.gbc_lblNome.gridx = 0;
-			this.gbc_lblNome.gridy = 0;
-			this.contentPanel.add(lblNome, gbc_lblNome);
+			this.glblNome.gridwidth = 4;
+			this.glblNome.insets = new Insets(0, 0, 5, 5);
+			this.glblNome.gridx = 0;
+			this.glblNome.gridy = 0;
+			this.contentPanel.add(lblNome, glblNome);
 		}
 		{
-			this.gbc_txtNome.gridwidth = 2;
-			this.gbc_txtNome.insets = new Insets(0, 0, 5, 0);
-			this.gbc_txtNome.fill = GridBagConstraints.HORIZONTAL;
-			this.gbc_txtNome.gridx = 4;
-			this.gbc_txtNome.gridy = 0;
+			this.gtxtNome.gridwidth = 2;
+			this.gtxtNome.insets = new Insets(0, 0, 5, 0);
+			this.gtxtNome.fill = GridBagConstraints.HORIZONTAL;
+			this.gtxtNome.gridx = 4;
+			this.gtxtNome.gridy = 0;
 			this.txtNome.setEditable(true);
-			this.contentPanel.add(txtNome, gbc_txtNome);
+			this.contentPanel.add(txtNome, gtxtNome);
 			this.txtNome.setColumns(10);
 		}
 		{
-			this.gbc_lblCognome.gridwidth = 4;
-			this.gbc_lblCognome.insets = new Insets(0, 0, 5, 5);
-			this.gbc_lblCognome.gridx = 0;
-			this.gbc_lblCognome.gridy = 2;
-			this.contentPanel.add(lblCognome, gbc_lblCognome);
+			this.glblCognome.gridwidth = 4;
+			this.glblCognome.insets = new Insets(0, 0, 5, 5);
+			this.glblCognome.gridx = 0;
+			this.glblCognome.gridy = 2;
+			this.contentPanel.add(lblCognome, glblCognome);
 		}
 		{
-			this.gbc_txtCognome.insets = new Insets(0, 0, 5, 0);
-			this.gbc_txtCognome.gridwidth = 2;
-			this.gbc_txtCognome.fill = GridBagConstraints.HORIZONTAL;
-			this.gbc_txtCognome.gridx = 4;
-			this.gbc_txtCognome.gridy = 2;
+			this.gtxtCognome.insets = new Insets(0, 0, 5, 0);
+			this.gtxtCognome.gridwidth = 2;
+			this.gtxtCognome.fill = GridBagConstraints.HORIZONTAL;
+			this.gtxtCognome.gridx = 4;
+			this.gtxtCognome.gridy = 2;
 			this.txtCognome.setEditable(true);
-			this.contentPanel.add(txtCognome, gbc_txtCognome);
+			this.contentPanel.add(txtCognome, gtxtCognome);
 			this.txtCognome.setColumns(10);
 		}
 		{
-			this.gbc_lblTelefono.gridwidth = 4;
-			this.gbc_lblTelefono.insets = new Insets(0, 0, 5, 5);
-			this.gbc_lblTelefono.gridx = 0;
-			this.gbc_lblTelefono.gridy = 4;
-			this.contentPanel.add(lblTelefono, gbc_lblTelefono);
+			this.glblTelefono.gridwidth = 4;
+			this.glblTelefono.insets = new Insets(0, 0, 5, 5);
+			this.glblTelefono.gridx = 0;
+			this.glblTelefono.gridy = 4;
+			this.contentPanel.add(lblTelefono, glblTelefono);
 		}
 		{
-			this.gbc_txtTelefono.gridwidth = 2;
-			this.gbc_txtTelefono.insets = new Insets(0, 0, 5, 0);
-			this.gbc_txtTelefono.fill = GridBagConstraints.HORIZONTAL;
-			this.gbc_txtTelefono.gridx = 4;
-			this.gbc_txtTelefono.gridy = 4;
+			this.gtxtTelefono.gridwidth = 2;
+			this.gtxtTelefono.insets = new Insets(0, 0, 5, 0);
+			this.gtxtTelefono.fill = GridBagConstraints.HORIZONTAL;
+			this.gtxtTelefono.gridx = 4;
+			this.gtxtTelefono.gridy = 4;
 			this.txtTelefono.setEditable(true);
-			this.contentPanel.add(txtTelefono, gbc_txtTelefono);
+			this.contentPanel.add(txtTelefono, gtxtTelefono);
 			this.txtTelefono.setColumns(10);
 		}
 		{
-			this.gbc_lblIndirizzo.gridwidth = 4;
-			this.gbc_lblIndirizzo.insets = new Insets(0, 0, 5, 5);
-			this.gbc_lblIndirizzo.gridx = 0;
-			this.gbc_lblIndirizzo.gridy = 6;
-			this.contentPanel.add(lblIndirizzo, gbc_lblIndirizzo);
+			this.glblIndirizzo.gridwidth = 4;
+			this.glblIndirizzo.insets = new Insets(0, 0, 5, 5);
+			this.glblIndirizzo.gridx = 0;
+			this.glblIndirizzo.gridy = 6;
+			this.contentPanel.add(lblIndirizzo, glblIndirizzo);
 		}
 		{
-			this.gbc_txtIndirizzo.insets = new Insets(0, 0, 5, 0);
-			this.gbc_txtIndirizzo.gridwidth = 2;
-			this.gbc_txtIndirizzo.fill = GridBagConstraints.HORIZONTAL;
-			this.gbc_txtIndirizzo.gridx = 4;
-			this.gbc_txtIndirizzo.gridy = 6;
+			this.gtxtIndirizzo.insets = new Insets(0, 0, 5, 0);
+			this.gtxtIndirizzo.gridwidth = 2;
+			this.gtxtIndirizzo.fill = GridBagConstraints.HORIZONTAL;
+			this.gtxtIndirizzo.gridx = 4;
+			this.gtxtIndirizzo.gridy = 6;
 			this.txtIndirizzo.setEditable(true);
-			this.contentPanel.add(txtIndirizzo, gbc_txtIndirizzo);
+			this.contentPanel.add(txtIndirizzo, gtxtIndirizzo);
 			this.txtIndirizzo.setColumns(10);
 		}
 		{
 
-			this.gbc_lblEmail.gridwidth = 3;
-			this.gbc_lblEmail.insets = new Insets(0, 0, 5, 5);
-			this.gbc_lblEmail.gridx = 0;
-			this.gbc_lblEmail.gridy = 8;
-			this.contentPanel.add(lblEmail, gbc_lblEmail);
+			this.glblEmail.gridwidth = 3;
+			this.glblEmail.insets = new Insets(0, 0, 5, 5);
+			this.glblEmail.gridx = 0;
+			this.glblEmail.gridy = 8;
+			this.contentPanel.add(lblEmail, glblEmail);
 		}
 		{
-			this.gbc_txtMail.gridwidth = 2;
-			this.gbc_txtMail.insets = new Insets(0, 0, 5, 0);
-			this.gbc_txtMail.fill = GridBagConstraints.HORIZONTAL;
-			this.gbc_txtMail.gridx = 4;
-			this.gbc_txtMail.gridy = 8;
+			this.gtxtMail.gridwidth = 2;
+			this.gtxtMail.insets = new Insets(0, 0, 5, 0);
+			this.gtxtMail.fill = GridBagConstraints.HORIZONTAL;
+			this.gtxtMail.gridx = 4;
+			this.gtxtMail.gridy = 8;
 			this.txtMail.setEditable(true);
-			this.contentPanel.add(txtMail, gbc_txtMail);
+			this.contentPanel.add(txtMail, gtxtMail);
 		}
-		
+
 		this.rdbtnFornitore.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if (rdbtnFornitore.isSelected()){
+				if (rdbtnFornitore.isSelected()) {
 					rdbtnCliente.setEnabled(false);
 				} else {
 					rdbtnCliente.setEnabled(true);
@@ -215,33 +220,33 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 			}
 		});
 		{
-			this.gbc_lblNegozio.gridwidth = 4;
-			this.gbc_lblNegozio.insets = new Insets(0, 0, 5, 5);
-			this.gbc_lblNegozio.gridx = 0;
-			this.gbc_lblNegozio.gridy = 10;
-			this.contentPanel.add(lblNegozio, gbc_lblNegozio);
+			this.glblNegozio.gridwidth = 4;
+			this.glblNegozio.insets = new Insets(0, 0, 5, 5);
+			this.glblNegozio.gridx = 0;
+			this.glblNegozio.gridy = 10;
+			this.contentPanel.add(lblNegozio, glblNegozio);
 		}
 		{
 
-			this.gbc_txtNegozio.gridwidth = 2;
-			this.gbc_txtNegozio.insets = new Insets(0, 0, 5, 5);
-			this.gbc_txtNegozio.fill = GridBagConstraints.HORIZONTAL;
-			this.gbc_txtNegozio.gridx = 4;
-			this.gbc_txtNegozio.gridy = 10;
-			this.contentPanel.add(txtNegozio, gbc_txtNegozio);
+			this.gtxtNegozio.gridwidth = 2;
+			this.gtxtNegozio.insets = new Insets(0, 0, 5, 5);
+			this.gtxtNegozio.fill = GridBagConstraints.HORIZONTAL;
+			this.gtxtNegozio.gridx = 4;
+			this.gtxtNegozio.gridy = 10;
+			this.contentPanel.add(txtNegozio, gtxtNegozio);
 		}
 		{
-			this.gbc_rdbtnFornitore.insets = new Insets(0, 0, 0, 5);
-			this.gbc_rdbtnFornitore.gridx = 4;
-			this.gbc_rdbtnFornitore.gridy = 11;
-			this.contentPanel.add(rdbtnFornitore, gbc_rdbtnFornitore);
+			this.grdbtnFornitore.insets = new Insets(0, 0, 0, 5);
+			this.grdbtnFornitore.gridx = 4;
+			this.grdbtnFornitore.gridy = 11;
+			this.contentPanel.add(rdbtnFornitore, grdbtnFornitore);
 		}
-		
+
 		this.rdbtnCliente.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(rdbtnCliente.isSelected()){
+				if (rdbtnCliente.isSelected()) {
 					rdbtnFornitore.setEnabled(false);
 				} else {
 					rdbtnFornitore.setEnabled(true);
@@ -249,34 +254,34 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 			}
 		});
 		{
-			this.gbc_rdbtnCliente.gridx = 5;
-			this.gbc_rdbtnCliente.gridy = 11;
-			this.contentPanel.add(rdbtnCliente, gbc_rdbtnCliente);
+			this.grdbtnCliente.gridx = 5;
+			this.grdbtnCliente.gridy = 11;
+			this.contentPanel.add(rdbtnCliente, grdbtnCliente);
 		}
 		{
 			this.buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			this.getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				this.okButton.addActionListener(new ActionListener() {
-					
+
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if(rdbtnCliente.isSelected()){				
-							if (checkText()){
+						if (rdbtnCliente.isSelected()) {
+							if (checkText()) {
 								o.salvaCliente(map);
 								o.abilitaFrame(true);
 								dispose();
 							} else {
 								o.mostraDialogCampoObbligatorio();
-							}	
+							}
 						} else {
-							if (checkText()){
+							if (checkText()) {
 								o.salvaFornitore(map);
 								o.abilitaFrame(true);
 								dispose();
 							} else {
 								o.mostraDialogCampoObbligatorio();
-							}	
+							}
 						}
 					}
 				});
@@ -285,7 +290,7 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 			}
 			{
 				this.cancelButton.addActionListener(new ActionListener() {
-					
+
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						o.abilitaFrame(true);

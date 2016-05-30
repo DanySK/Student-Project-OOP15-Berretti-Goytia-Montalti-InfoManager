@@ -3,15 +3,22 @@ package view.dialog;
 import java.util.Map;
 import view.interfaces.ObserverInterface;;
 
+/**
+ * Interfaccia per i dialoghi Dialog.
+ * 
+ * @author Alessandro
+ *
+ */
 public interface DialogInterface {
-	
+
 	/**
-	 * Method that capture data from JDialogs
+	 * Metodo per ottenere i dati dai JDialogs.
+	 * 
 	 * @param o
-	 * 			Object ObserverInterface
-	 * @return Map (String,String) that contains all the data insert on the current JTextField's JDialog, 
-	 * if the operation don't goes well this return null 
+	 *            Oggetto ObserverInterface
+	 * @return Map (String,String) che contiene tutti i dati inseriti nei TextFields del dialogo 
+	 * 		   chiamato, se l'operazione non va a buon fine restituisce null
 	 * 
 	 */
-	public Map<String,String> getDataString(final ObserverInterface o);
+	Map<String, String> getDataString(final ObserverInterface o);
 }

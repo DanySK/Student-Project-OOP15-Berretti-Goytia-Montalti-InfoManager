@@ -18,11 +18,11 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 
 /**
- * Class that define viewRiunioni
+ * Classe che definisce viewRiunioni.
  * @author Alessandro
  *
  */
-public class RiunioniGUI extends InitializeFrame{
+public class RiunioniGUI extends InitializeFrame {
 
 	/**
 	 * 
@@ -30,7 +30,7 @@ public class RiunioniGUI extends InitializeFrame{
 	private static final long serialVersionUID = -8816191580108552347L;
 	private static final String TITOLO = "Riunioni";
 	private static final LayoutManager LAYOUT = new BorderLayout();
-	private static final Dimension DIMFRAME = new Dimension(400,400);
+	private static final Dimension DIMFRAME = new Dimension(400, 400);
 	private RiunioniGUI frame = this;
 	private JPanel panelTool = new JPanel();
 	private JPanel panelText = new JPanel();
@@ -47,14 +47,14 @@ public class RiunioniGUI extends InitializeFrame{
 	private final JLabel lblAnno = new JLabel("Anno");
 	private final JTextField txtAnno = new JTextField();
 	private JTextArea textArea = new JTextArea();
-	private GroupLayout gl_panelText = new GroupLayout(panelText);
+	private GroupLayout gPanelText = new GroupLayout(panelText);
 	/**
-	 * Method that get data from TextField's frame
+	 * Metodo per ottendere dati dai TextField.
 	 * @return
 	 * 			Map (String,String)
 	 */		
-	public Map<String,String> getTextField(){
-		Map<String,String> mappa = new HashMap<>();
+	public Map<String, String> getTextField() {
+		Map<String, String> mappa = new HashMap<>();
 		mappa.put("Evento", txtEvento.getText());
 		mappa.put("Giorno", txtGiorno.getText());
 		mappa.put("Mese", txtMese.getText());
@@ -63,12 +63,13 @@ public class RiunioniGUI extends InitializeFrame{
 		return mappa;
 	}
 	/**
-	 * Create the RiunioniGUI frame.
+	 * Costruttore del RiunioniGUI frame.
 	 * @param o
-	 * 		Object ObserverInterface
+	 * 		Oggetto ObserverInterface
 	 */
+	//CHECKSTYLE:OFF: checkstyle:magicnumber    
 	public RiunioniGUI(final ObserverInterface o) {
-		super(TITOLO,LAYOUT,DIMFRAME);
+		super(TITOLO, LAYOUT, DIMFRAME);
 		this.txtAnno.setColumns(10);
 		this.txtMese.setColumns(10);
 		this.txtOra.setColumns(10);
@@ -78,27 +79,27 @@ public class RiunioniGUI extends InitializeFrame{
 		this.getMainPanel().setLayout(new BorderLayout(0, 0));
 		this.getMainPanel().add(panelTool, BorderLayout.CENTER);
 		this.toolbar = new MyToolbar(o, frame);
-		this.panelTool.setLayout(new BorderLayout(0,0));
+		this.panelTool.setLayout(new BorderLayout(0, 0));
 		this.panelTool.add(toolbar, BorderLayout.NORTH);
 		this.panelTool.add(panelText, BorderLayout.CENTER);
 		
 
 
-		this.gl_panelText.setHorizontalGroup(
-				this.gl_panelText.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelText.createSequentialGroup()
+		this.gPanelText.setHorizontalGroup(
+				this.gPanelText.createParallelGroup(Alignment.LEADING)
+				.addGroup(gPanelText.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panelText.createParallelGroup(Alignment.LEADING)
+					.addGroup(gPanelText.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblNomeEvento)
 						.addComponent(lblGiorno)
 						.addComponent(lblOra)
 						.addComponent(lblNote))
 					.addGap(18)
-					.addGroup(gl_panelText.createParallelGroup(Alignment.LEADING, false)
+					.addGroup(gPanelText.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(textArea)
 						.addComponent(txtEvento, GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
 						.addComponent(txtOra)
-						.addGroup(gl_panelText.createSequentialGroup()
+						.addGroup(gPanelText.createSequentialGroup()
 							.addComponent(txtGiorno, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
 							.addComponent(lblMese)
@@ -110,15 +111,15 @@ public class RiunioniGUI extends InitializeFrame{
 							.addComponent(txtAnno, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
-		this.gl_panelText.setVerticalGroup(
-				this.gl_panelText.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelText.createSequentialGroup()
+		this.gPanelText.setVerticalGroup(
+				this.gPanelText.createParallelGroup(Alignment.LEADING)
+				.addGroup(gPanelText.createSequentialGroup()
 					.addGap(32)
-					.addGroup(gl_panelText.createParallelGroup(Alignment.BASELINE)
+					.addGroup(gPanelText.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNomeEvento)
 						.addComponent(txtEvento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
-					.addGroup(gl_panelText.createParallelGroup(Alignment.BASELINE)
+					.addGroup(gPanelText.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblGiorno)
 						.addComponent(txtGiorno, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblMese)
@@ -126,17 +127,28 @@ public class RiunioniGUI extends InitializeFrame{
 						.addComponent(lblAnno)
 						.addComponent(txtAnno, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
-					.addGroup(gl_panelText.createParallelGroup(Alignment.BASELINE)
+					.addGroup(gPanelText.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblOra)
 						.addComponent(txtOra, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
-					.addGroup(gl_panelText.createParallelGroup(Alignment.BASELINE)
+					.addGroup(gPanelText.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNote)
 						.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(24, Short.MAX_VALUE))
 		);
-		this.panelText.setLayout(gl_panelText);
+		this.panelText.setLayout(gPanelText);
 		
 
+	}
+	/**
+	 * Metodo per resettare i textfield del frame
+	 */
+	public void resetCampi() {
+		this.txtAnno.setText("");
+		this.txtGiorno.setText("");
+		this.txtMese.setText("");
+		this.txtEvento.setText("");
+		this.txtOra.setText("");
+		this.textArea.setText("");
 	}
 }

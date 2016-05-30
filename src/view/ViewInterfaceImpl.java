@@ -1,31 +1,41 @@
 package view;
 
+import view.dialog.DialogCampoObbligatorio;
+import view.dialog.DialogCerca;
+import view.dialog.DialogNuovo;
+import view.dialog.DialogRegistrati;
+import view.dialog.DialogWrongPass;
+import view.dialog.DialogWrongUser;
 import view.interfaces.ObserverInterface;
 import view.interfaces.ViewInterface;
 
-import view.dialog.*;
 
-public class ViewInterfaceImpl implements ViewInterface{
-	
+
+/**
+ * Classe che definisce ViewInterface.
+ * 
+ * @author Alessandro
+ *
+ */
+public class ViewInterfaceImpl implements ViewInterface {
+
 	private ObserverInterface o;
-	
-	
+
 	/**
-	 * Constructor empty
+	 * Costruttore vuoto.
 	 */
-    public ViewInterfaceImpl() {
+	public ViewInterfaceImpl() {
 	}
-    
+
 	@Override
 	public void viewClienti() {
-		new ClientiGUI(o).display(true);;
+		new ClientiGUI(o).display(true);
 
-		
 	}
 
 	@Override
 	public void viewFornitori() {
-		new FornitoriGUI(o).display(true);;
+		new FornitoriGUI(o).display(true);
 
 	}
 
@@ -41,42 +51,42 @@ public class ViewInterfaceImpl implements ViewInterface{
 
 	@Override
 	public void viewMenu() {
-		 new MenuGUI(o).display(true);
-		
+		new MenuGUI(o).display(true);
+
 	}
 
 	@Override
 	public void viewMagazzino() {
 		new MagazzinoGUI(o).display(true);
-		
+
 	}
 
 	@Override
 	public void viewRegistiIva() {
 		new RegistriIvaGUI(o).display(true);
-	
+
 	}
 
 	@Override
 	public void viewReportVendite() {
-		 new ReportVenditeGUI(o).display(true);
+		new ReportVenditeGUI(o).display(true);
 	}
 
 	@Override
 	public void viewRiunioni() {
-		 new RiunioniGUI(o).display(true);
+		new RiunioniGUI(o).display(true);
 
 	}
 
 	@Override
 	public void viewScontrini() {
-		 new ScontriniGUI(o).display(true);
+		new ScontriniGUI(o).display(true);
 
 	}
 
 	@Override
 	public void viewDialogCampoObbligatorio() {
-		 new DialogCampoObbligatorio(o).setVisible(true);
+		new DialogCampoObbligatorio(o).setVisible(true);
 
 	}
 
@@ -84,39 +94,37 @@ public class ViewInterfaceImpl implements ViewInterface{
 	public void viewDialogCerca() {
 		new DialogCerca(o, o.getAttuale()).setVisible(true);
 
-		
 	}
 
 	@Override
 	public void viewDialogNuovo() {
-			new DialogNuovo(o).setVisible(true);
-		
+		new DialogNuovo(o).setVisible(true);
+
 	}
 
 	@Override
 	public void viewDialogRegistrati() {
-		 new DialogRegistrati(o).setVisible(true);
+		new DialogRegistrati(o).setVisible(true);
 
-		
 	}
 
 	@Override
 	public void viewDialogWrongPass() {
-		 new DialogWrongPass(o).setVisible(true);
+		new DialogWrongPass(o).setVisible(true);
 
-		
 	}
 
 	@Override
 	public void viewDialogWrongUser() {
-		 new DialogWrongUser(o).setVisible(true);
+		new DialogWrongUser(o).setVisible(true);
 
-		
 	}
 
 	@Override
-	public void setOggettoController(ObserverInterface o) {
-		this.o = o;	
+	//CHECKSTYLE:OFF:
+	public void setOggettoController(final ObserverInterface o ) {
+		//CHECKSTYLE:ON:
+		this.o = o;
 	}
 
 }

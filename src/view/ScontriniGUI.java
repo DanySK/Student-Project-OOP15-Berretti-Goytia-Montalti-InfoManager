@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import javax.swing.GroupLayout;
@@ -22,15 +23,16 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
 /**
- * Class that define viewScontrini
+ * Classe che definisce viewScontrini.
+ * 
  * @author Alessandro
  *
  */
-public class ScontriniGUI extends InitializeFrame{
+public class ScontriniGUI extends InitializeFrame {
 
 	/**
 	 * 
@@ -38,7 +40,7 @@ public class ScontriniGUI extends InitializeFrame{
 	private static final long serialVersionUID = 3626871331020606696L;
 	private static final String TITOLO = "Scontrini";
 	private static final LayoutManager LAYOUT = new BorderLayout();
-	private static final Dimension DIMFRAME = new Dimension(664,413);
+	private static final Dimension DIMFRAME = new Dimension(664, 413);
 	private ScontriniGUI frame = this;
 	private JTextField txtProdotto;
 	private JTextField txtPrezzoUnitario;
@@ -56,199 +58,210 @@ public class ScontriniGUI extends InitializeFrame{
 	private JLabel lblNscontrino = new JLabel("N.Scontrino");
 	private JLabel lblNewLabel = new JLabel("\u20AC");
 	private JLabel label = new JLabel("%");
-	private JLabel label_1 = new JLabel("%");
+	private JLabel labelPercento = new JLabel("%");
 	private MyToolbar toolbar;
 	private JPanel panelTool = new JPanel();
 	private JPanel panelText = new JPanel();
-	private GroupLayout gl_contentPane = new GroupLayout(panelText);
+	private GroupLayout gcontentPane = new GroupLayout(panelText);
 	private double imponibile;
 	private double totale;
 	private double totiva;
 	private double totsconto;
 	private final JButton btnAggiungi = new JButton("Aggiungi");
 	private final JLabel lblAnteprimaDiStampa = new JLabel("Anteprima di Stampa");
+	private LinkedList<String> lista = new LinkedList<>();
+
 	/**
-	 * Method that clean the TextField's frame
+	 * Metodo che resetta i TextField del frame.
 	 */
-	public void resetCampi(){
-		txtIva.setText("");
-		txtPrezzoUnitario.setText("");
-		txtProdotto.setText("");
-		txtQuantita.setText("");
-		txtSconto.setText("");
-		txtScontrino.setText("");
+	public void resetCampi() {
+		this.txtIva.setText("");
+		this.txtPrezzoUnitario.setText("");
+		this.txtProdotto.setText("");
+		this.txtQuantita.setText("");
+		this.txtSconto.setText("");
+		this.txtScontrino.setText("");
 	}
 
-
 	/**
-	 * Create the ScontriniGUI frame.
+	 * Costruttore del  ScontriniGUI frame.
+	 * 
 	 * @param o
-	 * 			Object ObserverInterface
+	 *            Oggetto ObserverInterface
 	 */
-	public ScontriniGUI(final ObserverInterface o) {
-		super(TITOLO,LAYOUT,DIMFRAME);
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage(ScontriniGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
+	// CHECKSTYLE:OFF: checkstyle:magicnumber
+	ScontriniGUI(final ObserverInterface o) {
+		super(TITOLO, LAYOUT, DIMFRAME);
+		this.setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(ScontriniGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.getMainPanel().setLayout(new BorderLayout(0, 0));
 		this.getMainPanel().add(panelTool, BorderLayout.CENTER);
 		panelTool.setLayout(new BorderLayout(0, 0));
-		this.toolbar = new MyToolbar(o,frame);
+		this.toolbar = new MyToolbar(o, frame);
 		this.panelTool.add(toolbar, BorderLayout.NORTH);
 		this.panelTool.add(panelText);
 		this.txtProdotto = new JTextField();
 		this.txtProdotto.setColumns(10);
-		
+
 		this.txtPrezzoUnitario = new JTextField();
 		this.txtPrezzoUnitario.setColumns(10);
-		
+
 		this.txtQuantita = new JTextField();
 		this.txtQuantita.setColumns(10);
-		
+
 		this.txtIva = new JTextField();
 		this.txtIva.setColumns(10);
-		
+
 		this.txtSconto = new JTextField();
 		this.txtSconto.setColumns(10);
-		
+
 		this.textArea.setEditable(false);
-		
 
 		this.txtScontrino = new JTextField();
 		this.txtScontrino.setColumns(10);
-		
-		this.gl_contentPane.setHorizontalGroup(
-			this.gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblProdotto)
-								.addComponent(lblPrezzoUnitario)
-								.addComponent(lblQuantita)
-								.addComponent(lblIva)
-								.addComponent(lblSconto)
-								.addComponent(lblNscontrino))
-							.addGap(40)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(txtScontrino)
-								.addComponent(txtProdotto, GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-								.addComponent(txtPrezzoUnitario)
-								.addComponent(txtQuantita)
-								.addComponent(txtIva)
-								.addComponent(txtSconto))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
-								.addComponent(label)
-								.addComponent(label_1)))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(54)
-							.addComponent(btnStampa, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
-							.addGap(40)
-							.addComponent(btnAggiungi, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)))
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(31)
-							.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
-							.addContainerGap())
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(131)
-							.addComponent(lblAnteprimaDiStampa, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(104, Short.MAX_VALUE))))
-		);
-		this.gl_contentPane.setVerticalGroup(
-			this.gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(58)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblProdotto)
-								.addComponent(txtProdotto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(33)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblPrezzoUnitario)
-								.addComponent(txtPrezzoUnitario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblNewLabel))
-							.addGap(30)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblQuantita)
-								.addComponent(txtQuantita, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(29)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblIva)
-								.addComponent(txtIva, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(label))
-							.addGap(29)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblSconto)
-								.addComponent(txtSconto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(label_1)))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblNscontrino)
-								.addComponent(txtScontrino, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-					.addPreferredGap(ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnStampa)
-						.addComponent(btnAggiungi))
-					.addGap(28))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(lblAnteprimaDiStampa)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		this.panelText.setLayout(gl_contentPane);
+
+		this.gcontentPane
+				.setHorizontalGroup(
+						this.gcontentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(
+										gcontentPane.createSequentialGroup()
+												.addGroup(gcontentPane
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gcontentPane.createSequentialGroup().addContainerGap()
+																		.addGroup(
+																				gcontentPane
+																						.createParallelGroup(
+																								Alignment.LEADING)
+																						.addComponent(lblProdotto)
+																						.addComponent(lblPrezzoUnitario)
+																						.addComponent(lblQuantita)
+																						.addComponent(lblIva)
+																						.addComponent(lblSconto)
+																						.addComponent(
+																								lblNscontrino))
+								.addGap(40)
+								.addGroup(
+										gcontentPane.createParallelGroup(Alignment.LEADING, false)
+												.addComponent(txtScontrino)
+												.addComponent(txtProdotto, GroupLayout.DEFAULT_SIZE, 160,
+														Short.MAX_VALUE)
+												.addComponent(txtPrezzoUnitario).addComponent(txtQuantita)
+												.addComponent(txtIva).addComponent(txtSconto))
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+								.addGroup(gcontentPane.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 18,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(label).addComponent(labelPercento)))
+						.addGroup(gcontentPane.createSequentialGroup().addGap(54)
+								.addComponent(btnStampa, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+								.addGap(40).addComponent(btnAggiungi, GroupLayout.PREFERRED_SIZE, 86,
+										GroupLayout.PREFERRED_SIZE))).addGroup(
+												gcontentPane.createParallelGroup(Alignment.TRAILING)
+														.addGroup(gcontentPane.createSequentialGroup().addGap(31)
+																.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 293,
+																		Short.MAX_VALUE)
+																.addContainerGap())
+										.addGroup(gcontentPane.createSequentialGroup().addGap(131)
+												.addComponent(lblAnteprimaDiStampa, GroupLayout.PREFERRED_SIZE, 99,
+														GroupLayout.PREFERRED_SIZE)
+												.addContainerGap(104, Short.MAX_VALUE)))));
+		this.gcontentPane.setVerticalGroup(this.gcontentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gcontentPane.createSequentialGroup().addGroup(gcontentPane
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(gcontentPane.createSequentialGroup().addGap(58)
+								.addGroup(gcontentPane.createParallelGroup(Alignment.BASELINE).addComponent(lblProdotto)
+										.addComponent(txtProdotto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE))
+								.addGap(33)
+								.addGroup(gcontentPane.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblPrezzoUnitario)
+										.addComponent(txtPrezzoUnitario, GroupLayout.PREFERRED_SIZE,
+												GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblNewLabel))
+								.addGap(30)
+								.addGroup(gcontentPane.createParallelGroup(Alignment.BASELINE).addComponent(lblQuantita)
+										.addComponent(txtQuantita, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE))
+								.addGap(29)
+								.addGroup(gcontentPane.createParallelGroup(Alignment.BASELINE).addComponent(lblIva)
+										.addComponent(txtIva, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(label))
+								.addGap(29)
+								.addGroup(gcontentPane.createParallelGroup(Alignment.BASELINE).addComponent(lblSconto)
+										.addComponent(txtSconto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(labelPercento)))
+						.addGroup(
+								gcontentPane.createSequentialGroup().addContainerGap()
+										.addGroup(gcontentPane.createParallelGroup(Alignment.BASELINE)
+												.addComponent(lblNscontrino).addComponent(txtScontrino,
+														GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE))))
+						.addPreferredGap(ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+						.addGroup(gcontentPane.createParallelGroup(Alignment.BASELINE).addComponent(btnStampa)
+								.addComponent(btnAggiungi))
+						.addGap(28))
+				.addGroup(gcontentPane.createSequentialGroup().addContainerGap().addComponent(lblAnteprimaDiStampa)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE).addContainerGap()));
+		this.panelText.setLayout(gcontentPane);
 		this.btnStampa.addActionListener(new ActionListener() {
-			
+
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				try {
-				Calcola(Integer.parseInt(txtPrezzoUnitario.getText()), Integer.parseInt(txtQuantita.getText())
-						, Integer.parseInt(txtIva.getText()));
-				textArea.setText("");
-				textArea.setText("Quantita': " + txtQuantita.getText() +" "+ txtProdotto.getText() 
-						+ "     Prezzo: " 
-						+ txtPrezzoUnitario.getText() + "\u20AC "
-						+ "\nSconto: "
-						+ txtSconto.getText() + "\n\n =====================================\n\n" +
-						"Sconto: "  + txtSconto.getText() +"%" +"\t\t" + String.valueOf(totsconto) +
-						"\nImponibile:\t\t" + String.valueOf(imponibile) + "\u20AC\nIva: " + txtIva.getText() + "%"  + "\t\t" + String.valueOf(totiva) + "\u20AC" +
-						"\n\n =====================================\n\n" + "Totale:\t\t\t" + 
-				String.valueOf(totale)+"\u20AC");		 
+					calcola(Integer.parseInt(txtPrezzoUnitario.getText()), Integer.parseInt(txtQuantita.getText()),
+							Integer.parseInt(txtIva.getText()));
+					textArea.setText("");
+					//TODO:Sistemare il fatto di più prodotti
+					/*
+					String a = new String();
+					for (Integer i=0; i<lista.size()-3; i=i+3){
+						a = a +("Quantita': " + lista.get(i) + " " + lista.get(i+1)
+						+ "     Prezzo: " + lista.get(i+2) + "\u20AC \n");
+					}
+					System.out.println(a);*/
+					textArea.setText("Quantita': " + txtQuantita.getText() + " " + txtProdotto.getText()
+							+ "     Prezzo: " + txtPrezzoUnitario.getText() + "\u20AC " + "\nSconto: "
+							+ txtSconto.getText() + "\n\n =====================================\n\n" + "Sconto: "
+							+ txtSconto.getText() + "%" + "\t\t" + String.valueOf(totsconto) + "\nImponibile:\t\t"
+							+ String.valueOf(imponibile) + "\u20AC\nIva: " + txtIva.getText() + "%" + "\t\t"
+							+ String.valueOf(totiva) + "\u20AC" + "\n\n =====================================\n\n"
+							+ "Totale:\t\t\t" + String.valueOf(totale) + "\u20AC");
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(frame, "Inserisci i campi correttamente", "Campi scorretti",
+							JOptionPane.ERROR_MESSAGE);
 				}
-				catch (NumberFormatException e1){
-					JOptionPane.showMessageDialog(frame,"Inserisci i campi correttamente","Campi scorretti",JOptionPane.ERROR_MESSAGE);
-				};
+				;
 			}
 		});
 		this.btnAggiungi.addActionListener(new ActionListener() {
-			
+
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				//modelScontrini.nuovoScontrino(txtScontrino.getText(), txtPrezzoUnitario.getText(), 
-						//txtProdotto.getText(), txtIva.getText(), txtQuantita.getText(), txtSconto.getText());
-				txtIva.setText("");
-				txtSconto.setText("");
+			public void actionPerformed(final ActionEvent e) {
+				lista.add(txtQuantita.getText());
+				lista.add(txtProdotto.getText());
+				lista.add(txtPrezzoUnitario.getText());
 				txtQuantita.setText("");
 				txtPrezzoUnitario.setText("");
 				txtProdotto.setText("");
 			}
 		});
-		
+
 	}
+
 	/**
-	 * Method for get data from TextField
-	 * @return
-	 * 			Map (String,String)
+	 * Metodo per ottenere i dati dai TextField
+	 * 
+	 * @return Map (String,Object)
 	 */
-	public Map<String,String> getTextField(){
-		Map<String,String> mappa = new HashMap<>();
-		mappa.put("Prodotto", txtProdotto.getText());
+	public Map<String, Object> getTextField() {
+		Map<String, Object> mappa = new HashMap<>();
+		mappa.put("Prodotti", txtProdotto.getText());
 		mappa.put("PrezzoUnitario", txtPrezzoUnitario.getText());
 		mappa.put("Quantita", txtQuantita.getText());
 		mappa.put("Iva", txtIva.getText());
@@ -256,33 +269,35 @@ public class ScontriniGUI extends InitializeFrame{
 		mappa.put("Scontrino", txtScontrino.getText());
 		return mappa;
 	}
+
 	/**
-	 * Method that calculate price in real time
+	 * Metodo che calcola il prezzo in tempo reale
+	 * 
 	 * @param prezzo
-	 * 			Object Integer
+	 *            Oggetto Integer
 	 * @param quantita
-	 * 			Object Integer
+	 *            Oggetto Integer
 	 * @param iva
-	 * 			Object Integer
-	 * @return
-	 * 		  Total
+	 *            Oggetto Integer
+	 * @return Total
 	 */
-	private double Calcola (Integer prezzo, Integer quantita, Integer iva){
-		this.imponibile=0;
-		this.totale=0;
-		this.totiva=0;
-		this.totsconto=0;
-		if(txtSconto.getText().equals("")){
-			this.imponibile = prezzo*quantita;
-			this.totiva = (this.imponibile * iva)/100;
+	private double calcola(Integer prezzo, Integer quantita, Integer iva) {
+		this.imponibile = 0;
+		this.totale = 0;
+		this.totiva = 0;
+		this.totsconto = 0;
+		if (txtSconto.getText().equals("")) {
+			this.imponibile = prezzo * quantita;
+			this.totiva = (this.imponibile * iva) / 100;
 			this.totale = this.totiva + this.imponibile;
 		} else {
-			this.totsconto = ((prezzo*quantita)*Integer.parseInt(txtSconto.getText())/100);
-			this.imponibile = (prezzo*quantita)-this.imponibile;
-			this.totiva = (this.imponibile * iva)/100;
+			this.totsconto = ((prezzo * quantita) * Integer.parseInt(txtSconto.getText()) / 100);
+			this.imponibile = (prezzo * quantita) - this.imponibile;
+			this.totiva = (this.imponibile * iva) / 100;
 			this.totale = this.totiva + this.imponibile;
 		}
 		return this.totale;
-		
+
 	}
+	
 }
