@@ -1,5 +1,6 @@
 package view.interfaces;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -118,8 +119,9 @@ public interface ObserverInterface {
 	 * Method that save invoice
 	 * @param map
 	 * 			Map (String,String)
+	 * @throws ParseException 
 	 */
-	void salvaFattura(Map<String, Object> map);
+	void salvaFattura(Map<String, Object> map) throws ParseException;
 	/**
 	 * Method that save reunion
 	 * @param dati

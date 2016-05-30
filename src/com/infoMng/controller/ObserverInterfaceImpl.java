@@ -1,5 +1,8 @@
 package com.infoMng.controller;
 
+import java.sql.Date;import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -154,9 +157,25 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public void salvaFattura(Map<String, String> dati) {
-		// TODO chiamata model per salvare fattura
-
+	public void salvaFattura(Map<String, Object> dati) throws ParseException, NumberFormatException  {
+		Integer numeroFattura = Integer.parseInt((String) dati.get("NumeroOrdine"));
+		String cliente = (String) dati.get("Fornitore/Cliente");
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date data = new Date(dateFormatter.parse((String)dati.get("DataOrdine")).getTime());
+		
+		
+		Date inizio = new Date(dateFormatter.parse((String)dati.get("Dal")).getTime());
+		Date fine = new Date(dateFormatter.parse((String)dati.get("Al")).getTime());
+		String banca = (String) dati.get("Banca");
+		
+		Double sconto = Double.parseDouble((String)dati.get("Sconto"));
+		Integer iva = Integer.parseInt((String)dati.get("IVA"));
+		
+		String descrizione = String.format("Tipo ordine : %s, Banca %s, note %s", banca, (String)dati.get("Tipo ordine"), (String)dati.get("Note"));
+		String nomeNegozio = (String) dati.get("Negozio");
+		
+		
+		
 	}
 
 	@Override
@@ -175,7 +194,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public void salvaScontrini(Map<String, String> dati) {
+	public void salvaScontrini(Map<String, Object> dati) {
 		// TODO Auto-generated method stub
 		
 	}

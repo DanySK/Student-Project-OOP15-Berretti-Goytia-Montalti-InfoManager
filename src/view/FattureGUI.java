@@ -335,6 +335,7 @@ public class FattureGUI extends InitializeFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		getContentPane().add(toolBar, BorderLayout.NORTH);
 		getContentPane().add(layeredPane);
+		
 	}
 	
 
