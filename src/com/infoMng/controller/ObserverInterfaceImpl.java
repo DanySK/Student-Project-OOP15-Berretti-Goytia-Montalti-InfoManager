@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 
 import com.goytia.models.DB.modelClients;
 import com.goytia.models.DB.modelProviders;
+import com.goytia.models.DB.modelReceipts;
 import com.goytia.models.DB.modelStore;
 
 import view.interfaces.ObserverInterface;
@@ -58,7 +59,6 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public void Start() {
-		//TODO: controllare se c'è l'utente loggato se no eseguo l'accesso
 		this.view.viewStart();
 	}
 
@@ -182,8 +182,12 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public List<modelStore> ricercaProdotti(String nome) {
-		// TODO Auto-generated method stub
-		return null;
+		return modelStore.serachProductsByName(nome);
+	}
+
+	@Override
+	public List<modelStore> elencoProdotti() {
+		return modelStore.elenco();
 	}
 
 
