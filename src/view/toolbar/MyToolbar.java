@@ -94,12 +94,27 @@ public class MyToolbar extends JToolBar {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(frame.getClass().equals(FattureGUI.class)){
-					o.salvaFattura(((FattureGUI) frame).getTextfield());
-					JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
+					/*switch (o.salvaFattura(((FattureGUI) frame).getTextfield())){
+					case SALVATAGGIO:
+						JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
+						break;
+					case ERROREDATA:
+						JOptionPane.showMessageDialog(frame, "Inserimento errato data");
+						break;
+					case ERRORESALVATAGGIO:
+						JOptionPane.showMessageDialog(frame, "Errore nel salvataggio dei dati");
+						break;
+					default:
+						throw new IllegalStateException();
+					}*/	
 				}
 				if(frame.getClass().equals(ClientiGUI.class)){
-					o.salvaCliente(((ClientiGUI)frame).getTextfield());
-					JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
+					if(o.salvaCliente(((ClientiGUI)frame).getTextfield())){
+						JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");	
+					} else {
+						JOptionPane.showMessageDialog(frame, "Errore nel salvataggio dei dati");
+					}
+					
 				}
 				if(frame.getClass().equals(FornitoriGUI.class)){
 					o.salvaFornitore(((FornitoriGUI)frame).getTextfield());
@@ -107,8 +122,8 @@ public class MyToolbar extends JToolBar {
 				}
 
 				if(frame.getClass().equals(ScontriniGUI.class)){
-					//o.salvaScontriniGUI(((ScontriniGUI) frame).getTextfield());
-					//JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
+					//o.salvaScontriniGUI(((ScontriniGUI) frame).getTextField());
+					JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
 				}
 				if(frame.getClass().equals(RiunioniGUI.class)){
 					o.salvaRiunione(((RiunioniGUI)frame).getTextField());

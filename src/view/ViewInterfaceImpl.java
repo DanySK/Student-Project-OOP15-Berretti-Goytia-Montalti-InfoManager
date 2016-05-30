@@ -82,7 +82,7 @@ public class ViewInterfaceImpl implements ViewInterface{
 
 	@Override
 	public void viewDialogCerca() {
-		new DialogCerca(o).setVisible(true);
+		new DialogCerca(o, o.getAttuale()).setVisible(true);
 
 		
 	}

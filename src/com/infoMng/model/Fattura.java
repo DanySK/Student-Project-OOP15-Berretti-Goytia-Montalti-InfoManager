@@ -2,19 +2,14 @@ package com.infoMng.model;
 
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-
-import javax.management.Query;
-
 import com.goytia.models.DB.modelClients;
 import com.goytia.models.DB.modelProviders;
 import com.goytia.models.DB.modelStore;
 import com.infoMng.controller.MBOggetto;
 import com.infoMng.controller.MBQuery;
-import com.infoMng.model.IFattura.prodottoFattura;
+
 
 public class Fattura implements IFattura {
 	MBOggetto collegamento;

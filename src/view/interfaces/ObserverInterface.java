@@ -6,8 +6,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.swing.JFrame;
-
-import com.goytia.models.DB.modelProviders;
 import com.goytia.models.DB.modelStore;
 
 public interface ObserverInterface {
@@ -119,9 +117,10 @@ public interface ObserverInterface {
 	 * Method that save invoice
 	 * @param map
 	 * 			Map (String,String)
+	 * @return 
 	 * @throws ParseException 
 	 */
-	void salvaFattura(Map<String, Object> map) throws ParseException;
+	int salvaFattura(Map<String, Object> map) throws ParseException;
 	/**
 	 * Method that save reunion
 	 * @param dati
@@ -138,4 +137,10 @@ public interface ObserverInterface {
 	List<modelStore> ricercaProdotti(String nome);
 	
 	List<modelStore> elencoProdotti();
+	
+	void cercaFornitori(String nome);
+	void cercaClienti(String nome);
+	void cercaRiunioni(String data, String nome);
+	void cercaScontrini(String numero, String nome);
+
 }

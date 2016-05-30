@@ -1,6 +1,6 @@
 package com.infoMng.controller;
 
-import java.sql.Date;import java.text.DateFormat;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 
 import com.goytia.models.DB.modelClients;
 import com.goytia.models.DB.modelProviders;
-import com.goytia.models.DB.modelReceipts;
 import com.goytia.models.DB.modelStore;
 
 import view.interfaces.ObserverInterface;
@@ -134,7 +133,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public void salvaUtente(Map<String,String> dati) {
-		 
+		 //TODO: Da fare
 	}
 
 	@Override
@@ -157,7 +156,8 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public void salvaFattura(Map<String, Object> dati) throws ParseException, NumberFormatException  {
+	public int salvaFattura(Map<String, Object> dati) throws ParseException, NumberFormatException  {
+		//TODO: fai enumerazione con i casi SUCCESSO o ERROREDATA o ERRORESALVATAGGIO al posto del ritorno int perchè fa più figo
 		Integer numeroFattura = Integer.parseInt((String) dati.get("NumeroOrdine"));
 		String cliente = (String) dati.get("Fornitore/Cliente");
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -173,6 +173,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		
 		String descrizione = String.format("Tipo ordine : %s, Banca %s, note %s", banca, (String)dati.get("Tipo ordine"), (String)dati.get("Note"));
 		String nomeNegozio = (String) dati.get("Negozio");
+		return 1;
 		
 		
 		
@@ -207,6 +208,30 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	@Override
 	public List<modelStore> elencoProdotti() {
 		return modelStore.elenco();
+	}
+
+	@Override
+	public void cercaFornitori(String nome) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void cercaClienti(String nome) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void cercaRiunioni(String data, String nome) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void cercaScontrini(String numero, String nome) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

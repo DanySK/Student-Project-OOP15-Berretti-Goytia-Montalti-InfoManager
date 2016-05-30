@@ -7,9 +7,6 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.goytia.models.DB.modelClients;
-import com.goytia.models.DB.modelProviders;
-
 import view.interfaces.ObserverInterface;
 
 import java.awt.GridBagLayout;
@@ -85,6 +82,17 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 			this.map.put("TipoDiRapporto", rdbtnFornitore.getText());
 		}
 		return this.map;
+	}
+	
+	private boolean checkText () {
+		if (txtNome.getText().equals("")){
+			return false;
+		} else {
+			if(txtCognome.getText().equals("")){
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	/**
@@ -253,25 +261,23 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if(rdbtnCliente.isSelected()){
-							try{
-								Map<String,String> mappa = getDataString(o);
-								modelClients.newClient(mappa.get("Nome"), mappa.get("Cognome"),
-									mappa.get("Email"), mappa.get("Telefono"), mappa.get("Negozio"));
-							} catch (NullPointerException e1){
+						if(rdbtnCliente.isSelected()){				
+							if (checkText()){
+								o.salvaCliente(map);
+								o.abilitaFrame(true);
+								dispose();
+							} else {
 								o.mostraDialogCampoObbligatorio();
-							}
+							}	
 						} else {
-							try{
-								Map<String,String> mappa = getDataString(o);
-								modelProviders.newProvider(mappa.get("Nome"), mappa.get("Cognome"),
-									mappa.get("Email"), mappa.get("Telefono"));
-							} catch (NullPointerException e2){
+							if (checkText()){
+								o.salvaFornitore(map);
+								o.abilitaFrame(true);
+								dispose();
+							} else {
 								o.mostraDialogCampoObbligatorio();
-							}
+							}	
 						}
-						o.abilitaFrame(true);
-						dispose();
 					}
 				});
 				this.buttonPane.add(okButton);
@@ -282,7 +288,7 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						o.abilitaFrame(false);
+						o.abilitaFrame(true);
 						dispose();
 					}
 				});

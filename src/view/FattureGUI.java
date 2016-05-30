@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -60,13 +59,11 @@ public class FattureGUI extends InitializeFrame {
 	private JLabel lblNumeroOrdine = new JLabel("Numero Ordine");
 	private JLayeredPane layeredPane = new JLayeredPane();
 	private MyToolbar toolBar;
-	private JComboBox<?> comboBoxFornitore = new JComboBox<>();
 	private JLabel lblConsegna = new JLabel("Consegna Dal");
 	private JLabel lblAl = new JLabel("Al");
 	private JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	private JPanel panelTestata = new JPanel();
 	private JLabel lblTipoOrdine = new JLabel("Tipo Ordine");
-	private JComboBox<?> comboBoxTipoOrdine = new JComboBox<>();
 	private JLabel lblNegozio = new JLabel("Negozio");
 	private JLabel lblPagamento = new JLabel("Pagamento");
 	private JLabel lblBanca = new JLabel("Banca");
@@ -80,7 +77,6 @@ public class FattureGUI extends InitializeFrame {
 	private JLabel lblIva = new JLabel("IVA");
 	private JLabel lblPercento1 = new JLabel("%");
 	private JLabel lblQuantita = new JLabel("Quantit\u00E0");
-	private JLabel lblCodFornitore = new JLabel("Cod. Fornitore");
 	private JScrollPane scrollPaneFattura = new JScrollPane();
 	private JTextArea textAreaFattura = new JTextArea("");
 	private LinkedList<Map<String,Object>> products = new LinkedList<>();
@@ -154,6 +150,8 @@ public class FattureGUI extends InitializeFrame {
 		this.textNumeroOrdine.setColumns(10);
 		
 		this.textDataOrdine = new JTextField();
+		textDataOrdine.setText("gg/mm/aaaa");
+		textDataOrdine.setToolTipText("");
 		this.textDataOrdine.setBounds(117, 54, 86, 20);
 		this.layeredPane.add(textDataOrdine);
 		this.textDataOrdine.setColumns(10);
@@ -162,16 +160,6 @@ public class FattureGUI extends InitializeFrame {
 		this.textFornitore.setBounds(336, 8, 86, 20);
 		this.layeredPane.add(textFornitore);
 		this.textFornitore.setColumns(10);
-		
-		this.comboBoxFornitore.setBounds(336, 51, 86, 20);
-		this.comboBoxFornitore.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-			}
-		});
-		this.layeredPane.add(comboBoxFornitore);
 		
 
 		this.lblConsegna.setBounds(432, 11, 86, 14);
@@ -182,11 +170,13 @@ public class FattureGUI extends InitializeFrame {
 		this.layeredPane.add(lblAl);
 		
 		this.textDal = new JTextField();
+		textDal.setText("gg/mm/aaaa");
 		this.textDal.setBounds(528, 8, 86, 20);
 		this.layeredPane.add(textDal);
 		this.textDal.setColumns(10);
 		
 		this.textAl = new JTextField();
+		textAl.setText("gg/mm/aaaa");
 		this.textAl.setBounds(528, 51, 86, 20);
 		this.layeredPane.add(textAl);
 		this.textAl.setColumns(10);
@@ -204,20 +194,9 @@ public class FattureGUI extends InitializeFrame {
 		this.panelTestata.add(lblTipoOrdine);
 		
 		this.textTipoOrdine = new JTextField();
-		this.textTipoOrdine.setBounds(106, 11, 62, 20);
+		this.textTipoOrdine.setBounds(106, 11, 181, 20);
 		this.panelTestata.add(textTipoOrdine);
 		this.textTipoOrdine.setColumns(10);
-		
-
-		this.comboBoxTipoOrdine.setBounds(178, 11, 109, 20);
-		this.comboBoxTipoOrdine.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-			}
-		});
-		this.panelTestata.add(comboBoxTipoOrdine);
 		
 		this.lblNegozio.setBounds(10, 59, 86, 14);
 		this.panelTestata.add(lblNegozio);
@@ -329,9 +308,6 @@ public class FattureGUI extends InitializeFrame {
 		this.scrollPaneFattura.setBounds(315, 153, 467, 193);
 		this.scrollPaneFattura.setViewportView(textAreaFattura);//= new JScrollPane(textAreaFattura,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.panelTestata.add(scrollPaneFattura);
-		
-		this.lblCodFornitore.setBounds(226, 57, 100, 14);
-		this.layeredPane.add(lblCodFornitore);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		getContentPane().add(toolBar, BorderLayout.NORTH);
 		getContentPane().add(layeredPane);

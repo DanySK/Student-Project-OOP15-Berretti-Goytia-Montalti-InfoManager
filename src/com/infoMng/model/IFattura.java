@@ -9,7 +9,6 @@ import com.goytia.models.DB.modelClients;
 import com.goytia.models.DB.modelProviders;
 import com.goytia.models.DB.modelStore;
 import com.infoMng.controller.MBOggetto;
-import com.infoMng.model.IFattura.prodottoFattura;
 
 public interface IFattura {
 	
