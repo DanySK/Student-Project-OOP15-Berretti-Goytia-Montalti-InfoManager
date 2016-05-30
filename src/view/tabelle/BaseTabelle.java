@@ -4,7 +4,7 @@ package view.tabelle;
 
 import javax.swing.table.AbstractTableModel;
 
-import com.goytia.models.DB.modelMagazzino;
+import com.goytia.models.DB.modelStore;
 
 
 /**
@@ -31,7 +31,7 @@ public class BaseTabelle extends AbstractTableModel {
 	@Override
 	public int getRowCount() {
 		int i = 0;
-		for (i=0;i<modelMagazzino.elenco().size();i++){
+		for (i=0;i<modelStore.elenco().size();i++){
 		}
 		return i;
 	}

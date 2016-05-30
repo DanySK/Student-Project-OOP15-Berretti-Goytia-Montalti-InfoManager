@@ -7,17 +7,17 @@ import java.util.stream.Collectors;
 import com.infoMng.controller.MBOggetto;
 import com.infoMng.controller.MBQuery;
 
-public class modelFornitori{
+public class modelProviders{
 	
 	MBOggetto oggetto;
 	
-	private modelFornitori(MBOggetto temp){
+	private modelProviders(MBOggetto temp){
 		this.oggetto=temp;
 	}
 	/***
 	 * ottieni un nuovo record della tabella Fornitori
 	 */
-	public modelFornitori(){
+	public modelProviders(){
 		this.oggetto = MBOggetto.oggettoDaTabella("Fornitori");
 	}
 	
@@ -29,11 +29,11 @@ public class modelFornitori{
 		return String.format("%i", this.oggetto.objectId());
 	}
 	
-	public String getNome(){
+	public String getName(){
 		return (String)this.oggetto.getObject("Nome");
 	}
 	
-	public String getCognome(){
+	public String getLastName(){
 		return (String)this.oggetto.getObject("Cognome");
 	}
 	
@@ -41,27 +41,27 @@ public class modelFornitori{
 		return (String)this.oggetto.getObject("Mail");
 	}
 	
-	public String getTelefono(){
+	public String getPhone(){
 		return (String)this.oggetto.getObject("Telefono");
 	}
 	
-	private void setNome(String nome){
-		this.oggetto.setObjectValue("Nome", ctrlStringa(nome));
+	private void setName(String nome){
+		this.oggetto.setObjectValue("Nome", ctrlString(nome));
 	}
 	
-	private void setCognome(String cognome){
-		this.oggetto.setObjectValue("Cognome", ctrlStringa(cognome));
+	private void setLastName(String cognome){
+		this.oggetto.setObjectValue("Cognome", ctrlString(cognome));
 	}
 	
 	private void setMail(String mail){
-		this.oggetto.setObjectValue("Mail", ctrlStringa(mail));
+		this.oggetto.setObjectValue("Mail", ctrlString(mail));
 	}
 	
-	private void setTelefono(String telf){
-		this.oggetto.setObjectValue("Telefono", ctrlStringa(telf));
+	private void setPhone(String telf){
+		this.oggetto.setObjectValue("Telefono", ctrlString(telf));
 	}
 	
-	private static String ctrlStringa(String str){
+	private static String ctrlString(String str){
 		return str != "" ? str : null;
 	}
 	
@@ -70,11 +70,11 @@ public class modelFornitori{
 	 * @return
 	 * una lista contenente tutti i fornitori
 	 */
-	public static List<modelFornitori> elenco(){
+	public static List<modelProviders> providersList(){
 		MBQuery query = MBQuery.queryDaTabella("Fornitori");
 		try {
 			return query.find().stream()
-					.map(e -> new modelFornitori(e))
+					.map(e -> new modelProviders(e))
 					.collect(Collectors.toList());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -92,10 +92,10 @@ public class modelFornitori{
 	 * @return
 	 * una lista contenente tutti i fornitori, tramite i parametri forniti
 	 */
-	public static List<modelFornitori> cercaFornitori(String nome, String cognome, String mail, String telefono){
-		return modelFornitori.elenco().stream()
-							.filter(f -> f.getNome().equalsIgnoreCase(nome) || f.getCognome().equalsIgnoreCase(cognome)
-											    || f.getMail().equalsIgnoreCase(mail) || f.getTelefono().equalsIgnoreCase(mail))
+	public static List<modelProviders> searchProviders(String nome, String cognome, String mail, String telefono){
+		return modelProviders.providersList().stream()
+							.filter(f -> f.getName().equalsIgnoreCase(nome) || f.getLastName().equalsIgnoreCase(cognome)
+											    || f.getMail().equalsIgnoreCase(mail) || f.getPhone().equalsIgnoreCase(mail))
 							.collect(Collectors.toList());
 	}
 	/***
@@ -104,14 +104,14 @@ public class modelFornitori{
 	 * @return
 	 * una lista con tutti i fornitori che producono il prodotto specificato
 	 */
-	public static List<modelFornitori> cercaFornitori(String nomeProdotto){
+	public static List<modelProviders> searchProviders(String nomeProdotto){
 		
-		List<Integer> listTemp = modelMagazzino.elenco().stream()
-				.filter(e-> e.getNome().equalsIgnoreCase(nomeProdotto))
-				.map(e -> e.getFornitore())
+		List<Integer> listTemp = modelStore.elenco().stream()
+				.filter(e-> e.getName().equalsIgnoreCase(nomeProdotto))
+				.map(e -> e.getIDProvider())
 				.collect(Collectors.toList());
 		
-		return modelFornitori.elenco().stream()
+		return modelProviders.providersList().stream()
 				.filter(e ->{
 					for(Integer a : listTemp){
 						if(e.getID().equals(a))
@@ -128,12 +128,12 @@ public class modelFornitori{
 	 * @return
 	 * true o false a seonda del esito
 	 */
-	public static boolean nuovoFornitore(String nome, String cognome, String mail, String telefono){
-		modelFornitori nuovo = new modelFornitori(MBOggetto.oggettoDaTabella("Fornitori"));
-		nuovo.setNome(nome);
-		nuovo.setCognome(cognome);
+	public static boolean newProvider(String nome, String cognome, String mail, String telefono){
+		modelProviders nuovo = new modelProviders(MBOggetto.oggettoDaTabella("Fornitori"));
+		nuovo.setName(nome);
+		nuovo.setLastName(cognome);
 		nuovo.setMail(mail);
-		nuovo.setTelefono(telefono);
+		nuovo.setPhone(telefono);
 		return nuovo.oggetto.salva();
 	}
 	/***
@@ -141,7 +141,7 @@ public class modelFornitori{
 	 * @return
 	 * true o false a seconda del esito
 	 */
-	public boolean eliminaFornitore(){
+	public boolean deleteProvider(){
 		return this.oggetto.elimina();
 	}
 	/***
@@ -154,11 +154,11 @@ public class modelFornitori{
 	 * @return
 	 * true o false a seconda del esito
 	 */
-	public boolean modificaFornitore(String newNome , String newCognome, String newMail, String newTelefono){
-		if(newNome != "")this.setNome(newNome);
-		if(newCognome != "")this.setCognome(newCognome);
+	public boolean renameProvider(String newNome , String newCognome, String newMail, String newTelefono){
+		if(newNome != "")this.setName(newNome);
+		if(newCognome != "")this.setLastName(newCognome);
 		if(newMail != "")this.setMail(newMail);
-		if(newTelefono != "")this.setTelefono(newTelefono);
+		if(newTelefono != "")this.setPhone(newTelefono);
 		return this.oggetto.salva();
 	}
 }

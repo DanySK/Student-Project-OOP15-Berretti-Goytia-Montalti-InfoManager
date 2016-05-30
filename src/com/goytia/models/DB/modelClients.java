@@ -7,78 +7,79 @@ import java.util.stream.Collectors;
 import com.infoMng.controller.MBOggetto;
 import com.infoMng.controller.MBQuery;
 
-public class modelClienti {
+public class modelClients{
 	
 	MBOggetto oggetto;
 	
-	public modelClienti(){
+	public modelClients(){
 		this.oggetto= MBOggetto.oggettoDaTabella("Clienti");
 	}
 	
 	/***
 	 * crea un nuovo oggetto tipo modelCliente
 	 */
-	private modelClienti(MBOggetto temp){
+	private modelClients(MBOggetto temp){
 		this.oggetto=temp;
 	}
 	
 	public Integer getID(){
 		return this.oggetto.objectId();
 	}
-	
-	public String getNome(){
+
+	public String getName(){
 		return (String)this.oggetto.getObject("Nome");
 	}
-	
-	public String getCognome(){
+
+	public String getLastName(){
 		return (String)this.oggetto.getObject("Cognome");
 	}
-	
+
 	public String getMail(){
 		return (String)this.oggetto.getObject("Mail");
 	}
-	
-	public String getTelefono(){
+
+	public String getPhone(){
 		return (String)this.oggetto.getObject("Telefono");
 	}
 	
-	public String getNomeNegozio(){
+	public String getShopName(){
 		return (String)this.oggetto.getObject("Negozio");
 	}
 	
-	private void setNome(String nome){
-		this.oggetto.setObjectValue("Nome", ctrlStringa(nome));
+	private void setName(String nome){
+		this.oggetto.setObjectValue("Nome", ctrlString(nome));
 	}
 	
-	private void setCognome(String cognome){
-		this.oggetto.setObjectValue("Cognome", ctrlStringa(cognome));
+	private void setLastName(String cognome){
+		this.oggetto.setObjectValue("Cognome", ctrlString(cognome));
 	}
 	
 	private void setMail(String mail){
-		this.oggetto.setObjectValue("Mail", ctrlStringa(mail));
+		this.oggetto.setObjectValue("Mail", ctrlString(mail));
 	}
 	
-	private void setTelefono(String telf){
-		this.oggetto.setObjectValue("Telefono", ctrlStringa(telf));
+	private void setPhone(String telf){
+		this.oggetto.setObjectValue("Telefono", ctrlString(telf));
 	}
 	
-	private void setNegozio(String negozio){
-		this.oggetto.setObjectValue("Negozio", ctrlStringa(negozio));
+	private void setShopName(String negozio){
+		this.oggetto.setObjectValue("Negozio", ctrlString(negozio));
 	}
 	
-	private static String ctrlStringa(String str){
+	private static String ctrlString(String str){
 		return str != "" ? str : null;
 	}
+	
 	/***
 	 * elenco di tutti i clienti esisitenti
 	 * @return
 	 * una lista contenente tutti i clienti
 	 */
-	public static List<modelClienti> elenco(){
+	public static List<modelClients> clientsList(){
 		MBQuery query = MBQuery.queryDaTabella("Clienti");
 		try {
 			return query.find().stream()
-					.map(e -> new modelClienti(e))
+					.map(e -> new modelClients(e))
 					.collect(Collectors.toList());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -101,11 +102,11 @@ public class modelClienti {
 	 * @return
 	 * tutti i clienti trovati tramite i parametri forniti, si segue una lgica or
 	 */
-	public static List<modelClienti> cercaClienti(String nome, String cognome, String mail, String telefono, String nomeNegozio){
-		return modelClienti.elenco().stream()
-							.filter(cliente -> cliente.getNome().equalsIgnoreCase(nome) || cliente.getCognome().equalsIgnoreCase(cognome)
-											    || cliente.getMail().equalsIgnoreCase(mail) || cliente.getNomeNegozio().equalsIgnoreCase(nomeNegozio)
-											    || cliente.getTelefono().equalsIgnoreCase(telefono))
+	public static List<modelClients> searchClients(String nome, String cognome, String mail, String telefono, String nomeNegozio){
+		return modelClients.clientsList().stream()
+							.filter(cliente -> cliente.getName().equalsIgnoreCase(nome) || cliente.getLastName().equalsIgnoreCase(cognome)
+											    || cliente.getMail().equalsIgnoreCase(mail) || cliente.getShopName().equalsIgnoreCase(nomeNegozio)
+											    || cliente.getPhone().equalsIgnoreCase(telefono))
 							.collect(Collectors.toList());
 	}
 	/***
@@ -118,13 +119,13 @@ public class modelClienti {
 	 * @return
 	 * true o false a seconda del esito
 	 */
-	public static boolean nuovoCliente(String nome, String cognome, String mail, String telefono, String negozio){
-		modelClienti nuovo = new modelClienti(MBOggetto.oggettoDaTabella("Clienti"));
-		nuovo.setNome(nome);
-		nuovo.setCognome(cognome);
+	public static boolean newClient(String nome, String cognome, String mail, String telefono, String negozio){
+		modelClients nuovo = new modelClients(MBOggetto.oggettoDaTabella("Clienti"));
+		nuovo.setName(nome);
+		nuovo.setLastName(cognome);
 		nuovo.setMail(mail);
-		nuovo.setTelefono(telefono);
-		nuovo.setNegozio(negozio);
+		nuovo.setPhone(telefono);
+		nuovo.setShopName(negozio);
 		return nuovo.oggetto.salva();
 	}
 	/***
@@ -132,7 +133,7 @@ public class modelClienti {
 	 * @return
 	 * true o false a seconda del esito
 	 */
-	public boolean eliminaCliente(){
+	public boolean deleteClient(){
 		return this.oggetto.elimina();
 	}
 	/***
@@ -146,11 +147,12 @@ public class modelClienti {
 	 * @return
 	 * true o false a seconda del esisto\
 	 */
-	public boolean modificaCliente(String newNome, String newCognome, String newMail, String newTelefono, String newNegozio){
-			if(newNome != "")this.setNome(newNome);
-			if(newCognome != "")this.setCognome(newCognome);
+	public boolean renameClient(String newNome, String newCognome, String newMail, String newTelefono, String newNegozio){
+			if(newNome != "")this.setName(newNome);
+			if(newCognome != "")this.setLastName(newCognome);
 			if(newMail != "")this.setMail(newMail);
-			if(newTelefono != "")this.setTelefono(newTelefono);
+			if(newTelefono != "")this.setPhone(newTelefono);
 			return this.oggetto.salva();
 	}
+	
 }

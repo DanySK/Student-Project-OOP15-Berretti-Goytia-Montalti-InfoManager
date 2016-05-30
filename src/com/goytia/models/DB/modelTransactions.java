@@ -7,31 +7,35 @@ import java.util.stream.Collectors;
 import com.infoMng.controller.MBOggetto;
 import com.infoMng.controller.MBQuery;
 
-public class modelMovimenti {
+public class modelTransactions {
 	
 	MBOggetto oggetto;
 	
-	private modelMovimenti(MBOggetto temp){
+	private modelTransactions(MBOggetto temp){
 		this.oggetto = temp;
 	}
 	
-	public modelMovimenti(){
+	public modelTransactions(){
 		this.oggetto = MBOggetto.oggettoDaTabella("Movimenti");
 	}
 	
-	public Integer getIDProdotto(){
+	public Integer getID(){
+		return this.oggetto.objectId();
+	}
+	
+	public Integer getIDProduct(){
 		return (Integer) this.oggetto.getObject("IDProdotto");
 	}
 	
-	public int getNricevuta(){
+	public int getNumberPaymentRicevuta(){
 		return (int)this.oggetto.getObject("nRicevuta");
 	}
 	
-	public int getQuantita(){
+	public int getQuantity(){
 		return (int)this.oggetto.getObject("Quantita");
 	}
 	
-	public double getPrezzo(){
+	public double getPrice(){
 		return (double)this.oggetto.getObject("Prezzo");
 	}
 	/***
@@ -40,12 +44,12 @@ public class modelMovimenti {
 	 * una lista che contiene tutti i movimenti. ACquisto e vendite si diferenzano per la quantita in ogni movimento
 	 * vendita -> quantita negativa acquisto->quantita positiva
 	 */
-	public static List<modelMovimenti> elenco(){
+	public static List<modelTransactions> transactionsList(){
 		
-		MBQuery query = MBQuery.queryDaTabella("Clienti");
+		MBQuery query = MBQuery.queryDaTabella("Movimenti");
 		try {
 			return query.find().stream()
-					.map(e -> new modelMovimenti(e))
+					.map(e -> new modelTransactions(e))
 					.collect(Collectors.toList());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -63,18 +67,18 @@ public class modelMovimenti {
 	 * @return
 	 * true o false a seconda dell'esito
 	 */
-	public static boolean prodottiNelMovimento(int nRicevuta, List<prodottoNelMovimento> lista, boolean ctrlVendita){
+	public static boolean transactionsProducts(int nRicevuta, List<transactionsProducts> lista, boolean ctrlVendita){
 		
 		boolean ctrl= true;
-		for(prodottoNelMovimento p : lista){
-			modelMovimenti temp = new modelMovimenti(MBOggetto.oggettoDaTabella("Movimenti"));
+		for(transactionsProducts p : lista){
+			modelTransactions temp = new modelTransactions(MBOggetto.oggettoDaTabella("Movimenti"));
 			temp.oggetto.setObjectValue("nRicevuta", nRicevuta );
-			temp.oggetto.setObjectValue("IDProdotto", p.getIDProdottoV());
+			temp.oggetto.setObjectValue("IDProdotto", p.getIDProductInvolved());
 			if(ctrlVendita)
-				temp.oggetto.setObjectValue("Quantita", -1 * p.getQuantita());
+				temp.oggetto.setObjectValue("Quantita", -1 * p.getQuantity());
 			else
-				temp.oggetto.setObjectValue("Quantita", p.getQuantita());
-			temp.oggetto.setObjectValue("Prezzo", p.getPrezzoUnitario());
+				temp.oggetto.setObjectValue("Quantita", p.getQuantity());
+			temp.oggetto.setObjectValue("Prezzo", p.getPrice());
 			ctrl=temp.oggetto.salva();
 		}
 		return ctrl;
@@ -88,26 +92,26 @@ public class modelMovimenti {
 	 * @return
 	 * true o false a secoda del esito
 	 */
-	public static boolean elimnaProdottiDellMovimento(int nRicevuta, boolean ctrlVendita){
-		List<modelMovimenti> temp;
+	public static boolean deleteTransactionsProducts(int nRicevuta, boolean ctrlVendita){
+		List<modelTransactions> temp;
 		boolean ctrl = true;
 		if(ctrlVendita){
-			temp = modelMovimenti.elenco().stream()
-			.filter(e -> e.getNricevuta()==nRicevuta)
-			.filter(e -> e.getQuantita() < 0)
+			temp = modelTransactions.transactionsList().stream()
+			.filter(e -> e.getNumberPaymentRicevuta()==nRicevuta)
+			.filter(e -> e.getQuantity() < 0)
 			.collect(Collectors.toList());
 			
-			for(modelMovimenti a : temp){ ctrl = a.oggetto.elimina(); }
+			for(modelTransactions a : temp){ ctrl = a.oggetto.elimina(); }
 			return ctrl;
 		}
 		else
 		{
-			temp = modelMovimenti.elenco().stream()
-			.filter(e -> e.getNricevuta()==nRicevuta)
-			.filter(e -> e.getQuantita() > 0)
+			temp = modelTransactions.transactionsList().stream()
+			.filter(e -> e.getNumberPaymentRicevuta()==nRicevuta)
+			.filter(e -> e.getQuantity() > 0)
 			.collect(Collectors.toList());
 					
-			for(modelMovimenti a : temp){ ctrl = a.oggetto.elimina(); }
+			for(modelTransactions a : temp){ ctrl = a.oggetto.elimina(); }
 					return ctrl;
 		}
 	}

@@ -7,17 +7,17 @@ import java.util.stream.Collectors;
 import com.infoMng.controller.MBOggetto;
 import com.infoMng.controller.MBQuery;
 
-public class modelUtenti {
+public class modelUsers {
 
 	MBOggetto oggetto;
 	/***
 	 * Ottengo un record nuovo dalla tabella Scontrini
 	 */
-	public modelUtenti(){
+	public modelUsers(){
 		this.oggetto= MBOggetto.oggettoDaTabella("Utenti");
 	}
 	
-	private modelUtenti(MBOggetto temp){
+	private modelUsers(MBOggetto temp){
 		this.oggetto=temp;
 	}
 	
@@ -25,11 +25,11 @@ public class modelUtenti {
 		return this.oggetto.objectId();
 	}
 	
-	public String getNome(){
+	public String getName(){
 		return (String)this.oggetto.getObject("Nome");
 	}
 	
-	public String getCognome(){
+	public String getLastName(){
 		return (String)this.oggetto.getObject("Cognome");
 	}
 	
@@ -46,28 +46,28 @@ public class modelUtenti {
 	
 	
 	
-	private void setNome(String nome){
+	private void setName(String nome){
 		if(nome!= "")
-		this.oggetto.setObjectValue("Nome", ctrlStringa(nome));
+		this.oggetto.setObjectValue("Nome", ctrlString(nome));
 	}
 	
-	private void setCognome(String cognome){
-		this.oggetto.setObjectValue("Cognome", ctrlStringa(cognome));
+	private void setLastName(String cognome){
+		this.oggetto.setObjectValue("Cognome", ctrlString(cognome));
 	}
 	
 	private void setMail(String mail){
-		this.oggetto.setObjectValue("Mail", ctrlStringa(mail));
+		this.oggetto.setObjectValue("Mail", ctrlString(mail));
 	}
 	
 	private void setUsername(String username){
-		this.oggetto.setObjectValue("Username", ctrlStringa(username));
+		this.oggetto.setObjectValue("Username", ctrlString(username));
 	}
 	
 	private void setPassword(String password){
-		this.oggetto.setObjectValue("Password", ctrlStringa(password));
+		this.oggetto.setObjectValue("Password", ctrlString(password));
 	}
 	
-	private static String ctrlStringa(String str){
+	private static String ctrlString(String str){
 		return str != "" ? str : null;
 	}
 	/***
@@ -75,11 +75,11 @@ public class modelUtenti {
 	 * @return
 	 * una lista contenenti tutti gli utenti esistenti
 	 */
-	private static List<modelUtenti> elenco(){
+	private static List<modelUsers> usersList(){
 		MBQuery query = MBQuery.queryDaTabella("Utenti");
 		try {
 			return query.find().stream()
-					.map(e -> new modelUtenti(e))
+					.map(e -> new modelUsers(e))
 					.collect(Collectors.toList());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -97,10 +97,10 @@ public class modelUtenti {
 	 * @return
 	 * true se è stato creato l'utente altrimenti false
 	 */
-	public boolean nuovoUtente(String nome, String cognome, String mail, String username, String password){
-		modelUtenti nuovo = new modelUtenti(MBOggetto.oggettoDaTabella("Utenti"));
-		nuovo.setNome(nome);
-		nuovo.setCognome(cognome);
+	public boolean newUser(String nome, String cognome, String mail, String username, String password){
+		modelUsers nuovo = new modelUsers(MBOggetto.oggettoDaTabella("Utenti"));
+		nuovo.setName(nome);
+		nuovo.setLastName(cognome);
 		nuovo.setMail(mail);
 		nuovo.setUsername(username);
 		nuovo.setPassword(password);
@@ -113,8 +113,8 @@ public class modelUtenti {
 	 * @return
 	 * true se l'untente esiste, altrimenti False
 	 */
-	public boolean loginUtenti(String username, String password){
-		return modelUtenti.elenco().stream()
+	public boolean usersLogin(String username, String password){
+		return modelUsers.usersList().stream()
 				.filter(e -> e.getUsername() == username &&  e.getPassword() == password)
 				.count() == 1;
 	}
@@ -129,9 +129,9 @@ public class modelUtenti {
 	 * @return
 	 * true se la password e stata cambiata, altrimenti false.
 	 */
-	public boolean cambiaPassword(String nome, String cognome, String mail, String username, String password, String newPassword){
+	public boolean changePassword(String nome, String cognome, String mail, String username, String password, String newPassword){
 		//mi accerto che si tratti dello stesso cliente richiedendo i dati
-		if(this.getNome()== nome && this.getCognome()==cognome && this.getUsername()==username && this.getMail()==mail && this.getPassword()== password){
+		if(this.getName()== nome && this.getLastName()==cognome && this.getUsername()==username && this.getMail()==mail && this.getPassword()== password){
 			this.setPassword(newPassword);
 			return this.oggetto.salva();
 		}
@@ -148,9 +148,9 @@ public class modelUtenti {
 	 * @return
 	 * true se è stata cancellata l'account altrimenti false
 	 */
-	public boolean eliminaUtente(String nome, String cognome, String mail, String username, String password){
+	public boolean deleteUser(String nome, String cognome, String mail, String username, String password){
 		//mi accerto che si tratti dello stesso cliente richiedendo i dati
-		if(this.getNome()== nome && this.getCognome()==cognome && this.getUsername()==username && this.getMail()==mail && this.getPassword()== password)
+		if(this.getName()== nome && this.getLastName()==cognome && this.getUsername()==username && this.getMail()==mail && this.getPassword()== password)
 			return this.oggetto.elimina();
 		else 
 			return false;

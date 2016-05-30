@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import javax.swing.JFrame;
 
-import com.goytia.models.DB.modelMagazzino;
+import com.goytia.models.DB.modelStore;
 
 public interface ObserverInterface {
 	/**
@@ -132,5 +132,5 @@ public interface ObserverInterface {
 	 */
 	void salvaScontrini(Map<String, String> dati);
 	
-	List<modelMagazzino> ricercaProdotti(String nome);
+	List<modelStore> ricercaProdotti(String nome);
 }

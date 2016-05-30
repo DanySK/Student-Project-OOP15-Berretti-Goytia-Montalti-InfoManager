@@ -7,27 +7,27 @@ import java.util.stream.Collectors;
 import com.infoMng.controller.MBOggetto;
 import com.infoMng.controller.MBQuery;
 
-public class modelMagazzino {
+public class modelStore {
 	
 	MBOggetto oggetto;
 	
-	private modelMagazzino(MBOggetto temp){
+	private modelStore(MBOggetto temp){
 		this.oggetto=temp;
 	}
 	
-	public modelMagazzino(){
+	public modelStore(){
 		this.oggetto = MBOggetto.oggettoDaTabella("Magazzino");
 	}
 	
-	private void setNome(String nome){
+	private void setName(String nome){
 		this.oggetto.setObjectValue("Nome", nome);
 	}
 	
-	private void setFornitore(Integer IDFornitore){
+	private void setIDProvider(Integer IDFornitore){
 		this.oggetto.setObjectValue("IDFornitore", IDFornitore);
 	}
 	
-	private void setDescrizione(String descrizione){
+	private void setProductDeatils(String descrizione){
 		this.oggetto.setObjectValue("Descrizione", descrizione);
 	}
 	
@@ -35,7 +35,7 @@ public class modelMagazzino {
 		return this.oggetto.objectId();
 	}
 	
-	public String getNome(){
+	public String getName(){
 		return (String) this.oggetto.getObject("Nome");
 	}
 	/***
@@ -45,19 +45,19 @@ public class modelMagazzino {
 	 * @return
 	 * quantita del prodotto nel magazzzino
 	 */
-	public int getQuantita(Integer IDProdotto){
+	public int getQuantity(Integer IDProdotto){
 		
-		return 	modelMovimenti.elenco().stream()
-				.filter(p -> p.getIDProdotto().equals(IDProdotto))
-				.mapToInt( m -> m.getQuantita())
+		return 	modelTransactions.transactionsList().stream()
+				.filter(p -> p.getIDProduct().equals(IDProdotto))
+				.mapToInt( m -> m.getQuantity())
 				.sum();
 	}
 	
-	public Integer getFornitore(){
+	public Integer getIDProvider(){
 		return (Integer)this.oggetto.getObject("IDFornitore");
 	}
 	
-	public String getDescrizione(){
+	public String getProductDetails(){
 		return (String)this.oggetto.getObject("Descrizione");
 	}
 	/***
@@ -65,11 +65,11 @@ public class modelMagazzino {
 	 * @return
 	 * una lista con tutti i prodotti
 	 */
-	public static List<modelMagazzino> elenco(){
+	public static List<modelStore> elenco(){
 		MBQuery query = MBQuery.queryDaTabella("Magazzino");
 		try {
 			return query.find().stream()
-					.map(e -> new modelMagazzino(e))
+					.map(e -> new modelStore(e))
 					.collect(Collectors.toList());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -87,11 +87,11 @@ public class modelMagazzino {
 	 * descrizione del prodotto
 	 * @return
 	 */
-	public static boolean nuovoProdotto(String nome, Integer IDFornitore, String descrizione) {
-		modelMagazzino temp = new modelMagazzino(MBOggetto.oggettoDaTabella("Magazzino"));
-		temp.setNome(nome);
-		temp.setFornitore(IDFornitore);
-		temp.setDescrizione(descrizione);
+	public static boolean newProduct(String nome, Integer IDFornitore, String descrizione) {
+		modelStore temp = new modelStore(MBOggetto.oggettoDaTabella("Magazzino"));
+		temp.setName(nome);
+		temp.setIDProvider(IDFornitore);
+		temp.setProductDeatils(descrizione);
 		return temp.oggetto.salva();
 	}
 	/***
@@ -101,9 +101,9 @@ public class modelMagazzino {
 	 * @return
 	 * il/i prodotti trovati
 	 */
-	public static List<modelMagazzino> cercaProdottiDalNome(String nome){
-		return modelMagazzino.elenco().stream()
-				.filter(e-> e.getNome().equalsIgnoreCase(nome))
+	public static List<modelStore> serachProductsByName(String nome){
+		return modelStore.elenco().stream()
+				.filter(e-> e.getName().equalsIgnoreCase(nome))
 				.collect(Collectors.toList());
 	}
 	/***
@@ -112,9 +112,9 @@ public class modelMagazzino {
 	 * @return
 	 * una lista che contiene i prodotti trovati
 	 */
-	public static List<modelMagazzino> cercaProdottiDisponibili(int quantitaMinima){
-		return modelMagazzino.elenco().stream()
-				.filter(e-> e.getQuantita(e.getID()) >= quantitaMinima)
+	public static List<modelStore> searchProductsByQuantity(int quantitaMinima){
+		return modelStore.elenco().stream()
+				.filter(e-> e.getQuantity(e.getID()) >= quantitaMinima)
 				.collect(Collectors.toList());
 	}
 	/***
@@ -123,13 +123,13 @@ public class modelMagazzino {
 	 * @return
 	 * i prodotti trovati
 	 */
-	public static List<modelMagazzino> cercaProdottiDalFornitore(Integer IDFornitore){
-		return modelMagazzino.elenco().stream()
-				.filter(e-> e.getFornitore().equals(IDFornitore))
+	public static List<modelStore> serachProductsByProvider(Integer IDFornitore){
+		return modelStore.elenco().stream()
+				.filter(e-> e.getIDProvider().equals(IDFornitore))
 				.collect(Collectors.toList());
 	}
 	
-	public boolean eliminaProdotto(){
+	public boolean deleteProduct(){
 		return this.oggetto.elimina();
 	}
 }

@@ -7,19 +7,19 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
-public class modelAcquisti {
+public class modelPurchases {
 	
 	MBOggetto oggetto;
 	
-	private modelAcquisti(MBOggetto temp){
+	private modelPurchases(MBOggetto temp){
 		this.oggetto = temp;
 	}
 	
-	public modelAcquisti(){
+	public modelPurchases(){
 		this.oggetto = MBOggetto.oggettoDaTabella("Acquisti");
 	}
 	
-	private void setRicevuta(int nRicevuta){
+	private void setNumberPaymentReceipt(int nRicevuta){
 		this.oggetto.setObjectValue("nRicevuta", nRicevuta);
 	}
 	
@@ -27,23 +27,27 @@ public class modelAcquisti {
 		this.oggetto.setObjectValue("IVA", iva);
 	}
 	
-	private void setFornitore(Integer IDFornitore){
+	public Integer getID(){
+		return this.oggetto.objectId();
+	}
+	
+	private void setProvider(Integer IDFornitore){
 		this.oggetto.setObjectValue("IDFornitore", IDFornitore);
 	}
 	
-	private void setData(Date data){
+	private void setDate(Date data){
 		this.oggetto.setObjectValue("Data", data);
 	}
 	
-	private void setSconto(float sconto){
+	private void setDiscount(float sconto){
 		this.oggetto.setObjectValue("Sconto", sconto);
 	}
 	
-	public int getRicevuta(){
+	public int getNumberPaymentReceipt(){
 		return (int)this.oggetto.getObject("nRicevuta");
 	}
 	
-	public Integer getCliente(){
+	public Integer getIDProvider(){
 		return (Integer)this.oggetto.getObject("IDFornitore");
 	}
 	
@@ -51,23 +55,24 @@ public class modelAcquisti {
 		return (float)this.oggetto.getObject("IVA");
 	}
 	
-	public Date getData(){
+	public Date getDate(){
 		return (Date)this.oggetto.getObject("Data");
 	}
 	
-	public float getSconto(){
+	public float getDiscount(){
 		return (float)this.oggetto.getObject("Sconto");
 	}
+	
 	/***
 	 * elenco di tutti gli acquisti realizzati
 	 * @return
 	 * una lista contenente tutti gli acquisti fatti
 	 */
-	public static List<modelAcquisti> elenco(){
+	public static List<modelPurchases> purchasesList(){
 		MBQuery query = MBQuery.queryDaTabella("Acquisti");
 		try {
 			return query.find().stream()
-					.map(e -> new modelAcquisti(e))
+					.map(e -> new modelPurchases(e))
 					.collect(Collectors.toList());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -86,31 +91,43 @@ public class modelAcquisti {
 	 * @return
 	 * true se è stato aggiunt nel db altrimenti false
 	 */
-	public static boolean nuovoAcquisto(Integer IDFornitore, int nRicevuta, float iva, float sconto, Date data, List<prodottoNelMovimento> prodotti){
+	public static boolean newPurchase(Integer IDFornitore, int nRicevuta, float iva, float sconto, Date data, List<transactionsProducts> prodotti){
 		
-		modelAcquisti temp = new modelAcquisti(MBOggetto.oggettoDaTabella("Acquisti"));
-		temp.setFornitore(IDFornitore);
-		temp.setSconto(sconto);
-		temp.setData(data);
+		modelPurchases temp = new modelPurchases(MBOggetto.oggettoDaTabella("Acquisti"));
+		temp.setProvider(IDFornitore);
+		temp.setDiscount(sconto);
+		temp.setDate(data);
 		temp.setIVA(iva);
-		temp.setRicevuta(nRicevuta);
-		if(modelAcquisti.builderElementiAcquisiti(nRicevuta, prodotti))
+		temp.setNumberPaymentReceipt(nRicevuta);
+		if(modelPurchases.builderProductsPurchases(nRicevuta, prodotti))
 			return temp.oggetto.salva();
 		else 
 			return false;
 	}
 	//salvataggio degli elementi acquistati
-	private static boolean builderElementiAcquisiti(int nRicevuta, List<prodottoNelMovimento> lista){
-		return modelMovimenti.prodottiNelMovimento(nRicevuta, lista, false);
+	private static boolean builderProductsPurchases(int nRicevuta, List<transactionsProducts> lista){
+		return modelTransactions.transactionsProducts(nRicevuta, lista, false);
 	}
+	
+	public List<transactionsProducts> purchasedProducts(){
+		return modelTransactions.transactionsList().stream()
+				.filter( m -> m.getNumberPaymentRicevuta() == this.getNumberPaymentReceipt())
+				.map( p -> {
+					transactionsProducts prod = new transactionsProducts(p.getIDProduct(), Math.abs(p.getQuantity()), p.getPrice());
+					return prod;
+				})
+				.collect(Collectors.toList());
+				
+	}
+	
 	/***
 	 * eliminazione dell'accquisto corrente
 	 * @return
 	 * true o false a seconda del esito
 	 */
-	public boolean eliminaAquisto(){
+	public boolean deletePurchase(){
 		
-		if(modelMovimenti.elimnaProdottiDellMovimento(this.getRicevuta(), false))
+		if(modelTransactions.deleteTransactionsProducts(this.getNumberPaymentReceipt(), false))
 			return this.oggetto.elimina();
 		else 
 			return false;

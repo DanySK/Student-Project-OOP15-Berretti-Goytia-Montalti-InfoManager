@@ -18,7 +18,7 @@ import java.util.OptionalInt;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.goytia.models.DB.modelFornitori;
+import com.goytia.models.DB.modelProviders;
 
 class DataBase {
 	private boolean connesso;
@@ -167,8 +167,8 @@ class DataBase {
 			if(valore == null){
 				valore = "NULL";
 			}
-			if(valore.getClass() == modelFornitori.class){
-				sql = String.format("%s %s = '%s',", sql, campi[i], ((modelFornitori)valore).getIDFornitore());
+			if(valore.getClass() == modelProviders.class){
+				sql = String.format("%s %s = '%s',", sql, campi[i], ((modelProviders)valore).getIDFornitore());
 			}
 			else{
 				sql = String.format("%s %s = '%s',", sql, campi[i], valore.toString());
@@ -179,8 +179,8 @@ class DataBase {
 			if(valore == null){
 				valore = "NULL";
 			}
-			if(valore.getClass() == modelFornitori.class){
-				sql = String.format("%s %s = '%s'", sql, campi[campi.length - 1], ((modelFornitori)valore).getIDFornitore());
+			if(valore.getClass() == modelProviders.class){
+				sql = String.format("%s %s = '%s'", sql, campi[campi.length - 1], ((modelProviders)valore).getIDFornitore());
 			}
 			else{
 				sql = String.format("%s %s = '%s'", sql, campi[campi.length - 1], valore.toString());
@@ -237,7 +237,7 @@ class DataBase {
 		else if(class1.getClass() == Boolean.class){
 			tipo = "BOOLEAN";
 		}
-		else if(class1.getClass() == modelFornitori.class){
+		else if(class1.getClass() == modelProviders.class){
 			tipo = "INTEGER";
 		}
 		else{

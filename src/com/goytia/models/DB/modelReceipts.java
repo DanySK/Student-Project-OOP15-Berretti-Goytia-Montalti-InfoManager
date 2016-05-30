@@ -7,28 +7,28 @@ import java.sql.Date;
 import com.infoMng.controller.MBOggetto;
 import com.infoMng.controller.MBQuery;
 
-public class modelScontrini {
+public class modelReceipts {
 	
 	MBOggetto oggetto;
 	
-	private modelScontrini(MBOggetto temp){
+	private modelReceipts(MBOggetto temp){
 		this.oggetto=temp;
 	}
 	/***
 	 * Ottengo un record nuovo dalla tabella Scontrini
 	 */
-	public modelScontrini(){
+	public modelReceipts(){
 		this.oggetto = MBOggetto.oggettoDaTabella("Scontrini");
 	}
 	
-	private void setScontrino(int nScontrino){
+	private void setReceipt(int nScontrino){
 		this.oggetto.setObjectValue("nScontrino", nScontrino);
 	}
-	private void setCliente(Integer idCliente){
+	private void setClient(Integer idCliente){
 		this.oggetto.setObjectValue("IDCliente", idCliente);
 	}
 	
-	private void setData(Date data){
+	private void setDate(Date data){
 		this.oggetto.setObjectValue("Data", data);
 	}
 	
@@ -36,19 +36,19 @@ public class modelScontrini {
 		this.oggetto.setObjectValue("IVA", iva);
 	}
 	
-	private void setRicevuta(int nRicevuta){
+	private void setNumberPaymentReceipt(int nRicevuta){
 		this.oggetto.setObjectValue("nRicevuta", nRicevuta);
 	}
 	
-	private int getRicevuta(){
+	private int getNumberPaymentReceipt(){
 		return (int)this.oggetto.getObject("nRicevuta");
 	}
 	
-	public int getNscontrino(){
+	public int getNumberReceipt(){
 		return (int)this.oggetto.getObject("nScontrino");
 	}
 	
-	public Integer getIDCliente(){
+	public Integer getIDClient(){
 		return (Integer)this.oggetto.getObject("IDCliente");
 	}
 	
@@ -56,7 +56,7 @@ public class modelScontrini {
 		return (float) this.oggetto.getObject("IVA");
 	}
 	
-	public Date getData(){
+	public Date getDate(){
 		return (Date)this.oggetto.getObject("Data");
 	}
 	/***
@@ -64,9 +64,9 @@ public class modelScontrini {
 	 * @return
 	 * lo specifico cliente a qui va rivolta lo scontrino
 	 */
-	public modelClienti cliente(){
-		return modelClienti.elenco().stream()
-				.filter(c -> c.getID().equals(this.getIDCliente()))
+	public modelClients client(){
+		return modelClients.clientsList().stream()
+				.filter(c -> c.getID().equals(this.getIDClient()))
 				.findFirst()
 				.get();
 	}
@@ -75,11 +75,11 @@ public class modelScontrini {
 	 * @return
 	 * una lista ocn tutti i prodotti sottoforma di prodottoVenduto
 	 */
-	public List<prodottoNelMovimento> prodottiVenduti(){
-		return modelMovimenti.elenco().stream()
-				.filter( m -> m.getNricevuta() == this.getRicevuta())
+	public List<transactionsProducts> soldProducts(){
+		return modelTransactions.transactionsList().stream()
+				.filter( m -> m.getNumberPaymentRicevuta() == this.getNumberPaymentReceipt())
 				.map( p -> {
-					prodottoNelMovimento prod = new prodottoNelMovimento(p.getIDProdotto(), Math.abs(p.getQuantita()), p.getPrezzo());
+					transactionsProducts prod = new transactionsProducts(p.getIDProduct(), Math.abs(p.getQuantity()), p.getPrice());
 					return prod;
 				})
 				.collect(Collectors.toList());
@@ -90,11 +90,11 @@ public class modelScontrini {
 	 * @return
 	 * un lista cont utti gli scontrini esistenti fino a quel momento
 	 */
-	public static List<modelScontrini> elenco(){
+	public static List<modelReceipts> receiptsList(){
 		MBQuery query = MBQuery.queryDaTabella("Scontrini");
 		try {
 			return query.find().stream()
-					.map(e -> new modelScontrini(e))
+					.map(e -> new modelReceipts(e))
 					.collect(Collectors.toList());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -117,14 +117,14 @@ public class modelScontrini {
 	 * @return
 	 * true se è stato creato e salvato lo scrontrino altrimenti false
 	 */
-	public boolean creaScontrino(int nScontrino, int nRicevuta, Integer idCliente, Date data, float iva){
+	public boolean newReceipt(int nScontrino, int nRicevuta, Integer idCliente, Date data, float iva){
 		
-		modelScontrini nuovo = new modelScontrini(MBOggetto.oggettoDaTabella("Scontrini"));
-		nuovo.setCliente(idCliente);
-		nuovo.setData(data);
+		modelReceipts nuovo = new modelReceipts(MBOggetto.oggettoDaTabella("Scontrini"));
+		nuovo.setClient(idCliente);
+		nuovo.setDate(data);
 		nuovo.setIva(iva);
-		nuovo.setRicevuta(nRicevuta);
-		nuovo.setScontrino(nScontrino);
+		nuovo.setNumberPaymentReceipt(nRicevuta);
+		nuovo.setReceipt(nScontrino);
 		return nuovo.oggetto.salva();
 		
 	}
@@ -136,10 +136,10 @@ public class modelScontrini {
 	 * @return
 	 * lo scontrino 
 	 */
-	public static modelScontrini cercaScontrinoPerNumero(int nScontrino){
+	public static modelReceipts searchReceiptByNumber(int nScontrino){
 		
-		return modelScontrini.elenco().stream()
-				.filter(s -> s.getNscontrino() == nScontrino)
+		return modelReceipts.receiptsList().stream()
+				.filter(s -> s.getNumberReceipt() == nScontrino)
 				.findFirst()
 				.get();
 	}
@@ -148,7 +148,7 @@ public class modelScontrini {
 	 * @return
 	 * true o false a seconda del esito
 	 */
-	public boolean eliminaScontrino(){
+	public boolean deleteReceipt(){
 		return this.oggetto.elimina();
 	}
 }

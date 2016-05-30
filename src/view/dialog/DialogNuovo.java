@@ -7,8 +7,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.goytia.models.DB.modelClienti;
-import com.goytia.models.DB.modelFornitori;
+import com.goytia.models.DB.modelClients;
+import com.goytia.models.DB.modelProviders;
 
 import view.interfaces.ObserverInterface;
 
@@ -256,7 +256,7 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 						if(rdbtnCliente.isSelected()){
 							try{
 								Map<String,String> mappa = getDataString(o);
-								modelClienti.nuovoCliente(mappa.get("Nome"), mappa.get("Cognome"),
+								modelClients.newClient(mappa.get("Nome"), mappa.get("Cognome"),
 									mappa.get("Email"), mappa.get("Telefono"), mappa.get("Negozio"));
 							} catch (NullPointerException e1){
 								o.mostraDialogCampoObbligatorio();
@@ -264,7 +264,7 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 						} else {
 							try{
 								Map<String,String> mappa = getDataString(o);
-								modelFornitori.nuovoFornitore(mappa.get("Nome"), mappa.get("Cognome"),
+								modelProviders.newProvider(mappa.get("Nome"), mappa.get("Cognome"),
 									mappa.get("Email"), mappa.get("Telefono"));
 							} catch (NullPointerException e2){
 								o.mostraDialogCampoObbligatorio();

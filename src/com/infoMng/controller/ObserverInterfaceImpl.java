@@ -6,9 +6,9 @@ import java.util.Optional;
 
 import javax.swing.JFrame;
 
-import com.goytia.models.DB.modelClienti;
-import com.goytia.models.DB.modelFornitori;
-import com.goytia.models.DB.modelMagazzino;
+import com.goytia.models.DB.modelClients;
+import com.goytia.models.DB.modelProviders;
+import com.goytia.models.DB.modelStore;
 
 import view.interfaces.ObserverInterface;
 import view.interfaces.ViewInterface;
@@ -141,7 +141,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	    String mail = dati.get("Email");
 	    String telefono = dati.get("Telefono");
 	    String nomeNegozio = ""; //in attesa del metodoto per il nome negozio
-	    return modelClienti.nuovoCliente(nome, cognome, mail, telefono, nomeNegozio);
+	    return modelClients.newClient(nome, cognome, mail, telefono, nomeNegozio);
 	}
 
 	@Override
@@ -150,7 +150,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		String cognome = dati.get("Cognome");
 		String telefono = dati.get("Telefono");
 		String mail = dati.get("Email");
-		return modelFornitori.nuovoFornitore(nome, cognome, mail, telefono);
+		return modelProviders.newProvider(nome, cognome, mail, telefono);
 	}
 
 	@Override
@@ -181,7 +181,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public List<modelMagazzino> ricercaProdotti(String nome) {
+	public List<modelStore> ricercaProdotti(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}

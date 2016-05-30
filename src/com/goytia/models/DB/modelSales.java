@@ -8,20 +8,20 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class modelVendite{
+public class modelSales {
 	
 	MBOggetto oggetto;
-	List<prodottoNelMovimento> prodottiVenduti;
+	//List<transactionsProducts> prodottiVenduti;
 	
-	private modelVendite(MBOggetto temp){
+	private modelSales(MBOggetto temp){
 		this.oggetto = temp;
 	}
 	
-	public modelVendite(){
+	public modelSales(){
 		this.oggetto = MBOggetto.oggettoDaTabella("Vendite");
 	}
 	
-	private void setRicevuta(int nRicevuta){
+	private void setNumberPaymentReceipt(int nRicevuta){
 		this.oggetto.setObjectValue("nRicevuta", nRicevuta);
 	}
 	
@@ -29,23 +29,27 @@ public class modelVendite{
 		this.oggetto.setObjectValue("IVA", iva);
 	}
 	
-	private void setCliente(Integer IDCliente){
+	private void setIDClient(Integer IDCliente){
 		this.oggetto.setObjectValue("IDCliente", IDCliente);
 	}
 	
-	private void setData(Date data){
+	private void setDate(Date data){
 		this.oggetto.setObjectValue("Data", data);
 	}
 	
-	private void setSconto(float sconto){
+	private void setDiscount(float sconto){
 		this.oggetto.setObjectValue("Sconto", sconto);
 	}
 	
-	public int getRicevuta(){
+	public Integer getID(){
+		return this.oggetto.objectId();
+	}
+	
+	public int getNumberPaymentReceipt(){
 		return (int)this.oggetto.getObject("nRicevuta");
 	}
 	
-	public Integer getCliente(){
+	public Integer getIDClient(){
 		return (Integer)this.oggetto.getObject("IDCliente");
 	}
 	
@@ -53,11 +57,11 @@ public class modelVendite{
 		return (float)this.oggetto.getObject("IVA");
 	}
 	
-	public Date getData(){
+	public Date getDate(){
 		return (Date)this.oggetto.getObject("Data");
 	}
 	
-	public float getSconto(){
+	public float getDiscount(){
 		return (float)this.oggetto.getObject("Sconto");
 	}
 	
@@ -66,11 +70,11 @@ public class modelVendite{
 	 * @return
 	 * una lista contenente tutte le vendite
 	 */
-	public static List<modelVendite> elenco(){
+	public static List<modelSales> salesList(){
 		MBQuery query = MBQuery.queryDaTabella("Acquisti");
 		try {
 			return query.find().stream()
-					.map(e -> new modelVendite(e))
+					.map(e -> new modelSales(e))
 					.collect(Collectors.toList());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -91,15 +95,15 @@ public class modelVendite{
 	 * @return
 	 * true o false a seconda dell'esito
 	 */
-	public static boolean nuovaVendita(Integer IDCliente, int nRicevuta, float iva, float sconto, Date data, List<prodottoNelMovimento> prodotti){
+	public static boolean newSale(Integer IDCliente, int nRicevuta, float iva, float sconto, Date data, List<transactionsProducts> prodotti){
 		
-		modelVendite temp = new modelVendite(MBOggetto.oggettoDaTabella("Vendite"));
-		temp.setCliente(IDCliente);
-		temp.setSconto(sconto);
-		temp.setData(data);
+		modelSales temp = new modelSales(MBOggetto.oggettoDaTabella("Vendite"));
+		temp.setIDClient(IDCliente);
+		temp.setDiscount(sconto);
+		temp.setDate(data);
 		temp.setIVA(iva);
-		temp.setRicevuta(nRicevuta);
-		if(modelVendite.builderElementiVenduti(nRicevuta, prodotti))
+		temp.setNumberPaymentReceipt(nRicevuta);
+		if(modelSales.builderProductsSale(nRicevuta, prodotti))
 			return temp.oggetto.salva();
 		else 
 			return false;
@@ -111,20 +115,39 @@ public class modelVendite{
 	 * @return
 	 * true o false a seconda dell'esito
 	 */
-	private static boolean builderElementiVenduti(int nRicevuta, List<prodottoNelMovimento> lista){
+	private static boolean builderProductsSale(int nRicevuta, List<transactionsProducts> lista){
 		
-		return modelMovimenti.prodottiNelMovimento(nRicevuta, lista, true);
+		return modelTransactions.transactionsProducts(nRicevuta, lista, true);
 	}
 	/***
 	 * metodo che elimina la vednita corrente e i suoi relativi prodotti
 	 * @return
 	 * true o false a seconda del esito
 	 */
-	public boolean eliminaVendita(){
+	public boolean deleteSale(){
 
-		if(modelMovimenti.elimnaProdottiDellMovimento(this.getRicevuta(), true))
+		if(modelTransactions.deleteTransactionsProducts(this.getNumberPaymentReceipt(), true))
 			return this.oggetto.elimina();
 		else 
 			return false;
+	}
+	
+	public List<transactionsProducts> soldProducts(){
+		return modelTransactions.transactionsList().stream()
+				.filter( m -> m.getNumberPaymentRicevuta() == this.getNumberPaymentReceipt())
+				.map( p -> {
+					transactionsProducts prod = new transactionsProducts(p.getIDProduct(), Math.abs(p.getQuantity()), p.getPrice());
+					return prod;
+				})
+				.collect(Collectors.toList());
+	}
+	
+	public boolean renameSale(Integer newIDCliente, int newNRicevuta, float newIva, float newSconto, Date newData){
+			if(!newIDCliente.equals(null))this.setNumberPaymentReceipt(newNRicevuta);
+			if(newNRicevuta != -1)this.setNumberPaymentReceipt(newNRicevuta);
+			if(newIva != -1)this.setIVA(newIva);
+			if(newSconto != -1)this.setDiscount(newSconto);
+			if(newData != null)this.setDate(newData);
+			return this.oggetto.salva();
 	}
 }
