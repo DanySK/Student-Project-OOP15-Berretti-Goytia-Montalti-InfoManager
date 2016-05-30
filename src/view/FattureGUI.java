@@ -83,7 +83,8 @@ public class FattureGUI extends InitializeFrame {
 	private JLabel lblCodFornitore = new JLabel("Cod. Fornitore");
 	private JScrollPane scrollPaneFattura = new JScrollPane();
 	private JTextArea textAreaFattura = new JTextArea("");
-	
+	private LinkedList<Map<String,Object>> products = new LinkedList<>();
+
 	/**
 	 * Method for clean textfield of that frame
 	 */
@@ -110,8 +111,8 @@ public class FattureGUI extends InitializeFrame {
 	 * @return
 	 * 			Map(String,String)
 	 */			
-	public Map<String,String> getTextfield(){
-		Map<String,String> mappa = new HashMap<>();
+	public Map<String,Object> getTextfield(){
+		Map<String,Object> mappa = new HashMap<>();
 		mappa.put("NumeroOrdine", textNumeroOrdine.getText());
 		mappa.put("DataOrdine", textDataOrdine.getText());
 		mappa.put("Fornitore/Cliente", textFornitore.getText());
@@ -123,10 +124,8 @@ public class FattureGUI extends InitializeFrame {
 		mappa.put("Banca", textFieldBanca.getText());
 		mappa.put("Note", textFieldNote.getText());
 		mappa.put("Sconto" , textFieldSconto.getText());
-		mappa.put("Prodotto", textFieldProdotto.getText());
-		mappa.put("Prezzo", textFieldPrezzo.getText());
 		mappa.put("IVA", textFieldIVA.getText());
-		mappa.put("Quantita", textFieldQuantita.getText());
+		mappa.put("Prodotti", products);
 		return mappa;
 	}
 /**
@@ -285,6 +284,11 @@ public class FattureGUI extends InitializeFrame {
 
 		this.bAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Map<String,Object> temp = new HashMap<>();
+				temp.put("Nome", textFieldProdotto.getText());
+				temp.put("Quantita", textFieldQuantita.getText());
+				temp.put("Prezzo", textFieldPrezzo.getText());
+				products.add(temp);
 				list.add("Prodotto:"+textFieldProdotto.getText()+"\tQuantita':"+ textFieldQuantita.getText()+"\tPrezzo:"+textFieldPrezzo.getText()+ "\tSconto:" + textFieldSconto.getText() + "\tIVA:" + textFieldIVA.getText());
 				textAreaFattura.setText("");
 				for(String elem : list){

@@ -116,10 +116,10 @@ public interface ObserverInterface {
 	boolean salvaFornitore(Map<String, String> dati);
 	/**
 	 * Method that save invoice
-	 * @param dati
+	 * @param map
 	 * 			Map (String,String)
 	 */
-	void salvaFattura(Map<String, String> dati);
+	void salvaFattura(Map<String, Object> map);
 	/**
 	 * Method that save reunion
 	 * @param dati
@@ -131,7 +131,7 @@ public interface ObserverInterface {
 	 * @param dati
 	 * 			Map (String,String)
 	 */
-	void salvaScontrini(Map<String, String> dati);
+	void salvaScontrini(Map<String, Object> dati);
 	
 	List<modelStore> ricercaProdotti(String nome);
 	
