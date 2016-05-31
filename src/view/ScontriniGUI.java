@@ -236,6 +236,7 @@ public class ScontriniGUI extends InitializeFrame {
 							+ String.valueOf(imponibile) + "\u20AC\nIva: " + txtIva.getText() + "%" + "\t\t"
 							+ String.valueOf(totiva) + "\u20AC" + "\n\n =====================================\n\n"
 							+ "Totale:\t\t\t" + String.valueOf(totale) + "\u20AC");
+					o.salvaScontrini(getTextField());
 				} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(frame, "Inserisci i campi correttamente", "Campi scorretti",
 							JOptionPane.ERROR_MESSAGE);

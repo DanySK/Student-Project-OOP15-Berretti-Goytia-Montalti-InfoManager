@@ -138,6 +138,14 @@ public class ClientiGUI extends InitializeFrame {
 		this.panelButton.add(btnPrecendete);
 		
 		this.panelButton.add(btnProssimo);
+		this.btnPrecendete.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fornitori.indietro();
+				
+			}
+		});
 		this.btnProssimo.addActionListener(new ActionListener() {
 			
 			@Override

@@ -52,7 +52,9 @@ public class DialogCerca extends JDialog implements DialogInterface {
 	private final JTextField txtCognome = new JTextField();
 	private final JTextField txtNumero = new JTextField();
 	private GroupLayout gcontentPanel = new GroupLayout(contentPanel);
+	// CHECKSTYLE:OFF:
 	protected Navigator<?> fornitori;
+	// CHECKSTYLE:ON:
 
 	/**
 	 * Costruttore DialogCerca.
