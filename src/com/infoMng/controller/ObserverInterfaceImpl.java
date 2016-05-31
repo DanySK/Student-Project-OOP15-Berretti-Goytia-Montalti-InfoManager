@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -393,6 +394,17 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 		private saveResult(String rawValue) {
 			this.rawValue = rawValue;
+		}
+	}
+
+	@Override
+	public List<modelStoreI> listOfProducts() {
+		List<modelStoreI> tmp = modelStoreI.productsList();
+		if(tmp == null){
+			return new ArrayList<>();
+		}
+		else{
+			return tmp;
 		}
 	}
 }
