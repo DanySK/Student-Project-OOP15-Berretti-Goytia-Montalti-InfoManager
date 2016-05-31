@@ -8,23 +8,49 @@ import com.infoMng.controller.TableRow;
 import com.infoMng.controller.DataBaseSearch;
 
 public interface modelProvidersI {
-
+	
+	/***
+	 * ottiene ID del record corrente
+	 * @return
+	 * un integer contenente l'ID
+	 */
 	Integer getID();
-
+	
+	/***
+	 * ottiene l'id del fornitore sottoforma di stringa
+	 * @return
+	 * una stringa contenente l'ID del fornitore
+	 */
 	String getIDFornitore();
-
+	/***
+	 * ottiene il nome del fornitore
+	 * @return
+	 * una string che contiene il nome
+	 */
 	String getName();
-
+	/***
+	 * ottiene il cognome de fornitore
+	 * @return
+	 * una stringa contenente il cognome
+	 */
 	String getLastName();
-
+	/***
+	 * ottiene la mail del fornitore
+	 * @return
+	 * una stringa contenente la mail
+	 */
 	String getMail();
-
+	/***
+	 * ottiene il recapito telefonico del fornitore
+	 * @return
+	 * una stringa contenente il recapito telfonico
+	 */
 	String getPhone();
 
 	/***
 	 * eliminazione del fornitore corrente
 	 * @return
-	 * true o false a seconda del esito
+	 * true se e andato a buon fine
 	 */
 	boolean deleteProvider();
 
@@ -32,11 +58,15 @@ public interface modelProvidersI {
 	 * modifica dei dati di un fornitore
 	 * Si chiede di passare come "" i parametri che non si devono modificare
 	 * @param newNome
+	 * nuovo nome
 	 * @param newCognome
+	 * nuvo cognome
 	 * @param newMail
+	 * nuova mail
 	 * @param newTelefono
+	 * nuovo recapito telefonicoc
 	 * @return
-	 * true o false a seconda del esito
+	 * true se e andato a buon fine
 	 */
 	boolean renameProvider(String newNome, String newCognome, String newMail, String newTelefono);
 	
@@ -45,9 +75,13 @@ public interface modelProvidersI {
 	 * ricerca di fornitore tramite uno o piu paramentri
 	 * si chiede di passare come "" i parametri da non considerare
 	 * @param nome
+	 * nome del fornitre
 	 * @param cognome
+	 * cognome del fornitore
 	 * @param mail
+	 * mail del fornitore
 	 * @param telefono
+	 * recapito telefonico del fornitore
 	 * @return
 	 * una lista contenente tutti i fornitori, tramite i parametri forniti
 	 */
@@ -61,8 +95,9 @@ public interface modelProvidersI {
 	/***
 	 * cerca dei fornitori attraverso i prodotti presente nel magazzino
 	 * @param nomeProdotto
+	 * noeme del prodotto
 	 * @return
-	 * una lista con tutti i fornitori che producono il prodotto specificato
+	 * una lista con tutti i fornitori che forniscono il prodotto specificato
 	 */
 	public static List<modelProvidersI> searchProvidersByProduct(String nomeProdotto){
 		
@@ -81,7 +116,7 @@ public interface modelProvidersI {
 	}
 	
 	/***
-	 * ottiene un eleno di tutti i fornitori
+	 * ottiene un elenco di tutti i fornitori
 	 * @return
 	 * una lista contenente tutti i fornitori
 	 */
@@ -101,11 +136,15 @@ public interface modelProvidersI {
 	/***
 	 * creazione di un nuovo fornitore
 	 * @param nome
+	 * nome del fornitor
 	 * @param cognome
+	 * cognome del fornitore
 	 * @param mail
+	 * mail del fornitore
 	 * @param telefono
+	 * recapito telefonico del fornitore
 	 * @return
-	 * true o false a seonda del esito
+	 * true se e andato a buon fine
 	 */
 	public static boolean newProvider(String nome, String cognome, String mail, String telefono){
 		modelProviders nuovo = new modelProviders(TableRow.oggettoDaTabella("Fornitori"));
