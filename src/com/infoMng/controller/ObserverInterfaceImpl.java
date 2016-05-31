@@ -1,6 +1,7 @@
 package com.infoMng.controller;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,6 +25,8 @@ import view.interfaces.ViewInterface;
 
 public class ObserverInterfaceImpl implements ObserverInterface {
 
+	private static UtenteCorrente currentUser = new UtenteCorrente();
+	
 	private ViewInterface view;
 	private JFrame attuale;
 
@@ -146,7 +149,16 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		String indirizzo = dati.get("Indirizzo");
 		String nomeNegozio = dati.get("Nome");
 		
-		return modelUsers.newUser(nomeNegozio, null, mail, username, password);
+		if( modelUsers.newUser(nomeNegozio, null, mail, username, password)){
+			UtenteCorrente.tmpUser tmp = new UtenteCorrente.tmpUser();
+			tmp.nome = username;
+			ObserverInterfaceImpl.currentUser.setUtente(tmp);
+			return true;
+		}
+		else{
+			
+			return false;
+		}
 	}
 
 	@Override
@@ -297,9 +309,14 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		
 		String nome = String.format("Riunione del %s/%s/%s", giorno, mese, anno);
 		
+		String responsabile = "";
+		if(ObserverInterfaceImpl.currentUser.getUtente().isPresent()){
+			responsabile = ObserverInterfaceImpl.currentUser.getUtente().get().nome;
+		}
+		
 		DateFormat formatterData = new SimpleDateFormat("dd-MM-yyyy");
 		Date dataEora = new Date(formatterData.parse(String.format("%s-%s-%s", giorno, mese, anno)).getTime());
-		return modelReunions.newReunion(nome, "", "", note, dataEora);
+		return modelReunions.newReunion(nome, responsabile, "", note, dataEora);
 		
 	}
 
@@ -356,13 +373,25 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public boolean userLogin(String user, String pass) {
-		return modelUsers.usersLogin(user, pass);
+		if( modelUsers.usersLogin(user, pass)){
+			UtenteCorrente.tmpUser tmp = new UtenteCorrente.tmpUser();
+			tmp.nome = user;
+			ObserverInterfaceImpl.currentUser.setUtente(tmp);
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	@Override
-	public void cercaFatture(String numero, String nome) {
-		// TODO Auto-generated method stub
-		
+	public Optional<IFattura> cercaFatture(String numero, String nome, String cognome) throws NumberFormatException {
+		Integer invoiceNumber = Integer.parseInt(numero);
+		try {
+			return IFattura.searchIvoicesForNumber(invoiceNumber, nome, cognome);
+		} catch (SQLException e) {
+			return Optional.empty();
+		}
 	}
 
 

@@ -13,6 +13,7 @@ import com.goytia.models.DB.modelReceipts;
 import com.goytia.models.DB.modelReunions;
 import com.goytia.models.DB.modelStore;
 import com.infoMng.controller.ObserverInterfaceImpl.saveResult;
+import com.infoMng.model.IFattura;
 
 /**
  * Interfaccia che definisce ObserverInterface.
@@ -251,7 +252,8 @@ public interface ObserverInterface {
 	 * 			numero della fattura
 	 * @param nome
 	 * 			nome del Cliente o Fornitore
+	 * @return 
 	 */
-	void cercaFatture(String numero, String nome);
+	Optional<IFattura> cercaFatture(String numero, String nome, String cognome);
 
 }

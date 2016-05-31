@@ -19,6 +19,10 @@ public class Fattura implements IFattura {
 		query.whereEqualTo("objectId", idFattura);
 		this.collegamento = query.getFirst();
 	}
+	
+	protected Fattura(MBOggetto collegamento){
+		this.collegamento = collegamento;
+	}
 
 	@Override
 	public List<prodottoFattura> getProdotti() {
