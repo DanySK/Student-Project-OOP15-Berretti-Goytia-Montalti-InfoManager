@@ -92,7 +92,7 @@ public interface modelUsersI {
 	public static boolean usersLogin(String username, String password){
 		return modelUsersI.usersList().stream()
 				.filter(e -> e.getUsername().equals(username) &&  e.getPassword().equals(password))
-				.count() == 1;
+				.count() >0;
 	}
 
 }
