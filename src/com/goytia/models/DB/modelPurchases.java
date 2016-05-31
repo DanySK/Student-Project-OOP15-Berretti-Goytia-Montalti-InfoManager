@@ -90,4 +90,12 @@ class modelPurchases implements modelPurchasesI{
 			return false;
 	}
 	
+	/*
+	 * calcolo del totale speso in un acquisto
+	 */
+	public Double getTotalSpent(){
+		return purchasedProducts().stream()
+		.mapToDouble(e -> e.getPrice() * e.getQuantity())
+		.sum();
+	}
 }

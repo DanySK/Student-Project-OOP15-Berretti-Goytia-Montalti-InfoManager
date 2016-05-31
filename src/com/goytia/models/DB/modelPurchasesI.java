@@ -2,6 +2,7 @@ package com.goytia.models.DB;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +24,9 @@ public interface modelPurchasesI {
 	float getDiscount();
 
 	List<transactionsProducts> purchasedProducts();
-
+	
+	Double getTotalSpent();
+	
 	/***
 	 * eliminazione dell'accquisto corrente
 	 * @return
@@ -73,8 +76,14 @@ public interface modelPurchasesI {
 			return false;
 	}
 	
-	/*public static List<modelPurchases> reportPurchases(){
+	public static List<modelPurchasesI> reportPurchases(){
+		
+		Comparator<modelPurchasesI> sort = (primo, secondo) -> Double.compare(primo.getTotalSpent(), secondo.getTotalSpent());
+		
 		return modelPurchasesI.purchasesList().stream()
-				.sorted().
-	}*/
+				.sorted(sort)
+				.collect(Collectors.toList());
+	}
+	
+	
 }

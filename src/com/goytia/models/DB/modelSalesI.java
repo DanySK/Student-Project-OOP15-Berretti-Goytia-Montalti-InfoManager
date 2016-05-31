@@ -2,11 +2,12 @@ package com.goytia.models.DB;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.infoMng.controller.TableRow;
 import com.infoMng.controller.DataBaseSearch;
+import com.infoMng.controller.TableRow;
 
 public interface modelSalesI {
 
@@ -21,7 +22,9 @@ public interface modelSalesI {
 	Date getDate();
 
 	float getDiscount();
-
+	
+	double getTotalColleactions();
+	
 	/***
 	 * metodo che elimina la vednita corrente e i suoi relativi prodotti
 	 * @return
@@ -29,7 +32,7 @@ public interface modelSalesI {
 	 */
 	boolean deleteSale();
 
-	List<transactionsProducts> soldProducts();
+	List<transactionsProductsI> soldProducts();
 
 	boolean renameSale(Integer newIDCliente, int newNRicevuta, float newIva, float newSconto, Date newData);
 	
@@ -38,7 +41,7 @@ public interface modelSalesI {
 	 * @return
 	 * una lista contenente tutte le vendite
 	 */
-	public static List<modelSales> salesList(){
+	public static List<modelSalesI> salesList(){
 		DataBaseSearch query = DataBaseSearch.queryDaTabella("Acquisti");
 		try {
 			return query.find().stream()
@@ -53,7 +56,7 @@ public interface modelSalesI {
 	/***
 	 * nuova vendita
 	 * @param IDCliente
-	 * id del cliente a chi ï¿½ stato effettuata la vendita
+	 * id del cliente a chi è stato effettuata la vendita
 	 * @param nRicevuta
 	 * @param iva
 	 * @param sconto
@@ -77,8 +80,13 @@ public interface modelSalesI {
 			return false;
 	}
 	
-	/*public static List<modelSales> reportSales(){
+	public static List<modelSalesI> reportSales(){
 		
-	}*/
+	Comparator<modelSalesI> sort = (primo, secondo) -> Double.compare(primo.getTotalColleactions(), secondo.getTotalColleactions());
+			
+			return modelSalesI.salesList().stream()
+					.sorted(sort)
+					.collect(Collectors.toList());
+	}
 
 }

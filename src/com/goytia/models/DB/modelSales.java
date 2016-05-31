@@ -82,7 +82,7 @@ public class modelSales implements modelSalesI {
 			return false;
 	}
 	
-	public List<transactionsProducts> soldProducts(){
+	public List<transactionsProductsI> soldProducts(){
 		return modelTransactionsI.transactionsList().stream()
 				.filter( m -> m.getNumberPaymentRicevuta() == this.getNumberPaymentReceipt())
 				.map( p -> {
@@ -99,5 +99,12 @@ public class modelSales implements modelSalesI {
 			if(newSconto != -1)this.setDiscount(newSconto);
 			if(newData != null)this.setDate(newData);
 			return this.oggetto.salva();
+	}
+	
+	public double getTotalColleactions(){
+		
+		return this.soldProducts().stream()
+				.mapToDouble(e -> e.getPrice() * e.getQuantity())
+				.sum();
 	}
 }
