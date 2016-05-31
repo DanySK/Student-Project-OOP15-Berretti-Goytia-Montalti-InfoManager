@@ -36,18 +36,6 @@ public class BaseTabelle extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(final int row, final int col) {
-		if (row == 0) {
-			if (col == 0) {
-				return new String("Prodotto");
-			}
-			if (col == 1) {
-				return new String("Quantita'");
-			}
-			if (col == 2) {
-				return new String("Prezzo");
-			}
-		}
-		//TODO: fai in modo che ritorni la lista di juan
 		return new String(l.avanti().toString());
 	}
 /**
@@ -58,7 +46,16 @@ public class BaseTabelle extends AbstractTableModel {
  * 			nome colonna
  */
 	public String getColumnName(final int col) {
-		return Integer.toString(col + 1);
+		if (col == 0) {
+			return new String("Prodotto");
+		}
+		if (col == 1) {
+			return new String("Quantita'");
+		}
+		if (col == 2) {
+			return new String("Prezzo");
+		}
+		return new String("");
 	}
 
 }

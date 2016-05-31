@@ -6,6 +6,8 @@ import view.interfaces.ObserverInterface;
 import view.toolbar.MyToolbar;
 
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.BorderLayout;
@@ -13,9 +15,14 @@ import java.awt.Dimension;
 import java.awt.LayoutManager;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+
+import com.infoMng.controller.Navigator;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
+import javax.swing.JButton;
 
 /**
  * Classe che definisce viewRiunioni.
@@ -48,6 +55,12 @@ public class RiunioniGUI extends InitializeFrame {
 	private final JTextField txtAnno = new JTextField();
 	private JTextArea textArea = new JTextArea();
 	private GroupLayout gPanelText = new GroupLayout(panelText);
+	private final JPanel buttonPane = new JPanel();
+	private final JButton btnPrecedente = new JButton("<<");
+	private final JButton btnSuccessivo = new JButton(">>");
+	//CHECKSTYLE:OFF:
+	public Navigator<?> riunioni;
+	//CHECKSTYLE:ON:
 	/**
 	 * Metodo per ottendere dati dai TextField.
 	 * @return
@@ -137,6 +150,37 @@ public class RiunioniGUI extends InitializeFrame {
 					.addContainerGap(24, Short.MAX_VALUE))
 		);
 		this.panelText.setLayout(gPanelText);
+		
+		this.panelTool.add(buttonPane, BorderLayout.SOUTH);
+		
+		this.buttonPane.add(btnPrecedente);
+		this.btnPrecedente.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					o.setAttuale(frame);
+					riunioni.indietro();
+				} catch (NullPointerException e2) {
+					JOptionPane.showMessageDialog(o.getAttuale().get(), "Eseguire una ricerca per scorrere tra le riunioni");
+				}
+				
+			}
+		});
+		this.buttonPane.add(btnSuccessivo);
+		this.btnSuccessivo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					o.setAttuale(frame);
+					riunioni.avanti();
+				} catch (NullPointerException e2) {
+					JOptionPane.showMessageDialog(o.getAttuale().get(), "Eseguire una ricerca per scorrere tra le riunioni");
+				}
+				
+			}
+		});
 		
 
 	}

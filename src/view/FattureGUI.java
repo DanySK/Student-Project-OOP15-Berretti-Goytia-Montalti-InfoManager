@@ -10,11 +10,14 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import com.infoMng.controller.Navigator;
 
 import view.interfaces.ObserverInterface;
 import view.toolbar.MyToolbar;
@@ -81,7 +84,12 @@ public class FattureGUI extends InitializeFrame {
 	private JScrollPane scrollPaneFattura = new JScrollPane();
 	private JTextArea textAreaFattura = new JTextArea("");
 	private LinkedList<Map<String, Object>> products = new LinkedList<>();
-	//TODO: metodo per settare i campi e bottoni per scorrere
+	private final JPanel buttonPane = new JPanel();
+	private final JButton btnSuccessivo = new JButton(">>");
+	private final JButton btnPrecedente = new JButton("<<");
+	//CHECKSTYLE:OFF:
+	public Navigator<?> fatture;
+	//CHECKSTYLE:ON:
 	/**
 	 * Metodo per pulire i campi del frame.
 	 */
@@ -310,9 +318,39 @@ public class FattureGUI extends InitializeFrame {
 		this.scrollPaneFattura.setViewportView(textAreaFattura); // = new
 																	// JScrollPane(textAreaFattura,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.panelTestata.add(scrollPaneFattura);
-		getContentPane().setLayout(new BorderLayout(0, 0));
-		getContentPane().add(toolBar, BorderLayout.NORTH);
-		getContentPane().add(layeredPane);
+		this.getContentPane().setLayout(new BorderLayout(0, 0));
+		this.getContentPane().add(toolBar, BorderLayout.NORTH);
+		this.getContentPane().add(layeredPane);
+		
+		this.getContentPane().add(buttonPane, BorderLayout.SOUTH);
+		this.buttonPane.add(btnPrecedente);
+		this.btnPrecedente.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					o.setAttuale(frame);
+					fatture.avanti();
+				} catch (NullPointerException e2) {
+					JOptionPane.showMessageDialog(o.getAttuale().get(), "Eseguire una ricerca per scorrere tra le fatture");
+				}
+				
+			}
+		});
+		this.buttonPane.add(btnSuccessivo);
+		this.btnSuccessivo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					o.setAttuale(frame);
+					fatture.avanti();
+				} catch (NullPointerException e2) {
+					JOptionPane.showMessageDialog(o.getAttuale().get(), "Eseguire una ricerca per scorrere tra le fatture");
+				}
+				
+			}
+		});
 
 	}
 	

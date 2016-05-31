@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.LayoutManager;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import view.interfaces.ObserverInterface;
 import view.toolbar.MyToolbar;
@@ -30,6 +31,7 @@ public class ReportVenditeGUI extends InitializeFrame {
 	private JPanel panelText = new JPanel();
 	private MyToolbar toolbar;
 	private final JTextArea textArea = new JTextArea();
+	private JScrollPane scrollArea = new JScrollPane();
 	/**
 	 * Metodo che setta il testo nella textArea del frame.
 	 * @param testoVendite
@@ -53,9 +55,10 @@ public class ReportVenditeGUI extends InitializeFrame {
 		this.panelTool.setLayout(new BorderLayout(0, 0));
 		this.panelTool.add(toolbar, BorderLayout.NORTH);
 		this.panelTool.add(panelText, BorderLayout.CENTER);
-		panelText.setLayout(new BorderLayout(0, 0));
-		
-		panelText.add(textArea, BorderLayout.CENTER);
+		this.panelText.setLayout(new BorderLayout(0, 0));
+		this.scrollArea.setViewportView(textArea);
+		this.textArea.setEditable(false);
+		this.panelText.add(scrollArea, BorderLayout.CENTER);
 		
 	}
 

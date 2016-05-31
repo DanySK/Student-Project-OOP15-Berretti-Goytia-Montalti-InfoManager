@@ -23,6 +23,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import com.infoMng.controller.Navigator;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
@@ -72,6 +74,12 @@ public class ScontriniGUI extends InitializeFrame {
 	private final JLabel lblAnteprimaDiStampa = new JLabel("Anteprima di Stampa");
 	private LinkedList<String> lista = new LinkedList<>();
 	private String prodotti = new String();
+	private final JPanel buttonPane = new JPanel();
+	private final JButton btnPrecedente = new JButton("<<");
+	private final JButton btnSuccessivo = new JButton(">>");
+	//CHECKSTYLE:OFF:
+	public Navigator<?> scontrini;
+	//CHECKSTYLE:ON:
 
 	/**
 	 * Metodo che resetta i TextField del frame.
@@ -211,6 +219,38 @@ public class ScontriniGUI extends InitializeFrame {
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE).addContainerGap()));
 		this.panelText.setLayout(gcontentPane);
+		
+		this.getMainPanel().add(buttonPane, BorderLayout.SOUTH);
+		
+		this.buttonPane.add(btnPrecedente);
+		this.btnPrecedente.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					o.setAttuale(frame);
+					scontrini.indietro();
+				} catch (NullPointerException e2) {
+					JOptionPane.showMessageDialog(o.getAttuale().get(), "Eseguire una ricerca per scorrere tra gli scontrini");
+				}
+				
+			}
+		});
+		
+		this.buttonPane.add(btnSuccessivo);
+		this.btnSuccessivo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					o.setAttuale(frame);
+					scontrini.avanti();
+				} catch (NullPointerException e2) {
+					JOptionPane.showMessageDialog(o.getAttuale().get(), "Eseguire una ricerca per scorrere tra gli scontrini");
+				}
+				
+			}
+		});
 		this.btnStampa.addActionListener(new ActionListener() {
 
 			@Override

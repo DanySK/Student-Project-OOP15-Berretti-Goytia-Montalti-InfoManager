@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
@@ -58,7 +59,9 @@ public class ClientiGUI extends InitializeFrame {
 	private final JPanel panelButton = new JPanel();
 	private final JButton btnPrecendete = new JButton("<<");
 	private final JButton btnProssimo = new JButton(">>");
+	//CHECKSTYLE:OFF:
 	public Navigator<?> fornitori;
+	//CHECKSTYLE:ON:
 	
 	
 
@@ -142,15 +145,26 @@ public class ClientiGUI extends InitializeFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				fornitori.indietro();
+				try {
+					o.setAttuale(frame);
+					fornitori.indietro();
+				} catch (NullPointerException e2) {
+					JOptionPane.showMessageDialog(o.getAttuale().get(), "Eseguire una ricerca per scorrere tra i clienti e fornitori");
+				}
+				
 				
 			}
 		});
 		this.btnProssimo.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(final ActionEvent e) {
-				fornitori.avanti();
+			public void actionPerformed(final ActionEvent e) {			
+				try {
+					o.setAttuale(frame);
+					fornitori.avanti();
+				} catch (NullPointerException e2) {
+					JOptionPane.showMessageDialog(o.getAttuale().get(), "Eseguire una ricerca per scorrere tra i clienti e fornitori");
+				}
 			}
 		});
 		

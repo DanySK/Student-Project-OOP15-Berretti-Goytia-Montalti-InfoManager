@@ -9,7 +9,9 @@ import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import java.awt.BorderLayout;
@@ -32,6 +34,7 @@ public class MenuGUI extends InitializeFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -8257069661304151100L;
+	private JFrame menu = this;
 	private JPanel contentPane;
 	private JLabel lblGestioneClienti = new JLabel("Clienti");
 	private JLabel lblGestioneFornitori = new JLabel("Fornitori");
@@ -109,8 +112,13 @@ public class MenuGUI extends InitializeFrame {
 			
 			@Override
 			public void actionPerformed(final ActionEvent arg0) {
-				o.mostraMagazzino();
-				dispose();
+				try{
+					o.setAttuale(menu);
+					o.mostraMagazzino();
+					dispose();
+				} catch (NullPointerException e1){
+					JOptionPane.showMessageDialog(o.getAttuale().get(), "Non sono ancora stati inseriti prodotti");
+				} 
 			}
 		});
 		
@@ -129,8 +137,13 @@ public class MenuGUI extends InitializeFrame {
 			
 			@Override
 			public void actionPerformed(final ActionEvent arg0) {
-				o.mostraRegistiIva();
-				dispose();
+				try{
+					o.setAttuale(menu);
+					o.mostraRegistiIva();
+					dispose();
+				} catch (NullPointerException e1){
+					JOptionPane.showMessageDialog(o.getAttuale().get(), "Non è ancora stata registrata nessuna operazione con IVA");
+				} 
 			}
 		});
 		
@@ -139,8 +152,13 @@ public class MenuGUI extends InitializeFrame {
 			
 			@Override
 			public void actionPerformed(final ActionEvent arg0) {
-				o.mostraReportVendite();
-				dispose();
+				try{
+					o.setAttuale(menu);
+					o.mostraReportVendite();
+					dispose();
+				} catch (NullPointerException e1){
+					JOptionPane.showMessageDialog(o.getAttuale().get(), "Non sono ancora state registrate vendite");
+				} 
 			}
 		});
 		

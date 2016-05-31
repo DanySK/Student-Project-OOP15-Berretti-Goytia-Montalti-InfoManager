@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.LayoutManager;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import view.interfaces.ObserverInterface;
 import view.toolbar.MyToolbar;
@@ -29,16 +30,31 @@ public class RegistriIvaGUI extends InitializeFrame {
 	private JPanel panelTool = new JPanel();
 	private JPanel panelText = new JPanel();
 	private MyToolbar toolbar;
+	private JScrollPane scrollArea = new JScrollPane();
 	private final JTextArea textArea = new JTextArea();
 
 	/**
 	 * Metodo per settare il testo nellaT extArea del frame.
-	 * @param testoIva
-	 * 			Oggetto String
+	 * 
 	 */
-	public void setTextIva(final String testoIva) {
-		this.textArea.setText(testoIva);
+	//CHECKSTYLE:OFF:
+	public void setTextIva() {
+		String iva = new String();
+		double totDare = 0;
+		double totAvere = 0;
+		iva = ("\t\t\t\t\t\t\tAVERE \t\tDARE\n\n");
+		for (Integer i = 0; i<10; i++){
+			totAvere = totAvere + 1234;
+		iva = iva + ("Iva ns/debito\t\t\t\t\t\t" + "1234\n");
+		}
+		for (Integer i = 0; i<10; i++){
+			totDare = totDare + 1234;
+		iva = iva + ("Iva ns/credito\t\t\t\t\t\t\t\t" + "1234\n");
+		}
+		iva = iva + ("\n\n\n\n\n\n\n\n\n\nTotale\t\t\t\t\t\t\t" + totAvere + "\t\t" + totDare);
+		this.textArea.setText(iva);
 	}
+	//CHECKSTYLE:ON:
 
 	/**
 	 * Costruttore del RegistriIvaGUI frame.
@@ -55,7 +71,10 @@ public class RegistriIvaGUI extends InitializeFrame {
 		this.panelTool.add(toolbar, BorderLayout.NORTH);
 		this.panelTool.add(panelText, BorderLayout.CENTER);
 		this.panelText.setLayout(new BorderLayout(0, 0));
-		this.panelText.add(textArea, BorderLayout.CENTER);
+		this.setTextIva();
+		this.scrollArea.setViewportView(textArea);
+		this.textArea.setEditable(false);
+		this.panelText.add(scrollArea, BorderLayout.CENTER);
 		
 	}
 
