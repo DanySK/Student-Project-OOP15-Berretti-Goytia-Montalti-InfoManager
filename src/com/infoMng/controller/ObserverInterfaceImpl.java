@@ -362,12 +362,16 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public boolean userLogin(String user, String pass) {
-		if (modelUsersI.usersLogin(user, pass)) {
-			UtenteCorrente.tmpUser tmp = new UtenteCorrente.tmpUser();
-			tmp.nome = user;
-			ObserverInterfaceImpl.currentUser.setUtente(tmp);
-			return true;
-		} else {
+		try{
+			if (modelUsersI.usersLogin(user, pass)) {
+				UtenteCorrente.tmpUser tmp = new UtenteCorrente.tmpUser();
+				tmp.nome = user;
+				ObserverInterfaceImpl.currentUser.setUtente(tmp);
+				return true;
+			} else {
+				return false;
+			}
+		}catch(NullPointerException e){
 			return false;
 		}
 	}
