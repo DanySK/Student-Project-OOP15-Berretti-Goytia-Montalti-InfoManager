@@ -161,6 +161,11 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		String indirizzo = dati.get("Indirizzo");
 		String nomeNegozio = dati.get("Nome");
 
+		if(modelUsersI.usersList().stream().filter(u -> u.getUsername().equals(username)).collect(Collectors.toList()).size() > 0){
+			return false;
+		}
+		
+		
 		if (modelUsersI.newUser(nomeNegozio, null, mail, username, password)) {
 			UtenteCorrente.tmpUser tmp = new UtenteCorrente.tmpUser();
 			tmp.nome = username;
@@ -389,7 +394,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public Optional<IFattura> cercaFatture(String numero, String nome, String cognome) throws NumberFormatException {
+	public void cercaFatture(String numero, String nome, String cognome) throws NumberFormatException {
 		Integer invoiceNumber = Integer.parseInt(numero);
 		FattureGUI view = (FattureGUI) this.attuale;
 		Optional<IFattura> fattura;
@@ -404,7 +409,6 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		}
 		
 		
-		return fattura;
 	}
 
 	public enum saveResult {

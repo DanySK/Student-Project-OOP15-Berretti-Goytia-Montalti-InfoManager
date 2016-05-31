@@ -252,9 +252,8 @@ public interface ObserverInterface {
 	 * 			numero della fattura
 	 * @param nome
 	 * 			nome del Cliente o Fornitore
-	 * @return 
 	 */
-	Optional<IFattura> cercaFatture(String numero, String nome, String cognome);
+	void cercaFatture(String numero, String nome, String cognome);
 
 	List<modelStoreI> listOfProducts();
 	
