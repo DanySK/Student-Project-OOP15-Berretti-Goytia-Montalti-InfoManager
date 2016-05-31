@@ -13,7 +13,6 @@ import com.goytia.models.DB.modelReceiptsI;
 import com.goytia.models.DB.modelReunionsI;
 import com.goytia.models.DB.modelStoreI;
 import com.infoMng.controller.ObserverInterfaceImpl.saveResult;
-import com.infoMng.model.IFattura;
 
 /**
  * Interfaccia che definisce ObserverInterface.

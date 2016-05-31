@@ -2,8 +2,6 @@ package view.tabelle;
 
 import javax.swing.table.AbstractTableModel;
 
-import com.goytia.models.DB.modelStoreI;
-
 import view.interfaces.ObserverInterface;
 import com.infoMng.controller.Navigator;
 import com.infoMng.controller.ObserverInterfaceImpl;

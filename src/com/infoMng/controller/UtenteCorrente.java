@@ -2,8 +2,6 @@ package com.infoMng.controller;
 
 import java.util.Optional;
 
-import com.goytia.models.DB.modelUsers;
-
 class UtenteCorrente {
 	private Optional<tmpUser> utente;
 	

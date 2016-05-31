@@ -158,6 +158,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		String username = dati.get("Username");
 		String password = dati.get("Password");
 		String mail = dati.get("Email");
+		@SuppressWarnings("unused") //lo so che non è usato
 		String indirizzo = dati.get("Indirizzo");
 		String nomeNegozio = dati.get("Nome");
 
@@ -306,6 +307,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public boolean salvaRiunione(Map<String, String> dati) throws ParseException {
+		@SuppressWarnings("unused") //lo so
 		String evento = dati.get("Evento");
 		String giorno = dati.get("Giorno");
 		String mese = dati.get("Mese");
@@ -363,7 +365,6 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public List<modelReunionsI> cercaRiunioni(String data, String nome) throws ParseException {
-		// TODO Auto-generated method stub
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		Date giorno = new Date(format.parse(data).getTime());
 		return modelReunionsI.reunionsList().stream().filter(r -> {
@@ -395,6 +396,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public void cercaFatture(String numero, String nome, String cognome) throws NumberFormatException {
+		//TODO: chiamare metodo per l'aggiornamento della view
 		Integer invoiceNumber = Integer.parseInt(numero);
 		FattureGUI view = (FattureGUI) this.attuale;
 		Optional<IFattura> fattura;
