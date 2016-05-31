@@ -1,6 +1,6 @@
 package com.goytia.models.DB;
 
-public class transactionsProducts {
+public class transactionsProducts implements transactionsProductsI {
 	
 	private Integer idProduct;
 	private int quantity;
