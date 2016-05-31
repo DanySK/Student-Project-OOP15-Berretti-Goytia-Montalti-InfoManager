@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import com.goytia.models.DB.modelClients;
 import com.goytia.models.DB.modelProviders;
 import com.goytia.models.DB.modelStore;
+import com.infoMng.model.IFattura;
 
 import view.interfaces.ObserverInterface;
 import view.interfaces.ViewInterface;
@@ -156,9 +157,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public int salvaFattura(Map<String, Object> dati) throws ParseException, NumberFormatException {
-		// TODO: fai enumerazione con i casi SUCCESSO o ERROREDATA o
-		// ERRORESALVATAGGIO al posto del ritorno int perch� fa pi� figo
+	public saveResult salvaFattura(Map<String, Object> dati) throws ParseException, NumberFormatException {
 		Integer numeroFattura = Integer.parseInt((String) dati.get("NumeroOrdine"));
 		String cliente = (String) dati.get("Fornitore/Cliente");
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -174,8 +173,106 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		String descrizione = String.format("Tipo ordine : %s, Banca %s, note %s", banca,
 				(String) dati.get("Tipo ordine"), (String) dati.get("Note"));
 		String nomeNegozio = (String) dati.get("Negozio");
-		return 1;
-
+		
+		
+		IFattura.FatturaBuilder builder = new IFattura.FatturaBuilder();
+		//imposto il numero della fattura
+		builder.setNumeroOrdine(numeroFattura);
+		//cerco il fornitore
+		Optional<modelProviders> tmpFornitore = this.ottieniFornitoreDaNome(cliente);
+		if(tmpFornitore.isPresent()){
+			//il fornitore è stato trovato
+			builder.setFornitore(tmpFornitore.get());
+		}
+		else{
+			//il fornitore non è stato trovato
+			//cerco il cliente
+			Optional<modelClients> tmpCliente = this.ottieniClienteDaNome(cliente);
+			if(tmpCliente.isPresent()){
+				//il cliente è stato trovato
+				builder.setCliente(tmpCliente.get());
+			}
+			else{
+				//non è stato trovato ne cliente ne fornitore
+				return saveResult.errorData;
+			}
+		}
+		
+		//imposto le date di richiesta e di consegna
+		builder.setData(data);
+		builder.getConsegna()[0] = inizio;
+		builder.getConsegna()[1] = fine;
+		
+		builder.setBanca(banca);
+		
+		builder.setSconto(sconto);
+		builder.setIVA(iva);
+		builder.setNomeNegozio(nomeNegozio);
+		builder.setNote(descrizione);
+		
+		//ho finito di impostare i campi della fattura ora aggiungo i prodotti
+		@SuppressWarnings("unchecked")
+		List<Map<String, Object>> prodotti = (List<Map<String, Object>>) dati.get("Prodotti");
+		prodotti.stream()
+		.map(e ->{
+			String nomeProdotto = (String) e.get("Nome");
+			Integer quantita = Integer.parseInt((String) e.get("Quantita"));
+			Double prezzo = Double.parseDouble((String) e.get("Prezzo"));
+			//cerco il prodotto
+			Optional<modelStore> tmpProdotto = this.ottengoProdottoDaNome(nomeProdotto);
+			IFattura.prodottoFattura ritorno = null;
+			if(tmpProdotto.isPresent()){
+				ritorno = new IFattura.prodottoFattura();
+				ritorno.prodotto = tmpProdotto.get();
+				ritorno.prezzo = prezzo;
+				ritorno.quantita = quantita;
+			}
+			else{
+				System.out.println(String.format("Prodotto %s non trovato", nomeProdotto));
+			}
+			return Optional.ofNullable(ritorno);
+		})
+		.filter(e -> e.isPresent()).map(e -> e.get())
+		.forEach(e -> builder.addProdotto(e));
+		
+		//ho aggiunto tutti i prodotti che sono riuscito a trovare
+		IFattura nuova = builder.salva();
+		if(nuova != null){
+			return saveResult.success;
+		}
+		else{
+			return saveResult.errorSave;
+		}
+	}
+	
+	private Optional<modelStore> ottengoProdottoDaNome(String nome){
+		List<modelStore> tmp = modelStore.serachProductsByName(nome);
+		if(tmp.size() > 0){
+			return Optional.of(tmp.get(0));
+		}
+		else{
+			return Optional.empty();
+		}
+	}
+	
+	private Optional<modelProviders> ottieniFornitoreDaNome(String nome){
+		List<modelProviders> tmp = modelProviders.searchProviders(nome, null, null, null);
+		if(tmp.size() > 0){
+			return Optional.of(tmp.get(0));
+		}
+		else{
+			return Optional.empty();
+		}
+	}
+	
+	private Optional<modelClients> ottieniClienteDaNome(String nome){
+		List<modelClients> tmp = modelClients.searchClients(nome, null, null, null, null);
+		if(tmp.size() > 0){
+			return Optional.of(tmp.get(0));
+		}
+		else{
+			return Optional.empty();
+		}
 	}
 
 	@Override
@@ -246,5 +343,15 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 
-
+	public enum saveResult{
+		success(""),
+		errorData("Dati non corretti"),
+		errorSave("Errore durante il salvataggio");
+		
+		public String rawValue;
+		
+		private saveResult(String rawValue){
+			this.rawValue = rawValue;
+		}
+	}
 }

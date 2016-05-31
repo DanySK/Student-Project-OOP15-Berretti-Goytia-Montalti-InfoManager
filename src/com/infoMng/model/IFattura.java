@@ -57,9 +57,117 @@ public interface IFattura {
 		
 		String note;
 		
-		Integer sconto;
+		Double sconto;
 		Integer IVA;
 	
+		public void addProdotto(modelStore prodotto, Integer quantita, Double prezzo){
+			prodottoFattura tmp = new prodottoFattura();
+			tmp.prodotto = prodotto;
+			tmp.quantita = quantita;
+			tmp.prezzo = prezzo;
+			this.prodotti.add(tmp);
+		}
+		
+		public void addProdotto(prodottoFattura nuovo){
+			this.prodotti.add(nuovo);
+		}
+		
+		public Date getData() {
+			return data;
+		}
+
+		public Integer getNumeroOrdine() {
+			return numeroOrdine;
+		}
+
+		public modelClients getCliente() {
+			return cliente;
+		}
+
+		public modelProviders getFornitore() {
+			return fornitore;
+		}
+
+		public Date[] getConsegna() {
+			return consegna;
+		}
+
+		public String getTipoOrdine() {
+			return tipoOrdine;
+		}
+
+		public String getNomeNegozio() {
+			return nomeNegozio;
+		}
+
+		public String getTipoPagamento() {
+			return tipoPagamento;
+		}
+
+		public String getBanca() {
+			return banca;
+		}
+
+		public String getNote() {
+			return note;
+		}
+
+		public Double getSconto() {
+			return sconto;
+		}
+
+		public Integer getIVA() {
+			return IVA;
+		}
+
+		public void setData(Date data) {
+			this.data = data;
+		}
+
+		public void setNumeroOrdine(Integer numeroOrdine) {
+			this.numeroOrdine = numeroOrdine;
+		}
+
+		public void setCliente(modelClients cliente) {
+			this.cliente = cliente;
+		}
+
+		public void setFornitore(modelProviders fornitore) {
+			this.fornitore = fornitore;
+		}
+
+		public void setConsegna(Date[] consegna) {
+			this.consegna = consegna;
+		}
+
+		public void setTipoOrdine(String tipoOrdine) {
+			this.tipoOrdine = tipoOrdine;
+		}
+
+		public void setNomeNegozio(String nomeNegozio) {
+			this.nomeNegozio = nomeNegozio;
+		}
+
+		public void setTipoPagamento(String tipoPagamento) {
+			this.tipoPagamento = tipoPagamento;
+		}
+
+		public void setBanca(String banca) {
+			this.banca = banca;
+		}
+
+		public void setNote(String note) {
+			this.note = note;
+		}
+
+		public void setSconto(Double sconto) {
+			this.sconto = sconto;
+		}
+
+		public void setIVA(Integer iVA) {
+			IVA = iVA;
+		}
+
 		public FatturaBuilder(){
 			this.prodotti = new ArrayList<>();
 			consegna = new Date[2];
@@ -110,8 +218,8 @@ public interface IFattura {
 	}
 	
 	public static class prodottoFattura{
-		modelStore prodotto;
-		Integer quantita;
-		Double prezzo;
+		public modelStore prodotto;
+		public Integer quantita;
+		public Double prezzo;
 	}
 }

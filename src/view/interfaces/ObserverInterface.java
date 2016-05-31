@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import javax.swing.JFrame;
 import com.goytia.models.DB.modelStore;
+import com.infoMng.controller.ObserverInterfaceImpl.saveResult;
 
 /**
  * Interfaccia che definisce ObserverInterface.
@@ -149,11 +150,12 @@ public interface ObserverInterface {
 	 * 
 	 * @param map
 	 *            Map (String,String)
-	 * @return Variabile boolean, true se l'operazione va a buon fine, false se non va buon fine
+	 * @return Enumerator than identifer if save had done or it was fail for incurrect data or if the operation have a error
 	 * @throws ParseException
 	 * 			da circondare con try catch
+	 * 			the numeric data is not in correct format
 	 */
-	int salvaFattura(Map<String, Object> map) throws ParseException;
+	saveResult salvaFattura(Map<String, Object> map) throws ParseException;
 
 	/**
 	 * Metodo che salva le riunioni.
@@ -222,7 +224,7 @@ public interface ObserverInterface {
  * @param pass
  * 			password da verificare
  * @return
- * 		Variabile boolean, true se l'operazione è eseguita con successo, falsa se non eseguita
+ * 		Variabile boolean, true se l'operazione ï¿½ eseguita con successo, falsa se non eseguita
  */
 	boolean userLogin(String user, String pass);
 	/**
