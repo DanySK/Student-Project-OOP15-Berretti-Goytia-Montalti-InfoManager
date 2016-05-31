@@ -9,21 +9,31 @@ interface Navigator<T> {
 	}
 	
 	/**
-	 * Obtein the next item
+	 * Ottiene il prossimo elemento
 	 * @return
-	 * the next item in the list if the actual item is the last return the last item
+	 * Ritorna il prossimo elemento, se l'elemento attuale è l'ultimo ritorna l'ultimo
 	 */
 	T avanti();
 
 	/**
-	 * Obtein the previus item
+	 * Ottiene l'elemento precedente
 	 * @return
-	 * the previus item in the list if the actual item is the first return the first item
+	 * l'elemento precedente, se l'elemento attuale è il primo ritorna il primo
 	 */
 	T indietro();
 
+	/**
+	 * ritorna se ci si trova alla posizione numero 1
+	 * @return
+	 * true se è la prima posizione
+	 */
 	Boolean isPrimo();
 
+	/**
+	 * ritorna se ci si trova all'ultima posizione
+	 * @return
+	 * true se è l'ultima posizione
+	 */
 	Boolean isUltimo();
 
 }
