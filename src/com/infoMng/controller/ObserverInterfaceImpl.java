@@ -25,6 +25,8 @@ import view.interfaces.ViewInterface;
 
 public class ObserverInterfaceImpl implements ObserverInterface {
 
+	private static UtenteCorrente currentUser = new UtenteCorrente();
+	
 	private ViewInterface view;
 	private JFrame attuale;
 
@@ -147,7 +149,16 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		String indirizzo = dati.get("Indirizzo");
 		String nomeNegozio = dati.get("Nome");
 		
-		return modelUsers.newUser(nomeNegozio, null, mail, username, password);
+		if( modelUsers.newUser(nomeNegozio, null, mail, username, password)){
+			UtenteCorrente.tmpUser tmp = new UtenteCorrente.tmpUser();
+			tmp.nome = username;
+			ObserverInterfaceImpl.currentUser.setUtente(tmp);
+			return true;
+		}
+		else{
+			
+			return false;
+		}
 	}
 
 	@Override
@@ -298,9 +309,14 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		
 		String nome = String.format("Riunione del %s/%s/%s", giorno, mese, anno);
 		
+		String responsabile = "";
+		if(ObserverInterfaceImpl.currentUser.getUtente().isPresent()){
+			responsabile = ObserverInterfaceImpl.currentUser.getUtente().get().nome;
+		}
+		
 		DateFormat formatterData = new SimpleDateFormat("dd-MM-yyyy");
 		Date dataEora = new Date(formatterData.parse(String.format("%s-%s-%s", giorno, mese, anno)).getTime());
-		return modelReunions.newReunion(nome, "", "", note, dataEora);
+		return modelReunions.newReunion(nome, responsabile, "", note, dataEora);
 		
 	}
 
@@ -357,7 +373,15 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public boolean userLogin(String user, String pass) {
-		return modelUsers.usersLogin(user, pass);
+		if( modelUsers.usersLogin(user, pass)){
+			UtenteCorrente.tmpUser tmp = new UtenteCorrente.tmpUser();
+			tmp.nome = user;
+			ObserverInterfaceImpl.currentUser.setUtente(tmp);
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	@Override
