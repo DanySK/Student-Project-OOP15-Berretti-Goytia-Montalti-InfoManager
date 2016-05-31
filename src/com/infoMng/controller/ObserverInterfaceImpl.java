@@ -330,8 +330,8 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public int quantitaProdotti() {
-		
-		return -1;
+		List<modelStoreI> tmp = modelStoreI.productsList();
+		return tmp == null ? 0 : tmp.size();
 	}
 
 	@Override
