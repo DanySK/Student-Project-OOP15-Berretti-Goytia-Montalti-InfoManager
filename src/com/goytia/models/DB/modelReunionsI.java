@@ -12,31 +12,64 @@ import com.infoMng.controller.TableRow;
 import com.infoMng.controller.DataBaseSearch;
 
 public interface modelReunionsI {
-
-	static  DateFormat format= new SimpleDateFormat("HH:mm:ss");
-	
+	//formato per estrarre l'ora in una data
+	public static  DateFormat format= new SimpleDateFormat("HH:mm:ss");
+	/***
+	 * ottiene l'id del record
+	 * @return
+	 * un integer con l'iD
+	 */
 	Integer getID();
-
+	/***
+	 * ottiene il nome assegnato alla riunione
+	 * @return
+	 * una stringa con il nome
+	 */
 	String getNameReunion();
-
+	/***
+	 * ottiene il nome del responsabile della riunione
+	 * @return
+	 * una stringa contenente il nome del responsabile
+	 */
 	String getNameResponsible();
-
+	/***
+	 * ottiene le referenze per contattare il responsabile
+	 * @return
+	 * una string contenente i dati
+	 */
 	String getReferences();
-
+	/***
+	 * ottiene la data della riunione
+	 * @return
+	 * un object sql.date
+	 */
 	Date getDate();
-
+	/***
+	 * ottiene l'ora della riunione
+	 * @return
+	 * una string con l'ora della riunione
+	 */
 	String getTime();
-
+	/***
+	 * ottiene i detaggli, tra cui il motivo, luogo e altro della riunione
+	 * @return
+	 * una stringa contenente i dati
+	 */
 	String getReunionDetails();
 
 	/***
-	 * se si intende modificare una riunione
+	 * modifica di una eventuale riunione
 	 * passare come "" e null per dataEora i dati da non modificare
 	 * @param newNome
+	 * nuovo nome da asseganre
 	 * @param newResponsabile
+	 * nuovo responsabile se c'è stato un cambiamento
 	 * @param newReferenze
+	 * nuove referenze del responsabile
 	 * @param newDescrizione
+	 * nuovi dettagli della riunione
 	 * @param newDataEora
+	 * la nuova data e ora della riunione sottoforma di object java.util.Date
 	 * @return
 	 * true o false a seconda dell'esito
 	 */
@@ -50,8 +83,12 @@ public interface modelReunionsI {
 	 */
 	boolean deleteReunion();
 	
-	/* (non-Javadoc)
-	 * @see com.goytia.models.DB.modelReunionsI#pastReunionsList(java.sql.Date)
+	/***
+	 * ottiene una lista con tutte le riunione svolte fino a quel giorno(escluso)
+	 * @param dataCorrente
+	 * dataCorrente(odierna))
+	 * @return
+	 * una lista contenente tutte le riunioni filtrate
 	 */
 	public static List<modelReunionsI>pastReunionsList(Date dataCorrente){
 		DataBaseSearch query = DataBaseSearch.queryDaTabella("Riunioni");
@@ -65,8 +102,12 @@ public interface modelReunionsI {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.goytia.models.DB.modelReunionsI#reunionsTodayList(java.sql.Date)
+	/***
+	 * ottiene una lista con tutte le riunioni per questo data
+	 * @param dataCorrente
+	 * Data del giorno corrente
+	 * @return
+	 * una lista con tutte le riunioni per oggi
 	 */
 	 public static List<modelReunionsI>reunionsTodayList(Date dataCorrente){
 			DataBaseSearch query = DataBaseSearch.queryDaTabella("Riunioni");
@@ -76,13 +117,15 @@ public interface modelReunionsI {
 						.filter(e -> e.getDate().equals(dataCorrente))
 						.collect(Collectors.toList());
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return null;
+				return new ArrayList<modelReunionsI>();
 			}
 		}
-	/* (non-Javadoc)
-	 * @see com.goytia.models.DB.modelReunionsI#futureReunionsList(java.sql.Date)
+	/***
+	 * ottiene una lista con tutte le future riunioni
+	 * @param dataCorrente
+	 * data odierna
+	 * @return
+	 * una lista con tutte le riunioni filtrate
 	 */
 	 public static List<modelReunionsI>futureReunionsList(Date dataCorrente){
 			DataBaseSearch query = DataBaseSearch.queryDaTabella("Riunioni");
@@ -92,9 +135,7 @@ public interface modelReunionsI {
 						.filter(e -> e.getDate().after(dataCorrente))
 						.collect(Collectors.toList());
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return null;
+				return new ArrayList<modelReunionsI>();
 			}
 		}
 	
@@ -110,13 +151,23 @@ public interface modelReunionsI {
 					.map(e -> new modelReunions(e))
 					.collect(Collectors.toList());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+			return new ArrayList<modelReunionsI>();
 		}
 	}
-	/* (non-Javadoc)
-	 * @see com.goytia.models.DB.modelReunionsI#newReunion(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.util.Date)
+	/***
+	 * salvataggio di una nuova riunione
+	 * @param nomeRiunione
+	 * nome da assegnare alla riunione
+	 * @param nomeResponsabile
+	 * nome del responsabile della riunione
+	 * @param referenze
+	 * referenze per contattare il responsabile della riunione
+	 * @param descrizione
+	 * dettagli della riunione tra cui luogo, motivo, ecc
+	 * @param dataEora
+	 * data e ora della riunione
+	 * @return
+	 * true se e andato a buon fine altrimenti false
 	 */
 	public static boolean newReunion(String nomeRiunione, String nomeResponsabile, String referenze, String descrizione, java.util.Date dataEora){
 		modelReunions temp = new modelReunions(TableRow.oggettoDaTabella("Riunioni"));

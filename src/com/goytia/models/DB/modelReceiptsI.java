@@ -10,40 +10,66 @@ import com.infoMng.controller.TableRow;
 import com.infoMng.controller.DataBaseSearch;
 
 public interface modelReceiptsI {
-
+	
+	/***
+	 * ottiene l'ID del record
+	 * @return
+	 */
+	Integer getID();
+	
+	/***
+	 * ottiene il numero dello scontrino
+	 * @return
+	 * un int con il numero dello scontrino
+	 */
 	int getNumberReceipt();
-
+	
+	/***
+	 * ottiene l'id del cliente a cui è stato fatto lo scontrino
+	 * @return
+	 * un Integer con il numero dello scontrino
+	 */
 	Integer getIDClient();
 
+	/***
+	 * ottiene l'iva dello scontrino
+	 * @return
+	 * un float contenente l'IVA
+	 */
 	float getIVA();
-
+	
+	/***
+	 *ottiene la data di emissione dello scontrino 
+	 * @return
+	 * un object sql.Date con la data
+	 */
 	Date getDate();
 
 	/***
-	 * metodo alternativo che ritorno il cliente con tutti i dati filtrando con l'idCliente
+	 * ottieni il cliente sottoforma di modelClientsI contentnte tutti i dati del cliente a cui è stato emmesso lo scontrino
 	 * @return
-	 * lo specifico cliente a qui va rivolta lo scontrino
+	 * un obtject tipo modelCLientsI
 	 */
 	modelClientsI client();
 
 	/***
-	 * meotodo che ritorna tutti i prodotti da insierire nello scontrino mappato con la classe prodttoVenduto
+	 * ottiene la lista di tutti i prodotti venduti nello sconrino
 	 * @return
-	 * una lista ocn tutti i prodotti sottoforma di prodottoVenduto
+	 * una lista tipo transactionsProductsI 
 	 */
-	List<transactionsProducts> soldProducts();
+	List<transactionsProductsI> soldProducts();
 
 	/***
 	 * elimnazione dello scontrino corrente
 	 * @return
-	 * true o false a seconda del esito
+	 * true se e andato  a buon fine
 	 */
 	boolean deleteReceipt();
 	
 	/***
-	 * metodo che ritorna elenco di tutti gli scontrini
+	 * ottiene una lista con tutti gli scontrini emmessi
 	 * @return
-	 * un lista cont utti gli scontrini esistenti fino a quel momento
+	 * un lista di tipo modelReceiptsI
 	 */
 	public static List<modelReceiptsI> receiptsList(){
 		DataBaseSearch query = DataBaseSearch.queryDaTabella("Scontrini");
@@ -57,19 +83,19 @@ public interface modelReceiptsI {
 	}
 	
 	/***
-	 * metodo per la crezione di un nuovo scontrino
+	 * salvataggio di un nuovo scontrino
 	 * @param nScontrino
-	 * numero dello scontrino 
+	 * numero dello scontrino
 	 * @param nRicevuta
 	 * numero della ricevuta per la quale si deve realizzare lo scontrino
 	 * @param idCliente
-	 * id del cliente
+	 * id del cliente a chi va emmesso lo scontrino
 	 * @param data
-	 * data de lo scontrino
+	 * data dello scontrino
 	 * @param iva
 	 * iva da applicare
 	 * @return
-	 * true se ï¿½ stato creato e salvato lo scrontrino altrimenti false
+	 * true se e andato a buon fine altrimenti false
 	 */
 	public static boolean newReceipt(int nScontrino, int nRicevuta, Integer idCliente, Date data, float iva){
 		
@@ -86,7 +112,7 @@ public interface modelReceiptsI {
 	/***
 	 * ricerca di uno specifico scontrino
 	 * @param nScontrino
-	 * numero dello scontrino a ricercare
+	 * numero dello scontrino da ricercare
 	 * @return
 	 * lo scontrino 
 	 */

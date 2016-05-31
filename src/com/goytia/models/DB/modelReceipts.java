@@ -19,7 +19,9 @@ public class modelReceipts implements modelReceiptsI{
 	public modelReceipts(){
 		this.oggetto = TableRow.oggettoDaTabella("Scontrini");
 	}
-	
+	public Integer getID(){
+		return this.oggetto.objectId();
+	}
 	protected void setReceipt(int nScontrino){
 		this.oggetto.setObjectValue("nScontrino", nScontrino);
 	}
@@ -70,7 +72,7 @@ public class modelReceipts implements modelReceiptsI{
 				.get();
 	}
 
-	public List<transactionsProducts> soldProducts(){
+	public List<transactionsProductsI> soldProducts(){
 		return modelTransactionsI.transactionsList().stream()
 				.filter( m -> m.getNumberPaymentRicevuta() == this.getNumberPaymentReceipt())
 				.map( p -> {

@@ -89,7 +89,7 @@ public interface modelProvidersI {
 	public static List<modelProvidersI> searchProviders(String nome, String cognome, String mail, String telefono){
 		return modelProvidersI.providersList().stream()
 							.filter(f -> f.getName().contains(nome) || f.getLastName().contains(cognome)
-											    || f.getMail().contains(mail) || f.getPhone().contains(mail))
+											    || f.getMail().contains(mail) || f.getPhone().contains(telefono))
 							.collect(Collectors.toList());
 	}
 	
