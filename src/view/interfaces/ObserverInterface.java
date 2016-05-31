@@ -7,15 +7,10 @@ import java.util.Optional;
 
 import javax.swing.JFrame;
 
-import com.goytia.models.DB.modelClients;
 import com.goytia.models.DB.modelClientsI;
-import com.goytia.models.DB.modelProviders;
 import com.goytia.models.DB.modelProvidersI;
-import com.goytia.models.DB.modelReceipts;
 import com.goytia.models.DB.modelReceiptsI;
-import com.goytia.models.DB.modelReunions;
 import com.goytia.models.DB.modelReunionsI;
-import com.goytia.models.DB.modelStore;
 import com.goytia.models.DB.modelStoreI;
 import com.infoMng.controller.ObserverInterfaceImpl.saveResult;
 import com.infoMng.model.IFattura;
