@@ -1,6 +1,7 @@
 package com.infoMng.controller;
 
 import java.sql.Date;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -11,6 +12,7 @@ import javax.swing.JFrame;
 
 import com.goytia.models.DB.modelClients;
 import com.goytia.models.DB.modelProviders;
+import com.goytia.models.DB.modelReunions;
 import com.goytia.models.DB.modelStore;
 import com.goytia.models.DB.modelUsers;
 import com.infoMng.model.IFattura;
@@ -284,9 +286,19 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public void salvaRiunione(Map<String, String> dati) {
-		// TODO chiamata model per salvare riunione
-
+	public boolean salvaRiunione(Map<String, String> dati) throws ParseException {
+		String evento = dati.get("Evento");
+		String giorno = dati.get("Giorno");
+		String mese = dati.get("Mese");
+		String anno = dati.get("Anno");
+		String note = dati.get("Note");
+		
+		String nome = String.format("Riunione del %s/%s/%s", giorno, mese, anno);
+		
+		DateFormat formatterData = new SimpleDateFormat("dd-MM-yyyy");
+		Date dataEora = new Date(formatterData.parse(String.format("%s-%s-%s", giorno, mese, anno)).getTime());
+		return modelReunions.newReunion(nome, "", "", note, dataEora);
+		
 	}
 
 	@Override

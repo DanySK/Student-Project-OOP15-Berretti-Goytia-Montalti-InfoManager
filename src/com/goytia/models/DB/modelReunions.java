@@ -12,7 +12,7 @@ import com.infoMng.controller.MBQuery;
 
 public class modelReunions {
 	
-	private DateFormat format= new SimpleDateFormat("HH:mm:ss");
+	private static DateFormat format= new SimpleDateFormat("HH:mm:ss");
 	
 	MBOggetto oggetto;
 
@@ -109,7 +109,7 @@ public class modelReunions {
 	 * @return
 	 * true o false a seconda del esito
 	 */
-	public boolean newReunion(String nomeRiunione, String nomeResponsabile, String referenze, String descrizione, java.util.Date dataEora){
+	public static boolean newReunion(String nomeRiunione, String nomeResponsabile, String referenze, String descrizione, java.util.Date dataEora){
 		modelReunions temp = new modelReunions(MBOggetto.oggettoDaTabella("Riunioni"));
 		temp.setNomeRiunione(nomeRiunione);
 		temp.setResponsible(nomeResponsabile);

@@ -166,9 +166,12 @@ public interface ObserverInterface {
 	 * 
 	 * @param dati
 	 *            Map (String,String)
+	 * @return The result of saving of data
+	 * @throws ParseException 
+	 * 				Error while try parse DateString into Date
 	 * 
 	 */
-	void salvaRiunione(Map<String, String> dati);
+	boolean salvaRiunione(Map<String, String> dati) throws ParseException;
 
 	/**
 	 * Metodo che salva gli scontrini.
