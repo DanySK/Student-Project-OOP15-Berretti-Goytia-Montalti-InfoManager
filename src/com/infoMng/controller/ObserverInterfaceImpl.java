@@ -354,8 +354,9 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public List<modelProvidersI> cercaFornitori(String nome) {
-		return modelProvidersI.searchProviders(nome, null, null, null);
+	public Navigator<modelProvidersI> cercaFornitori(String nome) {
+		Navigator<modelProvidersI> col = new ListOfObjectImpl<>(modelProvidersI.searchProviders(nome, null, null, null), this.attuale);
+		return col;
 	}
 
 	@Override

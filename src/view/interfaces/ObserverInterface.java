@@ -12,6 +12,7 @@ import com.goytia.models.DB.modelProvidersI;
 import com.goytia.models.DB.modelReceiptsI;
 import com.goytia.models.DB.modelReunionsI;
 import com.goytia.models.DB.modelStoreI;
+import com.infoMng.controller.Navigator;
 import com.infoMng.controller.ObserverInterfaceImpl.saveResult;
 
 /**
@@ -203,7 +204,7 @@ public interface ObserverInterface {
  * 			nome del fornitore
  * @return 
  */
-	List<modelProvidersI> cercaFornitori(String nome);
+	Navigator<modelProvidersI> cercaFornitori(String nome);
 /**
  * Metodo per cercare un cliente.
  * @param nome
