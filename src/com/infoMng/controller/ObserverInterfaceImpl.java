@@ -47,7 +47,9 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	public ObserverInterfaceImpl(ViewInterface view, JFrame attuale) {
 		this.view = view;
-		this.view.setOggettoController(this);
+		if(view != null){
+			this.view.setOggettoController(this);
+		}
 		this.attuale = attuale;
 	}
 
