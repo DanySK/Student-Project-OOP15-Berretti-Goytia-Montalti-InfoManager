@@ -19,6 +19,12 @@ class ListOfObjectImpl<T> implements Navigator<T> {
 		this.oggetti.addAll(elementi);
 		this.posizione = -1;
 		this.view = view;
+		if(this.view.getClass().equals(ClientiGUI.class)){
+			((ClientiGUI)this.view).fornitori = this;
+		}
+		else if(this.view.getClass().equals(FornitoriGUI.class)){
+			((FornitoriGUI)this.view).fornitori = this;
+		}
 	}
 	
 	protected ListOfObjectImpl(Collection<T> elementi){
