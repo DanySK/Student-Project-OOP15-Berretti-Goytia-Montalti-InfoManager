@@ -27,6 +27,9 @@ class ListOfObjectImpl<T> implements Navigator<T> {
 	
 	@Override
 	public T avanti(){
+		if(this.oggetti.isEmpty()){
+			return null;
+		}
 		if(posizione < this.oggetti.size() - 1){
 			this.posizione += 1;
 		}
@@ -46,10 +49,23 @@ class ListOfObjectImpl<T> implements Navigator<T> {
 	
 	@Override
 	public T indietro(){
+		if(this.oggetti.isEmpty()){
+			return null;
+		}
 		if(this.posizione > 0){
 			this.posizione -= 1;
 		}
-		return this.oggetti.get(this.posizione);
+		T oggetto = this.oggetti.get(this.posizione);
+		if(view != null){
+			if(this.view.getClass().equals(ClientiGUI.class)){
+				((ClientiGUI)this.view).setTextFields(oggetto);
+			}
+			else if(this.view.getClass().equals(FornitoriGUI.class)){
+				((FornitoriGUI)this.view).setTextFields(oggetto);
+			}
+		}
+		
+		return oggetto;
 	}
 	
 	@Override
