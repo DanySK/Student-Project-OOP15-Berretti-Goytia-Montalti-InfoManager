@@ -256,4 +256,6 @@ public interface ObserverInterface {
 	 */
 	Optional<IFattura> cercaFatture(String numero, String nome, String cognome);
 
+	List<modelStoreI> listOfProducts();
+	
 }

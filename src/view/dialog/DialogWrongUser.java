@@ -31,7 +31,7 @@ public class DialogWrongUser extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JButton cancelButton = new JButton("Cancel");
 	private JLabel lblLusernameInseritoNon = new JLabel(
-			"l'username inserito non risulta essere registrato, riprovare con un altro username o provare a registrarsi");
+			"l'Utente inserito non risulta essere registrato, riprovare con un altro Utente o provare a registrarsi");
 	private JPanel buttonPane = new JPanel();
 	private JButton okButton = new JButton("OK");
 
@@ -65,7 +65,6 @@ public class DialogWrongUser extends JDialog {
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						o.abilitaFrame(true);
 						dispose();
 					}
 				});
@@ -77,7 +76,6 @@ public class DialogWrongUser extends JDialog {
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						o.abilitaFrame(true);
 						dispose();
 					}
 				});

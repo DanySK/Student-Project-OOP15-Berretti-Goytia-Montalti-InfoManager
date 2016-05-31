@@ -81,7 +81,7 @@ public class FattureGUI extends InitializeFrame {
 	private JScrollPane scrollPaneFattura = new JScrollPane();
 	private JTextArea textAreaFattura = new JTextArea("");
 	private LinkedList<Map<String, Object>> products = new LinkedList<>();
-
+	//TODO: metodo per settare i campi e bottoni per scorrere
 	/**
 	 * Metodo per pulire i campi del frame.
 	 */

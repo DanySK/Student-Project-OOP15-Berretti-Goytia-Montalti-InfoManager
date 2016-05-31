@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -46,7 +47,9 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	public ObserverInterfaceImpl(ViewInterface view, JFrame attuale) {
 		this.view = view;
-		this.view.setOggettoController(this);
+		if(view != null){
+			this.view.setOggettoController(this);
+		}
 		this.attuale = attuale;
 	}
 
@@ -362,12 +365,16 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public boolean userLogin(String user, String pass) {
-		if (modelUsersI.usersLogin(user, pass)) {
-			UtenteCorrente.tmpUser tmp = new UtenteCorrente.tmpUser();
-			tmp.nome = user;
-			ObserverInterfaceImpl.currentUser.setUtente(tmp);
-			return true;
-		} else {
+		try{
+			if (modelUsersI.usersLogin(user, pass)) {
+				UtenteCorrente.tmpUser tmp = new UtenteCorrente.tmpUser();
+				tmp.nome = user;
+				ObserverInterfaceImpl.currentUser.setUtente(tmp);
+				return true;
+			} else {
+				return false;
+			}
+		}catch(NullPointerException e){
 			return false;
 		}
 	}
@@ -389,6 +396,17 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 		private saveResult(String rawValue) {
 			this.rawValue = rawValue;
+		}
+	}
+
+	@Override
+	public List<modelStoreI> listOfProducts() {
+		List<modelStoreI> tmp = modelStoreI.productsList();
+		if(tmp == null){
+			return new ArrayList<>();
+		}
+		else{
+			return tmp;
 		}
 	}
 }
