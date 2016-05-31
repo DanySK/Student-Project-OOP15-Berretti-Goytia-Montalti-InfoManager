@@ -1,12 +1,16 @@
 package view.toolbar;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
+
+import com.infoMng.controller.ObserverInterfaceImpl.saveResult;
 
 import view.ClientiGUI;
 import view.FattureGUI;
@@ -98,17 +102,28 @@ public class MyToolbar extends JToolBar {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 				if (frame.getClass().equals(FattureGUI.class)) {
-					/*
-					 * switch (o.salvaFattura(((FattureGUI)
-					 * frame).getTextfield())){ case SALVATAGGIO:
-					 * JOptionPane.showMessageDialog(frame,
-					 * "Salvataggio eseguito con successo"); break; case
-					 * ERROREDATA: JOptionPane.showMessageDialog(frame,
-					 * "Inserimento errato data"); break; case
-					 * ERRORESALVATAGGIO: JOptionPane.showMessageDialog(frame,
-					 * "Errore nel salvataggio dei dati"); break; default: throw
-					 * new IllegalStateException(); }
-					 */
+
+					try {
+						switch (o.salvaFattura(((FattureGUI) frame).getTextfield())) {
+						case success:
+							JOptionPane.showMessageDialog(frame, saveResult.success.rawValue);
+							break;
+						case errorData:
+							JOptionPane.showMessageDialog(frame, saveResult.errorData.rawValue);
+							break;
+						case errorSave:
+							JOptionPane.showMessageDialog(frame, saveResult.errorSave.rawValue);
+							break;
+						default:
+							throw new IllegalStateException();
+						}
+					} catch (HeadlessException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 				if (frame.getClass().equals(ClientiGUI.class)) {
 					if (o.salvaCliente(((ClientiGUI) frame).getTextfield())) {
@@ -124,11 +139,15 @@ public class MyToolbar extends JToolBar {
 				}
 
 				if (frame.getClass().equals(ScontriniGUI.class)) {
-					 o.salvaScontrini(((ScontriniGUI) frame).getTextField());
+					o.salvaScontrini(((ScontriniGUI) frame).getTextField());
 					JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
 				}
 				if (frame.getClass().equals(RiunioniGUI.class)) {
-					o.salvaRiunione(((RiunioniGUI) frame).getTextField());
+					try {
+						o.salvaRiunione(((RiunioniGUI) frame).getTextField());
+					} catch (ParseException e1) {
+						e1.printStackTrace();
+					}
 					JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
 				}
 			}

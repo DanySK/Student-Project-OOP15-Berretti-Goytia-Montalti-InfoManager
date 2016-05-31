@@ -197,7 +197,7 @@ public interface ObserverInterface {
  * @return
  * 		intero con lunghezza lista
  */
-	 int elencoProdotti(List<modelStoreI> lista);
+	 int quantitaProdotti();
 /**
  * Metodo per cercare un fornitore.
  * @param nome

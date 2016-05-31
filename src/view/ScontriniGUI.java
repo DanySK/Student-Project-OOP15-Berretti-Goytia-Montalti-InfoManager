@@ -67,9 +67,11 @@ public class ScontriniGUI extends InitializeFrame {
 	private double totale;
 	private double totiva;
 	private double totsconto;
+	private double pperq;
 	private final JButton btnAggiungi = new JButton("Aggiungi");
 	private final JLabel lblAnteprimaDiStampa = new JLabel("Anteprima di Stampa");
 	private LinkedList<String> lista = new LinkedList<>();
+	private String prodotti = new String();
 
 	/**
 	 * Metodo che resetta i TextField del frame.
@@ -214,19 +216,21 @@ public class ScontriniGUI extends InitializeFrame {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 				try {
-					calcola(Integer.parseInt(txtPrezzoUnitario.getText()), Integer.parseInt(txtQuantita.getText()),
-							Integer.parseInt(txtIva.getText()));
+					imponibile = 0;
+					totale = 0;
+					totiva = 0;
+					totsconto = 0;
+					lista.add(txtQuantita.getText());
+					lista.add(txtProdotto.getText());
+					lista.add(txtPrezzoUnitario.getText());
 					textArea.setText("");
-					//TODO:Sistemare il fatto di più prodotti
-					/*
-					String a = new String();
-					for (Integer i=0; i<lista.size()-3; i=i+3){
-						a = a +("Quantita': " + lista.get(i) + " " + lista.get(i+1)
-						+ "     Prezzo: " + lista.get(i+2) + "\u20AC \n");
+					for (Integer i=0; i<lista.size()-2; i=i+3){
+						pperq = pperq + (Integer.parseInt(lista.get(i+2)) * Integer.parseInt(lista.get(i)));
+						totale = totale + calcola();
+						prodotti = prodotti + "Quantita': " + lista.get(i) + " " + lista.get(i+1)
+						+ "     Prezzo: " + lista.get(i+2) + "\u20AC \n";
 					}
-					System.out.println(a);*/
-					textArea.setText("Quantita': " + txtQuantita.getText() + " " + txtProdotto.getText()
-							+ "     Prezzo: " + txtPrezzoUnitario.getText() + "\u20AC " + "\nSconto: "
+					textArea.setText(prodotti + "\nSconto: "
 							+ txtSconto.getText() + "\n\n =====================================\n\n" + "Sconto: "
 							+ txtSconto.getText() + "%" + "\t\t" + String.valueOf(totsconto) + "\nImponibile:\t\t"
 							+ String.valueOf(imponibile) + "\u20AC\nIva: " + txtIva.getText() + "%" + "\t\t"
@@ -261,9 +265,7 @@ public class ScontriniGUI extends InitializeFrame {
 	 */
 	public Map<String, Object> getTextField() {
 		Map<String, Object> mappa = new HashMap<>();
-		mappa.put("Prodotti", txtProdotto.getText());
-		mappa.put("PrezzoUnitario", txtPrezzoUnitario.getText());
-		mappa.put("Quantita", txtQuantita.getText());
+		mappa.put("Prodotti", lista);
 		mappa.put("Iva", txtIva.getText());
 		mappa.put("Sconto", txtSconto.getText());
 		mappa.put("Scontrino", txtScontrino.getText());
@@ -277,23 +279,16 @@ public class ScontriniGUI extends InitializeFrame {
 	 *            Oggetto Integer
 	 * @param quantita
 	 *            Oggetto Integer
-	 * @param iva
-	 *            Oggetto Integer
 	 * @return Total
 	 */
-	private double calcola(Integer prezzo, Integer quantita, Integer iva) {
-		this.imponibile = 0;
-		this.totale = 0;
-		this.totiva = 0;
-		this.totsconto = 0;
+	private double calcola() {
 		if (txtSconto.getText().equals("")) {
-			this.imponibile = prezzo * quantita;
-			this.totiva = (this.imponibile * iva) / 100;
+			this.totiva = (this.imponibile * Integer.parseInt(txtIva.getText())) / 100;
 			this.totale = this.totiva + this.imponibile;
 		} else {
-			this.totsconto = ((prezzo * quantita) * Integer.parseInt(txtSconto.getText()) / 100);
-			this.imponibile = (prezzo * quantita) - this.imponibile;
-			this.totiva = (this.imponibile * iva) / 100;
+			this.totsconto = (this.pperq * Integer.parseInt(txtSconto.getText()) / 100);
+			this.imponibile = this.pperq - this.totsconto;
+			this.totiva = (this.imponibile * Integer.parseInt(txtIva.getText())) / 100;
 			this.totale = this.totiva + this.imponibile;
 		}
 		return this.totale;

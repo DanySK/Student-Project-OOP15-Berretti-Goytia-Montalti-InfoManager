@@ -26,7 +26,7 @@ import view.interfaces.ViewInterface;
 public class ObserverInterfaceImpl implements ObserverInterface {
 
 	private static UtenteCorrente currentUser = new UtenteCorrente();
-	
+
 	private ViewInterface view;
 	private JFrame attuale;
 
@@ -148,15 +148,14 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		String mail = dati.get("Email");
 		String indirizzo = dati.get("Indirizzo");
 		String nomeNegozio = dati.get("Nome");
-		
-		if( modelUsersI.newUser(nomeNegozio, null, mail, username, password)){
+
+		if (modelUsersI.newUser(nomeNegozio, null, mail, username, password)) {
 			UtenteCorrente.tmpUser tmp = new UtenteCorrente.tmpUser();
 			tmp.nome = username;
 			ObserverInterfaceImpl.currentUser.setUtente(tmp);
 			return true;
-		}
-		else{
-			
+		} else {
+
 			return false;
 		}
 	}
@@ -197,104 +196,93 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		String descrizione = String.format("Tipo ordine : %s, Banca %s, note %s", banca,
 				(String) dati.get("Tipo ordine"), (String) dati.get("Note"));
 		String nomeNegozio = (String) dati.get("Negozio");
-		
-		
+
 		IFattura.FatturaBuilder builder = new IFattura.FatturaBuilder();
-		//imposto il numero della fattura
+		// imposto il numero della fattura
 		builder.setNumeroOrdine(numeroFattura);
-		//cerco il fornitore
+		// cerco il fornitore
 		Optional<modelProvidersI> tmpFornitore = this.ottieniFornitoreDaNome(cliente);
-		if(tmpFornitore.isPresent()){
-			//il fornitore è stato trovato
+		if (tmpFornitore.isPresent()) {
+			// il fornitore è stato trovato
 			builder.setFornitore(tmpFornitore.get());
-		}
-		else{
-			//il fornitore non è stato trovato
-			//cerco il cliente
+		} else {
+			// il fornitore non è stato trovato
+			// cerco il cliente
 			Optional<modelClientsI> tmpCliente = this.ottieniClienteDaNome(cliente);
-			if(tmpCliente.isPresent()){
-				//il cliente è stato trovato
+			if (tmpCliente.isPresent()) {
+				// il cliente è stato trovato
 				builder.setCliente(tmpCliente.get());
-			}
-			else{
-				//non è stato trovato ne cliente ne fornitore
+			} else {
+				// non è stato trovato ne cliente ne fornitore
 				return saveResult.errorData;
 			}
 		}
-		
-		//imposto le date di richiesta e di consegna
+
+		// imposto le date di richiesta e di consegna
 		builder.setData(data);
 		builder.getConsegna()[0] = inizio;
 		builder.getConsegna()[1] = fine;
-		
+
 		builder.setBanca(banca);
-		
+
 		builder.setSconto(sconto);
 		builder.setIVA(iva);
 		builder.setNomeNegozio(nomeNegozio);
 		builder.setNote(descrizione);
-		
-		//ho finito di impostare i campi della fattura ora aggiungo i prodotti
+
+		// ho finito di impostare i campi della fattura ora aggiungo i prodotti
 		@SuppressWarnings("unchecked")
 		List<Map<String, Object>> prodotti = (List<Map<String, Object>>) dati.get("Prodotti");
-		prodotti.stream()
-		.map(e ->{
+		prodotti.stream().map(e -> {
 			String nomeProdotto = (String) e.get("Nome");
 			Integer quantita = Integer.parseInt((String) e.get("Quantita"));
 			Double prezzo = Double.parseDouble((String) e.get("Prezzo"));
-			//cerco il prodotto
+			// cerco il prodotto
 			Optional<modelStoreI> tmpProdotto = this.ottengoProdottoDaNome(nomeProdotto);
 			IFattura.prodottoFattura ritorno = null;
-			if(tmpProdotto.isPresent()){
+			if (tmpProdotto.isPresent()) {
 				ritorno = new IFattura.prodottoFattura();
 				ritorno.prodotto = tmpProdotto.get();
 				ritorno.prezzo = prezzo;
 				ritorno.quantita = quantita;
-			}
-			else{
+			} else {
 				System.out.println(String.format("Prodotto %s non trovato", nomeProdotto));
 			}
 			return Optional.ofNullable(ritorno);
-		})
-		.filter(e -> e.isPresent()).map(e -> e.get())
-		.forEach(e -> builder.addProdotto(e));
-		
-		//ho aggiunto tutti i prodotti che sono riuscito a trovare
+		}).filter(e -> e.isPresent()).map(e -> e.get()).forEach(e -> builder.addProdotto(e));
+
+		// ho aggiunto tutti i prodotti che sono riuscito a trovare
 		IFattura nuova = builder.salva();
-		if(nuova != null){
+		if (nuova != null) {
 			return saveResult.success;
-		}
-		else{
+		} else {
 			return saveResult.errorSave;
 		}
 	}
-	
-	private Optional<modelStoreI> ottengoProdottoDaNome(String nome){
+
+	private Optional<modelStoreI> ottengoProdottoDaNome(String nome) {
 		List<modelStoreI> tmp = modelStoreI.serachProductsByName(nome);
-		if(tmp.size() > 0){
+		if (tmp.size() > 0) {
 			return Optional.of(tmp.get(0));
-		}
-		else{
+		} else {
 			return Optional.empty();
 		}
 	}
-	
-	private Optional<modelProvidersI> ottieniFornitoreDaNome(String nome){
+
+	private Optional<modelProvidersI> ottieniFornitoreDaNome(String nome) {
 		List<modelProvidersI> tmp = modelProvidersI.searchProviders(nome, null, null, null);
-		if(tmp.size() > 0){
+		if (tmp.size() > 0) {
 			return Optional.of(tmp.get(0));
-		}
-		else{
+		} else {
 			return Optional.empty();
 		}
 	}
-	
-	private Optional<modelClientsI> ottieniClienteDaNome(String nome){
+
+	private Optional<modelClientsI> ottieniClienteDaNome(String nome) {
 		List<modelClientsI> tmp = modelClientsI.searchClients(nome, null, null, null, null);
-		if(tmp.size() > 0){
+		if (tmp.size() > 0) {
 			return Optional.of(tmp.get(0));
-		}
-		else{
+		} else {
 			return Optional.empty();
 		}
 	}
@@ -306,18 +294,18 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		String mese = dati.get("Mese");
 		String anno = dati.get("Anno");
 		String note = dati.get("Note");
-		
+
 		String nome = String.format("Riunione del %s/%s/%s", giorno, mese, anno);
-		
+
 		String responsabile = "";
-		if(ObserverInterfaceImpl.currentUser.getUtente().isPresent()){
+		if (ObserverInterfaceImpl.currentUser.getUtente().isPresent()) {
 			responsabile = ObserverInterfaceImpl.currentUser.getUtente().get().nome;
 		}
-		
+
 		DateFormat formatterData = new SimpleDateFormat("dd-MM-yyyy");
 		Date dataEora = new Date(formatterData.parse(String.format("%s-%s-%s", giorno, mese, anno)).getTime());
 		return modelReunionsI.newReunion(nome, responsabile, "", note, dataEora);
-		
+
 	}
 
 	@Override
@@ -331,8 +319,8 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public void salvaScontrini(Map<String, Object> dati) {
-		//ottengo i dati dalla mappa
-		//TODO : chiedere a monta quale è la view per lo scontrino
+		// ottengo i dati dalla mappa
+		// TODO : chiedere a monta quale è la view per lo scontrino
 	}
 
 	@Override
@@ -341,8 +329,9 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public int elencoProdotti(List<modelStoreI> lista) {
-		return lista.size();
+	public int quantitaProdotti() {
+		
+		return -1;
 	}
 
 	@Override
@@ -373,13 +362,12 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public boolean userLogin(String user, String pass) {
-		if( modelUsersI.usersLogin(user, pass)){
+		if (modelUsersI.usersLogin(user, pass)) {
 			UtenteCorrente.tmpUser tmp = new UtenteCorrente.tmpUser();
 			tmp.nome = user;
 			ObserverInterfaceImpl.currentUser.setUtente(tmp);
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
@@ -394,15 +382,12 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		}
 	}
 
+	public enum saveResult {
+		success(""), errorData("Dati non corretti"), errorSave("Errore durante il salvataggio");
 
-	public enum saveResult{
-		success(""),
-		errorData("Dati non corretti"),
-		errorSave("Errore durante il salvataggio");
-		
 		public String rawValue;
-		
-		private saveResult(String rawValue){
+
+		private saveResult(String rawValue) {
 			this.rawValue = rawValue;
 		}
 	}

@@ -108,9 +108,8 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 				.getImage(DialogNuovo.class.getResource("/javax/swing/plaf/metal/icons/ocean/computer.gif")));
 		txtNegozio.setColumns(10);
 		txtMail.setColumns(10);
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setTitle("Nuovo Fornitore o Cliente");
-		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		this.setBounds(100, 100, 603, 265);
 		this.getContentPane().setLayout(new BorderLayout());
 		this.contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

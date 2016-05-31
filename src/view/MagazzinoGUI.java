@@ -29,7 +29,7 @@ public class MagazzinoGUI extends InitializeFrame {
 	private MagazzinoGUI frame = this;
 	private static final String TITOLO = "Menu";
 	private static final LayoutManager LAYOUT = new BorderLayout();
-	private static final Dimension DIMFRAME = new Dimension(938, 476);
+	private static final Dimension DIMFRAME = new Dimension(488, 512);
 
 
 /**
@@ -43,7 +43,6 @@ public class MagazzinoGUI extends InitializeFrame {
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(MagazzinoGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.setTitle("Magazzino");
 		this.toolBar =  new MyToolbar(o, frame);
-		this.setBounds(100, 100, 781, 486);
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.contentPane.setLayout(new BorderLayout(0, 0));

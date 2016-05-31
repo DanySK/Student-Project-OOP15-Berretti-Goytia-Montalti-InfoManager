@@ -4,9 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -22,6 +22,7 @@ import view.ScontriniGUI;
 import view.interfaces.ObserverInterface;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
@@ -42,11 +43,13 @@ public class DialogCerca extends JDialog implements DialogInterface {
 	private JPanel buttonPane = new JPanel();
 	private JButton okButton = new JButton("OK");
 	private JButton cancelButton = new JButton("Cancel");
-	private JTextField txtNumero;
-	private JTextField txtNome;
-	private JLabel lblNumero = new JLabel("N.");
-	private JLabel lblNome = new JLabel("Nome");
-	private GroupLayout gContentPane = new GroupLayout(contentPanel);
+	private final JLabel lblNome = new JLabel("Nome");
+	private final JLabel lblCognome = new JLabel("Cognome");
+	private final JLabel lblNumero = new JLabel("Numero");
+	private final JTextField txtNome = new JTextField();
+	private final JTextField txtCognome = new JTextField();
+	private final JTextField txtNumero = new JTextField();
+	private GroupLayout gcontentPanel = new GroupLayout(contentPanel);
 
 	/**
 	 * Costruttore DialogCerca.
@@ -54,43 +57,48 @@ public class DialogCerca extends JDialog implements DialogInterface {
 	 * @param o
 	 *            Oggetto ObserverInterface
 	 */
-	//CHECKSTYLE:OFF: checkstyle:magicnumber    
-	public DialogCerca(final ObserverInterface o, final Optional<JFrame> frame) {
+	// CHECKSTYLE:OFF: checkstyle:magicnumber
+	public DialogCerca(final ObserverInterface o, final JFrame frame) {
+		txtNumero.setColumns(10);
+		txtCognome.setColumns(10);
+		txtNome.setColumns(10);
 
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(DialogCerca.class.getResource("/javax/swing/plaf/metal/icons/ocean/computer.gif")));
-		this.setBounds(100, 100, 443, 252);
+		this.setBounds(100, 100, 492, 252);
 		this.setTitle("Cerca");
-		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		this.getContentPane().setLayout(new BorderLayout());
 		this.contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.getContentPane().add(contentPanel, BorderLayout.CENTER);
-
-		this.txtNumero = new JTextField();
-		this.txtNumero.setColumns(10);
-
-		this.txtNome = new JTextField();
-		this.txtNome.setColumns(10);
-		this.gContentPane.setHorizontalGroup(this.gContentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gContentPane.createSequentialGroup().addContainerGap()
-						.addGroup(gContentPane.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+		this.gcontentPanel.setHorizontalGroup(this.gcontentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gcontentPanel.createSequentialGroup().addContainerGap()
+						.addGroup(gcontentPanel.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+								.addComponent(lblCognome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
 										Short.MAX_VALUE)
-						.addComponent(lblNumero, GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)).addGap(18)
-						.addGroup(gContentPane.createParallelGroup(Alignment.LEADING, false).addComponent(txtNumero)
-								.addComponent(txtNome, GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE))
-						.addGap(55)));
-		this.gContentPane.setVerticalGroup(this.gContentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gContentPane.createSequentialGroup().addGap(35)
-						.addGroup(gContentPane.createParallelGroup(Alignment.LEADING).addComponent(lblNumero)
-								.addComponent(txtNumero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE))
-						.addGap(53)
-						.addGroup(gContentPane.createParallelGroup(Alignment.BASELINE).addComponent(lblNome)
+						.addComponent(lblNumero, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addGap(18)
+						.addGroup(gcontentPanel.createParallelGroup(Alignment.LEADING, false).addComponent(txtNumero)
+								.addComponent(txtCognome)
+								.addComponent(txtNome, GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE))
+						.addContainerGap(54, Short.MAX_VALUE)));
+		this.gcontentPanel.setVerticalGroup(this.gcontentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gcontentPanel.createSequentialGroup().addGap(34)
+						.addGroup(gcontentPanel.createParallelGroup(Alignment.BASELINE).addComponent(lblNome)
 								.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(48, Short.MAX_VALUE)));
-		this.contentPanel.setLayout(this.gContentPane);
+						.addGap(18)
+						.addGroup(gcontentPanel.createParallelGroup(Alignment.BASELINE).addComponent(lblCognome)
+								.addComponent(txtCognome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE))
+						.addGap(18)
+						.addGroup(gcontentPanel.createParallelGroup(Alignment.BASELINE).addComponent(lblNumero)
+								.addComponent(txtNumero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE))
+						.addContainerGap(114, Short.MAX_VALUE)));
+		contentPanel.setLayout(gcontentPanel);
+
 		{
 			this.buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			this.getContentPane().add(buttonPane, BorderLayout.SOUTH);
@@ -102,26 +110,27 @@ public class DialogCerca extends JDialog implements DialogInterface {
 					@Override
 					public void actionPerformed(final ActionEvent e) {
 						if (frame.getClass().equals(FattureGUI.class)) {
-							o.cercaFatture(txtNumero.getText(),txtNome.getText());
+							o.cercaFatture(txtNumero.getText(), txtNome.getText(), txtCognome.getText());
 						}
 						if (frame.getClass().equals(ClientiGUI.class)) {
-							txtNumero.setEnabled(false);
 							o.cercaClienti(txtNome.getText());
+
 						}
 						if (frame.getClass().equals(FornitoriGUI.class)) {
-							txtNumero.setEnabled(false);
 							o.cercaFornitori(txtNome.getText());
 						}
 						if (frame.getClass().equals(RiunioniGUI.class)) {
-							lblNumero.setText("Data");
-							o.cercaRiunioni(txtNumero.getText(),
-							txtNome.getText());
+							try {
+								o.cercaRiunioni(txtNumero.getText(), txtNome.getText());
+							} catch (ParseException e1) {
+								JOptionPane.showMessageDialog(frame, "Errore nel inserimento Data");
+							}
 						}
 						if (frame.getClass().equals(ScontriniGUI.class)) {
-							o.cercaScontrini(txtNumero.getText(),
-							txtNome.getText());
+							o.cercaScontrini(txtNumero.getText(), txtNome.getText());
 						}
 						o.abilitaFrame(true);
+
 						dispose();
 					}
 				});
@@ -144,7 +153,7 @@ public class DialogCerca extends JDialog implements DialogInterface {
 
 	@Override
 	public Map<String, String> getDataString(final ObserverInterface o) {
-		Map<String, String>mappa = new HashMap<>();
+		Map<String, String> mappa = new HashMap<>();
 		mappa.put("Nome", this.txtNome.getText());
 		mappa.put("Numero", this.txtNumero.getText());
 		return mappa;

@@ -129,8 +129,7 @@ public class ClientiGUI extends InitializeFrame {
 		this.panelText.setLayout(gpanelText);
 		
 		this.panelTool.add(panelButton, BorderLayout.SOUTH);
-		this.btnPrecendete.setEnabled(false);
-		this.btnProssimo.setEnabled(false);
+		this.changeStatusButton(false);
 		this.panelButton.add(btnPrecendete);
 		
 		this.panelButton.add(btnProssimo);
@@ -174,5 +173,10 @@ public class ClientiGUI extends InitializeFrame {
 		this.txtNome.setText(nome);
 		this.txtEmail.setText(email);
 		this.txtTelefono.setText(telefono);
+	}
+	
+	public void changeStatusButton(boolean a){
+		this.btnPrecendete.setEnabled(a);
+		this.btnProssimo.setEnabled(a);
 	}
 }	

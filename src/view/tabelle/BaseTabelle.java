@@ -2,6 +2,10 @@ package view.tabelle;
 
 import javax.swing.table.AbstractTableModel;
 
+import com.goytia.models.DB.modelStoreI;
+
+import view.interfaces.ObserverInterface;
+
 /**
  * Classe che definisce il modello di JTable.
  * 
@@ -13,6 +17,7 @@ public class BaseTabelle extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = -6283359396361049566L;
+	private ObserverInterface o;
 
 	/**
 	 * 
@@ -25,17 +30,11 @@ public class BaseTabelle extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		int i = 0;
-		//CHECKSTYLE:OFF:
-		for (i = 0; i < 10; i++) {
-			//CHECKSTYLE:ON:
-		}
-		return i;
+		return 3;
 	}
 
 	@Override
 	public Object getValueAt(final int row, final int col) {
-		// TODO Auto-generated method stub
 		if (row == 0) {
 			if (col == 0) {
 				return new String("Prodotto");
@@ -47,6 +46,7 @@ public class BaseTabelle extends AbstractTableModel {
 				return new String("Prezzo");
 			}
 		}
+		
 		return new String("");
 	}
 /**
