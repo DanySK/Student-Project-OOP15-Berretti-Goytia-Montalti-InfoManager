@@ -4,13 +4,67 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.goytia.models.DB.modelClients;
 import com.goytia.models.DB.modelProviders;
 import com.goytia.models.DB.modelStore;
 import com.infoMng.controller.MBOggetto;
+import com.infoMng.controller.MBQuery;
 
 public interface IFattura {
+	
+	/**
+	 * The list of invoices than save into db
+	 * @return
+	 * the list of invoices
+	 * @throws SQLException
+	 * error durring the reading of db
+	 */
+	static List<IFattura> elencoFatture() throws SQLException{
+		MBQuery query = MBQuery.queryDaTabella("Fatture");
+		return query.find().stream()
+				.map(c -> new Fattura(c))
+				.collect(Collectors.toList());
+	}
+	
+	/**
+	 * Search invoce for the invoces number
+	 * @param invoiceNumber
+	 * number of invoces required
+	 * @return
+	 * an optional of invoces whith invoches number equal to required number
+	 * @throws SQLException
+	 * error during the db reading
+	 */
+	static Optional<IFattura> searchIvoicesForNumber(Integer invoiceNumber, String clientName, String clientSurname) throws SQLException{
+		return IFattura.elencoFatture().stream()
+				.filter(f -> f.getNumeroOrdine().equals(invoiceNumber) )
+				.filter(f -> {
+					if (f.getCliente() != null){
+						return f.getCliente().getName().equals(clientName);
+					}
+					else if(f.getFornitore() != null){
+						return f.getFornitore().getName().equals(clientName);
+					}
+					else{
+						return false;
+					}
+				})
+				.filter(f -> {
+					if(f.getCliente() != null){
+						return f.getCliente().getLastName().equals(clientSurname);
+					}
+					else if(f.getFornitore() != null){
+						return f.getFornitore().getLastName().equals(clientSurname);
+					}
+					else{
+						return false;
+					}
+				})
+				.findFirst();
+	}
 	
 	List<prodottoFattura> getProdotti();
 	

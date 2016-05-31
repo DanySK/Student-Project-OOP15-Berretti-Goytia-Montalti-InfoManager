@@ -1,6 +1,7 @@
 package com.infoMng.controller;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -360,9 +361,13 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public void cercaFatture(String numero, String nome) {
-		// TODO Auto-generated method stub
-		
+	public Optional<IFattura> cercaFatture(String numero, String nome, String cognome) throws NumberFormatException {
+		Integer invoiceNumber = Integer.parseInt(numero);
+		try {
+			return IFattura.searchIvoicesForNumber(invoiceNumber, nome, cognome);
+		} catch (SQLException e) {
+			return Optional.empty();
+		}
 	}
 
 
