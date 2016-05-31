@@ -10,9 +10,6 @@ class modelClients implements modelClientsI{
 		this.oggetto= TableRow.oggettoDaTabella("Clienti");
 	}
 	
-	/***
-	 * crea un nuovo oggetto tipo modelCliente
-	 */
 	protected modelClients(TableRow temp){
 		this.oggetto=temp;
 	}

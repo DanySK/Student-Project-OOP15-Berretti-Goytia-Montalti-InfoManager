@@ -8,23 +8,53 @@ import com.infoMng.controller.TableRow;
 import com.infoMng.controller.DataBaseSearch;
 
 public interface modelClientsI {
-
+	
+	/***
+	 * ottiene ID del record corrente
+	 * @return
+	 * un integer che rapparesenta il record
+	 */
 	Integer getID();
-
+	
+	/***
+	 * ottiene il nome del cliente 
+	 * @return
+	 * una string con il nome del cliente
+	 */
 	String getName();
-
+	
+	/***
+	 * ottiene il cognome del cliente
+	 * @return
+	 * una string con il cognome del cliente
+	 */
 	String getLastName();
-
+	
+	/***
+	 * ottiene la mail del cliente
+	 * @return
+	 * una string con la mail del cliente
+	 */
 	String getMail();
-
+	
+	/***
+	 * Ottiene il telefono del cliente
+	 * @return
+	 * una string con il telefono del cliente
+	 */
 	String getPhone();
-
+	
+	/***
+	 * ottiene il nome del negozio a cui appartiene il cliente
+	 * @return
+	 * una stringa contenente il nome del negozio
+	 */
 	String getShopName();
 	
 	/***
 	 * eliminazione del cliente corrente
 	 * @return
-	 * true o false a seconda del esito
+	 * true se va a buon fine
 	 */
 	boolean deleteClient();
 
@@ -32,29 +62,34 @@ public interface modelClientsI {
 	 * modifica del cliente corrente
 	 * Si chiede di passare come "" i parametri che non sono a modificare
 	 * @param newNome
+	 * nuovo nome 
 	 * @param newCognome
+	 * nuovo cognome 
 	 * @param newMail
+	 * nuova mail
 	 * @param newTelefono
+	 * nuovo recapivo telefonico
 	 * @param newNegozio
 	 * @return
-	 * true o false a seconda del esisto\
+	 * true se va buon fine
 	 */
 	boolean renameClient(String newNome, String newCognome, String newMail, String newTelefono, String newNegozio);
 
 	/***
-	 * ricerca di un/i clienti tramite uno o pi� paramentro
+	 * ricerca di un/i clienti tramite uno o piu parametri
+	 * passare come stringa vuota se non si vuole usare come parametro di ricerca
 	 * @param nome
-	 * passarlo come "" se non si vuole filtrare con questo paramentro
+	 * nome del cliente
 	 * @param cognome
-	 * passarlo come "" se non si vuole filtrare con questo paramentro
+	 * cognome del cliente
 	 * @param mail
-	 * passarlo come "" se non si vuole filtrare con questo paramentro
+	 * mail del cliente
 	 * @param telefono
-	 * passarlo come "" se non si vuole filtrare con questo paramentro
+	 * telefono del cliente
 	 * @param nomeNegozio
-	 * passarlo come "" se non si vuole filtrare con questo paramentro
+	 * nome del negoizio a cui appartiene il cliente
 	 * @return
-	 * tutti i clienti trovati tramite i parametri forniti, si segue una lgica or
+	 * tutti i clienti trovati tramite i parametri forniti, si segue una lgica or!
 	 */
 	public static List<modelClientsI> searchClients(String nome, String cognome, String mail, String telefono, String nomeNegozio){
 		return modelClientsI.clientsList().stream()
@@ -63,6 +98,7 @@ public interface modelClientsI {
 											    || cliente.getPhone().contains(telefono))
 							.collect(Collectors.toList());
 	}
+	
 	/***
 	 * elenco di tutti i clienti esisitenti
 	 * @return
@@ -84,12 +120,17 @@ public interface modelClientsI {
 	/***
 	 * creazione di un nuovo cliente
 	 * @param nome
+	 * nome del cliente
 	 * @param cognome
+	 * cognome del cliente
 	 * @param mail
+	 * email del cliente
 	 * @param telefono
+	 * recapito telefonico del cliente
 	 * @param negozio
+	 * nome del negozio a cui appartiene il cliente
 	 * @return
-	 * true o false a seconda del esito
+	 * true se e andato a buon fine il salvataggio
 	 */
 	public static boolean newClient(String nome, String cognome, String mail, String telefono, String negozio){
 		modelClients nuovo = new modelClients(TableRow.oggettoDaTabella("Clienti"));
