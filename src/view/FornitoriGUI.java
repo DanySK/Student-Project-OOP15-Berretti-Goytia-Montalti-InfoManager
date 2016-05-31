@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Toolkit;
 
+import com.goytia.models.DB.modelProvidersI;
 
 import view.interfaces.ObserverInterface;
 /**
@@ -28,5 +29,15 @@ public class FornitoriGUI extends ClientiGUI {
 		this.setTitle(TITOLO);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(FornitoriGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 	}
+
+	@Override
+	public void setTextFields(final Object c) {
+		modelProvidersI fornitore = (modelProvidersI) c;
+		this.txtCognome.setText(fornitore.getLastName());
+		this.txtNome.setText(fornitore.getName());
+		this.txtEmail.setText(fornitore.getMail());
+		this.txtTelefono.setText(fornitore.getPhone());
+	}
+	
 
 }

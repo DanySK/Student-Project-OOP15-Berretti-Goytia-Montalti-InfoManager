@@ -19,6 +19,9 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import com.goytia.models.DB.modelClientsI;
+
 import javax.swing.JButton;
 
 /**
@@ -40,10 +43,12 @@ public class ClientiGUI extends InitializeFrame {
 	private MyToolbar toolbar;
 	private JPanel panelTool = new JPanel();
 	private JPanel panelText = new JPanel();
-	private JTextField txtNome;
-	private JTextField txtCognome;
-	private JTextField txtEmail;
-	private JTextField txtTelefono;
+	//CHECKSTYLE:OFF:
+	protected JTextField txtNome;
+	protected JTextField txtCognome;
+	protected JTextField txtEmail;
+	protected JTextField txtTelefono;
+	//CHECKSTYLE:ON:
 	private GroupLayout gpanelText = new GroupLayout(panelText);
 	private JLabel lblNome = new JLabel("Nome");
 	private JLabel lblCognome = new JLabel("Cognome");
@@ -168,11 +173,12 @@ public class ClientiGUI extends InitializeFrame {
 	 * 
 	 * 
 	 */
-	public void setTextFields(String cognome, String nome, String email, String telefono){
-		this.txtCognome.setText(cognome);
-		this.txtNome.setText(nome);
-		this.txtEmail.setText(email);
-		this.txtTelefono.setText(telefono);
+	public void setTextFields(Object c){
+		modelClientsI cliente = (modelClientsI) c;
+		this.txtCognome.setText(cliente.getLastName());
+		this.txtNome.setText(cliente.getName());
+		this.txtEmail.setText(cliente.getMail());
+		this.txtTelefono.setText(cliente.getPhone());
 	}
 	
 	public void changeStatusButton(boolean a){

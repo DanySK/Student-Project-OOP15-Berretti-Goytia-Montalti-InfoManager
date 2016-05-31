@@ -113,6 +113,7 @@ public class DialogCerca extends JDialog implements DialogInterface {
 							o.cercaFatture(txtNumero.getText(), txtNome.getText(), txtCognome.getText());
 						}
 						if (frame.getClass().equals(ClientiGUI.class)) {
+							
 							o.cercaClienti(txtNome.getText());
 
 						}

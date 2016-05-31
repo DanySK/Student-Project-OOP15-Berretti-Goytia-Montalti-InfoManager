@@ -315,5 +315,9 @@ public class FattureGUI extends InitializeFrame {
 		getContentPane().add(layeredPane);
 
 	}
+	
+	public void setTextfields(){
+		
+	}
 
 }
