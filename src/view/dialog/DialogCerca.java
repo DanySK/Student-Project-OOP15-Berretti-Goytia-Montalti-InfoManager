@@ -14,6 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.infoMng.controller.Navigator;
+
 import view.ClientiGUI;
 import view.FattureGUI;
 import view.FornitoriGUI;
@@ -50,6 +52,7 @@ public class DialogCerca extends JDialog implements DialogInterface {
 	private final JTextField txtCognome = new JTextField();
 	private final JTextField txtNumero = new JTextField();
 	private GroupLayout gcontentPanel = new GroupLayout(contentPanel);
+	private Navigator<?> fornitori ;
 
 	/**
 	 * Costruttore DialogCerca.
@@ -118,7 +121,7 @@ public class DialogCerca extends JDialog implements DialogInterface {
 
 						}
 						if (frame.getClass().equals(FornitoriGUI.class)) {
-							o.cercaFornitori(txtNome.getText());
+							fornitori = o.cercaFornitori(txtNome.getText());
 						}
 						if (frame.getClass().equals(RiunioniGUI.class)) {
 							try {
@@ -131,7 +134,7 @@ public class DialogCerca extends JDialog implements DialogInterface {
 							o.cercaScontrini(txtNumero.getText(), txtNome.getText());
 						}
 						o.abilitaFrame(true);
-//TODO: fai in modo che 
+						fornitori.avanti();
 						dispose();
 					}
 				});
