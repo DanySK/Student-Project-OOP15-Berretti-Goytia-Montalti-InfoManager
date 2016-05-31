@@ -11,7 +11,7 @@ class ListOfObjectImpl<T> implements Navigator<T> {
 	protected ListOfObjectImpl(Collection<T> elementi){
 		this.oggetti = new ArrayList<>();
 		this.oggetti.addAll(elementi);
-		this.posizione = 0;
+		this.posizione = -1;
 	}
 	
 	@Override
