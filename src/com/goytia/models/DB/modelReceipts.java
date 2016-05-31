@@ -115,9 +115,9 @@ public class modelReceipts {
 	 * @param iva
 	 * iva da applicare
 	 * @return
-	 * true se è stato creato e salvato lo scrontrino altrimenti false
+	 * true se ï¿½ stato creato e salvato lo scrontrino altrimenti false
 	 */
-	public boolean newReceipt(int nScontrino, int nRicevuta, Integer idCliente, Date data, float iva){
+	public static boolean newReceipt(int nScontrino, int nRicevuta, Integer idCliente, Date data, float iva){
 		
 		modelReceipts nuovo = new modelReceipts(MBOggetto.oggettoDaTabella("Scontrini"));
 		nuovo.setClient(idCliente);

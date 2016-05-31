@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import com.goytia.models.DB.modelClients;
 import com.goytia.models.DB.modelProviders;
 import com.goytia.models.DB.modelStore;
+import com.goytia.models.DB.modelUsers;
 import com.infoMng.model.IFattura;
 
 import view.interfaces.ObserverInterface;
@@ -133,8 +134,15 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public void salvaUtente(Map<String, String> dati) {
-		// TODO: Da fare
+	public boolean salvaUtente(Map<String, String> dati) {
+		// ottengo i dati utente
+		String username = dati.get("Username");
+		String password = dati.get("Password");
+		String mail = dati.get("Email");
+		String indirizzo = dati.get("Indirizzo");
+		String nomeNegozio = dati.get("Nome");
+		
+		return modelUsers.newUser(nomeNegozio, null, mail, username, password);
 	}
 
 	@Override
@@ -292,8 +300,8 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public void salvaScontrini(Map<String, Object> dati) {
-		// TODO Auto-generated method stub
-
+		//ottengo i dati dalla mappa
+		//TODO : chiedere a monta quale è la view per lo scontrino
 	}
 
 	@Override
@@ -307,15 +315,13 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public void cercaFornitori(String nome) {
-		// TODO Auto-generated method stub
-
+	public List<modelProviders> cercaFornitori(String nome) {
+		return modelProviders.searchProviders(nome, null, null, null);
 	}
 
 	@Override
-	public void cercaClienti(String nome) {
-		// TODO Auto-generated method stub
-
+	public List<modelClients> cercaClienti(String nome) {
+		return modelClients.searchClients(nome, null, null, null, null);
 	}
 
 	@Override
@@ -332,8 +338,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public boolean userLogin(String user, String pass) {
-		// TODO Auto-generated method stub
-		return false;
+		return modelUsers.usersLogin(user, pass);
 	}
 
 	@Override

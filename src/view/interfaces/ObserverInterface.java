@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.swing.JFrame;
+
+import com.goytia.models.DB.modelClients;
+import com.goytia.models.DB.modelProviders;
 import com.goytia.models.DB.modelStore;
 import com.infoMng.controller.ObserverInterfaceImpl.saveResult;
 
@@ -124,8 +127,9 @@ public interface ObserverInterface {
 	 * 
 	 * @param dati
 	 *            Map (String,String)
+	 * @return a boolean value than it is the result of registred
 	 */
-	void salvaUtente(Map<String, String> dati);
+	boolean salvaUtente(Map<String, String> dati);
 
 	/**
 	 * Metodo che salva il Cliente.
@@ -192,15 +196,17 @@ public interface ObserverInterface {
  * Metodo per cercare un fornitore.
  * @param nome
  * 			nome del fornitore
+ * @return 
  */
-	void cercaFornitori(String nome);
+	List<modelProviders> cercaFornitori(String nome);
 /**
  * Metodo per cercare un cliente.
  * @param nome
  * 			nome del cliente
+ * @return 
  * 
  */
-	void cercaClienti(String nome);
+	List<modelClients> cercaClienti(String nome);
 /**
  * Metodo per cercare una riunione.
  * @param data

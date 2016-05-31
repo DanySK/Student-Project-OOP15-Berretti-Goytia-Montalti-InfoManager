@@ -95,9 +95,9 @@ public class modelUsers {
 	 * @param username
 	 * @param password
 	 * @return
-	 * true se è stato creato l'utente altrimenti false
+	 * true se ï¿½ stato creato l'utente altrimenti false
 	 */
-	public boolean newUser(String nome, String cognome, String mail, String username, String password){
+	public static boolean newUser(String nome, String cognome, String mail, String username, String password){
 		modelUsers nuovo = new modelUsers(MBOggetto.oggettoDaTabella("Utenti"));
 		nuovo.setName(nome);
 		nuovo.setLastName(cognome);
@@ -113,7 +113,7 @@ public class modelUsers {
 	 * @return
 	 * true se l'untente esiste, altrimenti False
 	 */
-	public boolean usersLogin(String username, String password){
+	public static boolean usersLogin(String username, String password){
 		return modelUsers.usersList().stream()
 				.filter(e -> e.getUsername() == username &&  e.getPassword() == password)
 				.count() == 1;
@@ -146,7 +146,7 @@ public class modelUsers {
 	 * @param username
 	 * @param password
 	 * @return
-	 * true se è stata cancellata l'account altrimenti false
+	 * true se ï¿½ stata cancellata l'account altrimenti false
 	 */
 	public boolean deleteUser(String nome, String cognome, String mail, String username, String password){
 		//mi accerto che si tratti dello stesso cliente richiedendo i dati
