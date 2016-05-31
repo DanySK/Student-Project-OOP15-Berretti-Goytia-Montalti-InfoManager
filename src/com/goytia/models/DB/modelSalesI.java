@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.infoMng.controller.MBOggetto;
-import com.infoMng.controller.MBQuery;
+import com.infoMng.controller.TableRow;
+import com.infoMng.controller.DataBaseSearch;
 
 public interface modelSalesI {
 
@@ -39,7 +39,7 @@ public interface modelSalesI {
 	 * una lista contenente tutte le vendite
 	 */
 	public static List<modelSales> salesList(){
-		MBQuery query = MBQuery.queryDaTabella("Acquisti");
+		DataBaseSearch query = DataBaseSearch.queryDaTabella("Acquisti");
 		try {
 			return query.find().stream()
 					.map(e -> new modelSales(e))
@@ -53,7 +53,7 @@ public interface modelSalesI {
 	/***
 	 * nuova vendita
 	 * @param IDCliente
-	 * id del cliente a chi è stato effettuata la vendita
+	 * id del cliente a chi ï¿½ stato effettuata la vendita
 	 * @param nRicevuta
 	 * @param iva
 	 * @param sconto
@@ -65,7 +65,7 @@ public interface modelSalesI {
 	 */
 	public static boolean newSale(Integer IDCliente, int nRicevuta, float iva, float sconto, Date data, List<transactionsProductsI> prodotti){
 		
-		modelSales temp = new modelSales(MBOggetto.oggettoDaTabella("Vendite"));
+		modelSales temp = new modelSales(TableRow.oggettoDaTabella("Vendite"));
 		temp.setIDClient(IDCliente);
 		temp.setDiscount(sconto);
 		temp.setDate(data);

@@ -1,6 +1,6 @@
 package com.goytia.models.DB;
 
-import com.infoMng.controller.MBOggetto;
+import com.infoMng.controller.TableRow;
 
 import java.sql.Date;
 import java.util.List;
@@ -8,14 +8,14 @@ import java.util.stream.Collectors;
 
 class modelPurchases implements modelPurchasesI{
 	
-	MBOggetto oggetto;
+	TableRow oggetto;
 	
-	protected modelPurchases(MBOggetto temp){
+	protected modelPurchases(TableRow temp){
 		this.oggetto = temp;
 	}
 	
 	public modelPurchases(){
-		this.oggetto = MBOggetto.oggettoDaTabella("Acquisti");
+		this.oggetto = TableRow.oggettoDaTabella("Acquisti");
 	}
 	
 	protected void setNumberPaymentReceipt(int nRicevuta){

@@ -1,19 +1,19 @@
 package com.goytia.models.DB;
 
-import com.infoMng.controller.MBOggetto;
+import com.infoMng.controller.TableRow;
 
 class modelClients implements modelClientsI{
 	
-	MBOggetto oggetto;
+	TableRow oggetto;
 	
 	protected modelClients(){
-		this.oggetto= MBOggetto.oggettoDaTabella("Clienti");
+		this.oggetto= TableRow.oggettoDaTabella("Clienti");
 	}
 	
 	/***
 	 * crea un nuovo oggetto tipo modelCliente
 	 */
-	protected modelClients(MBOggetto temp){
+	protected modelClients(TableRow temp){
 		this.oggetto=temp;
 	}
 	

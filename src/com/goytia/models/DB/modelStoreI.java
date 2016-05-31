@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.infoMng.controller.MBOggetto;
-import com.infoMng.controller.MBQuery;
+import com.infoMng.controller.TableRow;
+import com.infoMng.controller.DataBaseSearch;
 
 public interface modelStoreI {
 
@@ -71,7 +71,7 @@ public interface modelStoreI {
 	 * una lista con tutti i prodotti
 	 */
 	public static List<modelStoreI> productsList(){
-		MBQuery query = MBQuery.queryDaTabella("Magazzino");
+		DataBaseSearch query = DataBaseSearch.queryDaTabella("Magazzino");
 		try {
 			return query.find().stream()
 					.map(e -> new modelStore(e))
@@ -93,7 +93,7 @@ public interface modelStoreI {
 	 * @return
 	 */
 	public static boolean newProduct(String nome, Integer IDFornitore, String descrizione) {
-		modelStore temp = new modelStore(MBOggetto.oggettoDaTabella("Magazzino"));
+		modelStore temp = new modelStore(TableRow.oggettoDaTabella("Magazzino"));
 		temp.setName(nome);
 		temp.setIDProvider(IDFornitore);
 		temp.setProductDeatils(descrizione);

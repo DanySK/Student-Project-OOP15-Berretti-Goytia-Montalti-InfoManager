@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.infoMng.controller.MBOggetto;
-import com.infoMng.controller.MBQuery;
+import com.infoMng.controller.TableRow;
+import com.infoMng.controller.DataBaseSearch;
 
 public interface modelUsersI {
 
@@ -29,7 +29,7 @@ public interface modelUsersI {
 	 * @param username
 	 * @param password
 	 * @return
-	 * true se è stato creato l'utente altrimenti false
+	 * true se ï¿½ stato creato l'utente altrimenti false
 	 */
 
 	boolean changePassword(String nome, String cognome, String mail, String username, String password,
@@ -43,7 +43,7 @@ public interface modelUsersI {
 	 * @param username
 	 * @param password
 	 * @return
-	 * true se è stata cancellata l'account altrimenti false
+	 * true se ï¿½ stata cancellata l'account altrimenti false
 	 */
 	boolean deleteUser(String nome, String cognome, String mail, String username, String password);
 	
@@ -53,7 +53,7 @@ public interface modelUsersI {
 	 * una lista contenenti tutti gli utenti esistenti
 	 */
 	public static List<modelUsers> usersList(){
-		MBQuery query = MBQuery.queryDaTabella("Utenti");
+		DataBaseSearch query = DataBaseSearch.queryDaTabella("Utenti");
 		try {
 			return query.find().stream()
 					.map(e -> new modelUsers(e))
@@ -72,10 +72,10 @@ public interface modelUsersI {
 	 * @param username
 	 * @param password
 	 * @return
-	 * true se è stato creato l'utente altrimenti false
+	 * true se ï¿½ stato creato l'utente altrimenti false
 	 */
 	public static boolean newUser(String nome, String cognome, String mail, String username, String password){
-		modelUsers nuovo = new modelUsers(MBOggetto.oggettoDaTabella("Utenti"));
+		modelUsers nuovo = new modelUsers(TableRow.oggettoDaTabella("Utenti"));
 		nuovo.setName(nome);
 		nuovo.setLastName(cognome);
 		nuovo.setMail(mail);

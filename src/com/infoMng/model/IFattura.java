@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 import com.goytia.models.DB.modelClientsI;
 import com.goytia.models.DB.modelProvidersI;
 import com.goytia.models.DB.modelStoreI;
-import com.infoMng.controller.MBOggetto;
-import com.infoMng.controller.MBQuery;
+import com.infoMng.controller.TableRow;
+import com.infoMng.controller.DataBaseSearch;
 
 public interface IFattura {
 	
@@ -23,7 +23,7 @@ public interface IFattura {
 	 * error durring the reading of db
 	 */
 	static List<IFattura> elencoFatture() throws SQLException{
-		MBQuery query = MBQuery.queryDaTabella("Fatture");
+		DataBaseSearch query = DataBaseSearch.queryDaTabella("Fatture");
 		return query.find().stream()
 				.map(c -> new Fattura(c))
 				.collect(Collectors.toList());
@@ -229,7 +229,7 @@ public interface IFattura {
 		}
 		
 		public IFattura salva(){
-			MBOggetto padre = MBOggetto.oggettoDaTabella("Fatture");
+			TableRow padre = TableRow.oggettoDaTabella("Fatture");
 			padre.setObjectValue("Numero", numeroOrdine);
 			if(this.cliente != null){
 				padre.setObjectValue("IDCliente", this.cliente.getID());
@@ -252,7 +252,7 @@ public interface IFattura {
 			if(padre.salva()){
 				this.prodotti.stream()
 				.map(p -> {
-					MBOggetto figlio = MBOggetto.oggettoDaTabella("ProdottoVendita");
+					TableRow figlio = TableRow.oggettoDaTabella("ProdottoVendita");
 					figlio.setObjectValue("IDProdotto", p.prodotto.getID());
 					figlio.setObjectValue("Quantita", p.quantita);
 					figlio.setObjectValue("Prezzo", p.prezzo);

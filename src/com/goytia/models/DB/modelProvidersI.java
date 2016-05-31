@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.infoMng.controller.MBOggetto;
-import com.infoMng.controller.MBQuery;
+import com.infoMng.controller.TableRow;
+import com.infoMng.controller.DataBaseSearch;
 
 public interface modelProvidersI {
 
@@ -86,7 +86,7 @@ public interface modelProvidersI {
 	 * una lista contenente tutti i fornitori
 	 */
 	public static List<modelProvidersI> providersList(){
-		MBQuery query = MBQuery.queryDaTabella("Fornitori");
+		DataBaseSearch query = DataBaseSearch.queryDaTabella("Fornitori");
 		try {
 			return query.find().stream()
 					.map(e -> new modelProviders(e))
@@ -108,7 +108,7 @@ public interface modelProvidersI {
 	 * true o false a seonda del esito
 	 */
 	public static boolean newProvider(String nome, String cognome, String mail, String telefono){
-		modelProviders nuovo = new modelProviders(MBOggetto.oggettoDaTabella("Fornitori"));
+		modelProviders nuovo = new modelProviders(TableRow.oggettoDaTabella("Fornitori"));
 		nuovo.setName(nome);
 		nuovo.setLastName(cognome);
 		nuovo.setMail(mail);

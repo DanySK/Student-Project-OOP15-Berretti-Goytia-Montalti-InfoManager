@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.Map;
 import java.util.Optional;
 
-class Oggetto implements MBOggetto{
+class Oggetto implements TableRow{
 	protected Map<String, Object> dati;
 	protected String nomeTabella;
 	protected Set<String> campi;

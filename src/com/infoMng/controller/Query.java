@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 
-class Query implements MBQuery {
+class Query implements DataBaseSearch {
 	private String nomeTabella;
 	private Set<String> condizioni;
 	
@@ -54,10 +54,10 @@ class Query implements MBQuery {
 	}
 	
 	@Override
-	public List<MBOggetto> find() throws SQLException{
+	public List<TableRow> find() throws SQLException{
 		DataBase db = new DataBase();
 		db.connetti();
-		List<MBOggetto> ritorno = db.eseguiLettura(this.generateSQL()).stream()
+		List<TableRow> ritorno = db.eseguiLettura(this.generateSQL()).stream()
 				.map(d -> {
 					return new Oggetto(this.nomeTabella, d);
 				}).collect(Collectors.toList());
@@ -66,8 +66,8 @@ class Query implements MBQuery {
 	}
 	
 	@Override
-	public MBOggetto getFirst() throws SQLException{
-		List<MBOggetto> elenco = this.find();
+	public TableRow getFirst() throws SQLException{
+		List<TableRow> elenco = this.find();
 		if(elenco.isEmpty()){
 			return null;
 		}

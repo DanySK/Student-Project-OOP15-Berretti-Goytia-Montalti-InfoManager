@@ -1,18 +1,18 @@
 package com.goytia.models.DB;
 
-import com.infoMng.controller.MBOggetto;
+import com.infoMng.controller.TableRow;
 
 public class modelUsers implements modelUsersI {
 
-	MBOggetto oggetto;
+	TableRow oggetto;
 	/***
 	 * Ottengo un record nuovo dalla tabella Scontrini
 	 */
 	public modelUsers(){
-		this.oggetto= MBOggetto.oggettoDaTabella("Utenti");
+		this.oggetto= TableRow.oggettoDaTabella("Utenti");
 	}
 	
-	protected modelUsers(MBOggetto temp){
+	protected modelUsers(TableRow temp){
 		this.oggetto=temp;
 	}
 	

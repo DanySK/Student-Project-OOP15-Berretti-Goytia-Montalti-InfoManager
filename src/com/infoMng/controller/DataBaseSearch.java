@@ -9,7 +9,7 @@ import java.util.List;
  * @author mattiaberretti
  *
  */
-public interface MBQuery {
+public interface DataBaseSearch {
 
 	/***
 	 * ritorna l'intero contenuto di una tabella
@@ -22,8 +22,8 @@ public interface MBQuery {
 	 * N.B.
 	 * 	La stampa della traccia di errore avviene comunque
 	 */
-	public static List<MBOggetto> contenutoTabella(String tabella) throws SQLException{
-		MBQuery query = new Query(tabella);
+	public static List<TableRow> contenutoTabella(String tabella) throws SQLException{
+		DataBaseSearch query = new Query(tabella);
 		try{
 			return query.find();
 		}
@@ -40,7 +40,7 @@ public interface MBQuery {
 	 * @return
 	 * 	un oggetto usato per la ricerca dei dati all'interno di una tabella
 	 */
-	public static MBQuery queryDaTabella(String nomeTabella){
+	public static DataBaseSearch queryDaTabella(String nomeTabella){
 		return new Query(nomeTabella);
 	}
 	
@@ -55,7 +55,7 @@ public interface MBQuery {
 	 * @return
 	 * 	un oggetto usato per la ricerca dei dati all'interno di una tabella
 	 */
-	public static MBQuery queryDaTabella(String nomeTabella, String condizione){
+	public static DataBaseSearch queryDaTabella(String nomeTabella, String condizione){
 		return new Query(nomeTabella, condizione);
 	}
 	
@@ -101,7 +101,7 @@ public interface MBQuery {
 	 * N.B.
 	 * 	Può derivare da condizioni errate
 	 */
-	List<MBOggetto> find() throws SQLException;
+	List<TableRow> find() throws SQLException;
 
 	/**
 	 * ottiene il primo elemento della tabella corrispondente all'elenco
@@ -112,6 +112,6 @@ public interface MBQuery {
 	 * N.B.
 	 * 	Può derivare da condizioni errate
 	 */
-	MBOggetto getFirst() throws SQLException;
+	TableRow getFirst() throws SQLException;
 
 }

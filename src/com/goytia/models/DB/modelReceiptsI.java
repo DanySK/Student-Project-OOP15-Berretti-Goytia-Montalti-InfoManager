@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.infoMng.controller.MBOggetto;
-import com.infoMng.controller.MBQuery;
+import com.infoMng.controller.TableRow;
+import com.infoMng.controller.DataBaseSearch;
 
 public interface modelReceiptsI {
 
@@ -45,7 +45,7 @@ public interface modelReceiptsI {
 	 * un lista cont utti gli scontrini esistenti fino a quel momento
 	 */
 	public static List<modelReceipts> receiptsList(){
-		MBQuery query = MBQuery.queryDaTabella("Scontrini");
+		DataBaseSearch query = DataBaseSearch.queryDaTabella("Scontrini");
 		try {
 			return query.find().stream()
 					.map(e -> new modelReceipts(e))
@@ -70,11 +70,11 @@ public interface modelReceiptsI {
 	 * @param iva
 	 * iva da applicare
 	 * @return
-	 * true se è stato creato e salvato lo scrontrino altrimenti false
+	 * true se ï¿½ stato creato e salvato lo scrontrino altrimenti false
 	 */
 	public static boolean newReceipt(int nScontrino, int nRicevuta, Integer idCliente, Date data, float iva){
 		
-		modelReceipts nuovo = new modelReceipts(MBOggetto.oggettoDaTabella("Scontrini"));
+		modelReceipts nuovo = new modelReceipts(TableRow.oggettoDaTabella("Scontrini"));
 		nuovo.setClient(idCliente);
 		nuovo.setDate(data);
 		nuovo.setIva(iva);

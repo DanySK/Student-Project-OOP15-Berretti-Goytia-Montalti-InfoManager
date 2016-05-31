@@ -1,17 +1,17 @@
 package com.goytia.models.DB;
 
-import com.infoMng.controller.MBOggetto;
+import com.infoMng.controller.TableRow;
 
 	class modelStore implements modelStoreI {
 	
-	MBOggetto oggetto;
+	TableRow oggetto;
 	
-	protected modelStore(MBOggetto temp){
+	protected modelStore(TableRow temp){
 		this.oggetto=temp;
 	}
 	
 	protected modelStore(){
-		this.oggetto = MBOggetto.oggettoDaTabella("Magazzino");
+		this.oggetto = TableRow.oggettoDaTabella("Magazzino");
 	}
 	
 	protected void setName(String nome){

@@ -3,21 +3,21 @@ package com.goytia.models.DB;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.sql.Date;
-import com.infoMng.controller.MBOggetto;
+import com.infoMng.controller.TableRow;
 
 
 public class modelReceipts implements modelReceiptsI{
 	
-	MBOggetto oggetto;
+	TableRow oggetto;
 	
-	protected modelReceipts(MBOggetto temp){
+	protected modelReceipts(TableRow temp){
 		this.oggetto=temp;
 	}
 	/***
 	 * Ottengo un record nuovo dalla tabella Scontrini
 	 */
 	public modelReceipts(){
-		this.oggetto = MBOggetto.oggettoDaTabella("Scontrini");
+		this.oggetto = TableRow.oggettoDaTabella("Scontrini");
 	}
 	
 	protected void setReceipt(int nScontrino){

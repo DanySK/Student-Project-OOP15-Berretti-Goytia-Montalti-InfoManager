@@ -7,8 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.infoMng.controller.MBOggetto;
-import com.infoMng.controller.MBQuery;
+import com.infoMng.controller.TableRow;
+import com.infoMng.controller.DataBaseSearch;
 
 public interface modelReunionsI {
 
@@ -53,7 +53,7 @@ public interface modelReunionsI {
 	 * @see com.goytia.models.DB.modelReunionsI#pastReunionsList(java.sql.Date)
 	 */
 	public static List<modelReunionsI>pastReunionsList(Date dataCorrente){
-		MBQuery query = MBQuery.queryDaTabella("Riunioni");
+		DataBaseSearch query = DataBaseSearch.queryDaTabella("Riunioni");
 		try {
 			return query.find().stream()
 					.map(e -> new modelReunions(e))
@@ -70,7 +70,7 @@ public interface modelReunionsI {
 	 * @see com.goytia.models.DB.modelReunionsI#reunionsTodayList(java.sql.Date)
 	 */
 	 public static List<modelReunionsI>reunionsTodayList(Date dataCorrente){
-			MBQuery query = MBQuery.queryDaTabella("Riunioni");
+			DataBaseSearch query = DataBaseSearch.queryDaTabella("Riunioni");
 			try {
 				return query.find().stream()
 						.map(e -> new modelReunions(e))
@@ -86,7 +86,7 @@ public interface modelReunionsI {
 	 * @see com.goytia.models.DB.modelReunionsI#futureReunionsList(java.sql.Date)
 	 */
 	 public static List<modelReunionsI>futureReunionsList(Date dataCorrente){
-			MBQuery query = MBQuery.queryDaTabella("Riunioni");
+			DataBaseSearch query = DataBaseSearch.queryDaTabella("Riunioni");
 			try {
 				return query.find().stream()
 						.map(e -> new modelReunions(e))
@@ -105,7 +105,7 @@ public interface modelReunionsI {
 	 * una lista contenente tutte le riunioni
 	 */
 	public static List<modelReunionsI> reunionsList(){
-		MBQuery query = MBQuery.queryDaTabella("Riunioni");
+		DataBaseSearch query = DataBaseSearch.queryDaTabella("Riunioni");
 		try {
 			return query.find().stream()
 					.map(e -> new modelReunions(e))
@@ -120,7 +120,7 @@ public interface modelReunionsI {
 	 * @see com.goytia.models.DB.modelReunionsI#newReunion(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.util.Date)
 	 */
 	public static boolean newReunion(String nomeRiunione, String nomeResponsabile, String referenze, String descrizione, java.util.Date dataEora){
-		modelReunions temp = new modelReunions(MBOggetto.oggettoDaTabella("Riunioni"));
+		modelReunions temp = new modelReunions(TableRow.oggettoDaTabella("Riunioni"));
 		temp.setNomeRiunione(nomeRiunione);
 		temp.setResponsible(nomeResponsabile);
 		temp.setReferenzeResponsabile(referenze);

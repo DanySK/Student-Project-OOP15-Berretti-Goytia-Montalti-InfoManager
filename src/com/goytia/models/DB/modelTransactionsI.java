@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.infoMng.controller.MBOggetto;
-import com.infoMng.controller.MBQuery;
+import com.infoMng.controller.TableRow;
+import com.infoMng.controller.DataBaseSearch;
 
 public interface modelTransactionsI {
 
@@ -27,7 +27,7 @@ public interface modelTransactionsI {
 	 */
 	public static List<modelTransactions> transactionsList(){
 		
-		MBQuery query = MBQuery.queryDaTabella("Movimenti");
+		DataBaseSearch query = DataBaseSearch.queryDaTabella("Movimenti");
 		try {
 			return query.find().stream()
 					.map(e -> new modelTransactions(e))
@@ -52,7 +52,7 @@ public interface modelTransactionsI {
 		
 		boolean ctrl= true;
 		for(transactionsProductsI p : lista){
-			modelTransactions temp = new modelTransactions(MBOggetto.oggettoDaTabella("Movimenti"));
+			modelTransactions temp = new modelTransactions(TableRow.oggettoDaTabella("Movimenti"));
 			temp.oggetto.setObjectValue("nRicevuta", nRicevuta );
 			temp.oggetto.setObjectValue("IDProdotto", p.getIDProductInvolved());
 			if(ctrlVendita)

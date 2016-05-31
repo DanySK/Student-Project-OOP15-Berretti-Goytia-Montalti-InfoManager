@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.infoMng.controller.MBOggetto;
-import com.infoMng.controller.MBQuery;
+import com.infoMng.controller.TableRow;
+import com.infoMng.controller.DataBaseSearch;
 
 public interface modelClientsI {
 
@@ -69,7 +69,7 @@ public interface modelClientsI {
 	 * una lista contenente tutti i clienti
 	 */
 	public static List<modelClientsI> clientsList(){
-		MBQuery query = MBQuery.queryDaTabella("Clienti");
+		DataBaseSearch query = DataBaseSearch.queryDaTabella("Clienti");
 		try {
 			return query.find().stream()
 					.map(e -> new modelClients(e))
@@ -92,7 +92,7 @@ public interface modelClientsI {
 	 * true o false a seconda del esito
 	 */
 	public static boolean newClient(String nome, String cognome, String mail, String telefono, String negozio){
-		modelClients nuovo = new modelClients(MBOggetto.oggettoDaTabella("Clienti"));
+		modelClients nuovo = new modelClients(TableRow.oggettoDaTabella("Clienti"));
 		nuovo.setName(nome);
 		nuovo.setLastName(cognome);
 		nuovo.setMail(mail);

@@ -1,17 +1,17 @@
 package com.goytia.models.DB;
 
-import com.infoMng.controller.MBOggetto;
+import com.infoMng.controller.TableRow;
 
 public class modelTransactions implements modelTransactionsI{
 	
-	MBOggetto oggetto;
+	TableRow oggetto;
 	
-	protected modelTransactions(MBOggetto temp){
+	protected modelTransactions(TableRow temp){
 		this.oggetto = temp;
 	}
 	
 	public modelTransactions(){
-		this.oggetto = MBOggetto.oggettoDaTabella("Movimenti");
+		this.oggetto = TableRow.oggettoDaTabella("Movimenti");
 	}
 	
 	public Integer getID(){

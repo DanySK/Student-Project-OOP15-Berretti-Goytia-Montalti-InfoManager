@@ -9,7 +9,7 @@ import java.util.Optional;
  * @author mattiaberretti
  *
  */
-public interface MBOggetto {
+public interface TableRow {
 
 	/***
 	 * crea un nuovo record in una tabella
@@ -18,7 +18,7 @@ public interface MBOggetto {
 	 * @return
 	 * un oggetto reppresentativo del nuovo record
 	 */
-	static MBOggetto oggettoDaTabella(String nomeTabella){
+	static TableRow oggettoDaTabella(String nomeTabella){
 		return new Oggetto(nomeTabella);
 	}
 	

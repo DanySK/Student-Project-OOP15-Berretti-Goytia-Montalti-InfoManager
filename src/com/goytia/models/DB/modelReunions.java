@@ -2,18 +2,18 @@ package com.goytia.models.DB;
 
 import java.sql.Date;
 
-import com.infoMng.controller.MBOggetto;
+import com.infoMng.controller.TableRow;
 
 class modelReunions implements modelReunionsI{
 	
-	MBOggetto oggetto;
+	TableRow oggetto;
 
-	protected modelReunions(MBOggetto temp){
+	protected modelReunions(TableRow temp){
 		this.oggetto = temp;
 	}
 	
 	public modelReunions(){
-		this.oggetto = MBOggetto.oggettoDaTabella("Riunioni");
+		this.oggetto = TableRow.oggettoDaTabella("Riunioni");
 	}
 	
 	protected void setNomeRiunione(String nome){

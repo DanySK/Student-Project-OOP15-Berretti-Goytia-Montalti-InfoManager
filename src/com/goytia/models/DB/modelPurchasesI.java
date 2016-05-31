@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.infoMng.controller.MBOggetto;
-import com.infoMng.controller.MBQuery;
+import com.infoMng.controller.TableRow;
+import com.infoMng.controller.DataBaseSearch;
 
 public interface modelPurchasesI {
 
@@ -37,7 +37,7 @@ public interface modelPurchasesI {
 	 * una lista contenente tutti gli acquisti fatti
 	 */
 	public static List<modelPurchases> purchasesList(){
-		MBQuery query = MBQuery.queryDaTabella("Acquisti");
+		DataBaseSearch query = DataBaseSearch.queryDaTabella("Acquisti");
 		try {
 			return query.find().stream()
 					.map(e -> new modelPurchases(e))
@@ -57,11 +57,11 @@ public interface modelPurchasesI {
 	 * @param data
 	 * @param prodotti
 	 * @return
-	 * true se è stato aggiunt nel db altrimenti false
+	 * true se ï¿½ stato aggiunt nel db altrimenti false
 	 */
 	public static boolean newPurchase(Integer IDFornitore, int nRicevuta, float iva, float sconto, Date data, List<transactionsProductsI> prodotti){
 	
-		modelPurchases temp = new modelPurchases(MBOggetto.oggettoDaTabella("Acquisti"));
+		modelPurchases temp = new modelPurchases(TableRow.oggettoDaTabella("Acquisti"));
 		temp.setProvider(IDFornitore);
 		temp.setDiscount(sconto);
 		temp.setDate(data);

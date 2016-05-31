@@ -7,26 +7,26 @@ import java.util.stream.Collectors;
 import com.goytia.models.DB.modelClientsI;
 import com.goytia.models.DB.modelProvidersI;
 import com.goytia.models.DB.modelStoreI;
-import com.infoMng.controller.MBOggetto;
-import com.infoMng.controller.MBQuery;
+import com.infoMng.controller.TableRow;
+import com.infoMng.controller.DataBaseSearch;
 
 
 public class Fattura implements IFattura {
-	MBOggetto collegamento;
+	TableRow collegamento;
 	
 	protected Fattura(Integer idFattura) throws SQLException{
-		MBQuery query = MBQuery.queryDaTabella("Fatture");
+		DataBaseSearch query = DataBaseSearch.queryDaTabella("Fatture");
 		query.whereEqualTo("objectId", idFattura);
 		this.collegamento = query.getFirst();
 	}
 	
-	protected Fattura(MBOggetto collegamento){
+	protected Fattura(TableRow collegamento){
 		this.collegamento = collegamento;
 	}
 
 	@Override
 	public List<prodottoFattura> getProdotti() {
-		MBQuery query = MBQuery.queryDaTabella("ProdottoVendita");
+		DataBaseSearch query = DataBaseSearch.queryDaTabella("ProdottoVendita");
 		query.whereEqualTo("IDFattura", this.collegamento.objectId());
 		
 		

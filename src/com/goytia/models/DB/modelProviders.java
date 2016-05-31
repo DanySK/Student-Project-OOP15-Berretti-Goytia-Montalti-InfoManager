@@ -1,19 +1,19 @@
 package com.goytia.models.DB;
 
-import com.infoMng.controller.MBOggetto;
+import com.infoMng.controller.TableRow;
 
 class modelProviders implements modelProvidersI{
 	
-	MBOggetto oggetto;
+	TableRow oggetto;
 	
-	protected modelProviders(MBOggetto temp){
+	protected modelProviders(TableRow temp){
 		this.oggetto=temp;
 	}
 	/***
 	 * ottieni un nuovo record della tabella Fornitori
 	 */
 	public modelProviders(){
-		this.oggetto = MBOggetto.oggettoDaTabella("Fornitori");
+		this.oggetto = TableRow.oggettoDaTabella("Fornitori");
 	}
 	
 	public Integer getID(){

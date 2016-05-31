@@ -1,21 +1,21 @@
 package com.goytia.models.DB;
 
-import com.infoMng.controller.MBOggetto;
+import com.infoMng.controller.TableRow;
 import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class modelSales implements modelSalesI {
 	
-	MBOggetto oggetto;
+	TableRow oggetto;
 	//List<transactionsProducts> prodottiVenduti;
 	
-	protected modelSales(MBOggetto temp){
+	protected modelSales(TableRow temp){
 		this.oggetto = temp;
 	}
 	
 	public modelSales(){
-		this.oggetto = MBOggetto.oggettoDaTabella("Vendite");
+		this.oggetto = TableRow.oggettoDaTabella("Vendite");
 	}
 	
 	protected void setNumberPaymentReceipt(int nRicevuta){
