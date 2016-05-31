@@ -52,7 +52,7 @@ public class DialogCerca extends JDialog implements DialogInterface {
 	private final JTextField txtCognome = new JTextField();
 	private final JTextField txtNumero = new JTextField();
 	private GroupLayout gcontentPanel = new GroupLayout(contentPanel);
-	private Navigator<?> fornitori ;
+	private Navigator<?> fornitori;
 
 	/**
 	 * Costruttore DialogCerca.
@@ -117,7 +117,7 @@ public class DialogCerca extends JDialog implements DialogInterface {
 						}
 						if (frame.getClass().equals(ClientiGUI.class)) {
 							
-							o.cercaClienti(txtNome.getText());
+							fornitori = o.cercaClienti(txtNome.getText());
 
 						}
 						if (frame.getClass().equals(FornitoriGUI.class)) {
