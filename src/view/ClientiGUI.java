@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import com.goytia.models.DB.modelClientsI;
+import com.infoMng.controller.Navigator;
 
 import javax.swing.JButton;
 
@@ -57,7 +58,7 @@ public class ClientiGUI extends InitializeFrame {
 	private final JPanel panelButton = new JPanel();
 	private final JButton btnPrecendete = new JButton("<<");
 	private final JButton btnProssimo = new JButton(">>");
-	
+	public Navigator<?> fornitori;
 	
 	
 
@@ -134,7 +135,6 @@ public class ClientiGUI extends InitializeFrame {
 		this.panelText.setLayout(gpanelText);
 		
 		this.panelTool.add(panelButton, BorderLayout.SOUTH);
-		this.changeStatusButton(false);
 		this.panelButton.add(btnPrecendete);
 		
 		this.panelButton.add(btnProssimo);
@@ -142,7 +142,7 @@ public class ClientiGUI extends InitializeFrame {
 			
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				//o.mostraClienteSuccessivo();
+				fornitori.avanti();
 			}
 		});
 		
@@ -181,8 +181,5 @@ public class ClientiGUI extends InitializeFrame {
 		this.txtTelefono.setText(cliente.getPhone());
 	}
 	
-	public void changeStatusButton(boolean a){
-		this.btnPrecendete.setEnabled(a);
-		this.btnProssimo.setEnabled(a);
-	}
+	
 }	
