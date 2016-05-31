@@ -267,7 +267,8 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 					public void actionPerformed(ActionEvent e) {
 						if (rdbtnCliente.isSelected()) {
 							if (checkText()) {
-								o.salvaCliente(map);
+								
+								o.salvaCliente(getDataString(o));
 								o.abilitaFrame(true);
 								dispose();
 							} else {
@@ -275,7 +276,7 @@ public class DialogNuovo extends JDialog implements DialogInterface {
 							}
 						} else {
 							if (checkText()) {
-								o.salvaFornitore(map);
+								o.salvaFornitore(getDataString(o));
 								o.abilitaFrame(true);
 								dispose();
 							} else {

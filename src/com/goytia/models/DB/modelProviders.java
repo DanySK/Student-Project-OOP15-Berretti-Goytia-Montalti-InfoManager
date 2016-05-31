@@ -57,7 +57,7 @@ class modelProviders implements modelProvidersI{
 	}
 	
 	protected static String ctrlString(String str){
-		return str != "" ? str : "";
+		return str == null ? "" : str;
 	}
 	
 	public boolean deleteProvider(){

@@ -355,13 +355,14 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public Navigator<modelProvidersI> cercaFornitori(String nome) {
-		Navigator<modelProvidersI> col = new ListOfObjectImpl<>(modelProvidersI.searchProviders(nome, null, null, null), this.attuale);
+		Navigator<modelProvidersI> col = new ListOfObjectImpl<>(modelProvidersI.searchProviders(nome, "", "", ""), this.attuale);
 		return col;
 	}
 
 	@Override
-	public List<modelClientsI> cercaClienti(String nome) {
-		return modelClientsI.searchClients(nome, null, null, null, null);
+	public Navigator<modelClientsI> cercaClienti(String nome) {
+		Navigator<modelClientsI> col = new ListOfObjectImpl<>(modelClientsI.searchClients(nome, "", "", "", ""), this.attuale);
+		return col;
 	}
 
 	@Override

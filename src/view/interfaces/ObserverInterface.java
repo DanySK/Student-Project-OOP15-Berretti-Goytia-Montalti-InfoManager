@@ -212,7 +212,7 @@ public interface ObserverInterface {
  * @return 
  * 
  */
-	List<modelClientsI> cercaClienti(String nome);
+	Navigator<modelClientsI> cercaClienti(String nome);
 /**
  * Metodo per cercare una riunione.
  * @param data
