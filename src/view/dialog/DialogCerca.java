@@ -130,7 +130,7 @@ public class DialogCerca extends JDialog implements DialogInterface {
 							o.cercaScontrini(txtNumero.getText(), txtNome.getText());
 						}
 						o.abilitaFrame(true);
-
+//TODO: fai in modo che 
 						dispose();
 					}
 				});

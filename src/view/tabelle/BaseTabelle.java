@@ -5,6 +5,8 @@ import javax.swing.table.AbstractTableModel;
 import com.goytia.models.DB.modelStoreI;
 
 import view.interfaces.ObserverInterface;
+import com.infoMng.controller.Navigator;
+import com.infoMng.controller.ObserverInterfaceImpl;
 
 /**
  * Classe che definisce il modello di JTable.
@@ -17,7 +19,8 @@ public class BaseTabelle extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = -6283359396361049566L;
-	private ObserverInterface o;
+	private ObserverInterface o = new ObserverInterfaceImpl(null);
+	private Navigator<?> l = Navigator.creatNavigator(o.listOfProducts());
 
 	/**
 	 * 
@@ -30,7 +33,7 @@ public class BaseTabelle extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return 3;
+		return o.quantitaProdotti();
 	}
 
 	@Override
@@ -46,8 +49,8 @@ public class BaseTabelle extends AbstractTableModel {
 				return new String("Prezzo");
 			}
 		}
-		
-		return new String("");
+		//TODO: fai in modo che ritorni la lista di juan
+		return new String(l.avanti().toString());
 	}
 /**
  * Metodo per ottenere il nome della colonna.

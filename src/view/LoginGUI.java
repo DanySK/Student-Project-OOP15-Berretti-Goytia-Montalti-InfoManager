@@ -128,16 +128,11 @@ public class LoginGUI extends InitializeFrame {
 			
 			@Override
 			public void actionPerformed(final ActionEvent arg0) {
-				final int a = checkLogin();
-				if (a == 1){
+				if (o.userLogin(tUser.getText(), tPass.getText())){
 					o.mostraMenu();
 					dispose();
 				} else {
-					if (a == 0){
-					o.mostraDialogWrongPass();
-					} else {
-						o.mostraDialogWrongUser();;
-					}
+					o.mostraDialogWrongUser();
 				}
 			}
 		});
@@ -163,10 +158,6 @@ public class LoginGUI extends InitializeFrame {
 		mappa.put("Username", tUser.getText());
 		mappa.put("Password", tPass.getText());
 		return mappa;
-	}
-	//TODO: da cavare
-	public int checkLogin() {
-		return 1;
 	}
 		
 }

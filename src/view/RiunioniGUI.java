@@ -140,6 +140,7 @@ public class RiunioniGUI extends InitializeFrame {
 		
 
 	}
+	//TODO: metodo per settare i campi
 	/**
 	 * Metodo per resettare i textfield del frame
 	 */
