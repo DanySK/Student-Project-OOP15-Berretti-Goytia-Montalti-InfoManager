@@ -1,6 +1,7 @@
 package com.goytia.models.DB;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,13 +20,14 @@ public interface modelTransactionsI {
 
 	double getPrice();
 	
+	boolean deleteTransactions();
 	/***
 	 * elenco con tutti i movimenti fatti
 	 * @return
 	 * una lista che contiene tutti i movimenti. ACquisto e vendite si diferenzano per la quantita in ogni movimento
 	 * vendita -> quantita negativa acquisto->quantita positiva
 	 */
-	public static List<modelTransactions> transactionsList(){
+	public static List<modelTransactionsI> transactionsList(){
 		
 		DataBaseSearch query = DataBaseSearch.queryDaTabella("Movimenti");
 		try {
@@ -33,9 +35,7 @@ public interface modelTransactionsI {
 					.map(e -> new modelTransactions(e))
 					.collect(Collectors.toList());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+			return new ArrayList<modelTransactionsI>();
 		}
 	}
 	/***
@@ -74,7 +74,7 @@ public interface modelTransactionsI {
 	 * true o false a secoda del esito
 	 */
 	public static boolean deleteTransactionsProducts(int nRicevuta, boolean ctrlVendita){
-		List<modelTransactions> temp;
+		List<modelTransactionsI> temp;
 		boolean ctrl = true;
 		if(ctrlVendita){
 			temp = modelTransactionsI.transactionsList().stream()
@@ -82,8 +82,8 @@ public interface modelTransactionsI {
 			.filter(e -> e.getQuantity() < 0)
 			.collect(Collectors.toList());
 			
-			for(modelTransactions a : temp){ ctrl = a.oggetto.elimina(); }
-			return ctrl;
+			for(modelTransactionsI a : temp){ ctrl = a.deleteTransactions(); }
+					return ctrl;
 		}
 		else
 		{
@@ -92,7 +92,7 @@ public interface modelTransactionsI {
 			.filter(e -> e.getQuantity() > 0)
 			.collect(Collectors.toList());
 					
-			for(modelTransactions a : temp){ ctrl = a.oggetto.elimina(); }
+			for(modelTransactionsI a : temp){ ctrl = a.deleteTransactions(); }
 					return ctrl;
 		}
 	}

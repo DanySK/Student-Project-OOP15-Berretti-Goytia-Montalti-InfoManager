@@ -1,6 +1,7 @@
 package com.goytia.models.DB;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,16 +53,14 @@ public interface modelUsersI {
 	 * @return
 	 * una lista contenenti tutti gli utenti esistenti
 	 */
-	public static List<modelUsers> usersList(){
+	public static List<modelUsersI> usersList(){
 		DataBaseSearch query = DataBaseSearch.queryDaTabella("Utenti");
 		try {
 			return query.find().stream()
 					.map(e -> new modelUsers(e))
 					.collect(Collectors.toList());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+			return new ArrayList<modelUsersI>();
 		}
 	}
 	/***
@@ -92,7 +91,7 @@ public interface modelUsersI {
 	 */
 	public static boolean usersLogin(String username, String password){
 		return modelUsersI.usersList().stream()
-				.filter(e -> e.getUsername() == username &&  e.getPassword() == password)
+				.filter(e -> e.getUsername().equals(username) &&  e.getPassword().equals(password))
 				.count() == 1;
 	}
 

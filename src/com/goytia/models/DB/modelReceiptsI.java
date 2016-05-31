@@ -2,6 +2,7 @@ package com.goytia.models.DB;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,16 +45,14 @@ public interface modelReceiptsI {
 	 * @return
 	 * un lista cont utti gli scontrini esistenti fino a quel momento
 	 */
-	public static List<modelReceipts> receiptsList(){
+	public static List<modelReceiptsI> receiptsList(){
 		DataBaseSearch query = DataBaseSearch.queryDaTabella("Scontrini");
 		try {
 			return query.find().stream()
 					.map(e -> new modelReceipts(e))
 					.collect(Collectors.toList());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+			return new ArrayList<modelReceiptsI>();
 		}
 	}
 	
@@ -91,7 +90,7 @@ public interface modelReceiptsI {
 	 * @return
 	 * lo scontrino 
 	 */
-	public static modelReceipts searchReceiptByNumber(int nScontrino){
+	public static modelReceiptsI searchReceiptByNumber(int nScontrino){
 		
 		return modelReceiptsI.receiptsList().stream()
 				.filter(s -> s.getNumberReceipt() == nScontrino)

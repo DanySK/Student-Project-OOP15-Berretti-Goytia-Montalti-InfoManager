@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,9 +61,7 @@ public interface modelReunionsI {
 					.filter(e -> e.getDate().before(dataCorrente))
 					.collect(Collectors.toList());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+			return new ArrayList<modelReunionsI>();
 		}
 	}
 	

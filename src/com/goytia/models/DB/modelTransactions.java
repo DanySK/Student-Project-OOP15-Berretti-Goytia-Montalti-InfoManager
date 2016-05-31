@@ -33,5 +33,9 @@ public class modelTransactions implements modelTransactionsI{
 	public double getPrice(){
 		return (double)this.oggetto.getObject("Prezzo");
 	}
+	
+	public boolean deleteTransactions(){
+		return this.oggetto.elimina();
+	}
 
 }
