@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 
 import com.goytia.models.DB.modelClients;
 import com.goytia.models.DB.modelProviders;
+import com.goytia.models.DB.modelReceipts;
+import com.goytia.models.DB.modelReunions;
 import com.goytia.models.DB.modelStore;
 import com.infoMng.controller.ObserverInterfaceImpl.saveResult;
 
@@ -216,16 +218,23 @@ public interface ObserverInterface {
  * 			data della riunione
  * @param nome
  * 			nome dell evento
+ * @return The list of the reuinion of one day
+ * @throws ParseException 
+ * 			Error while parsing String into date
  */
-	void cercaRiunioni(String data, String nome);
+	List<modelReunions> cercaRiunioni(String data, String nome) throws ParseException;
 /**
  * Metodo per cercare uno scontrino.
  * @param numero
  * 			numero dello scontrino
  * @param nome
  * 			nome dell prodotto
+ * @return lo scontrino con il numero richiesto
+ * 
+ * @throws NumberFormatException
+ * 			formato del numero dello scontrino non valido
  */
-	void cercaScontrini(String numero, String nome);
+	modelReceipts cercaScontrini(String numero, String nome) throws NumberFormatException;
 /**
  * Metodo di verifica di username e password.
  * @param user

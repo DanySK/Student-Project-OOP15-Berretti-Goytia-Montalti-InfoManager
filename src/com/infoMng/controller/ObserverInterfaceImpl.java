@@ -7,11 +7,13 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.swing.JFrame;
 
 import com.goytia.models.DB.modelClients;
 import com.goytia.models.DB.modelProviders;
+import com.goytia.models.DB.modelReceipts;
 import com.goytia.models.DB.modelReunions;
 import com.goytia.models.DB.modelStore;
 import com.goytia.models.DB.modelUsers;
@@ -337,15 +339,19 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public void cercaRiunioni(String data, String nome) {
+	public List<modelReunions> cercaRiunioni(String data, String nome) throws ParseException {
 		// TODO Auto-generated method stub
-
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		Date giorno = new Date(format.parse(data).getTime());
+		return modelReunions.reunionsList().stream().filter(r -> {
+			return r.getNameReunion().equals(nome) && r.getDate().equals(giorno);
+		}).collect(Collectors.toList());
 	}
 
 	@Override
-	public void cercaScontrini(String numero, String nome) {
-		// TODO Auto-generated method stub
-
+	public modelReceipts cercaScontrini(String numero, String nome) throws NumberFormatException {
+		Integer numeroScontrino = Integer.parseInt(numero);
+		return modelReceipts.searchReceiptByNumber(numeroScontrino);
 	}
 
 	@Override
