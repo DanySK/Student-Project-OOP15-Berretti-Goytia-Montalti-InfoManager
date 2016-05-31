@@ -34,7 +34,7 @@ public interface modelStoreI {
 	 * @return
 	 * i prodotti trovati
 	 */
-	public static List<modelStore> serachProductsByProvider(Integer IDFornitore){
+	public static List<modelStoreI> serachProductsByProvider(Integer IDFornitore){
 		return modelStoreI.productsList().stream()
 				.filter(e-> e.getIDProvider().equals(IDFornitore))
 				.collect(Collectors.toList());
@@ -46,7 +46,7 @@ public interface modelStoreI {
 	 * @return
 	 * una lista che contiene i prodotti trovati
 	 */
-	public static List<modelStore> searchProductsByQuantity(int quantitaMinima){
+	public static List<modelStoreI> searchProductsByQuantity(int quantitaMinima){
 		return modelStoreI.productsList().stream()
 				.filter(e-> e.getQuantity(e.getID()) >= quantitaMinima)
 				.collect(Collectors.toList());
@@ -59,7 +59,7 @@ public interface modelStoreI {
 	 * @return
 	 * il/i prodotti trovati
 	 */
-	public static List<modelStore> serachProductsByName(String nome){
+	public static List<modelStoreI> serachProductsByName(String nome){
 		return modelStoreI.productsList().stream()
 				.filter(e-> e.getName().equalsIgnoreCase(nome))
 				.collect(Collectors.toList());
@@ -70,7 +70,7 @@ public interface modelStoreI {
 	 * @return
 	 * una lista con tutti i prodotti
 	 */
-	public static List<modelStore> productsList(){
+	public static List<modelStoreI> productsList(){
 		MBQuery query = MBQuery.queryDaTabella("Magazzino");
 		try {
 			return query.find().stream()
@@ -87,7 +87,7 @@ public interface modelStoreI {
 	 * @param nome
 	 * nome del prodotto
 	 * @param IDFornitore
-	 * ID del fornitore del quale si è aquisito il prodotto
+	 * ID del fornitore del quale si ï¿½ aquisito il prodotto
 	 * @param descrizione
 	 * descrizione del prodotto
 	 * @return

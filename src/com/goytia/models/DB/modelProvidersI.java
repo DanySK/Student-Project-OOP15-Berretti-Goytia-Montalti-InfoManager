@@ -51,7 +51,7 @@ public interface modelProvidersI {
 	 * @return
 	 * una lista contenente tutti i fornitori, tramite i parametri forniti
 	 */
-	public static List<modelProviders> searchProviders(String nome, String cognome, String mail, String telefono){
+	public static List<modelProvidersI> searchProviders(String nome, String cognome, String mail, String telefono){
 		return modelProvidersI.providersList().stream()
 							.filter(f -> f.getName().contains(nome) || f.getLastName().contains(cognome)
 											    || f.getMail().contains(mail) || f.getPhone().contains(mail))
@@ -64,7 +64,7 @@ public interface modelProvidersI {
 	 * @return
 	 * una lista con tutti i fornitori che producono il prodotto specificato
 	 */
-	public static List<modelProviders> searchProvidersByProduct(String nomeProdotto){
+	public static List<modelProvidersI> searchProvidersByProduct(String nomeProdotto){
 		
 		List<Integer> listTemp = modelStoreI.productsList().stream()
 				.filter(e-> e.getName().contains(nomeProdotto))
@@ -85,7 +85,7 @@ public interface modelProvidersI {
 	 * @return
 	 * una lista contenente tutti i fornitori
 	 */
-	public static List<modelProviders> providersList(){
+	public static List<modelProvidersI> providersList(){
 		MBQuery query = MBQuery.queryDaTabella("Fornitori");
 		try {
 			return query.find().stream()

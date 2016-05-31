@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.goytia.models.DB.modelClients;
-import com.goytia.models.DB.modelProviders;
-import com.goytia.models.DB.modelStore;
+import com.goytia.models.DB.modelClientsI;
+import com.goytia.models.DB.modelProvidersI;
+import com.goytia.models.DB.modelStoreI;
 import com.infoMng.controller.MBOggetto;
 import com.infoMng.controller.MBQuery;
 
@@ -71,8 +71,8 @@ public interface IFattura {
 	Date getData();
 	Integer getNumeroOrdine();
 	
-	modelClients getCliente();
-	modelProviders getFornitore();
+	modelClientsI getCliente();
+	modelProvidersI getFornitore();
 	
 	Date[] getConsegna();
 	
@@ -96,8 +96,8 @@ public interface IFattura {
 		Date data;
 		Integer numeroOrdine;
 		
-		modelClients cliente;
-		modelProviders fornitore;
+		modelClientsI cliente;
+		modelProvidersI fornitore;
 		
 		Date[] consegna;
 		
@@ -114,7 +114,7 @@ public interface IFattura {
 		Double sconto;
 		Integer IVA;
 	
-		public void addProdotto(modelStore prodotto, Integer quantita, Double prezzo){
+		public void addProdotto(modelStoreI prodotto, Integer quantita, Double prezzo){
 			prodottoFattura tmp = new prodottoFattura();
 			tmp.prodotto = prodotto;
 			tmp.quantita = quantita;
@@ -134,11 +134,11 @@ public interface IFattura {
 			return numeroOrdine;
 		}
 
-		public modelClients getCliente() {
+		public modelClientsI getCliente() {
 			return cliente;
 		}
 
-		public modelProviders getFornitore() {
+		public modelProvidersI getFornitore() {
 			return fornitore;
 		}
 
@@ -182,11 +182,11 @@ public interface IFattura {
 			this.numeroOrdine = numeroOrdine;
 		}
 
-		public void setCliente(modelClients cliente) {
+		public void setCliente(modelClientsI cliente) {
 			this.cliente = cliente;
 		}
 
-		public void setFornitore(modelProviders fornitore) {
+		public void setFornitore(modelProvidersI fornitore) {
 			this.fornitore = fornitore;
 		}
 
@@ -272,7 +272,7 @@ public interface IFattura {
 	}
 	
 	public static class prodottoFattura{
-		public modelStore prodotto;
+		public modelStoreI prodotto;
 		public Integer quantita;
 		public Double prezzo;
 	}

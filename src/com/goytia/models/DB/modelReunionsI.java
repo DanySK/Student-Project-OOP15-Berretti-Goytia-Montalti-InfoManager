@@ -104,7 +104,7 @@ public interface modelReunionsI {
 	 * @return
 	 * una lista contenente tutte le riunioni
 	 */
-	public static List<modelReunions> reunionsList(){
+	public static List<modelReunionsI> reunionsList(){
 		MBQuery query = MBQuery.queryDaTabella("Riunioni");
 		try {
 			return query.find().stream()

@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 
 import javax.swing.JFrame;
 
-import com.goytia.models.DB.modelClients;
-import com.goytia.models.DB.modelProviders;
-import com.goytia.models.DB.modelReceipts;
-import com.goytia.models.DB.modelReunions;
-import com.goytia.models.DB.modelStore;
-import com.goytia.models.DB.modelUsers;
+import com.goytia.models.DB.modelClientsI;
+import com.goytia.models.DB.modelProvidersI;
+import com.goytia.models.DB.modelReceiptsI;
+import com.goytia.models.DB.modelReunionsI;
+import com.goytia.models.DB.modelStoreI;
+import com.goytia.models.DB.modelUsersI;
 import com.infoMng.model.IFattura;
 
 import view.interfaces.ObserverInterface;
@@ -149,7 +149,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		String indirizzo = dati.get("Indirizzo");
 		String nomeNegozio = dati.get("Nome");
 		
-		if( modelUsers.newUser(nomeNegozio, null, mail, username, password)){
+		if( modelUsersI.newUser(nomeNegozio, null, mail, username, password)){
 			UtenteCorrente.tmpUser tmp = new UtenteCorrente.tmpUser();
 			tmp.nome = username;
 			ObserverInterfaceImpl.currentUser.setUtente(tmp);
@@ -168,7 +168,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		String mail = dati.get("Email");
 		String telefono = dati.get("Telefono");
 		String nomeNegozio = ""; // in attesa del metodoto per il nome negozio
-		return modelClients.newClient(nome, cognome, mail, telefono, nomeNegozio);
+		return modelClientsI.newClient(nome, cognome, mail, telefono, nomeNegozio);
 	}
 
 	@Override
@@ -177,7 +177,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		String cognome = dati.get("Cognome");
 		String telefono = dati.get("Telefono");
 		String mail = dati.get("Email");
-		return modelProviders.newProvider(nome, cognome, mail, telefono);
+		return modelProvidersI.newProvider(nome, cognome, mail, telefono);
 	}
 
 	@Override
@@ -203,7 +203,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		//imposto il numero della fattura
 		builder.setNumeroOrdine(numeroFattura);
 		//cerco il fornitore
-		Optional<modelProviders> tmpFornitore = this.ottieniFornitoreDaNome(cliente);
+		Optional<modelProvidersI> tmpFornitore = this.ottieniFornitoreDaNome(cliente);
 		if(tmpFornitore.isPresent()){
 			//il fornitore è stato trovato
 			builder.setFornitore(tmpFornitore.get());
@@ -211,7 +211,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		else{
 			//il fornitore non è stato trovato
 			//cerco il cliente
-			Optional<modelClients> tmpCliente = this.ottieniClienteDaNome(cliente);
+			Optional<modelClientsI> tmpCliente = this.ottieniClienteDaNome(cliente);
 			if(tmpCliente.isPresent()){
 				//il cliente è stato trovato
 				builder.setCliente(tmpCliente.get());
@@ -243,7 +243,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 			Integer quantita = Integer.parseInt((String) e.get("Quantita"));
 			Double prezzo = Double.parseDouble((String) e.get("Prezzo"));
 			//cerco il prodotto
-			Optional<modelStore> tmpProdotto = this.ottengoProdottoDaNome(nomeProdotto);
+			Optional<modelStoreI> tmpProdotto = this.ottengoProdottoDaNome(nomeProdotto);
 			IFattura.prodottoFattura ritorno = null;
 			if(tmpProdotto.isPresent()){
 				ritorno = new IFattura.prodottoFattura();
@@ -269,8 +269,8 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		}
 	}
 	
-	private Optional<modelStore> ottengoProdottoDaNome(String nome){
-		List<modelStore> tmp = modelStore.serachProductsByName(nome);
+	private Optional<modelStoreI> ottengoProdottoDaNome(String nome){
+		List<modelStoreI> tmp = modelStoreI.serachProductsByName(nome);
 		if(tmp.size() > 0){
 			return Optional.of(tmp.get(0));
 		}
@@ -279,8 +279,8 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		}
 	}
 	
-	private Optional<modelProviders> ottieniFornitoreDaNome(String nome){
-		List<modelProviders> tmp = modelProviders.searchProviders(nome, null, null, null);
+	private Optional<modelProvidersI> ottieniFornitoreDaNome(String nome){
+		List<modelProvidersI> tmp = modelProvidersI.searchProviders(nome, null, null, null);
 		if(tmp.size() > 0){
 			return Optional.of(tmp.get(0));
 		}
@@ -289,8 +289,8 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		}
 	}
 	
-	private Optional<modelClients> ottieniClienteDaNome(String nome){
-		List<modelClients> tmp = modelClients.searchClients(nome, null, null, null, null);
+	private Optional<modelClientsI> ottieniClienteDaNome(String nome){
+		List<modelClientsI> tmp = modelClientsI.searchClients(nome, null, null, null, null);
 		if(tmp.size() > 0){
 			return Optional.of(tmp.get(0));
 		}
@@ -316,7 +316,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		
 		DateFormat formatterData = new SimpleDateFormat("dd-MM-yyyy");
 		Date dataEora = new Date(formatterData.parse(String.format("%s-%s-%s", giorno, mese, anno)).getTime());
-		return modelReunions.newReunion(nome, responsabile, "", note, dataEora);
+		return modelReunionsI.newReunion(nome, responsabile, "", note, dataEora);
 		
 	}
 
@@ -336,44 +336,44 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public List<modelStore> ricercaProdotti(String nome) {
-		return modelStore.serachProductsByName(nome);
+	public List<modelStoreI> ricercaProdotti(String nome) {
+		return modelStoreI.serachProductsByName(nome);
 	}
 
 	@Override
-	public int elencoProdotti(List<modelStore> lista) {
+	public int elencoProdotti(List<modelStoreI> lista) {
 		return lista.size();
 	}
 
 	@Override
-	public List<modelProviders> cercaFornitori(String nome) {
-		return modelProviders.searchProviders(nome, null, null, null);
+	public List<modelProvidersI> cercaFornitori(String nome) {
+		return modelProvidersI.searchProviders(nome, null, null, null);
 	}
 
 	@Override
-	public List<modelClients> cercaClienti(String nome) {
-		return modelClients.searchClients(nome, null, null, null, null);
+	public List<modelClientsI> cercaClienti(String nome) {
+		return modelClientsI.searchClients(nome, null, null, null, null);
 	}
 
 	@Override
-	public List<modelReunions> cercaRiunioni(String data, String nome) throws ParseException {
+	public List<modelReunionsI> cercaRiunioni(String data, String nome) throws ParseException {
 		// TODO Auto-generated method stub
 		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		Date giorno = new Date(format.parse(data).getTime());
-		return modelReunions.reunionsList().stream().filter(r -> {
+		return modelReunionsI.reunionsList().stream().filter(r -> {
 			return r.getNameReunion().equals(nome) && r.getDate().equals(giorno);
 		}).collect(Collectors.toList());
 	}
 
 	@Override
-	public modelReceipts cercaScontrini(String numero, String nome) throws NumberFormatException {
+	public modelReceiptsI cercaScontrini(String numero, String nome) throws NumberFormatException {
 		Integer numeroScontrino = Integer.parseInt(numero);
-		return modelReceipts.searchReceiptByNumber(numeroScontrino);
+		return modelReceiptsI.searchReceiptByNumber(numeroScontrino);
 	}
 
 	@Override
 	public boolean userLogin(String user, String pass) {
-		if( modelUsers.usersLogin(user, pass)){
+		if( modelUsersI.usersLogin(user, pass)){
 			UtenteCorrente.tmpUser tmp = new UtenteCorrente.tmpUser();
 			tmp.nome = user;
 			ObserverInterfaceImpl.currentUser.setUtente(tmp);

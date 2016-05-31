@@ -42,7 +42,7 @@ public interface modelClientsI {
 	boolean renameClient(String newNome, String newCognome, String newMail, String newTelefono, String newNegozio);
 
 	/***
-	 * ricerca di un/i clienti tramite uno o più paramentro
+	 * ricerca di un/i clienti tramite uno o piï¿½ paramentro
 	 * @param nome
 	 * passarlo come "" se non si vuole filtrare con questo paramentro
 	 * @param cognome
@@ -56,7 +56,7 @@ public interface modelClientsI {
 	 * @return
 	 * tutti i clienti trovati tramite i parametri forniti, si segue una lgica or
 	 */
-	public static List<modelClients> searchClients(String nome, String cognome, String mail, String telefono, String nomeNegozio){
+	public static List<modelClientsI> searchClients(String nome, String cognome, String mail, String telefono, String nomeNegozio){
 		return modelClientsI.clientsList().stream()
 							.filter(cliente -> cliente.getName().contains(nome) || cliente.getLastName().contains(cognome)
 											    || cliente.getMail().contains(mail) || cliente.getShopName().contains(nomeNegozio)
@@ -68,7 +68,7 @@ public interface modelClientsI {
 	 * @return
 	 * una lista contenente tutti i clienti
 	 */
-	public static List<modelClients> clientsList(){
+	public static List<modelClientsI> clientsList(){
 		MBQuery query = MBQuery.queryDaTabella("Clienti");
 		try {
 			return query.find().stream()

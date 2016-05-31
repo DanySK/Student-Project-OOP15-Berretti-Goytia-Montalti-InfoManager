@@ -4,9 +4,9 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.goytia.models.DB.modelClients;
-import com.goytia.models.DB.modelProviders;
-import com.goytia.models.DB.modelStore;
+import com.goytia.models.DB.modelClientsI;
+import com.goytia.models.DB.modelProvidersI;
+import com.goytia.models.DB.modelStoreI;
 import com.infoMng.controller.MBOggetto;
 import com.infoMng.controller.MBQuery;
 
@@ -38,7 +38,7 @@ public class Fattura implements IFattura {
 						nuovo.prezzo = (Double)co.getObject("Prezzo");
 						Integer idProdotto = (Integer)co.getObject("IDProdotto");
 						
-						modelStore prodotto = modelStore.elenco().stream().filter(p -> p.getID().equals(idProdotto)).findFirst().get();
+						modelStoreI prodotto = modelStoreI.productsList().stream().filter(p -> p.getID().equals(idProdotto)).findFirst().get();
 						nuovo.prodotto = prodotto;
 						return nuovo;
 						
@@ -60,22 +60,22 @@ public class Fattura implements IFattura {
 	}
 
 	@Override
-	public modelClients getCliente() {
+	public modelClientsI getCliente() {
 		Integer idCliente = (Integer) this.collegamento.getObject("IDCliente");
 		
 		if(idCliente != null){
-			return modelClients.clientsList().stream().filter(c -> c.getID().equals(idCliente)).findFirst().get();
+			return modelClientsI.clientsList().stream().filter(c -> c.getID().equals(idCliente)).findFirst().get();
 		}
 		return null;
 		
 	}
 
 	@Override
-	public modelProviders getFornitore() {
+	public modelProvidersI getFornitore() {
 		Integer idCliente = (Integer) this.collegamento.getObject("IDFornitore");
 		
 		if(idCliente != null){
-			return modelProviders.providersList().stream().filter(f -> f.getID().equals(idCliente)).findFirst().get();
+			return modelProvidersI.providersList().stream().filter(f -> f.getID().equals(idCliente)).findFirst().get();
 		}
 		return null;
 	}

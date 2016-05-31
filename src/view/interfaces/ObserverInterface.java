@@ -8,10 +8,15 @@ import java.util.Optional;
 import javax.swing.JFrame;
 
 import com.goytia.models.DB.modelClients;
+import com.goytia.models.DB.modelClientsI;
 import com.goytia.models.DB.modelProviders;
+import com.goytia.models.DB.modelProvidersI;
 import com.goytia.models.DB.modelReceipts;
+import com.goytia.models.DB.modelReceiptsI;
 import com.goytia.models.DB.modelReunions;
+import com.goytia.models.DB.modelReunionsI;
 import com.goytia.models.DB.modelStore;
+import com.goytia.models.DB.modelStoreI;
 import com.infoMng.controller.ObserverInterfaceImpl.saveResult;
 import com.infoMng.model.IFattura;
 
@@ -190,21 +195,21 @@ public interface ObserverInterface {
  * @return
  * 			List< modelStore > :lista di prodotti 
  */	
-	List<modelStore> ricercaProdotti(String nome);
+	List<modelStoreI> ricercaProdotti(String nome);
 /**Metodo per ottenere lunghezza lista prodotti.
  * @param lista
  * 		lista dei prodotti
  * @return
  * 		intero con lunghezza lista
  */
-	 int elencoProdotti(List<modelStore> lista);
+	 int elencoProdotti(List<modelStoreI> lista);
 /**
  * Metodo per cercare un fornitore.
  * @param nome
  * 			nome del fornitore
  * @return 
  */
-	List<modelProviders> cercaFornitori(String nome);
+	List<modelProvidersI> cercaFornitori(String nome);
 /**
  * Metodo per cercare un cliente.
  * @param nome
@@ -212,7 +217,7 @@ public interface ObserverInterface {
  * @return 
  * 
  */
-	List<modelClients> cercaClienti(String nome);
+	List<modelClientsI> cercaClienti(String nome);
 /**
  * Metodo per cercare una riunione.
  * @param data
@@ -223,7 +228,7 @@ public interface ObserverInterface {
  * @throws ParseException 
  * 			Error while parsing String into date
  */
-	List<modelReunions> cercaRiunioni(String data, String nome) throws ParseException;
+	List<modelReunionsI> cercaRiunioni(String data, String nome) throws ParseException;
 /**
  * Metodo per cercare uno scontrino.
  * @param numero
@@ -235,7 +240,7 @@ public interface ObserverInterface {
  * @throws NumberFormatException
  * 			formato del numero dello scontrino non valido
  */
-	modelReceipts cercaScontrini(String numero, String nome) throws NumberFormatException;
+	modelReceiptsI cercaScontrini(String numero, String nome) throws NumberFormatException;
 /**
  * Metodo di verifica di username e password.
  * @param user
