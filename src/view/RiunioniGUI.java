@@ -15,7 +15,7 @@ import java.awt.Dimension;
 import java.awt.LayoutManager;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-
+import com.goytia.models.DB.modelReunionsI;
 import com.infoMng.controller.Navigator;
 
 import javax.swing.JLabel;
@@ -184,7 +184,17 @@ public class RiunioniGUI extends InitializeFrame {
 		
 
 	}
-	//TODO: metodo per settare i campi
+	/**
+	 * Metodo per settare i textfield.
+	 * @param o
+	 * 			oggetto Object
+	 */			
+	public void setTextField(final Object o) {
+		modelReunionsI riunioni = (modelReunionsI) o;
+		this.txtEvento.setText(riunioni.getNameReunion());
+		this.txtGiorno.setText(String.valueOf(riunioni.getDate()));
+		this.txtOra.setText(riunioni.getTime());
+	}
 	/**
 	 * Metodo per resettare i textfield del frame
 	 */

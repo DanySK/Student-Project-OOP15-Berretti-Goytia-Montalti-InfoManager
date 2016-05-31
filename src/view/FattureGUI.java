@@ -17,6 +17,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.goytia.models.DB.modelPurchasesI;
 import com.infoMng.controller.Navigator;
 
 import view.interfaces.ObserverInterface;
@@ -351,11 +352,20 @@ public class FattureGUI extends InitializeFrame {
 				
 			}
 		});
-
 	}
-	
-	public void setTextfields(){
-		
+	/**
+	 * Metodo per settare i textfield.
+	 * @param o
+	 * 			oggetto Object
+	 */			
+	public void setTextField(final Object o) {
+		modelPurchasesI fatture = (modelPurchasesI) o;
+		this.textAreaFattura.setText(fatture.purchasedProducts().iterator().toString());
+		this.textFieldIVA.setText(String.valueOf(fatture.getIva()));
+		this.textNumeroOrdine.setText(String.valueOf(fatture.getID()));
+		this.textFornitore.setText(String.valueOf(fatture.getIDProvider()));
+		this.textFieldSconto.setText(String.valueOf(fatture.getDiscount()));
+		this.textDataOrdine.setText(String.valueOf(fatture.getDate()));
 	}
 
 }

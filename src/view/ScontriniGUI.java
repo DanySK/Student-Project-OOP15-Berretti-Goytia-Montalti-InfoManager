@@ -22,7 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
-
+import com.goytia.models.DB.modelReceiptsI;
 import com.infoMng.controller.Navigator;
 
 import javax.swing.JButton;
@@ -91,6 +91,17 @@ public class ScontriniGUI extends InitializeFrame {
 		this.txtQuantita.setText("");
 		this.txtSconto.setText("");
 		this.txtScontrino.setText("");
+	}
+	/**
+	 * Metodo per settare i textfield.
+	 * @param o
+	 * 			oggetto Object
+	 */			
+	public void setTextField(final Object o) {
+		modelReceiptsI scontrino = (modelReceiptsI) o;
+		this.txtIva.setText(String.valueOf(scontrino.getIVA()));
+		this.txtProdotto.setText(String.valueOf(scontrino.getID()));
+		this.txtScontrino.setText(String.valueOf(scontrino.getNumberReceipt()));	
 	}
 
 	/**
