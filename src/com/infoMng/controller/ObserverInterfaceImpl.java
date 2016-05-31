@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -19,8 +20,10 @@ import com.goytia.models.DB.modelReceiptsI;
 import com.goytia.models.DB.modelReunionsI;
 import com.goytia.models.DB.modelStoreI;
 import com.goytia.models.DB.modelUsersI;
+import com.infoMng.controller.delegate.researchDelegate;
 import com.infoMng.model.IFattura;
 
+import view.FattureGUI;
 import view.interfaces.ObserverInterface;
 import view.interfaces.ViewInterface;
 
@@ -30,7 +33,8 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	private ViewInterface view;
 	private JFrame attuale;
-
+	private Optional<researchDelegate> delegate;
+	
 	@Override
 	public Optional<JFrame> getAttuale() {
 		return Optional.ofNullable(this.attuale);
@@ -46,11 +50,16 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	public ObserverInterfaceImpl(ViewInterface view, JFrame attuale) {
+		this(view, attuale, null);
+	}
+	
+	public ObserverInterfaceImpl(ViewInterface view, JFrame attuale, researchDelegate delegate) {
 		this.view = view;
 		if(view != null){
 			this.view.setOggettoController(this);
 		}
 		this.attuale = attuale;
+		this.delegate = Optional.ofNullable(delegate);
 	}
 
 	@Override
@@ -382,11 +391,20 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	@Override
 	public Optional<IFattura> cercaFatture(String numero, String nome, String cognome) throws NumberFormatException {
 		Integer invoiceNumber = Integer.parseInt(numero);
+		FattureGUI view = (FattureGUI) this.attuale;
+		Optional<IFattura> fattura;
 		try {
-			return IFattura.searchIvoicesForNumber(invoiceNumber, nome, cognome);
+			fattura = IFattura.searchIvoicesForNumber(invoiceNumber, nome, cognome);
 		} catch (SQLException e) {
-			return Optional.empty();
+			fattura = Optional.empty();
 		}
+		
+		if(fattura.isPresent() && this.delegate.isPresent()){
+			this.delegate.get().ricercaCompletata(fattura.getClass(), Arrays.asList(fattura));
+		}
+		
+		
+		return fattura;
 	}
 
 	public enum saveResult {
