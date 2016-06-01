@@ -23,7 +23,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import com.goytia.models.DB.modelReceiptsI;
-import com.infoMng.controller.Navigator;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -77,9 +76,6 @@ public class ScontriniGUI extends InitializeFrame {
 	private final JPanel buttonPane = new JPanel();
 	private final JButton btnPrecedente = new JButton("<<");
 	private final JButton btnSuccessivo = new JButton(">>");
-	//CHECKSTYLE:OFF:
-	public Navigator<?> scontrini;
-	//CHECKSTYLE:ON:
 
 	/**
 	 * Metodo che resetta i TextField del frame.
@@ -240,7 +236,7 @@ public class ScontriniGUI extends InitializeFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					o.setAttuale(frame);
-					scontrini.indietro();
+					getNavigator().indietro();
 				} catch (NullPointerException e2) {
 					JOptionPane.showMessageDialog(o.getAttuale().get(), "Eseguire una ricerca per scorrere tra gli scontrini");
 				}
@@ -255,7 +251,7 @@ public class ScontriniGUI extends InitializeFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					o.setAttuale(frame);
-					scontrini.avanti();
+					getNavigator().avanti();
 				} catch (NullPointerException e2) {
 					JOptionPane.showMessageDialog(o.getAttuale().get(), "Eseguire una ricerca per scorrere tra gli scontrini");
 				}

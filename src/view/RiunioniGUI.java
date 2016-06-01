@@ -16,7 +16,6 @@ import java.awt.LayoutManager;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import com.goytia.models.DB.modelReunionsI;
-import com.infoMng.controller.Navigator;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -58,9 +57,6 @@ public class RiunioniGUI extends InitializeFrame {
 	private final JPanel buttonPane = new JPanel();
 	private final JButton btnPrecedente = new JButton("<<");
 	private final JButton btnSuccessivo = new JButton(">>");
-	//CHECKSTYLE:OFF:
-	public Navigator<?> riunioni;
-	//CHECKSTYLE:ON:
 	/**
 	 * Metodo per ottendere dati dai TextField.
 	 * @return
@@ -160,7 +156,7 @@ public class RiunioniGUI extends InitializeFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					o.setAttuale(frame);
-					riunioni.indietro();
+					getNavigator().indietro();
 				} catch (NullPointerException e2) {
 					JOptionPane.showMessageDialog(o.getAttuale().get(), "Eseguire una ricerca per scorrere tra le riunioni");
 				}
@@ -174,7 +170,7 @@ public class RiunioniGUI extends InitializeFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					o.setAttuale(frame);
-					riunioni.avanti();
+					getNavigator().avanti();
 				} catch (NullPointerException e2) {
 					JOptionPane.showMessageDialog(o.getAttuale().get(), "Eseguire una ricerca per scorrere tra le riunioni");
 				}

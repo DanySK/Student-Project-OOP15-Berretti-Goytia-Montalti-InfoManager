@@ -18,7 +18,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.goytia.models.DB.modelPurchasesI;
-import com.infoMng.controller.Navigator;
 
 import view.interfaces.ObserverInterface;
 import view.toolbar.MyToolbar;
@@ -88,9 +87,7 @@ public class FattureGUI extends InitializeFrame {
 	private final JPanel buttonPane = new JPanel();
 	private final JButton btnSuccessivo = new JButton(">>");
 	private final JButton btnPrecedente = new JButton("<<");
-	//CHECKSTYLE:OFF:
-	public Navigator<?> fatture;
-	//CHECKSTYLE:ON:
+
 	/**
 	 * Metodo per pulire i campi del frame.
 	 */
@@ -141,9 +138,9 @@ public class FattureGUI extends InitializeFrame {
 	 * Costruttore del FattureGUI frame.
 	 * 
 	 * @param o
-	 *           Oggetto ObserverInterface
+	 *            Oggetto ObserverInterface
 	 */
-	//CHECKSTYLE:OFF: checkstyle:magicnumber    
+	// CHECKSTYLE:OFF: checkstyle:magicnumber
 	public FattureGUI(final ObserverInterface o) {
 		super(TITOLO, LAYOUT, DIMFRAME);
 		this.setIconImage(Toolkit.getDefaultToolkit()
@@ -322,42 +319,46 @@ public class FattureGUI extends InitializeFrame {
 		this.getContentPane().setLayout(new BorderLayout(0, 0));
 		this.getContentPane().add(toolBar, BorderLayout.NORTH);
 		this.getContentPane().add(layeredPane);
-		
+
 		this.getContentPane().add(buttonPane, BorderLayout.SOUTH);
 		this.buttonPane.add(btnPrecedente);
 		this.btnPrecedente.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					o.setAttuale(frame);
-					fatture.avanti();
+					getNavigator().avanti();
 				} catch (NullPointerException e2) {
-					JOptionPane.showMessageDialog(o.getAttuale().get(), "Eseguire una ricerca per scorrere tra le fatture");
+					JOptionPane.showMessageDialog(o.getAttuale().get(),
+							"Eseguire una ricerca per scorrere tra le fatture");
 				}
-				
+
 			}
 		});
 		this.buttonPane.add(btnSuccessivo);
 		this.btnSuccessivo.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					o.setAttuale(frame);
-					fatture.avanti();
+					getNavigator().avanti();
 				} catch (NullPointerException e2) {
-					JOptionPane.showMessageDialog(o.getAttuale().get(), "Eseguire una ricerca per scorrere tra le fatture");
+					JOptionPane.showMessageDialog(o.getAttuale().get(),
+							"Eseguire una ricerca per scorrere tra le fatture");
 				}
-				
+
 			}
 		});
 	}
+
 	/**
 	 * Metodo per settare i textfield.
+	 * 
 	 * @param o
-	 * 			oggetto Object
-	 */			
+	 *            oggetto Object
+	 */
 	public void setTextField(final Object o) {
 		modelPurchasesI fatture = (modelPurchasesI) o;
 		this.textAreaFattura.setText(fatture.purchasedProducts().iterator().toString());
