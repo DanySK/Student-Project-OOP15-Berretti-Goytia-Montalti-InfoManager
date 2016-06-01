@@ -20,7 +20,10 @@ import com.goytia.models.DB.modelProvidersI;
 import com.goytia.models.DB.modelReceiptsI;
 import com.goytia.models.DB.modelReunionsI;
 import com.goytia.models.DB.modelStoreI;
+import com.goytia.models.DB.modelTransactionsI;
 import com.goytia.models.DB.modelUsersI;
+import com.goytia.models.DB.transactionsProducts;
+import com.goytia.models.DB.transactionsProductsI;
 import com.infoMng.controller.delegate.researchDelegate;
 import com.infoMng.model.IFattura;
 import com.infoMng.model.prodottoMovimento;
@@ -354,9 +357,22 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		Integer iva = Integer.parseInt((String) dati.get("Iva"));
 		Integer sconto = Integer.parseInt((String) dati.get("Sconto"));
 		Integer numero = Integer.parseInt((String) dati.get("Scontrino"));
-		
+		Date data = new Date(new java.util.Date().getTime());
 		List<Map<String, Object>> proodtti = this.estraiProdottiDaLista(tmpProdotti);
 		
+		modelReceiptsI.newReceipt(numero, numero, -1, data, iva);
+
+		List<transactionsProductsI> lista = proodtti.stream()
+				.map(d -> {
+					Integer idProdotto = ((modelStoreI)d.get("Prodotto")).getID();
+					Integer quantita = (Integer) d.get("Quantita");
+					Double prezzo = (Double)d.get("Prezzo");
+					transactionsProductsI t = new transactionsProducts(idProdotto, quantita, prezzo);
+					return t;
+				}).collect(Collectors.toList());
+		
+		
+		modelTransactionsI.transactionsProducts(numero, lista, true);
 		
 		//TODO: da fare
 	}
