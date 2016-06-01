@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -341,10 +342,21 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	@Override
 	public void salvaScontrini(Map<String, Object> dati) {
 		// ottengo i dati dalla mappa
-		List<String> prodotti = (List<String>) dati.get("Prodotti");
+		
+		
+		/*
+		 * Ho inserito un suppress warning per la variabile in quanto sono sicuro che all'interno della mappa è presente una lista
+		 * per sistemare il problema sarebbe sufficente modificare il tipo all'interno della mappa con una classe contenente la lista e il relativo getter
+		 */
+		@SuppressWarnings("unchecked")
+		List<String> tmpProdotti = (List<String>) dati.get("Prodotti");
+		
 		Integer iva = Integer.parseInt((String) dati.get("Iva"));
 		Integer sconto = Integer.parseInt((String) dati.get("Sconto"));
 		Integer numero = Integer.parseInt((String) dati.get("Scontrino"));
+		
+		List<Map<String, Object>> proodtti = this.estraiProdottiDaLista(tmpProdotti);
+		
 		
 		//TODO: da fare
 	}
@@ -464,5 +476,21 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 			this.rawValue = rawValue;
 		}
 	}
-
+	
+	private List<Map<String, Object>> estraiProdottiDaLista(List<String> obj){
+		List<Map<String, Object>> ritorno = new ArrayList<>();
+		for(int i = 0; i < obj.size(); i += 3){
+			Integer quantita = Integer.parseInt(obj.get(i));
+			Optional<modelStoreI> prodotto = this.ottengoProdottoDaNome(obj.get(i+1));
+			Double prezzo = Double.parseDouble(obj.get(i+2));
+			if(prodotto.isPresent()){
+				Map<String, Object> tmp = new HashMap<>();
+				tmp.put("Prodotto", prodotto.get());
+				tmp.put("Quantita", quantita);
+				tmp.put("Prezzo", prezzo);
+				ritorno.add(tmp);
+			}
+		}
+		return ritorno;
+	}
 }
