@@ -322,8 +322,11 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		String nome = String.format("Riunione del %s/%s/%s", giorno, mese, anno);
 
 		String responsabile = "";
-		if (ObserverInterfaceImpl.currentUser.getUtente().isPresent()) {
-			responsabile = ObserverInterfaceImpl.currentUser.getUtente().get().nome;
+		try{
+			responsabile = modelUsersI.getUtenteCorrente().getName();
+		}
+		catch(NullPointerException e){
+			
 		}
 
 		DateFormat formatterData = new SimpleDateFormat("dd-MM-yyyy");

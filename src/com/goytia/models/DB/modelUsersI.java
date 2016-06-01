@@ -3,13 +3,26 @@ package com.goytia.models.DB;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.infoMng.controller.TableRow;
 import com.infoMng.controller.DataBaseSearch;
 
 public interface modelUsersI {
-
+	public static Boolean isLogged(){
+		return UserTmp.CurrentUser.isLogged();
+	}
+	
+	public static modelUsersI getUtenteCorrente() throws NullPointerException {
+		if(UserTmp.CurrentUser.isLogged()){
+			return UserTmp.CurrentUser.getUtente();
+		}
+		else{
+			throw new NullPointerException("Utente non loggato");
+		}
+	}
+	
 	Integer getID();
 
 	String getName();
@@ -80,7 +93,11 @@ public interface modelUsersI {
 		nuovo.setMail(mail);
 		nuovo.setUsername(username);
 		nuovo.setPassword(password);
-		return nuovo.oggetto.salva();
+		if(nuovo.oggetto.salva()){
+			UserTmp.CurrentUser.setUtente(nuovo);
+			return true;
+		}
+		return false;
 	}
 	/***
 	 * controllo dell'accesso dell'utente
@@ -90,9 +107,18 @@ public interface modelUsersI {
 	 * true se l'untente esiste, altrimenti False
 	 */
 	public static boolean usersLogin(String username, String password){
-		return modelUsersI.usersList().stream()
-				.filter(e -> e.getUsername().equals(username) &&  e.getPassword().equals(password))
-				.count() >0;
+		Optional<modelUsersI> tmp = modelUsersI.usersList().stream()
+				.filter(e -> e.getUsername().equals(username))
+				.filter(e -> e.getPassword().equals(password))
+				.findFirst();
+		
+		if(tmp.isPresent()){
+			UserTmp.CurrentUser.setUtente(tmp.get());
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 }
