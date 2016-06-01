@@ -24,10 +24,11 @@ public interface modelPurchasesI {
 	 */
 	int getNumberPaymentReceipt();
 	/***
-	 * ottiene l'id del fornitore di cui si è acquistto
+	 * ottiene l'id del fornitore di cui si ï¿½ acquistto
 	 * @return
 	 * un integer che contiene l'ide del fornitore
 	 */
+	@Deprecated
 	Integer getIDProvider();
 	/***
 	 * ottiene l'iva dell'acquisto
