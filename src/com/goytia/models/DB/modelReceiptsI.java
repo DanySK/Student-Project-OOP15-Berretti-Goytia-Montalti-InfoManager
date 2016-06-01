@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.infoMng.controller.TableRow;
@@ -25,7 +26,7 @@ public interface modelReceiptsI {
 	int getNumberReceipt();
 	
 	/***
-	 * ottiene l'id del cliente a cui è stato fatto lo scontrino
+	 * ottiene l'id del cliente a cui ï¿½ stato fatto lo scontrino
 	 * @return
 	 * un Integer con il numero dello scontrino
 	 */
@@ -46,7 +47,7 @@ public interface modelReceiptsI {
 	Date getDate();
 
 	/***
-	 * ottieni il cliente sottoforma di modelClientsI contentnte tutti i dati del cliente a cui è stato emmesso lo scontrino
+	 * ottieni il cliente sottoforma di modelClientsI contentnte tutti i dati del cliente a cui ï¿½ stato emmesso lo scontrino
 	 * @return
 	 * un obtject tipo modelCLientsI
 	 */
@@ -97,6 +98,7 @@ public interface modelReceiptsI {
 	 * @return
 	 * true se e andato a buon fine altrimenti false
 	 */
+	@Deprecated
 	public static boolean newReceipt(int nScontrino, int nRicevuta, Integer idCliente, Date data, float iva){
 		
 		modelReceipts nuovo = new modelReceipts(TableRow.oggettoDaTabella("Scontrini"));
@@ -107,6 +109,11 @@ public interface modelReceiptsI {
 		nuovo.setReceipt(nScontrino);
 		return nuovo.oggetto.salva();
 		
+	}
+	
+	public static boolean newReceipt(Optional<Integer> numeroScontrino, modelClientsI cliente, Date data, Double iva, List<transactionsProductsI> prodotti){
+		
+		return false;
 	}
 	
 	/***
