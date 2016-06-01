@@ -14,6 +14,7 @@ import com.goytia.models.DB.modelReunionsI;
 import com.goytia.models.DB.modelStoreI;
 import com.infoMng.controller.Navigator;
 import com.infoMng.controller.ObserverInterfaceImpl.saveResult;
+import com.infoMng.model.IFattura;
 
 /**
  * Interfaccia che definisce ObserverInterface.
@@ -235,7 +236,7 @@ public interface ObserverInterface {
  * @throws NumberFormatException
  * 			formato del numero dello scontrino non valido
  */
-	modelReceiptsI cercaScontrini(String numero, String nome) throws NumberFormatException;
+	Navigator<modelReceiptsI> cercaScontrini(String numero, String nome) throws NumberFormatException;
 /**
  * Metodo di verifica di username e password.
  * @param user
@@ -252,8 +253,9 @@ public interface ObserverInterface {
 	 * 			numero della fattura
 	 * @param nome
 	 * 			nome del Cliente o Fornitore
+	 * @return 
 	 */
-	void cercaFatture(String numero, String nome, String cognome);
+	Navigator<IFattura> cercaFatture(String numero, String nome, String cognome);
 
 	List<modelStoreI> listOfProducts();
 	

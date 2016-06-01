@@ -7,7 +7,9 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import view.ClientiGUI;
+import view.FattureGUI;
 import view.FornitoriGUI;
+import view.ScontriniGUI;
 
 class ListOfObjectImpl<T> implements Navigator<T> {
 	private Integer posizione;
@@ -20,10 +22,10 @@ class ListOfObjectImpl<T> implements Navigator<T> {
 		this.posizione = -1;
 		this.view = view;
 		if(this.view.getClass().equals(ClientiGUI.class)){
-			((ClientiGUI)this.view).fornitori = this;
+			((ClientiGUI)this.view).setNavigator(this);
 		}
 		else if(this.view.getClass().equals(FornitoriGUI.class)){
-			((FornitoriGUI)this.view).fornitori = this;
+			((FornitoriGUI)this.view).setNavigator(this);
 		}
 	}
 	
@@ -48,6 +50,12 @@ class ListOfObjectImpl<T> implements Navigator<T> {
 			else if(this.view.getClass().equals(FornitoriGUI.class)){
 				((FornitoriGUI)this.view).setTextFields(oggetto);
 			}
+			else if(this.view.getClass().equals(FattureGUI.class)){
+				((FattureGUI)this.view).setTextField(oggetto);
+			}
+			else if(this.view.getClass().equals(ScontriniGUI.class)){
+				((ScontriniGUI)this.view).setTextField(oggetto);
+			}
 		}
 		
 		return oggetto;
@@ -68,6 +76,12 @@ class ListOfObjectImpl<T> implements Navigator<T> {
 			}
 			else if(this.view.getClass().equals(FornitoriGUI.class)){
 				((FornitoriGUI)this.view).setTextFields(oggetto);
+			}
+			else if(this.view.getClass().equals(FattureGUI.class)){
+				((FattureGUI)this.view).setTextField(oggetto);
+			}
+			else if(this.view.getClass().equals(ScontriniGUI.class)){
+				((ScontriniGUI)this.view).setTextField(oggetto);
 			}
 		}
 		

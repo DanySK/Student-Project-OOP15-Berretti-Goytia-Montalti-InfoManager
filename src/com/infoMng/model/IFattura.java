@@ -66,7 +66,7 @@ public interface IFattura {
 				.findFirst();
 	}
 	
-	List<prodottoFattura> getProdotti();
+	List<prodottoMovimento> getProdotti();
 	
 	Date getData();
 	Integer getNumeroOrdine();
@@ -91,7 +91,7 @@ public interface IFattura {
 	
 	
 	public static class FatturaBuilder{
-		List<prodottoFattura> prodotti;
+		List<prodottoMovimento> prodotti;
 		
 		Date data;
 		Integer numeroOrdine;
@@ -115,14 +115,14 @@ public interface IFattura {
 		Integer IVA;
 	
 		public void addProdotto(modelStoreI prodotto, Integer quantita, Double prezzo){
-			prodottoFattura tmp = new prodottoFattura();
+			prodottoMovimento tmp = new prodottoMovimento();
 			tmp.prodotto = prodotto;
 			tmp.quantita = quantita;
 			tmp.prezzo = prezzo;
 			this.prodotti.add(tmp);
 		}
 		
-		public void addProdotto(prodottoFattura nuovo){
+		public void addProdotto(prodottoMovimento nuovo){
 			this.prodotti.add(nuovo);
 		}
 		
@@ -269,11 +269,5 @@ public interface IFattura {
 			}
 		}
 		
-	}
-	
-	public static class prodottoFattura{
-		public modelStoreI prodotto;
-		public Integer quantita;
-		public Double prezzo;
 	}
 }

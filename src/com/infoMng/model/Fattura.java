@@ -25,7 +25,7 @@ public class Fattura implements IFattura {
 	}
 
 	@Override
-	public List<prodottoFattura> getProdotti() {
+	public List<prodottoMovimento> getProdotti() {
 		DataBaseSearch query = DataBaseSearch.queryDaTabella("ProdottoVendita");
 		query.whereEqualTo("IDFattura", this.collegamento.objectId());
 		
@@ -33,7 +33,7 @@ public class Fattura implements IFattura {
 		try {
 			return query.find().stream()
 					.map(co -> {
-						prodottoFattura nuovo = new prodottoFattura();
+						prodottoMovimento nuovo = new prodottoMovimento();
 						nuovo.quantita = (Integer)co.getObject("Quantita");
 						nuovo.prezzo = (Double)co.getObject("Prezzo");
 						Integer idProdotto = (Integer)co.getObject("IDProdotto");

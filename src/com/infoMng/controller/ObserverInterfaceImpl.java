@@ -22,8 +22,10 @@ import com.goytia.models.DB.modelStoreI;
 import com.goytia.models.DB.modelUsersI;
 import com.infoMng.controller.delegate.researchDelegate;
 import com.infoMng.model.IFattura;
+import com.infoMng.model.prodottoMovimento;
 
 import view.FattureGUI;
+import view.ScontriniGUI;
 import view.interfaces.ObserverInterface;
 import view.interfaces.ViewInterface;
 
@@ -257,9 +259,9 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 			Double prezzo = Double.parseDouble((String) e.get("Prezzo"));
 			// cerco il prodotto
 			Optional<modelStoreI> tmpProdotto = this.ottengoProdottoDaNome(nomeProdotto);
-			IFattura.prodottoFattura ritorno = null;
+			prodottoMovimento ritorno = null;
 			if (tmpProdotto.isPresent()) {
-				ritorno = new IFattura.prodottoFattura();
+				ritorno = new prodottoMovimento();
 				ritorno.prodotto = tmpProdotto.get();
 				ritorno.prezzo = prezzo;
 				ritorno.quantita = quantita;
@@ -339,8 +341,14 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	@Override
 	public void salvaScontrini(Map<String, Object> dati) {
 		// ottengo i dati dalla mappa
-		// TODO : chiedere a monta quale è la view per lo scontrino
+		List<String> prodotti = (List<String>) dati.get("Prodotti");
+		Integer iva = Integer.parseInt((String) dati.get("Iva"));
+		Integer sconto = Integer.parseInt((String) dati.get("Sconto"));
+		Integer numero = Integer.parseInt((String) dati.get("Scontrino"));
+		
+		//TODO: da fare
 	}
+	
 
 	@Override
 	public List<modelStoreI> ricercaProdotti(String nome) {
@@ -375,9 +383,18 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public modelReceiptsI cercaScontrini(String numero, String nome) throws NumberFormatException {
+	public Navigator<modelReceiptsI> cercaScontrini(String numero, String nome) throws NumberFormatException {
 		Integer numeroScontrino = Integer.parseInt(numero);
-		return modelReceiptsI.searchReceiptByNumber(numeroScontrino);
+		modelReceiptsI scontrino = modelReceiptsI.searchReceiptByNumber(numeroScontrino);
+		if(this.attuale.getClass().equals(ScontriniGUI.class)){
+			ScontriniGUI scontriniView = (ScontriniGUI)this.attuale;
+			
+			Navigator<modelReceiptsI> ritorno = new ListOfObjectImpl<>(Arrays.asList(scontrino), scontriniView);
+			scontriniView.setNavigator(ritorno);
+			return ritorno;
+			
+		}
+		return null;
 	}
 
 	@Override
@@ -397,13 +414,22 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 	}
 
 	@Override
-	public void cercaFatture(String numero, String nome, String cognome) throws NumberFormatException {
+	public Navigator<IFattura> cercaFatture(String numero, String nome, String cognome) throws NumberFormatException {
 		//TODO: chiamare metodo per l'aggiornamento della view
 		Integer invoiceNumber = Integer.parseInt(numero);
 		FattureGUI view = (FattureGUI) this.attuale;
 		Optional<IFattura> fattura;
+		Navigator<IFattura> ritorno = null;
 		try {
 			fattura = IFattura.searchIvoicesForNumber(invoiceNumber, nome, cognome);
+			if(fattura.isPresent()){
+				ritorno = new ListOfObjectImpl<IFattura>(Arrays.asList(fattura.get()), view);
+			}
+			else{
+				ritorno = null;
+			}
+			view.setNavigator(ritorno);
+			
 		} catch (SQLException e) {
 			fattura = Optional.empty();
 		}
@@ -412,8 +438,22 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 			this.delegate.get().ricercaCompletata(fattura.getClass(), Arrays.asList(fattura));
 		}
 		
-		
+		return ritorno;
 	}
+	
+	@Override
+	public List<modelStoreI> listOfProducts() {
+		List<modelStoreI> tmp = modelStoreI.productsList();
+		if(tmp == null){
+			return new ArrayList<>();
+		}
+		else{
+			return tmp;
+		}
+	}
+	
+	
+
 
 	public enum saveResult {
 		success(""), errorData("Dati non corretti"), errorSave("Errore durante il salvataggio");
@@ -425,14 +465,4 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		}
 	}
 
-	@Override
-	public List<modelStoreI> listOfProducts() {
-		List<modelStoreI> tmp = modelStoreI.productsList();
-		if(tmp == null){
-			return new ArrayList<>();
-		}
-		else{
-			return tmp;
-		}
-	}
 }
