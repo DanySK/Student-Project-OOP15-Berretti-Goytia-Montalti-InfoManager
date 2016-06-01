@@ -20,7 +20,6 @@ import com.goytia.models.DB.modelProvidersI;
 import com.goytia.models.DB.modelReceiptsI;
 import com.goytia.models.DB.modelReunionsI;
 import com.goytia.models.DB.modelStoreI;
-import com.goytia.models.DB.modelTransactionsI;
 import com.goytia.models.DB.modelUsersI;
 import com.goytia.models.DB.transactionsProducts;
 import com.goytia.models.DB.transactionsProductsI;
@@ -355,12 +354,10 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		List<String> tmpProdotti = (List<String>) dati.get("Prodotti");
 		
 		Integer iva = Integer.parseInt((String) dati.get("Iva"));
-		Integer sconto = Integer.parseInt((String) dati.get("Sconto"));
+		//Integer sconto = Integer.parseInt((String) dati.get("Sconto"));
 		Integer numero = Integer.parseInt((String) dati.get("Scontrino"));
 		Date data = new Date(new java.util.Date().getTime());
 		List<Map<String, Object>> proodtti = this.estraiProdottiDaLista(tmpProdotti);
-		
-		modelReceiptsI.newReceipt(numero, numero, -1, data, iva);
 
 		List<transactionsProductsI> lista = proodtti.stream()
 				.map(d -> {
@@ -372,9 +369,11 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 				}).collect(Collectors.toList());
 		
 		
-		modelTransactionsI.transactionsProducts(numero, lista, true);
+		modelReceiptsI.newReceipt(Optional.ofNullable(numero), null, data, (iva.doubleValue() / 100.0), lista);
 		
-		//TODO: da fare
+		//modelTransactionsI.transactionsProducts(numero, lista, true);
+		
+		//TODO: da rifare se juan cambia la classe
 	}
 	
 
@@ -443,7 +442,6 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 	@Override
 	public Navigator<IFattura> cercaFatture(String numero, String nome, String cognome) throws NumberFormatException {
-		//TODO: chiamare metodo per l'aggiornamento della view
 		Integer invoiceNumber = Integer.parseInt(numero);
 		FattureGUI view = (FattureGUI) this.attuale;
 		Optional<IFattura> fattura;
