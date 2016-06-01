@@ -31,6 +31,7 @@ public interface modelReunionsI {
 	 * @return
 	 * una stringa contenente il nome del responsabile
 	 */
+	@Deprecated
 	String getNameResponsible();
 	/***
 	 * ottiene le referenze per contattare il responsabile
@@ -63,7 +64,7 @@ public interface modelReunionsI {
 	 * @param newNome
 	 * nuovo nome da asseganre
 	 * @param newResponsabile
-	 * nuovo responsabile se c'è stato un cambiamento
+	 * nuovo responsabile se c'ï¿½ stato un cambiamento
 	 * @param newReferenze
 	 * nuove referenze del responsabile
 	 * @param newDescrizione

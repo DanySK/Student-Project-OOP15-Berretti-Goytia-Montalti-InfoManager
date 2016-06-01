@@ -18,6 +18,7 @@ import com.infoMng.controller.TableRow;
 		this.oggetto.setObjectValue("Nome", nome);
 	}
 	
+	@Deprecated
 	protected void setIDProvider(Integer IDFornitore){
 		this.oggetto.setObjectValue("IDFornitore", IDFornitore);
 	}
@@ -48,6 +49,7 @@ import com.infoMng.controller.TableRow;
 				.sum();
 	}
 	
+	@Deprecated
 	public Integer getIDProvider(){
 		return (Integer)this.oggetto.getObject("IDFornitore");
 	}

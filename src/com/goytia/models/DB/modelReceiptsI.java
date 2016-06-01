@@ -30,6 +30,7 @@ public interface modelReceiptsI {
 	 * @return
 	 * un Integer con il numero dello scontrino
 	 */
+	@Deprecated
 	Integer getIDClient();
 
 	/***
