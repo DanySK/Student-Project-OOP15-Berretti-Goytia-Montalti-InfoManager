@@ -7,19 +7,47 @@ import java.util.stream.Collectors;
 
 import it.unibo.infomanager.infomng.controller.DataBaseSearch;
 import it.unibo.infomanager.infomng.controller.TableRow;
-
+/***
+ * interfaccia per la gestione di ogni movimento realizzato( vendita o aquisto )
+ * @author Juan Goytia
+ *
+ */
 public interface modelTransactionsI {
-
+	/***
+	 * ottiene l'id del record
+	 * @return
+	 * un integer con l'id del record
+	 */
 	Integer getID();
-
-	Integer getIDProduct();
-
+	/***
+	 * ottiene prodotto movimentato
+	 * @return
+	 * il prodotto venduto o acquistato
+	 */
+	modelStoreI getProduct();
+	/***
+	 * ottiene il numero della ricevuta vendita o acquisto
+	 * @return
+	 * int con il numero della ricevuta
+	 */
 	int getNumberPaymentRicevuta();
-
+	/***
+	 * ottiene la quantita acquistata o venduta del prodotto
+	 * @return
+	 * un intero con la quantita
+	 */
 	int getQuantity();
-
+	/***
+	 * ottiene il perzzo unitario del prodotto
+	 * @return
+	 * un double con il prezzo
+	 */
 	double getPrice();
-	
+	/***
+	 * eliminazine del movimento corrente
+	 * @return
+	 * true se andato a buon fine altrimenti false
+	 */
 	boolean deleteTransactions();
 	/***
 	 * elenco con tutti i movimenti fatti
@@ -39,7 +67,7 @@ public interface modelTransactionsI {
 		}
 	}
 	/***
-	 * nuovo movimento effettato
+	 * nuovo movimento effettuato
 	 * @param nRicevuta
 	 * @param lista
 	 * lista tipo prodottoVenduto contenente tutti i prodotti coinvolti nel movimento
@@ -54,7 +82,7 @@ public interface modelTransactionsI {
 		for(transactionsProductsI p : lista){
 			modelTransactions temp = new modelTransactions(TableRow.oggettoDaTabella("Movimenti"));
 			temp.oggetto.setObjectValue("nRicevuta", nRicevuta );
-			temp.oggetto.setObjectValue("IDProdotto", p.getIDProductInvolved());
+			temp.oggetto.setObjectValue("IDProdotto", p.getProductInvolved().getID());
 			if(ctrlVendita)
 				temp.oggetto.setObjectValue("Quantita", -1 * p.getQuantity());
 			else

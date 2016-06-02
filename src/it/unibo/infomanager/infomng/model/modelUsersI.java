@@ -7,21 +7,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import it.unibo.infomanager.infomng.controller.DataBaseSearch;
-import it.unibo.infomanager.infomng.controller.TableRow;
-
+/***
+ * interfaccia per gestione degli untente
+ * @author Juan Goytia
+ *
+ */
 public interface modelUsersI {
-	public static Boolean isLogged(){
-		return UserTmp.CurrentUser.isLogged();
-	}
-	
-	public static modelUsersI getUtenteCorrente() throws NullPointerException {
-		if(UserTmp.CurrentUser.isLogged()){
-			return UserTmp.CurrentUser.getUtente();
-		}
-		else{
-			throw new NullPointerException("Utente non loggato");
-		}
-	}
 	
 	Integer getID();
 
@@ -34,30 +25,38 @@ public interface modelUsersI {
 	String getPassword();
 
 	String getMail();
-
+	
+	void setName(String nome);
+	
+	void setLastName(String cognome);
+	
+	void setUsername(String username);
+	
+	void setPassword(String password);
+	
+	void setMail(String mail);
 	/***
-	 * creazione di un nuovo utente
-	 * @param nome
-	 * @param cognome
-	 * @param mail
-	 * @param username
-	 * @param password
+	 * aggiornamento(salvataggio o modifica dell'utente)
 	 * @return
-	 * true se ï¿½ stato creato l'utente altrimenti false
+	 * true se andato a buon fine
 	 */
-
-	boolean changePassword(String nome, String cognome, String mail, String username, String password,
-			String newPassword);
-
+	boolean update();
+	
 	/***
-	 * metodo per eliminare il propri account utente
+	 * metodo per l'eliminazione di un utente
+	 * richiedo i dati per accettarsi che si tratti del proprio utente e non di un altro
 	 * @param nome
+	 * nome Utente
 	 * @param cognome
+	 * cognome dell'utente
 	 * @param mail
+	 * mail dell'utente
 	 * @param username
+	 * username dell'utente
 	 * @param password
+	 * pasword dell utente
 	 * @return
-	 * true se ï¿½ stata cancellata l'account altrimenti false
+	 * true se andato a buon fine altrimenti false
 	 */
 	boolean deleteUser(String nome, String cognome, String mail, String username, String password);
 	
@@ -79,21 +78,31 @@ public interface modelUsersI {
 	/***
 	 * creazione di un nuovo utente
 	 * @param nome
+	 * nome dell'utente
 	 * @param cognome
+	 * cognome dell'utente
 	 * @param mail
+	 * mail dell'utente
 	 * @param username
+	 * username per queto utente
 	 * @param password
+	 * pasword per questo utente
 	 * @return
-	 * true se ï¿½ stato creato l'utente altrimenti false
+	 * true se andato a buon fine o false se l'username esiste giù oppure errore nel salvataggio
 	 */
-	public static boolean newUser(String nome, String cognome, String mail, String username, String password){
-		modelUsers nuovo = new modelUsers(TableRow.oggettoDaTabella("Utenti"));
+	public static boolean builder(String nome, String cognome, String mail, String username, String password){
+		modelUsersI nuovo = new modelUsers();
 		nuovo.setName(nome);
 		nuovo.setLastName(cognome);
 		nuovo.setMail(mail);
+		if(modelUsersI.usersList().stream()
+			.filter(u -> u.getUsername().equals(username))
+			.count() > 1){
+			return false;
+		}
 		nuovo.setUsername(username);
 		nuovo.setPassword(password);
-		if(nuovo.oggetto.salva()){
+		if(nuovo.update()){
 			UserTmp.CurrentUser.setUtente(nuovo);
 			return true;
 		}
@@ -102,7 +111,9 @@ public interface modelUsersI {
 	/***
 	 * controllo dell'accesso dell'utente
 	 * @param username
+	 * username dell'utente passato come string
 	 * @param password
+	 * la pasword dell'utente passato come string
 	 * @return
 	 * true se l'untente esiste, altrimenti False
 	 */
@@ -113,11 +124,34 @@ public interface modelUsersI {
 				.findFirst();
 		
 		if(tmp.isPresent()){
+			//metodo per tener traccia dell'utente che è stato loggato
 			UserTmp.CurrentUser.setUtente(tmp.get());
 			return true;
 		}
 		else{
 			return false;
+		}
+	}
+	/***
+	 * metodo che controlla se l'utente corrente è logato
+	 * @return
+	 * true se l'utente è loggato
+	 */
+	public static Boolean isLogged(){
+		return UserTmp.CurrentUser.isLogged();
+	}
+	/***
+	 * metodo che ottiene l'utente corrente 
+	 * @return
+	 * l'utente corrente
+	 * @throws NullPointerException
+	 */
+	public static modelUsersI getUtenteCorrente() throws NullPointerException {
+		if(UserTmp.CurrentUser.isLogged()){
+			return UserTmp.CurrentUser.getUtente();
+		}
+		else{
+			throw new NullPointerException("Utente non loggato");
 		}
 	}
 

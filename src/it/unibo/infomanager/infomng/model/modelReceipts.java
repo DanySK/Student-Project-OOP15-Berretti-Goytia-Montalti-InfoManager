@@ -7,7 +7,11 @@ import it.unibo.infomanager.infomng.controller.TableRow;
 
 import java.sql.Date;
 
-
+/***
+ * 
+ * @author Juan Goytia
+ *
+ */
 public class modelReceipts implements modelReceiptsI{
 	
 	TableRow oggetto;
@@ -15,76 +19,107 @@ public class modelReceipts implements modelReceiptsI{
 	protected modelReceipts(TableRow temp){
 		this.oggetto=temp;
 	}
+	private Integer getIDCliente(){
+		return (Integer)this.oggetto.getObject("IDCliente");
+	}
+	private Integer getIDFornitore(){
+		return (Integer)this.oggetto.getObject("IDFornitore");
+	}
 	/***
 	 * Ottengo un record nuovo dalla tabella Scontrini
 	 */
 	public modelReceipts(){
 		this.oggetto = TableRow.oggettoDaTabella("Scontrini");
 	}
+	@Override
 	public Integer getID(){
 		return this.oggetto.objectId();
 	}
-	protected void setReceipt(int nScontrino){
-		this.oggetto.setObjectValue("nScontrino", nScontrino);
-	}
-	protected void setClient(Integer idCliente){
-		this.oggetto.setObjectValue("IDCliente", idCliente);
-	}
-	
-	protected void setDate(Date data){
+	@Override
+	public void setDate(Date data){
 		this.oggetto.setObjectValue("Data", data);
 	}
-	
-	protected void setIva(float iva){
+	@Override
+	public void setIva(float iva){
 		this.oggetto.setObjectValue("IVA", iva);
 	}
-	
-	protected void setNumberPaymentReceipt(int nRicevuta){
-		this.oggetto.setObjectValue("nRicevuta", nRicevuta);
-	}
-	
-	protected int getNumberPaymentReceipt(){
-		return (int)this.oggetto.getObject("nRicevuta");
-	}
-	
+	@Override
 	public int getNumberReceipt(){
-		return (int)this.oggetto.getObject("nScontrino");
+		return (int)this.oggetto.getObject("NumeroScontrino");
 	}
-	
-	public Integer getIDClient(){
-		return (Integer)this.oggetto.getObject("IDCliente");
+	//Aiuto a catturare l'errore
+	@Override
+	public modelClientsI getClient(){
+		try{
+			return modelClientsI.clientsList().stream()
+					.filter(c ->{
+						try{
+						return c.getID().equals(this.getIDCliente());
+						}catch(NullPointerException e){
+							return false;
+						}
+					})
+					.findFirst()
+					.get();
+		}catch(Exception e)
+		{
+			return null;
+		}
 	}
-	
-	public float getIVA(){
-		return (float) this.oggetto.getObject("IVA");
-	}
-	
-	public Date getDate(){
-		return (Date)this.oggetto.getObject("Data");
-	}
-	/***
-	 * metodo alternativo che ritorno il cliente con tutti i dati filtrando con l'idCliente
-	 * @return
-	 * lo specifico cliente a qui va rivolta lo scontrino
-	 */
-	public modelClientsI client(){
-		return modelClientsI.clientsList().stream()
-				.filter(c -> c.getID().equals(this.getIDClient()))
+	@Override
+	public modelProvidersI getProvider(){
+		return modelProvidersI.providersList().stream()
+				.filter(p -> p.getID().equals(this.getIDFornitore()))
 				.findFirst()
 				.get();
 	}
-
+	@Override
+	public float getIVA(){
+		return (float) this.oggetto.getObject("IVA");
+	}
+	@Override
+	public Date getDate(){
+		return (Date)this.oggetto.getObject("Data");
+	}
+	@Override
 	public List<transactionsProductsI> soldProducts(){
 		return modelTransactionsI.transactionsList().stream()
-				.filter( m -> m.getNumberPaymentRicevuta() == this.getNumberPaymentReceipt())
+				.filter( m -> m.getNumberPaymentRicevuta() == this.getNumberReceipt())
 				.map( p -> {
-					return new transactionsProducts(p.getIDProduct(), Math.abs(p.getQuantity()), p.getPrice());
+					return new transactionsProducts(p.getProduct(), Math.abs(p.getQuantity()), p.getPrice());
 				})
 				.collect(Collectors.toList());
 				
 	}
-	
+	@Override
+	public boolean update(){
+		return this.oggetto.salva();
+	}
+	@Override
 	public boolean deleteReceipt(){
 		return this.oggetto.elimina();
+	}
+	@Override
+	public void setNumberReceipt(int nScontrino) {
+		this.oggetto.setObjectValue("NumeroScontrino", nScontrino);
+	}
+	@Override
+	public void setProvider(modelProvidersI fornitore) {
+		// TODO Auto-generated method stub
+		this.oggetto.setObjectValue("IDFornitore", fornitore.getID());
+	}
+	@Override
+	public void setDiscount(float sconto) {
+		// TODO Auto-generated method stub
+		this.oggetto.setObjectValue("Sconto", sconto);
+	}
+	@Override
+	public void setClient(modelClientsI cliente) {
+		// TODO Auto-generated method stub
+		this.oggetto.setObjectValue("IDCliente", cliente.getID());
+	}
+	@Override
+	public float getDiscount() {
+		return (float)this.oggetto.getObject("Sconto");
 	}
 }

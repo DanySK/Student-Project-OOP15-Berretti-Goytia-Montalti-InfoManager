@@ -6,9 +6,42 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import it.unibo.infomanager.infomng.controller.DataBaseSearch;
-import it.unibo.infomanager.infomng.controller.TableRow;
-
+/***
+ * Interfaccia per gestire i clienti
+ * @author Juan Goytia
+ *
+ */
 public interface modelClientsI {
+	/***
+	 * setta il nome del cliente
+	 * @param name
+	 * string con il nome del cliente
+	 */
+	void setName(String name);
+	/***
+	 * setta il cognome del cliente
+	 * @param cognome
+	 * string con il cognome del cliente
+	 */
+	void setLastName(String cognome);
+	/***
+	 * setta la mail del cliente
+	 * @param mail
+	 * string con l'email del cliente
+	 */
+	void setMail(String mail);
+	/***
+	 * setta il numero del telefono
+	 * @param telefono
+	 * string con il numero del telefono
+	 */
+	void setPhone(String telefono);
+	/***
+	 * setta il nome del negozio
+	 * @param nomeNegozio
+	 * string con il nome del negozio
+	 */
+	void setShopName(String nomeNegozio);
 	
 	/***
 	 * ottiene ID del record corrente
@@ -51,6 +84,12 @@ public interface modelClientsI {
 	 * una stringa contenente il nome del negozio
 	 */
 	String getShopName();
+	/***
+	 * realizza l'update(salvataggio o modifica) di un record
+	 * @return
+	 * true se e andato a buon fine, altrimenti false
+	 */
+	boolean update();
 	
 	/***
 	 * eliminazione del cliente corrente
@@ -58,23 +97,6 @@ public interface modelClientsI {
 	 * true se va a buon fine
 	 */
 	boolean deleteClient();
-
-	/***
-	 * modifica del cliente corrente
-	 * Si chiede di passare come "" i parametri che non sono a modificare
-	 * @param newNome
-	 * nuovo nome 
-	 * @param newCognome
-	 * nuovo cognome 
-	 * @param newMail
-	 * nuova mail
-	 * @param newTelefono
-	 * nuovo recapivo telefonico
-	 * @param newNegozio
-	 * @return
-	 * true se va buon fine
-	 */
-	boolean renameClient(String newNome, String newCognome, String newMail, String newTelefono, String newNegozio);
 
 	/***
 	 * ricerca di un/i clienti tramite uno o piu parametri
@@ -94,9 +116,16 @@ public interface modelClientsI {
 	 */
 	public static List<modelClientsI> searchClients(String nome, String cognome, String mail, String telefono, String nomeNegozio){
 		return modelClientsI.clientsList().stream()
-							.filter(cliente -> cliente.getName().contains(nome) || cliente.getLastName().contains(cognome)
-											    || cliente.getMail().contains(mail) || cliente.getShopName().contains(nomeNegozio)
-											    || cliente.getPhone().contains(telefono))
+							.filter(cliente ->{ 
+								try{
+								 return cliente.getName().contains(nome) || cliente.getLastName().contains(cognome)
+							    || cliente.getMail().contains(mail) || cliente.getShopName().contains(nomeNegozio)
+							    || cliente.getPhone().contains(telefono);
+								}
+								catch(Exception e){
+									return false;
+								}
+							})
 							.collect(Collectors.toList());
 	}
 	
@@ -115,7 +144,6 @@ public interface modelClientsI {
 			return new ArrayList<modelClientsI>();
 		}
 	}
-	
 	/***
 	 * creazione di un nuovo cliente
 	 * @param nome
@@ -123,21 +151,22 @@ public interface modelClientsI {
 	 * @param cognome
 	 * cognome del cliente
 	 * @param mail
-	 * email del cliente
+	 * mail del cliente
 	 * @param telefono
-	 * recapito telefonico del cliente
-	 * @param negozio
-	 * nome del negozio a cui appartiene il cliente
+	 * teleono del cliente
+	 * @param nomeNegozio
+	 * nome del negozio cliente
 	 * @return
-	 * true se e andato a buon fine il salvataggio
+	 * true se e andato a buon fine altrimenti false
 	 */
-	public static boolean newClient(String nome, String cognome, String mail, String telefono, String negozio){
-		modelClients nuovo = new modelClients(TableRow.oggettoDaTabella("Clienti"));
-		nuovo.setName(nome);
-		nuovo.setLastName(cognome);
-		nuovo.setMail(mail);
-		nuovo.setPhone(telefono);
-		nuovo.setShopName(negozio);
-		return nuovo.oggetto.salva();
+	public static boolean builder(String nome, String cognome, String mail, String telefono, String nomeNegozio){
+		modelClientsI temp = new modelClients();
+		temp.setName(nome);
+		temp.setLastName(cognome);
+		temp.setMail(mail);
+		temp.setPhone(telefono);
+		temp.setShopName(nomeNegozio);
+		return temp.update();
+		
 	}
 }

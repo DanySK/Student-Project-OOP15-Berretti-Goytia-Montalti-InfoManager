@@ -8,9 +8,43 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import it.unibo.infomanager.infomng.controller.DataBaseSearch;
-import it.unibo.infomanager.infomng.controller.TableRow;
-
+/***
+ * interfaccia per la gestione degli sontrini
+ * @author Juan Goytia
+ *
+ */
 public interface modelReceiptsI {
+	
+	void setNumberReceipt(int nScontrino);
+	/***
+	 * setto nello scontrino l'eventuale cliente se si tratta di una vendita
+	 * @param cliente
+	 * cliente passato come modelClientsI
+	 */
+	void setClient(modelClientsI cliente);
+	/***
+	 * setto il providers se si tratta di un acquisto
+	 * @param fornitore
+	 * fornitore passato come modelProvidersI
+	 */
+	void setProvider(modelProvidersI fornitore);
+	/***
+	 * setto la data dello scontrino
+	 * @param data
+	 * data passato come sql.Date
+	 */
+	void setDate(Date data);
+	/***
+	 * setta l'iva per questo scontrino
+	 * @param iva
+	 */
+	void setIva(float iva);
+	/***
+	 * setto lo sconto per questo scontrino
+	 * @param sconto
+	 * lo sconto passato come un float
+	 */
+	void setDiscount(float sconto);
 	
 	/***
 	 * ottiene l'ID del record
@@ -24,21 +58,17 @@ public interface modelReceiptsI {
 	 * un int con il numero dello scontrino
 	 */
 	int getNumberReceipt();
-	
-	/***
-	 * ottiene l'id del cliente a cui � stato fatto lo scontrino
-	 * @return
-	 * un Integer con il numero dello scontrino
-	 */
-	@Deprecated
-	Integer getIDClient();
-
 	/***
 	 * ottiene l'iva dello scontrino
 	 * @return
 	 * un float contenente l'IVA
 	 */
 	float getIVA();
+	/***
+	 * ottiene l'eventuale sconto in questo scontrino
+	 * @return
+	 */
+	float getDiscount();
 	
 	/***
 	 *ottiene la data di emissione dello scontrino 
@@ -48,19 +78,24 @@ public interface modelReceiptsI {
 	Date getDate();
 
 	/***
-	 * ottieni il cliente sottoforma di modelClientsI contentnte tutti i dati del cliente a cui � stato emmesso lo scontrino
+	 * ottiene il cliente se si tratta di una vendita altrimenti ottine un cliente null
 	 * @return
 	 * un obtject tipo modelCLientsI
 	 */
-	modelClientsI client();
+	modelClientsI getClient();
 
 	/***
-	 * ottiene la lista di tutti i prodotti venduti nello sconrino
+	 * lista dei prodotti venduti o acquistati in questo scontrino
 	 * @return
 	 * una lista tipo transactionsProductsI 
 	 */
 	List<transactionsProductsI> soldProducts();
-
+	/***
+	 * ottiene il fornitore se si tratta di un acquisto altrimenti un fornitore null
+	 * @return
+	 */
+	modelProvidersI getProvider();
+	
 	/***
 	 * elimnazione dello scontrino corrente
 	 * @return
@@ -68,6 +103,14 @@ public interface modelReceiptsI {
 	 */
 	boolean deleteReceipt();
 	
+	/***
+	 * aggiornamento(modifica salvataggio) di un record
+	 * @return
+	 * true se andato a buon fine altrimenti false
+	 */
+	boolean update();
+	
+
 	/***
 	 * ottiene una lista con tutti gli scontrini emmessi
 	 * @return
@@ -85,36 +128,50 @@ public interface modelReceiptsI {
 	}
 	
 	/***
-	 * salvataggio di un nuovo scontrino
-	 * @param nScontrino
-	 * numero dello scontrino
-	 * @param nRicevuta
-	 * numero della ricevuta per la quale si deve realizzare lo scontrino
-	 * @param idCliente
-	 * id del cliente a chi va emmesso lo scontrino
+	 * creazione di uno scontrino
+	 * @param cliente
+	 * passare il cliente se si tratta di una vendita altrimenti passare l'optional vuoto
+	 * @param fornitore
+	 * passare il fornitore se si tratta di un acquisto altrimenti passare l'optional vuoto
 	 * @param data
 	 * data dello scontrino
 	 * @param iva
-	 * iva da applicare
+	 * iva dello scontrino
+	 * @param sconto
+	 * sconto per questo scontrino
+	 * @param prodotti
+	 * lista di prodotti sottforma di transactionsProductsI
 	 * @return
-	 * true se e andato a buon fine altrimenti false
+	 * true se andato a buon fine altrimenti false
 	 */
-	@Deprecated
-	public static boolean newReceipt(int nScontrino, int nRicevuta, Integer idCliente, Date data, float iva){
+	public static boolean builder(Optional<modelClientsI> cliente, Optional<modelProvidersI> fornitore, Date data, float iva,float sconto, List<transactionsProductsI> prodotti){
+		//variabile che mi salva il numero dello sconrino
+		int nScontrino;
+		//controllo se si tratto del primo scontrino 
+		if(modelReceiptsI.receiptsList().size() == 0)
+			nScontrino = 1000;
+		else
+			nScontrino = modelReceiptsI.receiptsList().get(modelReceiptsI.receiptsList().size()-1).getNumberReceipt()+1;
 		
-		modelReceipts nuovo = new modelReceipts(TableRow.oggettoDaTabella("Scontrini"));
-		nuovo.setClient(idCliente);
-		nuovo.setDate(data);
-		nuovo.setIva(iva);
-		nuovo.setNumberPaymentReceipt(nRicevuta);
-		nuovo.setReceipt(nScontrino);
-		return nuovo.oggetto.salva();
-		
-	}
-	
-	public static boolean newReceipt(Optional<Integer> numeroScontrino, modelClientsI cliente, Date data, Double iva, List<transactionsProductsI> prodotti){
-		
-		return false;
+		modelReceiptsI temp = new modelReceipts();
+		if(cliente.isPresent()){
+			temp.setClient(cliente.get());
+			temp.setNumberReceipt(nScontrino);
+			temp.setDate(data);
+			temp.setIva(iva);
+			temp.setDiscount(sconto);
+			modelSalesI.builder(cliente.get(), nScontrino, iva, sconto, data, prodotti);
+			return temp.update();
+		}
+		else{
+			temp.setProvider(fornitore.get());
+			temp.setNumberReceipt(nScontrino);
+			temp.setDate(data);
+			temp.setIva(iva);
+			temp.setDiscount(sconto);
+			modelPurchasesI.builder(data, sconto, iva, nScontrino, fornitore.get(), prodotti);
+			return temp.update();
+		}
 	}
 	
 	/***

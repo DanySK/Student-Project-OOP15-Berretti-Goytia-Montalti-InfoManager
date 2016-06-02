@@ -1,78 +1,73 @@
 package it.unibo.infomanager.infomng.model;
 
 import it.unibo.infomanager.infomng.controller.TableRow;
-
+/***
+ * 
+ * @author Juan Goytia
+ *
+ */
 class modelClients implements modelClientsI{
 	
 	TableRow oggetto;
 	
-	protected modelClients(){
+	public modelClients(){
 		this.oggetto= TableRow.oggettoDaTabella("Clienti");
 	}
 	
 	protected modelClients(TableRow temp){
 		this.oggetto=temp;
 	}
-	
+	@Override
 	public Integer getID(){
 		return this.oggetto.objectId();
 	}
-
+	@Override
 	public String getName(){
 		return (String)this.oggetto.getObject("Nome");
 	}
-
+	@Override
 	public String getLastName(){
 		return (String)this.oggetto.getObject("Cognome");
 	}
-
+	@Override
 	public String getMail(){
 		return (String)this.oggetto.getObject("Mail");
 	}
-
+	@Override
 	public String getPhone(){
 		return (String)this.oggetto.getObject("Telefono");
 	}
-	
+	@Override
 	public String getShopName(){
 		return (String)this.oggetto.getObject("Negozio");
 	}
-	
-	protected void setName(String nome){
-		this.oggetto.setObjectValue("Nome", ctrlString(nome));
+	@Override
+	public void setName(String nome){
+		this.oggetto.setObjectValue("Nome", nome);
 	}
-	
-	protected void setLastName(String cognome){
-		this.oggetto.setObjectValue("Cognome", ctrlString(cognome));
+	@Override
+	public void setLastName(String cognome){
+		this.oggetto.setObjectValue("Cognome", cognome);
 	}
-	
-	protected void setMail(String mail){
-		this.oggetto.setObjectValue("Mail", ctrlString(mail));
+	@Override
+	public void setMail(String mail){
+		this.oggetto.setObjectValue("Mail", mail);
 	}
-	
-	protected void setPhone(String telf){
-		this.oggetto.setObjectValue("Telefono", ctrlString(telf));
+	@Override
+	public void setPhone(String telf){
+		this.oggetto.setObjectValue("Telefono", telf);
 	}
-	
-	protected void setShopName(String negozio){
-		this.oggetto.setObjectValue("Negozio", ctrlString(negozio));
+	@Override
+	public void setShopName(String negozio){
+		this.oggetto.setObjectValue("Negozio", negozio);
 	}
-	
-	protected static String ctrlString(String str){
-		return str != "" ? str : null;
-	}
-
-	
+	@Override
 	public boolean deleteClient(){
 		return this.oggetto.elimina();
 	}
-	
-	public boolean renameClient(String newNome, String newCognome, String newMail, String newTelefono, String newNegozio){
-			if(newNome != "")this.setName(newNome);
-			if(newCognome != "")this.setLastName(newCognome);
-			if(newMail != "")this.setMail(newMail);
-			if(newTelefono != "")this.setPhone(newTelefono);
-			return this.oggetto.salva();
+	@Override
+	public boolean update(){
+		return this.oggetto.salva();
 	}
 	
 }

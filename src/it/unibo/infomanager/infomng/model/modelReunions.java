@@ -1,89 +1,94 @@
 package it.unibo.infomanager.infomng.model;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import it.unibo.infomanager.infomng.controller.TableRow;
-
+/***
+ * 
+ * @author Juan Goytia
+ *
+ */
 class modelReunions implements modelReunionsI{
 	
 	TableRow oggetto;
-
+	
+	//formato per estrarre l'ora in una data
+	private DateFormat f= new SimpleDateFormat("HH:mm:ss");
+	
+	private Integer getIDResponsable(){
+		return (Integer)this.oggetto.getObject("IDRisponsabile");
+	}
+	
 	protected modelReunions(TableRow temp){
 		this.oggetto = temp;
 	}
-	
+
 	public modelReunions(){
 		this.oggetto = TableRow.oggettoDaTabella("Riunioni");
 	}
-	
-	protected void setNomeRiunione(String nome){
-		this.oggetto.setObjectValue("Riunione", ctrlString(nome));
+	@Override
+	public void setNameReunion(String nome){
+		this.oggetto.setObjectValue("Riunione", nome);
 	}
-	
-	protected void setResponsible(String responsabile){
-		this.oggetto.setObjectValue("Responsabile", ctrlString(responsabile));
+	@Override
+	public void setReunionDetails(String descrizione){
+		this.oggetto.setObjectValue("Descrizione", descrizione);
 	}
-	
-	protected void  setReferenzeResponsabile(String referenze){
-		this.oggetto.setObjectValue("Referenze", ctrlString(referenze));
+	@Override
+	public void setDateAndHour(java.util.Date dataRiunione){
+		this.oggetto.setObjectValue("Data", new java.sql.Date(dataRiunione.getTime()));
+		this.setTime(f.format(dataRiunione));
 	}
-	protected void setReunionDetails(String descrizione){
-		this.oggetto.setObjectValue("Descrizione", ctrlString(descrizione));
-	}
-	
-	protected void setDate(Date dataRiunione){
-		this.oggetto.setObjectValue("Data", dataRiunione);
-	}
-	
-	protected void setTime(String oraRiunione) {
+
+	private void setTime(String oraRiunione) {
 		this.oggetto.setObjectValue("Ora", oraRiunione);
 	}
 	
-	protected static String ctrlString(String str){
-		return str != "" ? str : null;
-	}
-
+	@Override
 	public Integer getID(){
 		return this.oggetto.objectId();
 	}
-	
+	@Override
 	public String getNameReunion(){
 		return (String)this.oggetto.getObject("Riunione");
 	}
-	
-	public String getNameResponsible(){
-		return (String)this.oggetto.getObject("Responsabile");
-	}
-	
+	@Override
 	public String getReferences(){
-		return (String)this.oggetto.getObject("Referenze");
+		return new String(this.getResponsible().getName() +this.getResponsible().getLastName() + this.getResponsible().getMail());
 	}
-	
+	@Override
 	public Date getDate(){
 		return (Date)this.oggetto.getObject("Data");
 	}
-	
+	@Override
 	public String getTime(){
 		return (String) this.oggetto.getObject("Ora");
 	}
-	
+	@Override
 	public String getReunionDetails(){
 		return  (String)this.oggetto.getObject("Descrizione");
 	}
-
-	public boolean renameReunion(String newNome, String newResponsabile, String newReferenze, String newDescrizione, java.util.Date newDataEora){
-		if(newNome!="")this.setNomeRiunione(newNome);
-		if(newResponsabile!="")this.setResponsible(newResponsabile);
-		if(newReferenze!="")this.setReferenzeResponsabile(newReferenze);
-		if(newDescrizione!="")this.setReunionDetails(newDescrizione);
-		if(newDataEora!=null){
-			this.setDate(new java.sql.Date(newDataEora.getTime()));
-			this.setTime(format.format(newDataEora));
-		}
+	@Override
+	public boolean update(){
 		return this.oggetto.salva();
 	}
-
+	@Override
 	public boolean deleteReunion(){
 		return this.oggetto.elimina();
+	}
+
+	@Override
+	public modelUsersI getResponsible() {
+		return modelUsersI.usersList().stream()
+				.filter(r -> r.getID().equals(this.getIDResponsable()))
+				.findFirst()
+				.get();
+	}
+
+	@Override
+	public void setResponsible(modelUsersI risponsabileRiunione) {
+		this.oggetto.setObjectValue("IDResponsabile", risponsabileRiunione.getID());
 	}
 }

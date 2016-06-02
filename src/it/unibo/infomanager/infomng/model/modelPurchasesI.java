@@ -8,8 +8,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import it.unibo.infomanager.infomng.controller.DataBaseSearch;
-import it.unibo.infomanager.infomng.controller.TableRow;
-
+/***
+ * interfaccia per gestire gli acquisti 
+ * @author Juan
+ *
+ */
 public interface modelPurchasesI {
 	/***
 	 * ottiene l'id del record corrente
@@ -18,22 +21,52 @@ public interface modelPurchasesI {
 	 */
 	Integer getID();
 	/***
-	 * ottiene il numero della ricevuta dell'acquisto
+	 * salva la data dell'acquisto
+	 * @param data
+	 * data di tipo Object sql.date
+	 */
+    void setDate(Date data);
+	/***
+	 * settaggio dello sconto per questo acquisto
+	 * @param sconto
+	 * lo sconto passato come float
+	 */
+	void setDiscount(float sconto);
+	/***
+	 * settaggio del provider di questo acquisto
+	 * @param IDProvuder
+	 * ID del provider passato come Integer
+	 */
+	void setProvider(modelProvidersI IDProvider);
+	/***
+	 * settaggio del numero della recivuta per questo acquisto(lo stesso usato nello scontrino di questo acquisto)
+	 * @param nRicevuta
+	 * numero della recivuto passato come integer
+	 */
+	void setNumberPaymentReceipt(int nRicevuta);
+	/***
+	 * settaggio dell'iva per questo acquisto
+	 * @param iva
+	 * iva passato come float
+	 */
+	void setIVA(float iva);
+	
+	/***
+	 * ottiene il numero della ricevuta dell'acquisto( lo stesso usato nello scontrino per questo acquisto)
 	 * @return
 	 * un int con il numero della ricevuta
 	 */
 	int getNumberPaymentReceipt();
 	/***
-	 * ottiene l'id del fornitore di cui si � acquistto
+	 * ottiene il fornitore di questo acquisto
 	 * @return
-	 * un integer che contiene l'ide del fornitore
+	 * il fornitore
 	 */
-	@Deprecated
-	Integer getIDProvider();
+	modelProvidersI getProvider();
 	/***
-	 * ottiene l'iva dell'acquisto
+	 * ottiene l'iva per questo acquisto
 	 * @return
-	 * un float contenente l'iva dell'acquisto
+	 * l'iva
 	 */
 	float getIva();
 	/***
@@ -62,12 +95,19 @@ public interface modelPurchasesI {
 	Double getTotalSpent();
 	
 	/***
+	 * metodo che salva ogni modifica/creazione di un acquisto. 
+	 * @return
+	 * true se e andato a buon fine
+	 */
+	boolean update();
+	
+	/***
 	 * eliminazione dell'accquisto corrente
 	 * @return
 	 * true se e andato a buon fine
 	 */
 	boolean deletePurchase();
-	
+
 	/***
 	 * elenco di tutti gli acquisti realizzati
 	 * @return
@@ -84,39 +124,26 @@ public interface modelPurchasesI {
 		}
 	}
 	/***
-	 * salvataggio di un nuovo acquisto
-	 * @param IDFornitore
-	 * id del fornitore del quale si e acquistato
+	 * ricerca di una ricevuta di acquisto tramite il numero
 	 * @param nRicevuta
-	 * numero della ricevuta
-	 * @param iva
-	 * iva dell'acquisto
-	 * @param sconto
-	 * sconto dell'acquisto
-	 * @param data
-	 * data dell'acquisto
-	 * @param prodotti
-	 * una lista di tipo transactionsProducts contenente tutti i prodotti acquistati
+	 * numero della ricevuta passato come int
 	 * @return
-	 * true se e andato a buon fine
+	 * l'acquisto realizzato
 	 */
-	public static boolean newPurchase(Integer IDFornitore, int nRicevuta, float iva, float sconto, Date data, List<transactionsProductsI> prodotti){
-	
-		modelPurchases temp = new modelPurchases(TableRow.oggettoDaTabella("Acquisti"));
-		temp.setProvider(IDFornitore);
-		temp.setDiscount(sconto);
-		temp.setDate(data);
-		temp.setIVA(iva);
-		temp.setNumberPaymentReceipt(nRicevuta);
-		if(temp.builderProductsPurchases(nRicevuta, prodotti))
-			return temp.oggetto.salva();
-		else 
-			return false;
+	public static modelPurchasesI searchPurchase(int nRicevuta){
+			return modelPurchasesI.purchasesList().stream()
+				.filter(p -> {
+					try{
+						return p.getNumberPaymentReceipt() == nRicevuta;
+					}
+					catch(Exception e){return false;}
+				})
+				.findFirst().get();
 	}
 	/***
 	 * ottiene il report degli acquisti
 	 * @return
-	 * una lista contenente tutti gli acquisti arodinati in maniera decrescente di tutti gli acquisti
+	 * una lista contenente tutti gli acquisti ordinati in maniera decrescente in base alle spese
 	 */
 	public static List<modelPurchasesI> reportPurchases(){
 		
@@ -126,6 +153,34 @@ public interface modelPurchasesI {
 				.sorted(sort)
 				.collect(Collectors.toList());
 	}
-	
+	/***
+	 * creazione di un acquisto
+	 * @param data
+	 * data dell'acquisto
+	 * @param sconto
+	 * socnto dell'acquisto
+	 * @param iva
+	 * iva dell'acquisto
+	 * @param nRicevuta
+	 * numero della ricevuta
+	 * @param fornitore
+	 * fornitore dell'acquisto
+	 * @param prodotti
+	 * prodotti dell'acquisto
+	 * @return
+	 * true se creato altrimenti false
+	 */
+	public static boolean builder(Date data, float sconto, float iva, int nRicevuta, modelProvidersI fornitore,  List<transactionsProductsI> prodotti){
+		modelPurchasesI temp = new modelPurchases();
+		temp.setProvider(fornitore);
+		temp.setDate(data);
+		temp.setDiscount(sconto);
+		temp.setIVA(iva);
+		//salvataggio dei prodotti acquistati
+		if(modelTransactionsI.transactionsProducts(nRicevuta, prodotti, false))
+			return temp.update();
+		else
+			return false;
+	}
 	
 }

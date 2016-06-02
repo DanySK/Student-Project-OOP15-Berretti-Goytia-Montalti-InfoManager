@@ -2,18 +2,43 @@ package it.unibo.infomanager.infomng.model;
 
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import it.unibo.infomanager.infomng.controller.DataBaseSearch;
-import it.unibo.infomanager.infomng.controller.TableRow;
 
+/***
+ * interfaccia per la gestione delle riunione
+ * @author Juan
+ *
+ */
 public interface modelReunionsI {
-	//formato per estrarre l'ora in una data
-	public static  DateFormat format= new SimpleDateFormat("HH:mm:ss");
+	/***
+	 * settto la data e ora della riunione
+	 * @param data
+	 * data e ora 
+	 */
+	void setDateAndHour(java.util.Date data);
+	/***
+	 * setto il nome per questa riunione
+	 * @param nome
+	 * string con il nome della riunione
+	 */
+	void setNameReunion(String nome);
+	/***
+	 * setto il risponsabile di questa riunione
+	 * @param risposabileRiunione
+	 * il risponsabile della riunione(l'utente corrente)
+	 */
+	void setResponsible(modelUsersI risposabileRiunione);
+	/***
+	 * dettagli della riunione
+	 * @param dettagli
+	 * string con i dettagli della riunione
+	 */
+	void setReunionDetails(String dettagli);
+	
 	/***
 	 * ottiene l'id del record
 	 * @return
@@ -31,8 +56,7 @@ public interface modelReunionsI {
 	 * @return
 	 * una stringa contenente il nome del responsabile
 	 */
-	@Deprecated
-	String getNameResponsible();
+	modelUsersI getResponsible();
 	/***
 	 * ottiene le referenze per contattare il responsabile
 	 * @return
@@ -59,30 +83,18 @@ public interface modelReunionsI {
 	String getReunionDetails();
 
 	/***
-	 * modifica di una eventuale riunione
-	 * passare come "" e null per dataEora i dati da non modificare
-	 * @param newNome
-	 * nuovo nome da asseganre
-	 * @param newResponsabile
-	 * nuovo responsabile se c'� stato un cambiamento
-	 * @param newReferenze
-	 * nuove referenze del responsabile
-	 * @param newDescrizione
-	 * nuovi dettagli della riunione
-	 * @param newDataEora
-	 * la nuova data e ora della riunione sottoforma di object java.util.Date
-	 * @return
-	 * true o false a seconda dell'esito
-	 */
-	boolean renameReunion(String newNome, String newResponsabile, String newReferenze, String newDescrizione,
-			java.util.Date newDataEora);
-
-	/***
 	 * elimna la riunione corrente
 	 * @return
 	 * true o false a seconda dell'esito
 	 */
 	boolean deleteReunion();
+	/***
+	 * aggiornamento(salvattaggio o modifica) di una rinuione
+	 * @return
+	 * true se andato a buon fine altrimenti false
+	 */
+	boolean update();
+	
 	
 	/***
 	 * ottiene una lista con tutte le riunione svolte fino a quel giorno(escluso)
@@ -156,28 +168,24 @@ public interface modelReunionsI {
 		}
 	}
 	/***
-	 * salvataggio di una nuova riunione
-	 * @param nomeRiunione
-	 * nome da assegnare alla riunione
-	 * @param nomeResponsabile
-	 * nome del responsabile della riunione
-	 * @param referenze
-	 * referenze per contattare il responsabile della riunione
-	 * @param descrizione
-	 * dettagli della riunione tra cui luogo, motivo, ecc
+	 * creazione di una nuova riunione
 	 * @param dataEora
 	 * data e ora della riunione
+	 * @param nomeRiunione
+	 * nome per questa riunione
+	 * @param dettagli
+	 * dettagli della riunione
+	 * @param responsabile
+	 * responsabile della riunione
 	 * @return
-	 * true se e andato a buon fine altrimenti false
+	 * true se andato a buon fine
 	 */
-	public static boolean newReunion(String nomeRiunione, String nomeResponsabile, String referenze, String descrizione, java.util.Date dataEora){
-		modelReunions temp = new modelReunions(TableRow.oggettoDaTabella("Riunioni"));
-		temp.setNomeRiunione(nomeRiunione);
-		temp.setResponsible(nomeResponsabile);
-		temp.setReferenzeResponsabile(referenze);
-		temp.setReunionDetails(descrizione);
-		temp.setDate(new java.sql.Date(dataEora.getTime()));
-		temp.setTime(format.format(dataEora));
-		return temp.oggetto.salva();
+	public static boolean builder(java.util.Date dataEora, String nomeRiunione, String dettagli, modelUsersI responsabile){
+		modelReunionsI temp = new modelReunions();
+		temp.setDateAndHour(dataEora);
+		temp.setNameReunion(nomeRiunione);
+		temp.setResponsible(responsabile);
+		temp.setReunionDetails(dettagli);
+		return temp.update();
 	}
 }

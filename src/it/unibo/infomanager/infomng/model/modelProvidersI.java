@@ -6,9 +6,36 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import it.unibo.infomanager.infomng.controller.DataBaseSearch;
-import it.unibo.infomanager.infomng.controller.TableRow;
-
+/***
+ * interfaccia per gestire i fornitori
+ * @author Juan Goytia
+ *
+ */
 public interface modelProvidersI {
+	/***
+	 * setta il nome del fornitore
+	 * @param name
+	 * string con il nome del cliente
+	 */
+	void setName(String name);
+	/***
+	 * setta il cognome del fornitore
+	 * @param cognome
+	 * string con il congnome del fornitore
+	 */
+	void setLastName(String cognome);
+	/***
+	 * setta la mail del fornitore
+	 * @param mail
+	 * string con la mail del fornitore
+	 */
+	void setMail(String mail);
+	/***
+	 * setta il telefono del fornitore
+	 * @param telefono
+	 * string con il telefono del fornitore
+	 */
+	void setPhone(String telefono);
 	
 	/***
 	 * ottiene ID del record corrente
@@ -46,30 +73,19 @@ public interface modelProvidersI {
 	 * @return
 	 * una stringa contenente il recapito telfonico
 	 */
-	String getPhone();
-
+	String getPhone();	
 	/***
 	 * eliminazione del fornitore corrente
 	 * @return
 	 * true se e andato a buon fine
 	 */
 	boolean deleteProvider();
-
 	/***
-	 * modifica dei dati di un fornitore
-	 * Si chiede di passare come "" i parametri che non si devono modificare
-	 * @param newNome
-	 * nuovo nome
-	 * @param newCognome
-	 * nuvo cognome
-	 * @param newMail
-	 * nuova mail
-	 * @param newTelefono
-	 * nuovo recapito telefonicoc
+	 * realizza l'update(salvataggio o modifica) di un record
 	 * @return
-	 * true se e andato a buon fine
+	 * true se e andato a buon fine, altrimenti false
 	 */
-	boolean renameProvider(String newNome, String newCognome, String newMail, String newTelefono);
+	boolean update();
 	
 	
 	/***
@@ -88,9 +104,13 @@ public interface modelProvidersI {
 	 */
 	public static List<modelProvidersI> searchProviders(String nome, String cognome, String mail, String telefono){
 		return modelProvidersI.providersList().stream()
-							.peek(e -> System.out.println(e.getName()))
-							.filter(f -> f.getName().contains(nome) || f.getLastName().contains(cognome)
-											    || f.getMail().contains(mail) || f.getPhone().contains(telefono))
+							//.peek(e -> System.out.println(e.getName()))
+							.filter(f -> {
+								try{
+								return f.getName().contains(nome) || f.getLastName().contains(cognome)
+										|| f.getMail().contains(mail) || f.getPhone().contains(telefono);}
+								catch(Exception e){ return false;}
+							})
 							.collect(Collectors.toList());
 	}
 	
@@ -104,8 +124,12 @@ public interface modelProvidersI {
 	public static List<modelProvidersI> searchProvidersByProduct(String nomeProdotto){
 		
 		List<Integer> listTemp = modelStoreI.productsList().stream()
-				.filter(e-> e.getName().contains(nomeProdotto))
-				.map(e -> e.getIDProvider())
+				.filter(e->{ 
+					try{
+					return e.getName().contains(nomeProdotto);}
+					catch(Exception a){return false;}
+				})
+				.map(e -> e.getProvider().getID())
 				.collect(Collectors.toList());
 		
 		return modelProvidersI.providersList().stream()
@@ -132,27 +156,25 @@ public interface modelProvidersI {
 			return new ArrayList<modelProvidersI>();
 		}
 	}
-	
 	/***
-	 * creazione di un nuovo fornitore
+	 * creazione di un nuovo cliente
 	 * @param nome
-	 * nome del fornitor
+	 * nome del fornitore
 	 * @param cognome
-	 * cognome del fornitore
+	 * cognome de forntore
 	 * @param mail
-	 * mail del fornitore
+	 * email del fornitore
 	 * @param telefono
-	 * recapito telefonico del fornitore
+	 * telefono del fornitore
 	 * @return
-	 * true se e andato a buon fine
+	 * true se e andato a buon fine altrimenti false
 	 */
-	public static boolean newProvider(String nome, String cognome, String mail, String telefono){
-		modelProviders nuovo = new modelProviders(TableRow.oggettoDaTabella("Fornitori"));
-		nuovo.setName(nome);
-		nuovo.setLastName(cognome);
-		nuovo.setMail(mail);
-		nuovo.setPhone(telefono);
-		return nuovo.oggetto.salva();
+	public static boolean builder(String nome, String cognome, String mail, String telefono){
+		modelProvidersI temp = new modelProviders();
+		temp.setName(nome);
+		temp.setLastName(cognome);
+		temp.setPhone(telefono);
+		temp.setMail(mail);
+		return temp.update();
 	}
-
 }

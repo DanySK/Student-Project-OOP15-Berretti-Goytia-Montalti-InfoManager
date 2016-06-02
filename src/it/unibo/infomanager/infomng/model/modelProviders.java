@@ -1,7 +1,11 @@
 package it.unibo.infomanager.infomng.model;
 
 import it.unibo.infomanager.infomng.controller.TableRow;
-
+/***
+ * 
+ * @author Juan Goytia
+ *
+ */
 class modelProviders implements modelProvidersI{
 	
 	TableRow oggetto;
@@ -15,60 +19,53 @@ class modelProviders implements modelProvidersI{
 	public modelProviders(){
 		this.oggetto = TableRow.oggettoDaTabella("Fornitori");
 	}
-	
+	@Override
 	public Integer getID(){
 		return this.oggetto.objectId();
 	}
-	
+	@Override
 	public String getIDFornitore(){
 		return String.format("%i", this.oggetto.objectId());
 	}
-	
+	@Override
 	public String getName(){
 		return (String)this.oggetto.getObject("Nome");
 	}
-	
+	@Override
 	public String getLastName(){
 		return (String)this.oggetto.getObject("Cognome");
 	}
-	
+	@Override
 	public String getMail(){
 		return (String)this.oggetto.getObject("Mail");
 	}
-	
+	@Override
 	public String getPhone(){
 		return (String)this.oggetto.getObject("Telefono");
 	}
-	
-	protected void setName(String nome){
-		this.oggetto.setObjectValue("Nome", ctrlString(nome));
+	@Override
+	public void setName(String nome){
+		this.oggetto.setObjectValue("Nome", nome);
+	}
+	@Override
+	public void setLastName(String cognome){
+		this.oggetto.setObjectValue("Cognome", cognome);
+	}
+	@Override
+	public void setMail(String mail){
+		this.oggetto.setObjectValue("Mail", mail);
+	}
+	@Override
+	public void setPhone(String telf){
+		this.oggetto.setObjectValue("Telefono", telf);
 	}
 	
-	protected void setLastName(String cognome){
-		this.oggetto.setObjectValue("Cognome", ctrlString(cognome));
-	}
-	
-	protected void setMail(String mail){
-		this.oggetto.setObjectValue("Mail", ctrlString(mail));
-	}
-	
-	protected void setPhone(String telf){
-		this.oggetto.setObjectValue("Telefono", ctrlString(telf));
-	}
-	
-	protected static String ctrlString(String str){
-		return str == null ? "" : str;
-	}
-	
+	@Override
 	public boolean deleteProvider(){
 		return this.oggetto.elimina();
 	}
-
-	public boolean renameProvider(String newNome , String newCognome, String newMail, String newTelefono){
-		if(newNome != "")this.setName(newNome);
-		if(newCognome != "")this.setLastName(newCognome);
-		if(newMail != "")this.setMail(newMail);
-		if(newTelefono != "")this.setPhone(newTelefono);
+	@Override
+	public boolean update(){
 		return this.oggetto.salva();
 	}
 }
