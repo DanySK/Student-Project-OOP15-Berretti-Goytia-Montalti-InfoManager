@@ -314,7 +314,7 @@ public class ScontriniGUI extends InitializeFrame {
 	public Map<String, Object> getTextField() {
 		Map<String, Object> mappa = new HashMap<>();
 		mappa.put("Prodotti", lista);
-		mappa.put("Iva", txtIva.getText());
+		mappa.put("Iva", String.valueOf(totiva));
 		mappa.put("Sconto", txtSconto.getText());
 		mappa.put("Scontrino", txtScontrino.getText());
 		return mappa;

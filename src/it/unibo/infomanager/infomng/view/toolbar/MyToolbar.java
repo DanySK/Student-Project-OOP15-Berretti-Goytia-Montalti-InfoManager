@@ -87,20 +87,20 @@ public class MyToolbar extends JToolBar {
 		});
 		this.mntmSalva.setIcon(
 				new ImageIcon(FattureGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
-		if (frame.getClass().equals(MagazzinoGUI.class)) {
+		if (frame instanceof MagazzinoGUI) {
 			mntmSalva.setEnabled(false);
 		}
-		if (frame.getClass().equals(ReportVenditeGUI.class)) {
+		if (frame instanceof ReportVenditeGUI) {
 			mntmSalva.setEnabled(false);
 		}
-		if (frame.getClass().equals(RegistriIvaGUI.class)) {
+		if (frame instanceof RegistriIvaGUI) {
 			mntmSalva.setEnabled(false);
 		}
 		this.mntmSalva.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				if (frame.getClass().equals(FattureGUI.class)) {
+				if (frame instanceof FattureGUI) {
 
 					try {
 						switch (o.salvaFattura(((FattureGUI) frame).getTextfield())) {
@@ -122,7 +122,7 @@ public class MyToolbar extends JToolBar {
 						e1.printStackTrace();
 					}
 				}
-				if (frame.getClass().equals(ClientiGUI.class)) {
+				if (frame instanceof ClientiGUI) {
 					if (o.salvaCliente(((ClientiGUI) frame).getTextfield())) {
 						JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
 					} else {
@@ -130,16 +130,16 @@ public class MyToolbar extends JToolBar {
 					}
 
 				}
-				if (frame.getClass().equals(FornitoriGUI.class)) {
+				if (frame instanceof FornitoriGUI) {
 					o.salvaFornitore(((FornitoriGUI) frame).getTextfield());
 					JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
 				}
 
-				if (frame.getClass().equals(ScontriniGUI.class)) {
+				if (frame instanceof ScontriniGUI) {
 					o.salvaScontrini(((ScontriniGUI) frame).getTextField());
 					JOptionPane.showMessageDialog(frame, "Salvataggio eseguito con successo");
 				}
-				if (frame.getClass().equals(RiunioniGUI.class)) {
+				if (frame instanceof RiunioniGUI) {
 					try {
 						o.salvaRiunione(((RiunioniGUI) frame).getTextField());
 					} catch (ParseException e1) {
@@ -149,8 +149,16 @@ public class MyToolbar extends JToolBar {
 				}
 			}
 		});
-		this.mntmCerca
-				.setIcon(new ImageIcon(FattureGUI.class.getResource("/view/icon/lente-di-ingrandimento_318-1787.jpg")));
+		if (frame instanceof ReportVenditeGUI){
+			this.mntmCerca.setEnabled(false);
+		}
+		if (frame instanceof MagazzinoGUI){
+			this.mntmCerca.setEnabled(false);
+		}
+		if (frame instanceof RegistriIvaGUI){
+			this.mntmCerca.setEnabled(false);
+		}
+		this.mntmCerca.setIcon(new ImageIcon(FattureGUI.class.getResource("/view/icon/lente-di-ingrandimento_318-1787.jpg")));
 		this.mntmCerca.addActionListener(new ActionListener() {
 
 			@Override

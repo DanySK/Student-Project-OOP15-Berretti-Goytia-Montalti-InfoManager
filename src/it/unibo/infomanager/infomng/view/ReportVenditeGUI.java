@@ -3,6 +3,7 @@ package it.unibo.infomanager.infomng.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -10,6 +11,7 @@ import javax.swing.JScrollPane;
 import java.awt.Toolkit;
 import javax.swing.JTextArea;
 
+import it.unibo.infomanager.infomng.model.modelSalesI;
 import it.unibo.infomanager.infomng.view.interfaces.ObserverInterface;
 import it.unibo.infomanager.infomng.view.toolbar.MyToolbar;
 /**
@@ -34,11 +36,11 @@ public class ReportVenditeGUI extends InitializeFrame {
 	private JScrollPane scrollArea = new JScrollPane();
 	/**
 	 * Metodo che setta il testo nella textArea del frame.
-	 * @param testoVendite
+	 * @param list
 	 * 				Oggetto String
 	 */
-	public void setTextVendite(final String testoVendite) {
-		this.textArea.setText(testoVendite);
+	public void setTextVendite(final List<modelSalesI> list) {
+		this.textArea.setText(list.toString());
 	}
 	/**
 	 * Costruttore del ReportVenditeGUI frame.
@@ -58,6 +60,7 @@ public class ReportVenditeGUI extends InitializeFrame {
 		this.panelText.setLayout(new BorderLayout(0, 0));
 		this.scrollArea.setViewportView(textArea);
 		this.textArea.setEditable(false);
+		this.setTextVendite(modelSalesI.salesList());
 		this.panelText.add(scrollArea, BorderLayout.CENTER);
 		
 	}

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -114,28 +115,34 @@ public class DialogCerca extends JDialog implements DialogInterface {
 
 					@Override
 					public void actionPerformed(final ActionEvent e) {
-						if (frame.getClass().equals(FattureGUI.class)) {
+						if (frame instanceof FattureGUI) {
 							o.cercaFatture(txtNumero.getText(), txtNome.getText(), txtCognome.getText());
 						}
-						if (frame.getClass().equals(ClientiGUI.class)) {
+						if (frame instanceof ClientiGUI) {
 							
 							fornitori = o.cercaClienti(txtNome.getText());
 							fornitori.avanti();
 
 						}
-						if (frame.getClass().equals(FornitoriGUI.class)) {
+						if (frame instanceof FornitoriGUI) {
 							fornitori = o.cercaFornitori(txtNome.getText());
 							fornitori.avanti();
 						}
-						if (frame.getClass().equals(RiunioniGUI.class)) {
+						if (frame instanceof RiunioniGUI) {
 							try {
 								o.cercaRiunioni(txtNumero.getText(), txtNome.getText());
 							} catch (ParseException e1) {
 								JOptionPane.showMessageDialog(frame, "Errore nel inserimento Data");
 							}
 						}
-						if (frame.getClass().equals(ScontriniGUI.class)) {
+						if (frame instanceof ScontriniGUI) {
+							try {
 							o.cercaScontrini(txtNumero.getText(), txtNome.getText());
+							} catch (NumberFormatException e1){
+								JOptionPane.showMessageDialog(frame, "Errore inserire un numero di scontrino");
+							} catch (NoSuchElementException e2){
+								JOptionPane.showMessageDialog(frame, "Non esiste nessuno scontrino con questo numero");
+							}
 						}
 						o.abilitaFrame(true);
 						dispose();

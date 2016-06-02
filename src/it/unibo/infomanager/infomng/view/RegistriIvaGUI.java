@@ -10,6 +10,8 @@ import javax.swing.JScrollPane;
 import java.awt.Toolkit;
 import javax.swing.JTextArea;
 
+import it.unibo.infomanager.infomng.model.modelPurchasesI;
+import it.unibo.infomanager.infomng.model.modelSalesI;
 import it.unibo.infomanager.infomng.view.interfaces.ObserverInterface;
 import it.unibo.infomanager.infomng.view.toolbar.MyToolbar;
 /**
@@ -43,13 +45,13 @@ public class RegistriIvaGUI extends InitializeFrame {
 		double totDare = 0;
 		double totAvere = 0;
 		iva = ("\t\t\t\t\t\t\tAVERE \t\tDARE\n\n");
-		for (Integer i = 0; i<10; i++){
-			totAvere = totAvere + 1234;
-		iva = iva + ("Iva ns/debito\t\t\t\t\t\t" + "1234\n");
+		for (Integer i = 0; i<modelSalesI.salesList().size(); i++){
+			totAvere = totAvere + modelSalesI.salesList().get(i).getIva();
+		iva = iva + ("Iva ns/debito\t\t\t\t\t\t" + modelSalesI.salesList().get(i).getIva() +"\n");
 		}
-		for (Integer i = 0; i<10; i++){
-			totDare = totDare + 1234;
-		iva = iva + ("Iva ns/credito\t\t\t\t\t\t\t\t" + "1234\n");
+		for (Integer i = 0; i<modelPurchasesI.purchasesList().size(); i++){
+			totDare = totDare + modelPurchasesI.purchasesList().get(i).getIva();
+		iva = iva + ("Iva ns/credito\t\t\t\t\t\t\t\t" + modelPurchasesI.purchasesList().get(i).getIva() + "\n");
 		}
 		iva = iva + ("\n\n\n\n\n\n\n\n\n\nTotale\t\t\t\t\t\t\t" + totAvere + "\t\t" + totDare);
 		this.textArea.setText(iva);
