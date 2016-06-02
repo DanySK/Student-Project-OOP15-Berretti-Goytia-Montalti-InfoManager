@@ -100,18 +100,15 @@ public interface modelProvidersI {
 	 * @param telefono
 	 * recapito telefonico del fornitore
 	 * @return
-	 * una lista contenente tutti i fornitori, tramite i parametri forniti
+	 * una lista contenente tutti i fornitori, tramite i parametri forniti o una lista vuota
 	 */
 	public static List<modelProvidersI> searchProviders(String nome, String cognome, String mail, String telefono){
-		return modelProvidersI.providersList().stream()
-							//.peek(e -> System.out.println(e.getName()))
-							.filter(f -> {
-								try{
-								return f.getName().contains(nome) || f.getLastName().contains(cognome)
-										|| f.getMail().contains(mail) || f.getPhone().contains(telefono);}
-								catch(Exception e){ return false;}
-							})
-							.collect(Collectors.toList());
+		
+		 return modelProvidersI.providersList().stream()
+					//.peek(e -> System.out.println(e.getName()))
+					.filter(f -> f.getName().contains(nome) || f.getLastName().contains(cognome)
+								|| f.getMail().contains(mail) || f.getPhone().contains(telefono))
+					.collect(Collectors.toList());
 	}
 	
 	/***
@@ -119,19 +116,15 @@ public interface modelProvidersI {
 	 * @param nomeProdotto
 	 * noeme del prodotto
 	 * @return
-	 * una lista con tutti i fornitori che forniscono il prodotto specificato
+	 * una lista con tutti i fornitori che forniscono il prodotto specificato altrimenti una lista vuota
 	 */
 	public static List<modelProvidersI> searchProvidersByProduct(String nomeProdotto){
-		
+
 		List<Integer> listTemp = modelStoreI.productsList().stream()
-				.filter(e->{ 
-					try{
-					return e.getName().contains(nomeProdotto);}
-					catch(Exception a){return false;}
-				})
+				.filter(e-> e.getName().contains(nomeProdotto))
 				.map(e -> e.getProvider().getID())
 				.collect(Collectors.toList());
-		
+		if(!listTemp.isEmpty()){
 		return modelProvidersI.providersList().stream()
 				.filter(e ->{
 					for(Integer a : listTemp){
@@ -139,6 +132,9 @@ public interface modelProvidersI {
 							return true;
 					}return false;	
 				}).collect(Collectors.toList());
+		}
+		else
+			return new ArrayList<modelProvidersI>();
 	}
 	
 	/***

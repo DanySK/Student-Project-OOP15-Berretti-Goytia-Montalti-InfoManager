@@ -48,7 +48,7 @@ public class modelTransactions implements modelTransactionsI{
 		return modelStoreI.productsList().stream()
 				.filter( p -> p.getID().equals(this.getIDProduct()))
 				.findFirst()
-				.get();
+				.orElse(null);
 	}
 
 }

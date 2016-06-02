@@ -112,21 +112,15 @@ public interface modelClientsI {
 	 * @param nomeNegozio
 	 * nome del negoizio a cui appartiene il cliente
 	 * @return
-	 * tutti i clienti trovati tramite i parametri forniti, si segue una lgica or!
+	 * tutti i clienti trovati tramite i parametri forniti, si segue una lgica or! oppure una lista vuota
 	 */
 	public static List<modelClientsI> searchClients(String nome, String cognome, String mail, String telefono, String nomeNegozio){
-		return modelClientsI.clientsList().stream()
-							.filter(cliente ->{ 
-								try{
-								 return cliente.getName().contains(nome) || cliente.getLastName().contains(cognome)
-							    || cliente.getMail().contains(mail) || cliente.getShopName().contains(nomeNegozio)
-							    || cliente.getPhone().contains(telefono);
-								}
-								catch(Exception e){
-									return false;
-								}
-							})
-							.collect(Collectors.toList());
+		
+			return modelClientsI.clientsList().stream()
+					.filter(cliente -> cliente.getName().contains(nome) || cliente.getLastName().contains(cognome)
+					    || cliente.getMail().contains(mail) || cliente.getShopName().contains(nomeNegozio)
+					    || cliente.getPhone().contains(telefono))
+					.collect(Collectors.toList());
 	}
 	
 	/***
@@ -167,6 +161,5 @@ public interface modelClientsI {
 		temp.setPhone(telefono);
 		temp.setShopName(nomeNegozio);
 		return temp.update();
-		
 	}
 }

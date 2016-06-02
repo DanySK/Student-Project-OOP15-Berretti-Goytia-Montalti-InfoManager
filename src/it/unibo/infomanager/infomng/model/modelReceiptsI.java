@@ -80,19 +80,20 @@ public interface modelReceiptsI {
 	/***
 	 * ottiene il cliente se si tratta di una vendita altrimenti ottine un cliente null
 	 * @return
-	 * un obtject tipo modelCLientsI
+	 * un obtject tipo modelCLientsI altrimenti null
 	 */
 	modelClientsI getClient();
 
 	/***
 	 * lista dei prodotti venduti o acquistati in questo scontrino
 	 * @return
-	 * una lista tipo transactionsProductsI 
+	 * una lista tipo transactionsProductsI alrimenti una lista vuota
 	 */
-	List<transactionsProductsI> soldProducts();
+	List<transactionsProductsI> listTransactionsProducts();
 	/***
 	 * ottiene il fornitore se si tratta di un acquisto altrimenti un fornitore null
 	 * @return
+	 * una lista con i prodotti vendutiAcquistati altrimenti null
 	 */
 	modelProvidersI getProvider();
 	
@@ -179,14 +180,14 @@ public interface modelReceiptsI {
 	 * @param nScontrino
 	 * numero dello scontrino da ricercare
 	 * @return
-	 * lo scontrino 
+	 * lo scontrino altrimenti null
 	 */
 	public static modelReceiptsI searchReceiptByNumber(int nScontrino){
 		
 		return modelReceiptsI.receiptsList().stream()
 				.filter(s -> s.getNumberReceipt() == nScontrino)
 				.findFirst()
-				.get();
+				.orElse(null);
 	}
 	
 }

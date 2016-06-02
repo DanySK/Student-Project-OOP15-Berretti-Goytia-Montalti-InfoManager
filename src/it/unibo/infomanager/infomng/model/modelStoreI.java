@@ -32,7 +32,7 @@ public interface modelStoreI {
 	/***
 	 * ottiene il provider di questo prodotto
 	 * @return
-	 * il fornitore
+	 * il fornitore altrimenti null
 	 */
 	modelProvidersI getProvider();
 	/***
@@ -74,11 +74,17 @@ public interface modelStoreI {
 	 * ricerca di prodotti di un determinato fornitore
 	 * @param IDFornitore
 	 * @return
-	 * i prodotti trovati
+	 * i prodotti trovati ltrimenti una lista vuota
 	 */
 	public static List<modelStoreI> serachProductsByProvider(modelProvidersI fornitore){
 		return modelStoreI.productsList().stream()
-				.filter(e-> e.getProvider().getID().equals(fornitore.getID()))
+				.filter(e-> {
+					try{
+						return e.getProvider().getID().equals(fornitore.getID());
+					}catch (Exception ex){
+						return false;
+					}
+				})
 				.collect(Collectors.toList());
 	}
 	
@@ -86,7 +92,7 @@ public interface modelStoreI {
 	 * ricerca dei prodotti con una quantita minima
 	 * @param quantitaMinima
 	 * @return
-	 * una lista che contiene i prodotti trovati
+	 * una lista che contiene i prodotti trovati altrimenti una lista vuota
 	 */
 	public static List<modelStoreI> searchProductsByQuantity(int quantitaMinima){
 		return modelStoreI.productsList().stream()
@@ -99,11 +105,11 @@ public interface modelStoreI {
 	 * @param nome
 	 * nome del prodotto
 	 * @return
-	 * il/i prodotti trovati
+	 * il/i prodotti trovati altrimenti una lista vuota
 	 */
 	public static List<modelStoreI> serachProductsByName(String nome){
 		return modelStoreI.productsList().stream()
-				.filter(e-> e.getName().equalsIgnoreCase(nome))
+				.filter(e-> e.getName().contains(nome))
 				.collect(Collectors.toList());
 	}
 

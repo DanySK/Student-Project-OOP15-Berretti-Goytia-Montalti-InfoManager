@@ -27,9 +27,9 @@ public interface modelSalesI {
 	 */
 	int getNumberPaymentReceipt();
 	/***
-	 * ottiene l'id del cliente a chi è stata effettuata la vendita
+	 * ottiene il cliente a chi è stato effettuato la vendita
 	 * @return
-	 * un integer con l'id
+	 * il cliente altrimenti null
 	 */
 	modelClientsI getClient();
 	/***
@@ -97,7 +97,7 @@ public interface modelSalesI {
 	/***
 	 * ottiene la lista dei prodotti venduti
 	 * @return
-	 * una lista tipo transactionsProductsI
+	 * una lista tipo transactionsProductsI altrimenti una lista vuota
 	 */
 	List<transactionsProductsI> soldProducts();
 	
@@ -167,7 +167,7 @@ public interface modelSalesI {
 	/***
 	 * ottiene un report con le vendite ordinate in modo decrescente
 	 * @return
-	 * una lsita con tutte le vendite
+	 * una lsita con tutte le vendite altrimenti una lista vuota
 	 */
 	public static List<modelSalesI> reportSales(){
 		

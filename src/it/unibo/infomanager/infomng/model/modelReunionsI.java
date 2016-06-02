@@ -52,9 +52,9 @@ public interface modelReunionsI {
 	 */
 	String getNameReunion();
 	/***
-	 * ottiene il nome del responsabile della riunione
+	 * ottiene il responsabile della riunione
 	 * @return
-	 * una stringa contenente il nome del responsabile
+	 * il responsabile come modelUsersI altrimenti null
 	 */
 	modelUsersI getResponsible();
 	/***

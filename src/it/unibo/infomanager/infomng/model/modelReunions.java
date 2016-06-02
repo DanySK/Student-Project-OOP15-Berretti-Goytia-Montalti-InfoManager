@@ -84,7 +84,7 @@ class modelReunions implements modelReunionsI{
 		return modelUsersI.usersList().stream()
 				.filter(r -> r.getID().equals(this.getIDResponsable()))
 				.findFirst()
-				.get();
+				.orElse(null);
 	}
 
 	@Override

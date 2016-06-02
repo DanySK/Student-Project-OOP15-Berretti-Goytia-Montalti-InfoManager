@@ -84,7 +84,7 @@ public interface modelPurchasesI {
 	/***
 	 * ottiene una lista con tutti i prodotti acquistati
 	 * @return
-	 * una lista di tipo transactionsProducts 
+	 * una lista con i prodotti acquistati altrimenti una lista vuota
 	 */
 	List<transactionsProducts> purchasedProducts();
 	/***
@@ -128,22 +128,19 @@ public interface modelPurchasesI {
 	 * @param nRicevuta
 	 * numero della ricevuta passato come int
 	 * @return
-	 * l'acquisto realizzato
+	 * l'acquisto realizzato altrimenti null
 	 */
 	public static modelPurchasesI searchPurchase(int nRicevuta){
+		
 			return modelPurchasesI.purchasesList().stream()
-				.filter(p -> {
-					try{
-						return p.getNumberPaymentReceipt() == nRicevuta;
-					}
-					catch(Exception e){return false;}
-				})
-				.findFirst().get();
+				.filter(p -> p.getNumberPaymentReceipt() == nRicevuta)
+				.findFirst()
+				.orElse(null);
 	}
 	/***
 	 * ottiene il report degli acquisti
 	 * @return
-	 * una lista contenente tutti gli acquisti ordinati in maniera decrescente in base alle spese
+	 * una lista contenente tutti gli acquisti ordinati in maniera decrescente in base alle spese altrimenti una lista vuota
 	 */
 	public static List<modelPurchasesI> reportPurchases(){
 		

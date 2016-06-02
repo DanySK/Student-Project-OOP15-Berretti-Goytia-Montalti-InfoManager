@@ -58,7 +58,7 @@ public class modelSales implements modelSalesI {
 		return modelClientsI.clientsList().stream()
 				.filter(c -> c.getID().equals(this.getIDClient()))
 				.findFirst()
-				.get();
+				.orElse(null);
 	}
 	@Override
 	public float getIva(){

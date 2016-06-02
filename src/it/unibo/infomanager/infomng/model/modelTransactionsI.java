@@ -22,7 +22,7 @@ public interface modelTransactionsI {
 	/***
 	 * ottiene prodotto movimentato
 	 * @return
-	 * il prodotto venduto o acquistato
+	 * il prodotto venduto o acquistato altrimenti null
 	 */
 	modelStoreI getProduct();
 	/***
@@ -109,9 +109,9 @@ public interface modelTransactionsI {
 			.filter(e -> e.getNumberPaymentRicevuta()==nRicevuta)
 			.filter(e -> e.getQuantity() < 0)
 			.collect(Collectors.toList());
-			
-			for(modelTransactionsI a : temp){ ctrl = a.deleteTransactions(); }
-					return ctrl;
+			if(!temp.isEmpty())
+				for(modelTransactionsI a : temp){ ctrl = a.deleteTransactions(); }
+			return ctrl;
 		}
 		else
 		{
@@ -119,8 +119,8 @@ public interface modelTransactionsI {
 			.filter(e -> e.getNumberPaymentRicevuta()==nRicevuta)
 			.filter(e -> e.getQuantity() > 0)
 			.collect(Collectors.toList());
-					
-			for(modelTransactionsI a : temp){ ctrl = a.deleteTransactions(); }
+			if(!temp.isEmpty())	
+				for(modelTransactionsI a : temp){ ctrl = a.deleteTransactions(); }
 					return ctrl;
 		}
 	}

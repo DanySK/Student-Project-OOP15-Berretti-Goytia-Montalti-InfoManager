@@ -78,7 +78,7 @@ import it.unibo.infomanager.infomng.controller.TableRow;
 		return modelProvidersI.providersList().stream()
 				.filter(p -> p.getID().equals(this.getIDProvider()))
 				.findFirst()
-				.get();
+				.orElse(null);
 	}
 	
 }

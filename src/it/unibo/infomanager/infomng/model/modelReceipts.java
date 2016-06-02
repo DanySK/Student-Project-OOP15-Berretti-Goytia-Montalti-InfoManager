@@ -47,10 +47,10 @@ public class modelReceipts implements modelReceiptsI{
 	public int getNumberReceipt(){
 		return (int)this.oggetto.getObject("NumeroScontrino");
 	}
-	//Aiuto a catturare l'errore
+
 	@Override
 	public modelClientsI getClient(){
-		try{
+
 			return modelClientsI.clientsList().stream()
 					.filter(c ->{
 						try{
@@ -60,18 +60,18 @@ public class modelReceipts implements modelReceiptsI{
 						}
 					})
 					.findFirst()
-					.get();
-		}catch(Exception e)
-		{
-			return null;
-		}
+					.orElse(null);
 	}
 	@Override
 	public modelProvidersI getProvider(){
 		return modelProvidersI.providersList().stream()
-				.filter(p -> p.getID().equals(this.getIDFornitore()))
+				.filter(p -> {
+					try{
+						return p.getID().equals(this.getIDFornitore());}
+					catch(Exception e){return false;}
+				})
 				.findFirst()
-				.get();
+				.orElse(null);
 	}
 	@Override
 	public float getIVA(){
@@ -82,7 +82,7 @@ public class modelReceipts implements modelReceiptsI{
 		return (Date)this.oggetto.getObject("Data");
 	}
 	@Override
-	public List<transactionsProductsI> soldProducts(){
+	public List<transactionsProductsI> listTransactionsProducts(){
 		return modelTransactionsI.transactionsList().stream()
 				.filter( m -> m.getNumberPaymentRicevuta() == this.getNumberReceipt())
 				.map( p -> {

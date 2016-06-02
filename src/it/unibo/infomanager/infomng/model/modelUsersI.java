@@ -88,13 +88,14 @@ public interface modelUsersI {
 	 * @param password
 	 * pasword per questo utente
 	 * @return
-	 * true se andato a buon fine o false se l'username esiste giù oppure errore nel salvataggio
+	 * true se andato a buon fine o false se l'username esiste gia oppure errore nel salvataggio
 	 */
 	public static boolean builder(String nome, String cognome, String mail, String username, String password){
 		modelUsersI nuovo = new modelUsers();
 		nuovo.setName(nome);
 		nuovo.setLastName(cognome);
 		nuovo.setMail(mail);
+		//contrllo che non si usi lo stesso username
 		if(modelUsersI.usersList().stream()
 			.filter(u -> u.getUsername().equals(username))
 			.count() > 1){
