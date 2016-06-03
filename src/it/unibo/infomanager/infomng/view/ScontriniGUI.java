@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.LayoutManager;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -48,7 +49,7 @@ public class ScontriniGUI extends InitializeFrame {
 	private JTextField txtQuantita;
 	private JTextField txtIva;
 	private JTextField txtSconto;
-	private JTextField txtScontrino;
+	private JTextField txtClienteFornitore;
 	private JTextArea textArea = new JTextArea();
 	private JLabel lblProdotto = new JLabel("Prodotto");
 	private JLabel lblPrezzoUnitario = new JLabel("Prezzo Unitario");
@@ -56,7 +57,7 @@ public class ScontriniGUI extends InitializeFrame {
 	private JLabel lblIva = new JLabel("IVA");
 	private JLabel lblSconto = new JLabel("Sconto");
 	private JButton btnStampa = new JButton("Stampa");
-	private JLabel lblNscontrino = new JLabel("N.Scontrino");
+	private JLabel lblClienteFornitore = new JLabel("Cliente/Fornitore");
 	private JLabel lblNewLabel = new JLabel("\u20AC");
 	private JLabel label = new JLabel("%");
 	private JLabel labelPercento = new JLabel("%");
@@ -69,6 +70,7 @@ public class ScontriniGUI extends InitializeFrame {
 	private double totiva;
 	private double totsconto;
 	private double pperq;
+	private JScrollPane scrollArea = new JScrollPane();
 	private final JButton btnAggiungi = new JButton("Aggiungi");
 	private final JLabel lblAnteprimaDiStampa = new JLabel("Anteprima di Stampa");
 	private LinkedList<String> lista = new LinkedList<>();
@@ -86,7 +88,7 @@ public class ScontriniGUI extends InitializeFrame {
 		this.txtProdotto.setText("");
 		this.txtQuantita.setText("");
 		this.txtSconto.setText("");
-		this.txtScontrino.setText("");
+		this.txtClienteFornitore.setText("");
 	}
 	/**
 	 * Metodo per settare i textfield.
@@ -97,7 +99,7 @@ public class ScontriniGUI extends InitializeFrame {
 		modelReceiptsI scontrino = (modelReceiptsI) o;
 		this.txtIva.setText(String.valueOf(scontrino.getIVA()));
 		this.txtProdotto.setText(String.valueOf(scontrino.getID()));
-		this.txtScontrino.setText(String.valueOf(scontrino.getNumberReceipt()));	
+		this.txtClienteFornitore.setText(String.valueOf(scontrino.getNumberReceipt()));	
 	}
 
 	/**
@@ -113,7 +115,7 @@ public class ScontriniGUI extends InitializeFrame {
 				.getImage(ScontriniGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Computer.gif")));
 		this.getMainPanel().setLayout(new BorderLayout(0, 0));
 		this.getMainPanel().add(panelTool, BorderLayout.CENTER);
-		panelTool.setLayout(new BorderLayout(0, 0));
+		this.panelTool.setLayout(new BorderLayout(0, 0));
 		this.toolbar = new MyToolbar(o, frame);
 		this.panelTool.add(toolbar, BorderLayout.NORTH);
 		this.panelTool.add(panelText);
@@ -131,11 +133,11 @@ public class ScontriniGUI extends InitializeFrame {
 
 		this.txtSconto = new JTextField();
 		this.txtSconto.setColumns(10);
-
+		this.scrollArea.setViewportView(textArea);
 		this.textArea.setEditable(false);
 
-		this.txtScontrino = new JTextField();
-		this.txtScontrino.setColumns(10);
+		this.txtClienteFornitore = new JTextField();
+		this.txtClienteFornitore.setColumns(10);
 
 		this.gcontentPane
 				.setHorizontalGroup(
@@ -157,11 +159,11 @@ public class ScontriniGUI extends InitializeFrame {
 																						.addComponent(lblIva)
 																						.addComponent(lblSconto)
 																						.addComponent(
-																								lblNscontrino))
+																								lblClienteFornitore))
 								.addGap(40)
 								.addGroup(
 										gcontentPane.createParallelGroup(Alignment.LEADING, false)
-												.addComponent(txtScontrino)
+												.addComponent(txtClienteFornitore)
 												.addComponent(txtProdotto, GroupLayout.DEFAULT_SIZE, 160,
 														Short.MAX_VALUE)
 												.addComponent(txtPrezzoUnitario).addComponent(txtQuantita)
@@ -178,7 +180,7 @@ public class ScontriniGUI extends InitializeFrame {
 										GroupLayout.PREFERRED_SIZE))).addGroup(
 												gcontentPane.createParallelGroup(Alignment.TRAILING)
 														.addGroup(gcontentPane.createSequentialGroup().addGap(31)
-																.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 293,
+																.addComponent(scrollArea, GroupLayout.DEFAULT_SIZE, 293,
 																		Short.MAX_VALUE)
 																.addContainerGap())
 										.addGroup(gcontentPane.createSequentialGroup().addGap(131)
@@ -215,7 +217,7 @@ public class ScontriniGUI extends InitializeFrame {
 						.addGroup(
 								gcontentPane.createSequentialGroup().addContainerGap()
 										.addGroup(gcontentPane.createParallelGroup(Alignment.BASELINE)
-												.addComponent(lblNscontrino).addComponent(txtScontrino,
+												.addComponent(lblClienteFornitore).addComponent(txtClienteFornitore,
 														GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 														GroupLayout.PREFERRED_SIZE))))
 						.addPreferredGap(ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
@@ -224,7 +226,7 @@ public class ScontriniGUI extends InitializeFrame {
 						.addGap(28))
 				.addGroup(gcontentPane.createSequentialGroup().addContainerGap().addComponent(lblAnteprimaDiStampa)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE).addContainerGap()));
+						.addComponent(scrollArea, GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE).addContainerGap()));
 		this.panelText.setLayout(gcontentPane);
 		
 		this.getMainPanel().add(buttonPane, BorderLayout.SOUTH);
@@ -287,6 +289,7 @@ public class ScontriniGUI extends InitializeFrame {
 				} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(frame, "Inserisci i campi correttamente", "Campi scorretti",
 							JOptionPane.ERROR_MESSAGE);
+					
 				}
 				;
 			}
@@ -314,9 +317,10 @@ public class ScontriniGUI extends InitializeFrame {
 	public Map<String, Object> getTextField() {
 		Map<String, Object> mappa = new HashMap<>();
 		mappa.put("Prodotti", lista);
-		mappa.put("Iva", String.valueOf(totiva));
+		mappa.put("Iva", txtIva.getText());
 		mappa.put("Sconto", txtSconto.getText());
-		mappa.put("Scontrino", txtScontrino.getText());
+		mappa.put("Scontrino", txtClienteFornitore.getText());
+		mappa.put("Cliente/Fornitore", txtClienteFornitore.getText());
 		return mappa;
 	}
 
