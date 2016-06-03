@@ -103,12 +103,14 @@ public interface modelProvidersI {
 	 * una lista contenente tutti i fornitori, tramite i parametri forniti o una lista vuota
 	 */
 	public static List<modelProvidersI> searchProviders(String nome, String cognome, String mail, String telefono){
-		
+		if(modelUsersI.isLogged()){
 		 return modelProvidersI.providersList().stream()
-					//.peek(e -> System.out.println(e.getName()))
 					.filter(f -> f.getName().contains(nome) || f.getLastName().contains(cognome)
 								|| f.getMail().contains(mail) || f.getPhone().contains(telefono))
 					.collect(Collectors.toList());
+		}
+		else
+			return new ArrayList<modelProvidersI>();
 	}
 	
 	/***
@@ -119,19 +121,22 @@ public interface modelProvidersI {
 	 * una lista con tutti i fornitori che forniscono il prodotto specificato altrimenti una lista vuota
 	 */
 	public static List<modelProvidersI> searchProvidersByProduct(String nomeProdotto){
-
-		List<Integer> listTemp = modelStoreI.productsList().stream()
-				.filter(e-> e.getName().contains(nomeProdotto))
-				.map(e -> e.getProvider().getID())
-				.collect(Collectors.toList());
-		if(!listTemp.isEmpty()){
-		return modelProvidersI.providersList().stream()
-				.filter(e ->{
-					for(Integer a : listTemp){
-						if(e.getID().equals(a))
-							return true;
-					}return false;	
-				}).collect(Collectors.toList());
+		if(modelUsersI.isLogged()){
+			List<Integer> listTemp = modelStoreI.productsList().stream()
+					.filter(e-> e.getName().contains(nomeProdotto))
+					.map(e -> e.getProvider().getID())
+					.collect(Collectors.toList());
+			if(!listTemp.isEmpty()){
+			return modelProvidersI.providersList().stream()
+					.filter(e ->{
+						for(Integer a : listTemp){
+							if(e.getID().equals(a))
+								return true;
+						}return false;	
+					}).collect(Collectors.toList());
+			}
+			else
+				return new ArrayList<modelProvidersI>();
 		}
 		else
 			return new ArrayList<modelProvidersI>();
@@ -143,14 +148,18 @@ public interface modelProvidersI {
 	 * una lista contenente tutti i fornitori
 	 */
 	public static List<modelProvidersI> providersList(){
-		DataBaseSearch query = DataBaseSearch.queryDaTabella("Fornitori");
-		try {
-			return query.find().stream()
-					.map(e -> new modelProviders(e))
-					.collect(Collectors.toList());
-		} catch (SQLException e) {
-			return new ArrayList<modelProvidersI>();
+		if(modelUsersI.isLogged()){
+			DataBaseSearch query = DataBaseSearch.queryDaTabella("Fornitori");
+			try {
+				return query.find().stream()
+						.map(e -> new modelProviders(e))
+						.collect(Collectors.toList());
+			} catch (SQLException e) {
+				return new ArrayList<modelProvidersI>();
+			}
 		}
+		else
+			return new ArrayList<modelProvidersI>();
 	}
 	/***
 	 * creazione di un nuovo cliente
@@ -166,11 +175,15 @@ public interface modelProvidersI {
 	 * true se e andato a buon fine altrimenti false
 	 */
 	public static boolean builder(String nome, String cognome, String mail, String telefono){
-		modelProvidersI temp = new modelProviders();
-		temp.setName(nome);
-		temp.setLastName(cognome);
-		temp.setPhone(telefono);
-		temp.setMail(mail);
-		return temp.update();
+		if(modelUsersI.isLogged()){
+			modelProvidersI temp = new modelProviders();
+			temp.setName(nome);
+			temp.setLastName(cognome);
+			temp.setPhone(telefono);
+			temp.setMail(mail);
+			return temp.update();
+		}
+		else
+			return false;
 	}
 }

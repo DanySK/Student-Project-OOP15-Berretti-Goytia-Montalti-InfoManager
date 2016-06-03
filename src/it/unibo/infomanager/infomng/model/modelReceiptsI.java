@@ -118,14 +118,18 @@ public interface modelReceiptsI {
 	 * un lista di tipo modelReceiptsI
 	 */
 	public static List<modelReceiptsI> receiptsList(){
-		DataBaseSearch query = DataBaseSearch.queryDaTabella("Scontrini");
-		try {
-			return query.find().stream()
-					.map(e -> new modelReceipts(e))
-					.collect(Collectors.toList());
-		} catch (SQLException e) {
-			return new ArrayList<modelReceiptsI>();
+		if(modelUsersI.isLogged()){
+			DataBaseSearch query = DataBaseSearch.queryDaTabella("Scontrini");
+			try {
+				return query.find().stream()
+						.map(e -> new modelReceipts(e))
+						.collect(Collectors.toList());
+			} catch (SQLException e) {
+				return new ArrayList<modelReceiptsI>();
+			}
 		}
+		else
+			return new ArrayList<modelReceiptsI>(); 
 	}
 	
 	/***
@@ -146,33 +150,36 @@ public interface modelReceiptsI {
 	 * true se andato a buon fine altrimenti false
 	 */
 	public static boolean builder(Optional<modelClientsI> cliente, Optional<modelProvidersI> fornitore, Date data, float iva,float sconto, List<transactionsProductsI> prodotti){
-		//variabile che mi salva il numero dello sconrino
-		int nScontrino;
-		//controllo se si tratto del primo scontrino 
-		if(modelReceiptsI.receiptsList().size() == 0)
-			nScontrino = 1000;
-		else
-			nScontrino = modelReceiptsI.receiptsList().get(modelReceiptsI.receiptsList().size()-1).getNumberReceipt()+1;
-		
-		modelReceiptsI temp = new modelReceipts();
-		if(cliente.isPresent()){
-			temp.setClient(cliente.get());
-			temp.setNumberReceipt(nScontrino);
-			temp.setDate(data);
-			temp.setIva(iva);
-			temp.setDiscount(sconto);
-			modelSalesI.builder(cliente.get(), nScontrino, iva, sconto, data, prodotti);
-			return temp.update();
+		if(modelUsersI.isLogged()){
+			//variabile che mi salva il numero dello sconrino
+			int nScontrino;
+			//controllo se si tratto del primo scontrino 
+			if(modelReceiptsI.receiptsList().size() == 0)
+				nScontrino = 1000;
+			else
+				nScontrino = modelReceiptsI.receiptsList().get(modelReceiptsI.receiptsList().size()-1).getNumberReceipt()+1;
+			
+			modelReceiptsI temp = new modelReceipts();
+			if(cliente.isPresent()){
+				temp.setClient(cliente.get());
+				temp.setNumberReceipt(nScontrino);
+				temp.setDate(data);
+				temp.setIva(iva);
+				temp.setDiscount(sconto);
+				modelSalesI.builder(cliente.get(), nScontrino, iva, sconto, data, prodotti);
+				return temp.update();
+			}
+			else{
+				temp.setProvider(fornitore.get());
+				temp.setNumberReceipt(nScontrino);
+				temp.setDate(data);
+				temp.setIva(iva);
+				temp.setDiscount(sconto);
+				modelPurchasesI.builder(data, sconto, iva, nScontrino, fornitore.get(), prodotti);
+				return temp.update();
+			}
 		}
-		else{
-			temp.setProvider(fornitore.get());
-			temp.setNumberReceipt(nScontrino);
-			temp.setDate(data);
-			temp.setIva(iva);
-			temp.setDiscount(sconto);
-			modelPurchasesI.builder(data, sconto, iva, nScontrino, fornitore.get(), prodotti);
-			return temp.update();
-		}
+		return false;
 	}
 	
 	/***
@@ -183,11 +190,13 @@ public interface modelReceiptsI {
 	 * lo scontrino altrimenti null
 	 */
 	public static modelReceiptsI searchReceiptByNumber(int nScontrino){
-		
-		return modelReceiptsI.receiptsList().stream()
-				.filter(s -> s.getNumberReceipt() == nScontrino)
-				.findFirst()
-				.orElse(null);
+		if(modelUsersI.isLogged()){
+			return modelReceiptsI.receiptsList().stream()
+					.filter(s -> s.getNumberReceipt() == nScontrino)
+					.findFirst()
+					.orElse(null);
+		}
+		return null;
 	}
 	
 }

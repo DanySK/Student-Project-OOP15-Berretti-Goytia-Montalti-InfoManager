@@ -56,15 +56,18 @@ public interface modelTransactionsI {
 	 * vendita -> quantita negativa acquisto->quantita positiva
 	 */
 	public static List<modelTransactionsI> transactionsList(){
-		
-		DataBaseSearch query = DataBaseSearch.queryDaTabella("Movimenti");
-		try {
-			return query.find().stream()
-					.map(e -> new modelTransactions(e))
-					.collect(Collectors.toList());
-		} catch (SQLException e) {
-			return new ArrayList<modelTransactionsI>();
+		if(modelUsersI.isLogged()){
+			DataBaseSearch query = DataBaseSearch.queryDaTabella("Movimenti");
+			try {
+				return query.find().stream()
+						.map(e -> new modelTransactions(e))
+						.collect(Collectors.toList());
+			} catch (SQLException e) {
+				return new ArrayList<modelTransactionsI>();
+			}
 		}
+		else
+			return new ArrayList<modelTransactionsI>();
 	}
 	/***
 	 * nuovo movimento effettuato
@@ -77,20 +80,23 @@ public interface modelTransactionsI {
 	 * true o false a seconda dell'esito
 	 */
 	public static boolean transactionsProducts(int nRicevuta, List<transactionsProductsI> lista, boolean ctrlVendita){
-		
-		boolean ctrl= true;
-		for(transactionsProductsI p : lista){
-			modelTransactions temp = new modelTransactions(TableRow.oggettoDaTabella("Movimenti"));
-			temp.oggetto.setObjectValue("nRicevuta", nRicevuta );
-			temp.oggetto.setObjectValue("IDProdotto", p.getProductInvolved().getID());
-			if(ctrlVendita)
-				temp.oggetto.setObjectValue("Quantita", -1 * p.getQuantity());
-			else
-				temp.oggetto.setObjectValue("Quantita", p.getQuantity());
-			temp.oggetto.setObjectValue("Prezzo", p.getPrice());
-			ctrl=temp.oggetto.salva();
+		if(modelUsersI.isLogged()){
+			boolean ctrl= true;
+			for(transactionsProductsI p : lista){
+				modelTransactions temp = new modelTransactions(TableRow.oggettoDaTabella("Movimenti"));
+				temp.oggetto.setObjectValue("nRicevuta", nRicevuta );
+				temp.oggetto.setObjectValue("IDProdotto", p.getProductInvolved().getID());
+				if(ctrlVendita)
+					temp.oggetto.setObjectValue("Quantita", -1 * p.getQuantity());
+				else
+					temp.oggetto.setObjectValue("Quantita", p.getQuantity());
+				temp.oggetto.setObjectValue("Prezzo", p.getPrice());
+				ctrl=temp.oggetto.salva();
+			}
+			return ctrl;
 		}
-		return ctrl;
+		else
+			return false;
 	}
 	/***
 	 * metodo per eliminaare tutti i prodotti di una vendita o aquisto sbagliti
@@ -102,26 +108,30 @@ public interface modelTransactionsI {
 	 * true o false a secoda del esito
 	 */
 	public static boolean deleteTransactionsProducts(int nRicevuta, boolean ctrlVendita){
-		List<modelTransactionsI> temp;
-		boolean ctrl = true;
-		if(ctrlVendita){
-			temp = modelTransactionsI.transactionsList().stream()
-			.filter(e -> e.getNumberPaymentRicevuta()==nRicevuta)
-			.filter(e -> e.getQuantity() < 0)
-			.collect(Collectors.toList());
-			if(!temp.isEmpty())
-				for(modelTransactionsI a : temp){ ctrl = a.deleteTransactions(); }
-			return ctrl;
+		if(modelUsersI.isLogged()){
+			List<modelTransactionsI> temp;
+			boolean ctrl = true;
+			if(ctrlVendita){
+				temp = modelTransactionsI.transactionsList().stream()
+				.filter(e -> e.getNumberPaymentRicevuta()==nRicevuta)
+				.filter(e -> e.getQuantity() < 0)
+				.collect(Collectors.toList());
+				if(!temp.isEmpty())
+					for(modelTransactionsI a : temp){ ctrl = a.deleteTransactions(); }
+				return ctrl;
+			}
+			else
+			{
+				temp = modelTransactionsI.transactionsList().stream()
+				.filter(e -> e.getNumberPaymentRicevuta()==nRicevuta)
+				.filter(e -> e.getQuantity() > 0)
+				.collect(Collectors.toList());
+				if(!temp.isEmpty())	
+					for(modelTransactionsI a : temp){ ctrl = a.deleteTransactions(); }
+						return ctrl;
+			}
 		}
 		else
-		{
-			temp = modelTransactionsI.transactionsList().stream()
-			.filter(e -> e.getNumberPaymentRicevuta()==nRicevuta)
-			.filter(e -> e.getQuantity() > 0)
-			.collect(Collectors.toList());
-			if(!temp.isEmpty())	
-				for(modelTransactionsI a : temp){ ctrl = a.deleteTransactions(); }
-					return ctrl;
-		}
+			return false;
 	}
 }

@@ -124,14 +124,18 @@ public interface modelSalesI {
 	 * una lista contenente tutte le vendite
 	 */
 	public static List<modelSalesI> salesList(){
-		DataBaseSearch query = DataBaseSearch.queryDaTabella("Acquisti");
-		try {
-			return query.find().stream()
-					.map(e -> new modelSales(e))
-					.collect(Collectors.toList());
-		} catch (SQLException e) {
+		if(modelUsersI.isLogged()){
+			DataBaseSearch query = DataBaseSearch.queryDaTabella("Acquisti");
+			try {
+				return query.find().stream()
+						.map(e -> new modelSales(e))
+						.collect(Collectors.toList());
+			} catch (SQLException e) {
+				return new ArrayList<modelSalesI>();
+			}
+		}else
 			return new ArrayList<modelSalesI>();
-		}
+		
 	}
 	/***
 	 * creazione di una nuova vendita
@@ -151,18 +155,20 @@ public interface modelSalesI {
 	 * true se andato a buon fine altrimenti false
 	 */
 	public static boolean builder(modelClientsI cliente, int nRicevuta, float iva, float sconto, Date data, List<transactionsProductsI> prodotti){
-		
-		modelSalesI temp = new modelSales();
-		temp.setClient(cliente);
-		temp.setDiscount(sconto);
-		temp.setDate(data);
-		temp.setIVA(iva);
-		temp.setNumberPaymentReceipt(nRicevuta);
-		//salvo i prodotti della vendita
-		if(modelTransactionsI.transactionsProducts(nRicevuta, prodotti, true))
-			return temp.update();
-		else
-			return false;
+		if(modelUsersI.isLogged()){
+			modelSalesI temp = new modelSales();
+			temp.setClient(cliente);
+			temp.setDiscount(sconto);
+			temp.setDate(data);
+			temp.setIVA(iva);
+			temp.setNumberPaymentReceipt(nRicevuta);
+			//salvo i prodotti della vendita
+			if(modelTransactionsI.transactionsProducts(nRicevuta, prodotti, true))
+				return temp.update();
+			else
+				return false;
+		}
+		return false;
 	}
 	/***
 	 * ottiene un report con le vendite ordinate in modo decrescente
@@ -170,12 +176,15 @@ public interface modelSalesI {
 	 * una lsita con tutte le vendite altrimenti una lista vuota
 	 */
 	public static List<modelSalesI> reportSales(){
-		
-	Comparator<modelSalesI> sort = (primo, secondo) -> Double.compare(primo.getTotalColleactions(), secondo.getTotalColleactions());
+		if(modelUsersI.isLogged()){
+			Comparator<modelSalesI> sort = (primo, secondo) -> Double.compare(primo.getTotalColleactions(), secondo.getTotalColleactions());
 			
 			return modelSalesI.salesList().stream()
 					.sorted(sort)
 					.collect(Collectors.toList());
+		}
+		else
+			return new ArrayList<modelSalesI>();
 	}
 
 }

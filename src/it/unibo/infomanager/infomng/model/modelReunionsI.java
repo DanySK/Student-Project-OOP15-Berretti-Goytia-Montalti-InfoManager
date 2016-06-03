@@ -104,15 +104,19 @@ public interface modelReunionsI {
 	 * una lista contenente tutte le riunioni filtrate
 	 */
 	public static List<modelReunionsI>pastReunionsList(Date dataCorrente){
-		DataBaseSearch query = DataBaseSearch.queryDaTabella("Riunioni");
-		try {
-			return query.find().stream()
-					.map(e -> new modelReunions(e))
-					.filter(e -> e.getDate().before(dataCorrente))
-					.collect(Collectors.toList());
-		} catch (SQLException e) {
-			return new ArrayList<modelReunionsI>();
+		if(modelUsersI.isLogged()){
+			DataBaseSearch query = DataBaseSearch.queryDaTabella("Riunioni");
+			try {
+				return query.find().stream()
+						.map(e -> new modelReunions(e))
+						.filter(e -> e.getDate().before(dataCorrente))
+						.collect(Collectors.toList());
+			} catch (SQLException e) {
+				return new ArrayList<modelReunionsI>();
+			}
 		}
+		else
+			return new ArrayList<modelReunionsI>();
 	}
 	
 	/***
@@ -123,16 +127,19 @@ public interface modelReunionsI {
 	 * una lista con tutte le riunioni per oggi
 	 */
 	 public static List<modelReunionsI>reunionsTodayList(Date dataCorrente){
-			DataBaseSearch query = DataBaseSearch.queryDaTabella("Riunioni");
-			try {
-				return query.find().stream()
-						.map(e -> new modelReunions(e))
-						.filter(e -> e.getDate().equals(dataCorrente))
-						.collect(Collectors.toList());
-			} catch (SQLException e) {
-				return new ArrayList<modelReunionsI>();
-			}
-		}
+		 if(modelUsersI.isLogged()){
+				DataBaseSearch query = DataBaseSearch.queryDaTabella("Riunioni");
+				try {
+					return query.find().stream()
+							.map(e -> new modelReunions(e))
+							.filter(e -> e.getDate().equals(dataCorrente))
+							.collect(Collectors.toList());
+				} catch (SQLException e) {
+					return new ArrayList<modelReunionsI>();
+				}
+		 }else
+			 return new ArrayList<modelReunionsI>();
+	}
 	/***
 	 * ottiene una lista con tutte le future riunioni
 	 * @param dataCorrente
@@ -141,6 +148,7 @@ public interface modelReunionsI {
 	 * una lista con tutte le riunioni filtrate
 	 */
 	 public static List<modelReunionsI>futureReunionsList(Date dataCorrente){
+		 if(modelUsersI.isLogged()){
 			DataBaseSearch query = DataBaseSearch.queryDaTabella("Riunioni");
 			try {
 				return query.find().stream()
@@ -150,7 +158,10 @@ public interface modelReunionsI {
 			} catch (SQLException e) {
 				return new ArrayList<modelReunionsI>();
 			}
-		}
+		 }
+		  else
+				return new ArrayList<modelReunionsI>();
+	}
 	
 	/***
 	 * ritorna l'elenco con tutte le riunioni nel DB
@@ -158,14 +169,18 @@ public interface modelReunionsI {
 	 * una lista contenente tutte le riunioni
 	 */
 	public static List<modelReunionsI> reunionsList(){
-		DataBaseSearch query = DataBaseSearch.queryDaTabella("Riunioni");
-		try {
-			return query.find().stream()
-					.map(e -> new modelReunions(e))
-					.collect(Collectors.toList());
-		} catch (SQLException e) {
-			return new ArrayList<modelReunionsI>();
+		if(modelUsersI.isLogged()){
+			DataBaseSearch query = DataBaseSearch.queryDaTabella("Riunioni");
+			try {
+				return query.find().stream()
+						.map(e -> new modelReunions(e))
+						.collect(Collectors.toList());
+			} catch (SQLException e) {
+				return new ArrayList<modelReunionsI>();
+			}
 		}
+		else
+			return new ArrayList<modelReunionsI>();
 	}
 	/***
 	 * creazione di una nuova riunione
@@ -181,11 +196,15 @@ public interface modelReunionsI {
 	 * true se andato a buon fine
 	 */
 	public static boolean builder(java.util.Date dataEora, String nomeRiunione, String dettagli, modelUsersI responsabile){
-		modelReunionsI temp = new modelReunions();
-		temp.setDateAndHour(dataEora);
-		temp.setNameReunion(nomeRiunione);
-		temp.setResponsible(responsabile);
-		temp.setReunionDetails(dettagli);
-		return temp.update();
+		if(modelUsersI.isLogged()){
+			modelReunionsI temp = new modelReunions();
+			temp.setDateAndHour(dataEora);
+			temp.setNameReunion(nomeRiunione);
+			temp.setResponsible(responsabile);
+			temp.setReunionDetails(dettagli);
+			return temp.update();
+		}
+		else
+			return false;
 	}
 }

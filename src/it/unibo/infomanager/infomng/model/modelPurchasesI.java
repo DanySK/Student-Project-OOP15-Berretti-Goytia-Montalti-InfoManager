@@ -114,14 +114,18 @@ public interface modelPurchasesI {
 	 * una lista contenente tutti gli acquisti fatti
 	 */
 	public static List<modelPurchasesI> purchasesList(){
-		DataBaseSearch query = DataBaseSearch.queryDaTabella("Acquisti");
-		try {
-			return query.find().stream()
-					.map(e -> new modelPurchases(e))
-					.collect(Collectors.toList());
-		} catch (SQLException e) {
-			return new ArrayList<modelPurchasesI>();
+		if(modelUsersI.isLogged()){
+			DataBaseSearch query = DataBaseSearch.queryDaTabella("Acquisti");
+			try {
+				return query.find().stream()
+						.map(e -> new modelPurchases(e))
+						.collect(Collectors.toList());
+			} catch (SQLException e) {
+				return new ArrayList<modelPurchasesI>();
+			}
 		}
+		else
+			return new ArrayList<modelPurchasesI>();
 	}
 	/***
 	 * ricerca di una ricevuta di acquisto tramite il numero
@@ -131,11 +135,14 @@ public interface modelPurchasesI {
 	 * l'acquisto realizzato altrimenti null
 	 */
 	public static modelPurchasesI searchPurchase(int nRicevuta){
-		
+		if(modelUsersI.isLogged()){
 			return modelPurchasesI.purchasesList().stream()
 				.filter(p -> p.getNumberPaymentReceipt() == nRicevuta)
 				.findFirst()
 				.orElse(null);
+		}
+		else
+			return null;
 	}
 	/***
 	 * ottiene il report degli acquisti
@@ -143,12 +150,14 @@ public interface modelPurchasesI {
 	 * una lista contenente tutti gli acquisti ordinati in maniera decrescente in base alle spese altrimenti una lista vuota
 	 */
 	public static List<modelPurchasesI> reportPurchases(){
-		
-		Comparator<modelPurchasesI> sort = (primo, secondo) -> Double.compare(primo.getTotalSpent(), secondo.getTotalSpent());
-		
-		return modelPurchasesI.purchasesList().stream()
-				.sorted(sort)
-				.collect(Collectors.toList());
+		if(modelUsersI.isLogged()){
+			Comparator<modelPurchasesI> sort = (primo, secondo) -> Double.compare(primo.getTotalSpent(), secondo.getTotalSpent());
+			
+			return modelPurchasesI.purchasesList().stream()
+					.sorted(sort)
+					.collect(Collectors.toList());
+		}else
+			return new ArrayList<modelPurchasesI>();
 	}
 	/***
 	 * creazione di un acquisto
@@ -168,15 +177,20 @@ public interface modelPurchasesI {
 	 * true se creato altrimenti false
 	 */
 	public static boolean builder(Date data, float sconto, float iva, int nRicevuta, modelProvidersI fornitore,  List<transactionsProductsI> prodotti){
-		modelPurchasesI temp = new modelPurchases();
-		temp.setProvider(fornitore);
-		temp.setDate(data);
-		temp.setDiscount(sconto);
-		temp.setIVA(iva);
-		//salvataggio dei prodotti acquistati
-		if(modelTransactionsI.transactionsProducts(nRicevuta, prodotti, false))
-			return temp.update();
-		else
+		if(modelUsersI.isLogged())
+		{
+			modelPurchasesI temp = new modelPurchases();
+			temp.setProvider(fornitore);
+			temp.setDate(data);
+			temp.setDiscount(sconto);
+			temp.setIVA(iva);
+			//salvataggio dei prodotti acquistati
+			if(modelTransactionsI.transactionsProducts(nRicevuta, prodotti, false))
+				return temp.update();
+			else
+				return false;
+		}
+		else 
 			return false;
 	}
 	

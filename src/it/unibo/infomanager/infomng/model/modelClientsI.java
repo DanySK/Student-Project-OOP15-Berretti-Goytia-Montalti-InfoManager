@@ -115,12 +115,15 @@ public interface modelClientsI {
 	 * tutti i clienti trovati tramite i parametri forniti, si segue una lgica or! oppure una lista vuota
 	 */
 	public static List<modelClientsI> searchClients(String nome, String cognome, String mail, String telefono, String nomeNegozio){
-		
+		if(modelUsersI.isLogged()){
 			return modelClientsI.clientsList().stream()
 					.filter(cliente -> cliente.getName().contains(nome) || cliente.getLastName().contains(cognome)
 					    || cliente.getMail().contains(mail) || cliente.getShopName().contains(nomeNegozio)
 					    || cliente.getPhone().contains(telefono))
 					.collect(Collectors.toList());
+		}
+		else
+			return new ArrayList<modelClientsI>();
 	}
 	
 	/***
@@ -129,14 +132,18 @@ public interface modelClientsI {
 	 * una lista contenente tutti i clienti
 	 */
 	public static List<modelClientsI> clientsList(){
-		DataBaseSearch query = DataBaseSearch.queryDaTabella("Clienti");
-		try {
-			return query.find().stream()
-					.map(e -> new modelClients(e))
-					.collect(Collectors.toList());
-		} catch (SQLException e) {
-			return new ArrayList<modelClientsI>();
+		if(modelUsersI.isLogged()){
+			DataBaseSearch query = DataBaseSearch.queryDaTabella("Clienti");
+			try {
+				return query.find().stream()
+						.map(e -> new modelClients(e))
+						.collect(Collectors.toList());
+			} catch (SQLException e) {
+				return new ArrayList<modelClientsI>();
+			}
 		}
+		else
+			return new ArrayList<modelClientsI>();
 	}
 	/***
 	 * creazione di un nuovo cliente
@@ -154,12 +161,16 @@ public interface modelClientsI {
 	 * true se e andato a buon fine altrimenti false
 	 */
 	public static boolean builder(String nome, String cognome, String mail, String telefono, String nomeNegozio){
-		modelClientsI temp = new modelClients();
-		temp.setName(nome);
-		temp.setLastName(cognome);
-		temp.setMail(mail);
-		temp.setPhone(telefono);
-		temp.setShopName(nomeNegozio);
-		return temp.update();
+		if(modelUsersI.isLogged()){
+			modelClientsI temp = new modelClients();
+			temp.setName(nome);
+			temp.setLastName(cognome);
+			temp.setMail(mail);
+			temp.setPhone(telefono);
+			temp.setShopName(nomeNegozio);
+			return temp.update();
+		}else
+			return false;
 	}
+	
 }

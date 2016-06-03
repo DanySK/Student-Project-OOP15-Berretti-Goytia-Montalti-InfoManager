@@ -77,6 +77,7 @@ public interface modelStoreI {
 	 * i prodotti trovati ltrimenti una lista vuota
 	 */
 	public static List<modelStoreI> serachProductsByProvider(modelProvidersI fornitore){
+		if(modelUsersI.isLogged()){
 		return modelStoreI.productsList().stream()
 				.filter(e-> {
 					try{
@@ -86,6 +87,9 @@ public interface modelStoreI {
 					}
 				})
 				.collect(Collectors.toList());
+		}
+		else
+			return new ArrayList<modelStoreI>();
 	}
 	
 	/***
@@ -95,9 +99,13 @@ public interface modelStoreI {
 	 * una lista che contiene i prodotti trovati altrimenti una lista vuota
 	 */
 	public static List<modelStoreI> searchProductsByQuantity(int quantitaMinima){
-		return modelStoreI.productsList().stream()
-				.filter(e-> e.getQuantity() >= quantitaMinima)
-				.collect(Collectors.toList());
+		if(modelUsersI.isLogged()){
+			return modelStoreI.productsList().stream()
+					.filter(e-> e.getQuantity() >= quantitaMinima)
+					.collect(Collectors.toList());
+		}
+		else
+			return new ArrayList<modelStoreI>();
 	}
 	
 	/***
@@ -108,9 +116,13 @@ public interface modelStoreI {
 	 * il/i prodotti trovati altrimenti una lista vuota
 	 */
 	public static List<modelStoreI> serachProductsByName(String nome){
-		return modelStoreI.productsList().stream()
-				.filter(e-> e.getName().contains(nome))
-				.collect(Collectors.toList());
+		if(modelUsersI.isLogged()){
+			return modelStoreI.productsList().stream()
+					.filter(e-> e.getName().contains(nome))
+					.collect(Collectors.toList());
+		}
+		else
+			return new ArrayList<modelStoreI>();
 	}
 
 	/***
@@ -119,14 +131,18 @@ public interface modelStoreI {
 	 * una lista con tutti i prodotti
 	 */
 	public static List<modelStoreI> productsList(){
-		DataBaseSearch query = DataBaseSearch.queryDaTabella("Magazzino");
-		try {
-			return query.find().stream()
-					.map(e -> new modelStore(e))
-					.collect(Collectors.toList());
-		} catch (SQLException e) {
-			return new ArrayList<modelStoreI>();
+		if(modelUsersI.isLogged()){
+			DataBaseSearch query = DataBaseSearch.queryDaTabella("Magazzino");
+			try {
+				return query.find().stream()
+						.map(e -> new modelStore(e))
+						.collect(Collectors.toList());
+			} catch (SQLException e) {
+				return new ArrayList<modelStoreI>();
+			}
 		}
+		else
+			return new ArrayList<modelStoreI>();
 	}
 	
 	/***
@@ -140,10 +156,14 @@ public interface modelStoreI {
 	 * @return
 	 */
 	public static boolean builder(String nome, modelProvidersI fornitore, String descrizione) {
-		modelStoreI temp = new modelStore();
-		temp.setName(nome);
-		temp.setProductDeatils(descrizione);
-		temp.setProvider(fornitore);
-		return temp.update();
+		if(modelUsersI.isLogged()){
+			modelStoreI temp = new modelStore();
+			temp.setName(nome);
+			temp.setProductDeatils(descrizione);
+			temp.setProvider(fornitore);
+			return temp.update();
+		}
+		else
+			return false;
 	}
 }
