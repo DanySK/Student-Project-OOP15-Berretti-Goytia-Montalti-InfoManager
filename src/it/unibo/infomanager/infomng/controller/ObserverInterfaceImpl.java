@@ -170,8 +170,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 			return false;
 		}
 		
-		
-		if (modelUsersI.newUser(nomeNegozio, null, mail, username, password)) {
+		if (modelUsersI.builder(nomeNegozio, null, mail, username, password)) {
 			UtenteCorrente.tmpUser tmp = new UtenteCorrente.tmpUser();
 			tmp.nome = username;
 			ObserverInterfaceImpl.currentUser.setUtente(tmp);
@@ -189,7 +188,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		String mail = dati.get("Email");
 		String telefono = dati.get("Telefono");
 		String nomeNegozio = ""; // in attesa del metodoto per il nome negozio
-		return modelClientsI.newClient(nome, cognome, mail, telefono, nomeNegozio);
+		return modelClientsI.builder(nome, cognome, mail, telefono, nomeNegozio);
 	}
 
 	@Override
@@ -198,7 +197,7 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		String cognome = dati.get("Cognome");
 		String telefono = dati.get("Telefono");
 		String mail = dati.get("Email");
-		return modelProvidersI.newProvider(nome, cognome, mail, telefono);
+		return modelProvidersI.builder(nome, cognome, mail, telefono);
 	}
 
 	@Override
@@ -320,17 +319,9 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 
 		String nome = String.format("Riunione del %s/%s/%s", giorno, mese, anno);
 
-		String responsabile = "";
-		try{
-			responsabile = modelUsersI.getUtenteCorrente().getName();
-		}
-		catch(NullPointerException e){
-			
-		}
-
 		DateFormat formatterData = new SimpleDateFormat("dd-MM-yyyy");
 		Date dataEora = new Date(formatterData.parse(String.format("%s-%s-%s", giorno, mese, anno)).getTime());
-		return modelReunionsI.newReunion(nome, responsabile, "", note, dataEora);
+		return modelReunionsI.builder(dataEora, nome, note, modelUsersI.getUtenteCorrente());
 
 	}
 
@@ -356,26 +347,24 @@ public class ObserverInterfaceImpl implements ObserverInterface {
 		List<String> tmpProdotti = (List<String>) dati.get("Prodotti");
 		
 		Integer iva = Integer.parseInt((String) dati.get("Iva"));
-		//Integer sconto = Integer.parseInt((String) dati.get("Sconto"));
-		Integer numero = Integer.parseInt((String) dati.get("Scontrino"));
+		Integer sconto = Integer.parseInt((String) dati.get("Sconto"));
 		Date data = new Date(new java.util.Date().getTime());
 		List<Map<String, Object>> proodtti = this.estraiProdottiDaLista(tmpProdotti);
-
+ 
 		List<transactionsProductsI> lista = proodtti.stream()
 				.map(d -> {
 					Integer idProdotto = ((modelStoreI)d.get("Prodotto")).getID();
 					Integer quantita = (Integer) d.get("Quantita");
 					Double prezzo = (Double)d.get("Prezzo");
-					transactionsProductsI t = new transactionsProducts(idProdotto, quantita, prezzo);
+					modelStoreI prodotto = modelStoreI.productsList().stream()
+							.filter(p -> p.getID().equals(idProdotto))
+							.findFirst().get();
+					transactionsProductsI t = new transactionsProducts(prodotto, quantita, prezzo);
 					return t;
 				}).collect(Collectors.toList());
 		
+		modelReceiptsI.builder(Optional.empty(), Optional.empty(), data, iva, sconto, lista);
 		
-		modelReceiptsI.newReceipt(Optional.ofNullable(numero), null, data, (iva.doubleValue() / 100.0), lista);
-		
-		//modelTransactionsI.transactionsProducts(numero, lista, true);
-		
-		//TODO: da rifare se juan cambia la classe
 	}
 	
 
