@@ -363,7 +363,7 @@ public class FattureGUI extends InitializeFrame {
 		this.textAreaFattura.setText(fatture.purchasedProducts().iterator().toString());
 		this.textFieldIVA.setText(String.valueOf(fatture.getIva()));
 		this.textNumeroOrdine.setText(String.valueOf(fatture.getID()));
-		this.textFornitore.setText(String.valueOf(fatture.getIDProvider()));
+		this.textFornitore.setText(String.valueOf(fatture.getProvider()));
 		this.textFieldSconto.setText(String.valueOf(fatture.getDiscount()));
 		this.textDataOrdine.setText(String.valueOf(fatture.getDate()));
 	}
